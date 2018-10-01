@@ -1,0 +1,1834 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SECOM.ACS.MvcWebApp</RootNamespace>
+    <AssemblyName>SECOM.ACS.MvcWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.90.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.90.0\lib\net452\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net.Universal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Log4Net.Universal.1.0.1\lib\net40\Common.Logging.Log4Net.Universal.dll</HintPath>
+    </Reference>
+    <Reference Include="CronExpressionDescriptor, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CronExpressionDescriptor.2.0.2\lib\netstandard1.1\CronExpressionDescriptor.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper.Excel, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.Excel.1.0.6\lib\net40\CsvHelper.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FastMember.Signed, Version=1.0.0.9, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.1.0\lib\net40\FastMember.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="Kendo.Mvc, Version=2017.2.621.545, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\KENDOUIMVC\2017.2.621.545\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net.Ext.Json, Version=1.2.13.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.Ext.Json.1.2.13.1.2.13.20140804\lib\net35-full\log4net.Ext.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.4.0.1\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="ModelMetadataExtensions, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ModelMetadataExtensions.0.1.4\lib\net46\ModelMetadataExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.1\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="Vereyon.Web.FlashMessage, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vereyon.Web.FlashMessage.1.0.1\lib\net40\Vereyon.Web.FlashMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\SiteMapLocalizationResource.th.designer.cs">
+      <DependentUpon>SiteMapLocalizationResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\SiteMapLocalizationResource.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteMapLocalizationResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AcsVIPController.cs" />
+    <Compile Include="Controllers\CardApiController.cs" />
+    <Compile Include="Controllers\ApprovalApiController.cs" />
+    <Compile Include="Controllers\CardReceiveReturnController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\MediaController.cs" />
+    <Compile Include="Controllers\ScheduleTaskController.cs" />
+    <Compile Include="Extensions\AcsHtmlHelperExtensions.cs" />
+    <Compile Include="Extensions\CsvHelperExtensions.cs" />
+    <Compile Include="Extensions\ModelExtensions.AcsEmployee.cs">
+      <DependentUpon>ModelExtensions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ModelExtensions.AcsPhoto.cs">
+      <DependentUpon>ModelExtensions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ModelExtensions.cs" />
+    <Compile Include="Extensions\ModelExtensions.Dashboard.cs">
+      <DependentUpon>ModelExtensions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ModelExtensions.Employee.cs">
+      <DependentUpon>ModelExtensions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\AcsModelHelper.cs" />
+    <Compile Include="Helper\ApplicationSuspendAttribute.cs" />
+    <Compile Include="Helper\SiteMapPageTitleAttribute.cs" />
+    <Compile Include="Helper\OfflineSystemFileManager.cs" />
+    <Compile Include="Helper\UniteGalleryData.cs" />
+    <Compile Include="Extensions\DataCacheExtension.cs" />
+    <Compile Include="Models\AcsTransactionViewModel.cs" />
+    <Compile Include="Models\AreaDataViewModel.cs" />
+    <Compile Include="Models\BatchViewModel.cs" />
+    <Compile Include="Models\CardImportData.cs" />
+    <Compile Include="Models\AreaForEmployeeEntryViewModel.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\EmployeeApprovalDataViewModel.cs" />
+    <Compile Include="Models\EmployeeDataViewModel.cs" />
+    <Compile Include="Models\EmployeeInformationViewModel.cs" />
+    <Compile Include="Models\ReqApproverListViewModel.cs" />
+    <Compile Include="Models\RequestDH08DataViewModel.cs" />
+    <Compile Include="Models\RequestDH07DataViewModel.cs" />
+    <Compile Include="Models\RequestDH06DataViewModel.cs" />
+    <Compile Include="Models\RequestDH05DataViewModel.cs" />
+    <Compile Include="Models\RequestDH04DataViewModel.cs" />
+    <Compile Include="Models\RequestDH03DataViewModel.cs" />
+    <Compile Include="Models\RequestDH02DataViewModel.cs" />
+    <Compile Include="Models\RequestDH01DataViewModel.cs" />
+    <Compile Include="Models\RequestInquriyDataViewModel.cs" />
+    <Compile Include="Models\VIPCardRegistrationViewModel.cs" />
+    <Compile Include="Models\BusinessTripCardRegistrationViewModel.cs" />
+    <Compile Include="Models\ReceiveReturnBusinessTripCardDataViewModel.cs" />
+    <Compile Include="Models\ReceiveReturnVisitorCardDataViewModel.cs" />
+    <Compile Include="Models\RoleUserForEmployeeEntryViewModel.cs" />
+    <Compile Include="Models\SendMailViewModel.cs" />
+    <Compile Include="Models\OfflineOnlineSystemData.cs" />
+    <Compile Include="Models\VIPCardViewModel.cs" />
+    <Compile Include="Models\VisitorCardRegistrationViewModel.cs" />
+    <Compile Include="Properties\Resources.th-TH.Designer.cs">
+      <DependentUpon>Resources.th-TH.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsItemInDetailViewModelResource.Designer.cs">
+      <DependentUpon>AcsItemInDetailViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemInViewModelResource.Designer.cs">
+      <DependentUpon>AcsItemInViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemInDetailViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsItemInDetailViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemInViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsItemInViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemOutItemViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsItemOutItemViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemOutItemViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsItemOutItemViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsItemOutViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsItemOutViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsItemOutViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsItemOutViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsTransactionViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsTransactionViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsTransactionViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsTransactionViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorDetailViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsVisitorDetailViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorDetailViewModelResource.Designer.cs">
+      <DependentUpon>AcsVisitorDetailViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorTransactionDataViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsVisitorTransactionDataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorTransactionDataViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsVisitorTransactionDataViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsVisitorViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsVisitorViewModelResource.Designer.cs">
+      <DependentUpon>AcsVisitorViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RoleViewModelResource.Designer.cs">
+      <DependentUpon>RoleViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AreaForEmployeeEntryViewModelResource.Designer.cs">
+      <DependentUpon>AreaForEmployeeEntryViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RoleViewModelResource.th.Designer.cs">
+      <DependentUpon>RoleViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AreaForEmployeeEntryViewModelResource.th.Designer.cs">
+      <DependentUpon>AreaForEmployeeEntryViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH06DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH06DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH07DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH07DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RetrieveBusinessTripViewModelResource.th.Designer.cs">
+      <DependentUpon>RetrieveBusinessTripViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RetrieveBusinessTripViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RetrieveBusinessTripViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\VIPCardRegistrationViewModelResource.th.Designer.cs">
+      <DependentUpon>VIPCardRegistrationViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\VIPCardRegistrationViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VIPCardRegistrationViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ReceiveReturnBusinessTripCardDataViewModelResource.Designer.cs">
+      <DependentUpon>ReceiveReturnBusinessTripCardDataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ReceiveReturnVisitorCardDataViewModelResource.Designer.cs">
+      <DependentUpon>ReceiveReturnVisitorCardDataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH08DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH08DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH06DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH06DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH07DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH07DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ReceiveReturnBusinessTripCardDataViewModelResource.th.Designer.cs">
+      <DependentUpon>ReceiveReturnBusinessTripCardDataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ReceiveReturnVisitorCardDataViewModelResource.th.Designer.cs">
+      <DependentUpon>ReceiveReturnVisitorCardDataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH08DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH08DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH05DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH05DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH05DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH05DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH03DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH03DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH04DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH04DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH03DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH03DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH04DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH04DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH02DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH02DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH01DataViewModelResource.Designer.cs">
+      <DependentUpon>RequestDH01DataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH02DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH02DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestDH01DataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestDH01DataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestInquriyDataViewModelResource.th.Designer.cs">
+      <DependentUpon>RequestInquriyDataViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\RequestInquriyDataViewModelResource.Designer.cs">
+      <DependentUpon>RequestInquriyDataViewModelResource.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsEmployeeDetailViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsEmployeeDetailViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsEmployeeDetailViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsEmployeeDetailViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsEmployeeViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsEmployeeViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsEmployeeViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsEmployeeViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AcsPhotoViewModelResource.th.Designer.cs">
+      <DependentUpon>AcsPhotoViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AcsPhotoViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsPhotoViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\BusinessTripCardRegistrationViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BusinessTripCardRegistrationViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\BusinessTripCardRegistrationViewModelResource.th.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BusinessTripCardRegistrationViewModelResource.th.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\EmployeeDataViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployeeDataViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\EmployeeDataViewModelResource.th.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployeeDataViewModelResource.th.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\EmployeeInformationViewModelResource.th.Designer.cs">
+      <DependentUpon>EmployeeInformationViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\EmployeeInformationViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployeeInformationViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MessageResource.th.Designer.cs">
+      <DependentUpon>MessageResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MessageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessageResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MiscViewModelResource.th.Designer.cs">
+      <DependentUpon>MiscViewModelResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MiscViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MiscViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ViewResource.th.Designer.cs">
+      <DependentUpon>ViewResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ViewResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\VisitorCardRegistrationViewModelResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VisitorCardRegistrationViewModelResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\VisitorCardRegistrationViewModelResource.th.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VisitorCardRegistrationViewModelResource.th.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WidgetResource.th.Designer.cs">
+      <DependentUpon>WidgetResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\WidgetResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WidgetResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ModelMetadataResource.th.Designer.cs">
+      <DependentUpon>ModelMetadataResource.th.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ModelMetadataResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMetadataResource.resx</DependentUpon>
+    </Compile>
+    <Content Include="App_Start\MessageHelper.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MappingConfig.cs" />
+    <Compile Include="Controllers\AreaApiController.cs" />
+    <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\CardController.cs" />
+    <Compile Include="Controllers\CardRegistrationController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\InquiryController.cs" />
+    <Compile Include="Controllers\ApplicationLogController.cs" />
+    <Compile Include="Controllers\GateApiController.cs" />
+    <Compile Include="Controllers\EmployeeApiController.cs" />
+    <Compile Include="Controllers\ItemApiController.cs" />
+    <Compile Include="Controllers\MiscApiController.cs" />
+    <Compile Include="Controllers\MiscController.cs" />
+    <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\AcsVisitorController.cs" />
+    <Compile Include="Controllers\AcsItemInController.cs" />
+    <Compile Include="Controllers\AcsPhotoController.cs" />
+    <Compile Include="Controllers\AcsItemOutController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\RoleApiController.cs" />
+    <Compile Include="Controllers\SystemStatusController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\SystemMiscApiController.cs" />
+    <Compile Include="Helper\ApplicationOwinContextManager.cs" />
+    <Compile Include="Helper\MessageHelper.cs" />
+    <Compile Include="Extensions\PermissionExtension.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppControllerBase.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AuthrozieApiController.cs" />
+    <Compile Include="Controllers\AcsEmployeeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Extensions\IdentityUserExtensions.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestViewMode.cs" />
+    <Compile Include="Models\GateViewModel.cs" />
+    <Compile Include="Models\EmployeeViewModel.cs" />
+    <Compile Include="Models\LoggingViewModel.cs" />
+    <Compile Include="Models\AreaViewModel.cs" />
+    <Compile Include="Models\CardViewModel.cs" />
+    <Compile Include="Models\MiscViewModel.cs" />
+    <Compile Include="Models\AccessControlApprovalViewModel.cs" />
+    <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\AcsViewModel.cs" />
+    <Compile Include="Models\AcsItemInViewModel.cs" />
+    <Compile Include="Models\AcsItemOutViewModel.cs" />
+    <Compile Include="Models\AcsEmployeeViewModel.cs" />
+    <Compile Include="Models\AcsPhotoViewModel.cs" />
+    <Compile Include="Models\AcsVisitorViewModel.cs" />
+    <Compile Include="Models\ItemViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\AuthorizeViewModel.cs" />
+    <Compile Include="Models\UserRoleViewModel.cs" />
+    <Compile Include="Models\PermissionModel.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
+    <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App_Start\OwinStartup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Task\emailTemplates\PasswordReset.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\ChangePassword.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\ForgotPassword.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\PasswordReset.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestAcknowledge.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestApproved.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestCancelled.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestExpired.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestRejected.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestRejectedByArea.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestWaitForApproval.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestWithness.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap-dropdownhover.css" />
+    <Content Include="assets\css\bootstrap-dropdownhover.min.css" />
+    <Content Include="assets\css\bootstrap-formhelpers.css" />
+    <Content Include="assets\css\bootstrap-formhelpers.min.css" />
+    <Content Include="assets\css\bootstrap-theme.css" />
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\font-awesome.css" />
+    <Content Include="assets\css\font-awesome.min.css" />
+    <Content Include="assets\css\jquery-confirm.min.css" />
+    <Content Include="assets\css\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
+    <Content Include="assets\img\bg2.png" />
+    <Content Include="assets\img\bootstrap-formhelpers-countries.flags.png" />
+    <Content Include="assets\img\spinner-loading2.gif" />
+    <Content Include="assets\img\spinner_loading.gif" />
+    <Content Include="assets\js\app.messages.th.js" />
+    <Content Include="assets\js\app.ui.js" />
+    <Content Include="assets\js\bootstrap-hover-dropdown.js" />
+    <Content Include="assets\js\bootstrap-hover-dropdown.min.js" />
+    <Content Include="assets\js\bootstrap-notify.js" />
+    <Content Include="assets\js\bootstrap-notify.min.js" />
+    <Content Include="assets\js\fastclick.min.js" />
+    <Content Include="assets\js\jquery.confirm.min.js" />
+    <Content Include="assets\js\jquery.easing.js" />
+    <Content Include="assets\js\jquery.scrollUp.min.js" />
+    <Content Include="assets\js\jquery.tablehover.js" />
+    <Content Include="assets\js\jquery.tablehover.min.js" />
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.th-TH.min.js" />
+    <Content Include="assets\libs\kendo\js\messages\kendo.messages.th-TH.es5.js">
+      <DependentUpon>kendo.messages.th-TH.js</DependentUpon>
+    </Content>
+    <Content Include="assets\libs\kendo\js\messages\kendo.messages.th-TH.es5.min.js">
+      <DependentUpon>kendo.messages.th-TH.es5.js</DependentUpon>
+    </Content>
+    <Content Include="assets\libs\unite-gallery\css\unite-gallery.css" />
+    <Content Include="assets\libs\unite-gallery\images\button-close.png" />
+    <Content Include="assets\libs\unite-gallery\images\cover-grid.png" />
+    <Content Include="assets\libs\unite-gallery\images\icon-link32.png" />
+    <Content Include="assets\libs\unite-gallery\images\icon-play32.png" />
+    <Content Include="assets\libs\unite-gallery\images\icon-zoom32.png" />
+    <Content Include="assets\libs\unite-gallery\images\lightbox-arrow-left.png" />
+    <Content Include="assets\libs\unite-gallery\images\lightbox-arrow-right.png" />
+    <Content Include="assets\libs\unite-gallery\images\lightbox-icon-close-compact.png" />
+    <Content Include="assets\libs\unite-gallery\images\lightbox-icon-close-compact2.png" />
+    <Content Include="assets\libs\unite-gallery\images\lightbox-icon-close.png" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black1.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black2.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black3.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black4.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black5.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black6.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-black7.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white1.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white2.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white3.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white4.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white5.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white6.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader-white7.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader_bright.gif" />
+    <Content Include="assets\libs\unite-gallery\images\loader_skype_trans.gif" />
+    <Content Include="assets\libs\unite-gallery\images\not_loaded.png" />
+    <Content Include="assets\libs\unite-gallery\images\play-button-round.png" />
+    <Content Include="assets\libs\unite-gallery\images\play-button-square.png" />
+    <Content Include="assets\libs\unite-gallery\images\transparent.png" />
+    <Content Include="assets\libs\unite-gallery\js\jquery-11.0.min.js" />
+    <Content Include="assets\libs\unite-gallery\js\unitegallery.js" />
+    <Content Include="assets\libs\unite-gallery\js\unitegallery.min.js" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\alexis.css" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\arrows_strip_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\arrows_strip_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\button_fullscreen.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\button_playpause.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\button_zoom_back.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\button_zoom_minus.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\button_zoom_plus.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_down.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_left_hortype.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_right_hortype.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_arrow_up.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_handle_down.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_handle_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_handle_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\grid_handle_up.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\slider_arrow_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\slider_arrow_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\alexis\images\slider_bullets.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrows_strip_down.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrows_strip_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrows_strip_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrows_strip_up.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrow_grid_down.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\arrow_grid_up.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\button_fullscreen.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\button_playpause.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_arrow_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_arrow_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_handle_black_bottom.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_handle_black_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_handle_black_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\grid_handle_black_top.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\icon_zoom_back.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\icon_zoom_minus.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\icon_zoom_plus.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\slider_arrow_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\slider_arrow_right.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\slider_bullets.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_bullets_blue.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_bullets_brown.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_bullets_gray.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_bullets_green.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_bullets_red.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_button_left.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_button_play_pause.png" />
+    <Content Include="assets\libs\unite-gallery\skins\default\tile_button_right.png" />
+    <Content Include="assets\libs\unite-gallery\themes\carousel\ug-theme-carousel.js" />
+    <Content Include="assets\libs\unite-gallery\themes\compact\ug-theme-compact.js" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\arrows_strip_left.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\arrows_strip_right.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\arrow_down_up.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\button_fullscreen.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\button_fullscreen_single.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\button_playpause.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\images\button_playpause_single.png" />
+    <Content Include="assets\libs\unite-gallery\themes\default\ug-theme-default.css" />
+    <Content Include="assets\libs\unite-gallery\themes\default\ug-theme-default.js" />
+    <Content Include="assets\libs\unite-gallery\themes\grid\ug-theme-grid.js" />
+    <Content Include="assets\libs\unite-gallery\themes\slider\ug-theme-slider.js" />
+    <Content Include="assets\libs\unite-gallery\themes\tilesgrid\ug-theme-tilesgrid.js" />
+    <Content Include="assets\libs\unite-gallery\themes\tiles\ug-theme-tiles.js" />
+    <Content Include="assets\libs\unite-gallery\themes\video\images\arrow_left.png" />
+    <Content Include="assets\libs\unite-gallery\themes\video\images\arrow_right.png" />
+    <Content Include="assets\libs\unite-gallery\themes\video\skin-bottom-text.css" />
+    <Content Include="assets\libs\unite-gallery\themes\video\skin-right-no-thumb.css" />
+    <Content Include="assets\libs\unite-gallery\themes\video\skin-right-thumb.css" />
+    <Content Include="assets\libs\unite-gallery\themes\video\skin-right-title-only.css" />
+    <Content Include="assets\libs\unite-gallery\themes\video\ug-theme-video.js" />
+    <Content Include="Content\map\map1.jpg" />
+    <Content Include="Content\map\map2.jpg" />
+    <Content Include="Content\map\map3.jpg" />
+    <Content Include="App_Task\emailTemplates\ChangePassword.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\ForgotPassword.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestApproved.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestCancelled.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestRejectedByArea.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestRejected.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestExpired.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestAcknowledge.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestWithness.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestWaitForApproval.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="Images\aia.png" />
+    <Content Include="Images\carousel\s1.jpg" />
+    <Content Include="Images\carousel\s2.jpg" />
+    <Content Include="Images\carousel\s3.jpg" />
+    <Content Include="Images\carousel\s4.jpg" />
+    <Content Include="Images\carousel\s5.png" />
+    <Content Include="Images\img_aia.gif" />
+    <Content Include="Images\logo_group.gif" />
+    <Content Include="packages.config" />
+    <Content Include="bower.json" />
+    <Content Include="assets\css\animate.css" />
+    <Content Include="assets\css\animate.min.css" />
+    <Content Include="assets\js\bootstrap.js" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\jquery.js" />
+    <Content Include="assets\js\jquery.min.js" />
+    <Content Include="assets\js\jquery.nicescroll.min.js" />
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.en-US.min.js" />
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.en.min.js" />
+    <Content Include="assets\libs\kendo\js\kendo.all.min.js" />
+    <Content Include="assets\libs\kendo\js\kendo.aspnetmvc.min.js" />
+    <Content Include="assets\libs\kendo\js\messages\kendo.messages.en-US.min.js" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\editor.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\imagebrowser.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\indeterminate.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\loading-image.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\loading.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\loading_2x.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\markers.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\markers_2x.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\slider-h.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\slider-v.gif" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\sprite.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\sprite_2x.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\sprite_kpi.png" />
+    <Content Include="assets\libs\kendo\styles\Bootstrap\sprite_kpi_2x.png" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="assets\libs\kendo\styles\images\back.png" />
+    <Content Include="assets\libs\kendo\styles\images\wp8_icons.png" />
+    <Content Include="assets\libs\kendo\styles\images\wp8_inverseicons.png" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap-v4.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap.mobile.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.common-bootstrap.core.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.common-bootstrap.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.common.core.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.common.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.mobile.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.default-v2.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.default.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.default.mobile.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.all.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.android.dark.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.android.light.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.blackberry.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.common.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.ios.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.meego.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.wp8.min.css" />
+    <Content Include="assets\libs\kendo\styles\kendo.rtl.min.css" />
+    <Content Include="assets\libs\kendo\styles\textures\brushed-metal.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots1.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots10.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots11.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots12.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots13.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots2.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots3.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots4.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots5.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots6.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots7.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots8.png" />
+    <Content Include="assets\libs\kendo\styles\textures\dots9.png" />
+    <Content Include="assets\libs\kendo\styles\textures\glass-lighter.png" />
+    <Content Include="assets\libs\kendo\styles\textures\glass.png" />
+    <Content Include="assets\libs\kendo\styles\textures\highlight.png" />
+    <Content Include="assets\libs\kendo\styles\textures\hsv-gradient.png" />
+    <Content Include="assets\libs\kendo\styles\textures\hue.png" />
+    <Content Include="assets\libs\kendo\styles\textures\leather1.png" />
+    <Content Include="assets\libs\kendo\styles\textures\leather2.png" />
+    <Content Include="assets\libs\kendo\styles\textures\noise.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe1.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe2.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe3.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe4.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe5.png" />
+    <Content Include="assets\libs\kendo\styles\textures\stripe6.png" />
+    <Content Include="assets\libs\kendo\styles\textures\transparency.png" />
+    <Content Include="assets\libs\kendo\styles\textures\transtexture.png" />
+    <Content Include="assets\js\modernizr-2.8.3.js" />
+    <Content Include="assets\js\npm.js" />
+    <Content Include="assets\js\respond.js" />
+    <Content Include="assets\js\respond.matchmedia.addListener.js" />
+    <Content Include="assets\js\respond.matchmedia.addListener.min.js" />
+    <Content Include="assets\js\respond.min.js" />
+    <Content Include="assets\js\_references.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\site.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\box-sizing-fixes.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\fonts\FontAwesome.otf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\bootstrap-theme.css.map" />
+    <Content Include="assets\css\bootstrap-theme.min.css.map" />
+    <Content Include="assets\css\bootstrap.css.map" />
+    <Content Include="assets\css\bootstrap.min.css.map" />
+    <Content Include="assets\css\font-awesome.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="assets\libs\kendo\styles\fonts\glyphs\WebComponentsIcons.woff" />
+    <Content Include="assets\libs\kendo\styles\images\kendoui.svg" />
+    <Content Include="assets\libs\kendo\styles\images\kendoui.ttf" />
+    <Content Include="assets\libs\kendo\styles\images\kendoui.woff" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap-v4.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.bootstrap.mobile.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.common-bootstrap.core.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.common-bootstrap.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.common.core.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.common.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.bootstrap.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.dataviz.mobile.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.default-v2.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.default.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.default.mobile.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.all.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.android.dark.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.android.light.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.blackberry.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.common.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.ios.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.meego.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.mobile.wp8.min.css.map" />
+    <Content Include="assets\libs\kendo\styles\kendo.rtl.min.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.en-US.min.js.map" />
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.en.min.js.map" />
+    <Content Include="assets\libs\kendo\js\messages\kendo.messages.en-US.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\site.scss" />
+    <Content Include="appSettings.json" />
+    <Content Include="assets\libs\kendo\js\kendo.all.min.js.map" />
+    <Content Include="assets\libs\kendo\js\kendo.aspnetmvc.min.js.map" />
+    <Content Include="assets\css\site-vendor.css" />
+    <Content Include="appSettings.dev.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\libs\kendo\js\messages\kendo.messages.th-TH.js" />
+    <Content Include="assets\libs\kendo\js\cultures\kendo.culture.th-TH.min.js.map" />
+    <Content Include="appSettings.test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\PasswordReset.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\ChangePassword.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\ForgotPassword.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\PasswordReset.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestAcknowledge.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestApproved.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestCancelled.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestExpired.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestRejected.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestRejectedByArea.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestWaitForApproval.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\Plain\RequestWithness.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appSettings.production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appSettings.migrate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Mvc.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\ForgotPassword.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\_Layout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestWaitForApproval.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestApproved.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\ChangePassword.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestCancelled.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestRejected.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestExpired.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\card-import\card-1.csv" />
+    <Content Include="Content\acs-employee-import\employee-1.csv" />
+    <Content Include="Content\acs-employee-import\business-trip-1.csv" />
+    <Content Include="Content\card-import\card-2.csv" />
+    <Content Include="Content\acs-employee-import\business-trip-2.csv" />
+    <Content Include="Content\acs-employee-import\business-trip-3.csv" />
+    <Content Include="Content\acs-employee-import\employee-2.csv" />
+    <Content Include="Content\acs-visitor-import\visitor.csv" />
+    <Content Include="Content\acs-employee-import\employee-3.csv" />
+    <Content Include="App_Task\emailTemplates\RequestRejectedByArea.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestWithness.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\emailTemplates\RequestAcknowledge.text_html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Task\acs-import-template.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="log4net.test.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\employee-import-template.xlsx" />
+    <Content Include="Content\acs-import-template.xlsx" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\kawasaki01svr.pubxml" />
+    <None Include="Properties\PublishProfiles\kawasaki01svr_migrate.pubxml" />
+    <None Include="Properties\PublishProfiles\Missitron.pubxml" />
+    <Content Include="Views\AcsEmployee\Create.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BootstrapMenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\KendoTreeViewMenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Employee.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InchargeType.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PartNo.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Qty.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Views\Error\401.cshtml" />
+    <Content Include="Views\Error\403.cshtml" />
+    <Content Include="Views\Error\404.cshtml" />
+    <Content Include="Views\Error\500.cshtml" />
+    <Content Include="Views\Security\UserRoleAuthorize.cshtml" />
+    <Content Include="Views\Security\UserRole.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\Sample1.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\AcsItemOut\Create.cshtml" />
+    <Content Include="Views\AcsPhoto\Create.cshtml" />
+    <Content Include="Views\AcsPhoto\Detail.cshtml" />
+    <Content Include="Views\AcsVisitor\Edit.cshtml" />
+    <Content Include="Views\AcsItemOut\EditorTemplates\ItemEditor.cshtml" />
+    <Content Include="Views\AcsItemIn\Edit.cshtml" />
+    <Content Include="Views\AcsVIP\Index.cshtml" />
+    <Content Include="Views\AcsVIP\EditorTemplates\VIPCardRegistrationEditor.cshtml" />
+    <Content Include="Views\AcsItemOut\Edit.cshtml" />
+    <Content Include="Views\AcsItemOut\EditorTemplates\ItemEditorForAct.cshtml" />
+    <Content Include="Views\AcsItemIn\EditorTemplates\ItemInEditorForAuthor.cshtml" />
+    <Content Include="Views\AcsEmployee\EditorTemplates\EmployeeID.cshtml" />
+    <Content Include="Views\AcsPhoto\_DisplayApproverList.cshtml" />
+    <Content Include="Views\AcsItemOut\_DisplayApproverList.cshtml" />
+    <Content Include="Views\AcsItemIn\_DisplayApproverList.cshtml" />
+    <None Include="Views\AcsVisitor\EditForAuthor.cshtml" />
+    <Content Include="Views\AcsVisitor\Create.cshtml" />
+    <Content Include="Views\AcsVisitor\Detail.cshtml" />
+    <Content Include="Views\AcsItemOut\Detail.cshtml" />
+    <Content Include="Views\AcsItemOut\EditForAuthor.cshtml" />
+    <Content Include="Views\AcsEmployee\Detail.cshtml" />
+    <Content Include="Views\Shared\_PageTitle.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Message.cshtml" />
+    <Content Include="Views\Shared\_Employee.cshtml" />
+    <Content Include="Views\AcsEmployee\EditForAuthor.cshtml" />
+    <Content Include="Views\Request\Dashboard.cshtml" />
+    <Content Include="Views\AcsVisitor\EditorTemplates\VisitorEditor.cshtml" />
+    <Content Include="Views\AcsItemIn\Create.cshtml" />
+    <Content Include="Views\AcsItemIn\Detail.cshtml" />
+    <Content Include="Views\AcsItemIn\EditForAuthor.cshtml" />
+    <Content Include="Views\Request\Inquiry.cshtml" />
+    <Content Include="Views\AcsItemIn\EditorTemplates\ItemInEditor.cshtml" />
+    <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Employee\_UserGroup.cshtml" />
+    <Content Include="Views\Employee\Inquiry.cshtml" />
+    <Content Include="Views\ApplicationLog\Index.cshtml" />
+    <Content Include="Views\Employee\_AreaMapping.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Area.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\User.cshtml" />
+    <Content Include="Views\CardRegistration\Index.cshtml" />
+    <Content Include="Views\Misc\Index.cshtml" />
+    <Content Include="Views\Misc\EditorTemplates\MiscEditor.cshtml" />
+    <Content Include="Views\Security\EditorTemplates\RoleEditor.cshtml" />
+    <Content Include="Views\Shared\_LanguageSwitcher.cshtml" />
+    <Content Include="Views\Mail\Index.cshtml" />
+    <Content Include="Views\Shared\_AppOffline.cshtml" />
+    <Content Include="Views\AcsEmployee\EditorTemplates\BusinessTripEditor.cshtml" />
+    <Content Include="Views\AcsEmployee\EditorTemplates\EmployeeEditor.cshtml" />
+    <Content Include="Views\Shared\_Map.cshtml" />
+    <Content Include="Views\Test\Export.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\VerifyType.cshtml" />
+    <Content Include="Views\Request\_RequestInProgress.cshtml" />
+    <Content Include="Views\Request\_RequestWaitingToApprover.cshtml" />
+    <Content Include="Views\Request\_RequestWaitToAcknowledge.cshtml" />
+    <Content Include="Views\Request\_SecurityRoom.cshtml" />
+    <Content Include="Views\Request\_ItemIn.cshtml" />
+    <Content Include="Views\Request\_ItemOut.cshtml" />
+    <Content Include="Views\Request\_RequestWaitToInputLending.cshtml" />
+    <Content Include="Views\Request\_WitnessRequest.cshtml" />
+    <Content Include="Views\CardRegistration\EditorTemplates\VisitorCardRegistrationEditor.cshtml" />
+    <Content Include="Views\CardRegistration\EditorTemplates\BusinessTripCardEditor.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AcsMenuHelperModel.cshtml" />
+    <Content Include="Views\AcsEmployee\Edit.cshtml" />
+    <Content Include="Views\AcsPhoto\EditForAuthor.cshtml" />
+    <Content Include="Views\AcsPhoto\Edit.cshtml" />
+    <Content Include="Views\Area\Index.cshtml" />
+    <Content Include="Views\Area\EditorTemplates\AreaEditor.cshtml" />
+    <Content Include="Views\Card\EditorTemplates\CardEditor.cshtml" />
+    <Content Include="Views\Card\Index.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\EditorTemplates\ItemEditor.cshtml" />
+    <Content Include="Views\SystemStatus\Index.cshtml" />
+    <Content Include="Views\ScheduleTask\Index.cshtml" />
+    <Content Include="Views\ScheduleTask\EditorTemplates\ScheduleTimeEditor.cshtml" />
+    <Content Include="Views\CardRegistration\EditorTemplates\BusinessTripCardRegistrationEditor.cshtml" />
+    <Content Include="Views\CardReceiveReturn\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ActualItemQty.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ActualItemReturn.cshtml" />
+    <Content Include="Views\AcsEmployee\_DisplayApproverList.cshtml" />
+    <Content Include="Views\Employee\Import.cshtml" />
+    <Content Include="Views\AcsVisitor\_DisplayApproverList.cshtml" />
+    <Content Include="Views\Test\ErrorSample.cshtml" />
+    <None Include="Web.Release_Migrate.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Task\acs-archive\" />
+    <Folder Include="App_Task\acs-export\" />
+    <Folder Include="App_Task\acs-shared\" />
+    <Folder Include="App_Task\employee-backup\" />
+    <Folder Include="App_Task\employee-import\" />
+    <Folder Include="Views\CardReceiveReturn\EditorTemplates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSI.ComponentModel\CSI.ComponentModel.csproj">
+      <Project>{6244d808-bf55-4483-bd15-d938604e52c7}</Project>
+      <Name>CSI.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSI.EPPlus.Extensions\CSI.EPPlus.Extensions.csproj">
+      <Project>{17c36044-64a2-4539-9b4d-1c019935c2c7}</Project>
+      <Name>CSI.EPPlus.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSI.Web.Mvc.KendoUI\CSI.Web.Mvc.KendoUI.csproj">
+      <Project>{9de59e9e-8907-46f0-9e6c-7d954b1e38a1}</Project>
+      <Name>CSI.Web.Mvc.KendoUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSI.Web.Mvc\CSI.Web.Mvc.csproj">
+      <Project>{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}</Project>
+      <Name>CSI.Web.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Core\SECOM.ACS.Core.csproj">
+      <Project>{47fc5918-bc87-46b2-a585-6e60952f084e}</Project>
+      <Name>SECOM.ACS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Framework\SECOM.ACS.Framework.csproj">
+      <Project>{6bf4b642-b200-4707-8b5e-60ccba403ca5}</Project>
+      <Name>SECOM.ACS.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Identity\SECOM.ACS.Identity.csproj">
+      <Project>{92c446a5-463c-472e-8c82-fa62d1b52adc}</Project>
+      <Name>SECOM.ACS.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.Acs.Mail\SECOM.ACS.Mail.csproj">
+      <Project>{fcd58200-3e87-493f-8f8e-c23e68bb77af}</Project>
+      <Name>SECOM.ACS.Mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Reporting\SECOM.ACS.Reporting.csproj">
+      <Project>{29305497-1341-4e4a-8333-a0806273806a}</Project>
+      <Name>SECOM.ACS.Reporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Services\SECOM.ACS.Services.csproj">
+      <Project>{49f326be-5ca5-42b3-af54-ce4bd6a62c65}</Project>
+      <Name>SECOM.ACS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.Tasks\SECOM.ACS.Tasks.csproj">
+      <Project>{2547d873-0b91-4b29-b527-549811aad198}</Project>
+      <Name>SECOM.ACS.Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.ACS.WindowService\SECOM.ACS.WindowsService.csproj">
+      <Project>{98031D42-84FD-4E59-85B0-D0A8E025A3CE}</Project>
+      <Name>SECOM.ACS.WindowsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SECOM.Acs.Workflow\SECOM.ACS.Workflow.csproj">
+      <Project>{c760ae24-99b2-4389-b974-9c165134c669}</Project>
+      <Name>SECOM.ACS.Workflow</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\SiteMapLocalizationResource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SiteMapLocalizationResource.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\SiteMapLocalizationResource.th.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SiteMapLocalizationResource.th.designer.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Properties\Resources.th-TH.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.th-TH.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemInDetailViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemInDetailViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemInViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemInViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemInDetailViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemInDetailViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemInViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemInViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemOutItemViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemOutItemViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemOutItemViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemOutItemViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemOutViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemOutViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsItemOutViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsItemOutViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsTransactionViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsTransactionViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsTransactionViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsTransactionViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorDetailViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorDetailViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorDetailViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorDetailViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorTransactionDataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorTransactionDataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorTransactionDataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorTransactionDataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsVisitorViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsVisitorViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RoleViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RoleViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AreaForEmployeeEntryViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AreaForEmployeeEntryViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RoleViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RoleViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AreaForEmployeeEntryViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AreaForEmployeeEntryViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH06DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH06DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH07DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH07DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RetrieveBusinessTripViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RetrieveBusinessTripViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RetrieveBusinessTripViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RetrieveBusinessTripViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\VIPCardRegistrationViewModelResource.th.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VIPCardRegistrationViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\VIPCardRegistrationViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VIPCardRegistrationViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ReceiveReturnBusinessTripCardDataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReceiveReturnBusinessTripCardDataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ReceiveReturnVisitorCardDataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReceiveReturnVisitorCardDataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH08DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH08DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH06DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH06DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH07DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH07DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ReceiveReturnBusinessTripCardDataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReceiveReturnBusinessTripCardDataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ReceiveReturnVisitorCardDataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReceiveReturnVisitorCardDataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH08DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH08DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH05DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH05DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH05DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH05DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH03DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH03DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH04DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH04DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH03DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH03DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH04DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH04DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH02DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH02DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH01DataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH01DataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH02DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH02DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestDH01DataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestDH01DataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestInquriyDataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestInquriyDataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RequestInquriyDataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestInquriyDataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsEmployeeDetailViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsEmployeeDetailViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsEmployeeDetailViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsEmployeeDetailViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsEmployeeViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsEmployeeViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsEmployeeViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsEmployeeViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsPhotoViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsPhotoViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AcsPhotoViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AcsPhotoViewModelResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\BusinessTripCardRegistrationViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BusinessTripCardRegistrationViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\BusinessTripCardRegistrationViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BusinessTripCardRegistrationViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmployeeDataViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeDataViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmployeeDataViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeDataViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmployeeInformationViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeInformationViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EmployeeInformationViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeInformationViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MessageResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MessageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MiscViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MiscViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MiscViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MiscViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ViewResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewResource.th.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ViewResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\VisitorCardRegistrationViewModelResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VisitorCardRegistrationViewModelResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\VisitorCardRegistrationViewModelResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VisitorCardRegistrationViewModelResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WidgetResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WidgetResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WidgetResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WidgetResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ModelMetadataResource.th.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelMetadataResource.th.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ModelMetadataResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelMetadataResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Migrate|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54206</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54299/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseCdnSupport="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterBuild" Condition="Exists('Web.$(Configuration).config')">
+    <!--Generate transformed config in the output directory-->
+    <TransformXml Source="Web.config" Destination="$(OutputPath)Web.config" Transform="Web.$(Configuration).config" />
+  </Target>
+</Project>

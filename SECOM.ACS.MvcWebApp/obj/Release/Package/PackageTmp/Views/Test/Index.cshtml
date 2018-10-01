@@ -1,0 +1,14 @@
+﻿@using Newtonsoft.Json
+@{ 
+    var metaModelTypes = new Type[] { typeof(AcsPhotoViewModel), typeof(AcsEmployeeViewModel), typeof (MiscViewModel) };
+}
+<h2>Model Display Name Utility</h2>
+<div class="well well-sm">
+    @foreach (var type in metaModelTypes)
+    {
+        <h3>@("</" + type.Name + ">")</h3>
+        <div class="alert alert-info">
+            @Html.Raw(Json.Encode(JsonConvert.SerializeObject(AcsModelHelper.GetModelDisplayNames(type))))
+        </div>
+    }
+</div>

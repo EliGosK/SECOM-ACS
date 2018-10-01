@@ -1,0 +1,73 @@
+﻿@model AcsItemOutItemViewModel
+
+@using Vereyon.Web
+@{
+    var currentDate = DateTime.Now.Date;
+}
+
+<div class="k-edit-form-container" id="editor-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ItemTypeName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @(Html.Kendo().TextBoxFor(m => m.ItemTypeName)
+                       .HtmlAttributes(new { @readonly = "true" })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ItemName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @(Html.Kendo().TextBoxFor(m => m.ItemName)
+                       .HtmlAttributes(new { @readonly = "true" })
+                )
+            </div>
+        </div>
+        <div class="form-group" id="A1">
+            @Html.LabelFor(m => m.ActualTakeOutQty, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @(Html.Kendo().NumericTextBoxFor(m => m.ActualTakeOutQty)
+                .Spinners(false)
+                .Decimals(0)
+                .RestrictDecimals(true)
+                .Min(0)
+                .Format("n0")
+                .Name("ActualTakeOutQty")
+                )
+            </div>
+        </div>
+        <div class="col-md-offset-4 col-md-7">
+            @Html.KendoValidationMessageFor(m => m.ActualTakeOutQty)
+        </div>
+        <div class="form-group" id="A2">
+            @Html.LabelFor(m => m.ActualReturnQty, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @(Html.Kendo().NumericTextBoxFor(m => m.ActualReturnQty)
+                .Spinners(false)
+                .Decimals(0)
+                .RestrictDecimals(true)
+                .Min(0)
+                .Format("n0")
+                .Name("ActualReturnQty")
+                )
+            </div>
+        </div>
+        <div class="col-md-offset-4 col-md-7">
+            @Html.KendoValidationMessageFor(m => m.ActualReturnQty)
+        </div>
+        <div class="form-group" id="A3">
+            @Html.LabelFor(m => m.ActualReturn, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @(Html.Kendo().DatePickerFor(m => m.ActualReturn)
+                       .Max(currentDate)
+                )
+            </div>
+        </div>
+        <div class="col-md-offset-4 col-md-7">
+            @Html.KendoValidationMessageFor(m => m.ActualReturn)
+        </div>
+    </div>
+   @Html.KendoValidationSummary("edit-form-error-message", new { @style = "margin:0 15px" })
+</div>
+
+   

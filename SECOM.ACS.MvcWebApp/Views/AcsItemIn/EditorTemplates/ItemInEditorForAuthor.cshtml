@@ -1,0 +1,71 @@
+﻿@model AcsItemInDetailViewModel
+@{
+    var minTakeInDate = DateTime.Now;
+    var minActualReturnDate = DateTime.Now;
+}
+<div class="k-edit-form-container form-horizontal">
+    <div class="form-group">
+        @Html.LabelRequiredHintFor(m => m.ItemTypeID, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3 control-text">
+            @(Html.Kendo().DropDownListFor(f => f.ItemTypeID)
+                .DataSource(ds => ds.Read(r => r.Url("/api/miscs/list/ITM")))
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .ValuePrimitive(true)
+                .Filter(FilterType.Contains)
+                .OptionLabel(WidgetResource.SelectOptions)
+                .HtmlAttributes(new { @style = "width:100%" })
+            )
+        </div>
+        @Html.LabelRequiredHintFor(m => m.ItemID, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3 control-text">
+            @(Html.Kendo().DropDownListFor(f => f.ItemID)
+                .DataSource(ds => ds.Read(r => r.Url("/api/items/list/In")))
+                .DataTextField("ItemDisplay")
+                .DataValueField("ItemID")
+               .Filter(FilterType.Contains)
+                .ValuePrimitive(true)
+                .OptionLabel(WidgetResource.SelectOptions)
+                .HtmlAttributes(new { @style = "width:100%", @required = "required", data_field = Html.DisplayFor(m => m.ItemID) })
+            )
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            @(Html.Kendo().CheckBoxFor(m => m.Confidential))
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelRequiredHintFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-8">
+            @(Html.Kendo().TextBoxFor(m => m.Description).HtmlAttributes(new { @style = "width:100%", maxlength = 256 }))
+        </div>
+    </div>
+    <div class="form-group">
+    
+
+        @Html.LabelRequiredHintFor(m => m.RequestItemQty, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3 control-text">
+            @(Html.Kendo().NumericTextBoxFor(m => m.RequestItemQty)
+                 .Spinners(false)
+                    .Format("n0")
+                    .Decimals(0)
+                    .Min(1)
+                    .Max(9999)
+                    .RestrictDecimals(true)
+            )
+        </div>
+        @Html.LabelRequiredHintFor(m => m.PlanReturnDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3 control-text">
+            @(Html.Kendo().DatePickerFor(m => m.PlanReturnDate)
+                   //.Min(minTakeInDate)
+
+            )
+        </div>
+    </div>
+@Html.KendoValidationSummary("edit-form-error-message", new { @style = "margin:0 15px" })
+</div>
+
+
+

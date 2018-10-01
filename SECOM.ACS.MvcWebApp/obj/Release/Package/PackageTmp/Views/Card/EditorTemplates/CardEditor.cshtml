@@ -1,0 +1,72 @@
+﻿@model CardViewModel
+
+<div id="edit" class="k-edit-form-container animated fadeIn">    
+        @Html.LabelRequiredHintFor(m => m.CardID, new { @class = "k-edit-label k-text-bold" })
+        <div class="k-edit-field">
+            @Html.Kendo().TextBoxFor(m => m.CardID).HtmlAttributes(new { @maxlength = "50", @data_field = Html.DisplayNameFor(m => m.CardID), required = "required",@style="width:100%" })
+            @Html.KendoValidationMessageFor(m => m.CardID)
+        </div>
+        @Html.LabelRequiredHintFor(m => m.CardType, new { @class = "k-edit-label k-text-bold" })
+        <div class="k-edit-field">
+            @(Html.Kendo().DropDownListFor(m => m.CardType)
+            .DataSource(ds=>ds.Read(r=>r.Url("/api/cards/type/add")))
+            .DataTextField("Name")
+            .DataValueField("Value")
+            .OptionLabel(WidgetResource.SelectOptions)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.CardType), required = "required" })
+            )
+         @Html.KendoValidationMessageFor(m => m.CardType)
+        </div>
+        @Html.LabelRequiredHintFor(m => m.CardNo, new { @class = "k-edit-label k-text-bold" })
+        <div class="k-edit-field">
+            @(Html.Kendo().TextBoxFor(m => m.CardNo).HtmlAttributes(new { @maxlength = "50", @data_field = Html.DisplayNameFor(m => m.CardNo), required = "required", @style = "width:100%" }))
+            @Html.KendoValidationMessageFor(m => m.CardNo)
+        </div>
+        @Html.LabelFor(m => m.Area, new { @class = "k-edit-label k-text-bold" })
+        <div class="k-edit-field">
+            @(Html.Kendo().MultiSelectFor(m => m.SelectedArea)
+                .DataSource(ds=>ds.Read(r=>r.Url("/api/area/list")))
+                .DataTextField("Name")                
+                .DataValueField("AreaID")
+                .ValuePrimitive(true)
+                .Placeholder(WidgetResource.SelectOptions)
+                .HtmlAttributes(new { @data_field = Html.DisplayNameFor(m => m.Area), @style = "width:100%" })
+                .AutoClose(false)
+            )
+            @Html.KendoValidationMessageFor(m => m.SelectedArea)
+        </div>
+
+        
+
+        @Html.LabelRequiredHintFor(m => m.Note, new { @class = "k-edit-label k-text-bold"})
+        <div class="k-edit-field">
+            @(Html.TextAreaFor(m => m.Note, new { @maxlength = "256", @class = "k-textbox", style = "width: 100%;resize: none;", rows = "5" }))
+        </div>
+ 
+    
+    @Html.LabelRequiredHintFor(m => m.IsActive, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        <ul class="list-unstyled list-inline control-text">
+            @foreach (var card in AcsModelHelper.GetCardStatus())
+            {
+                <li>
+                    @(Html.Kendo().RadioButtonFor(m => m.IsActive).Label(card.Name).Value(card.Value)
+                        .HtmlAttributes(new { @class = "card-status" }))
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+    <div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+
+@*<div id="Upload" class="animated fadeIn">
+    @(Html.Kendo().Upload()
+                .Name("File")
+               .Async(a => a
+                   .Save("a", "b")
+                   .AutoUpload(false))
+    //.Validation(v=>v.AllowedExtensions(new string[] {".csv"}))
+
+    )
+
+</div>*@

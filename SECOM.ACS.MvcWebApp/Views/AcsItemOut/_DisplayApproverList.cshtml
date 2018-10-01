@@ -1,0 +1,159 @@
+﻿@model AcsItemOutViewModel
+@{
+    var currentUser = User.Identity.Name;
+}
+
+@if (Model.SuperiorApproveUserName == currentUser && String.IsNullOrEmpty(Model.SuperiorApprovalCode) && Model.ViewMode == RequestViewMode.Approval)
+{
+    <div class="well well-info well-sm">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayFor(m => m.SuperiorEmployee.EmployeeName, new { @class = "col-md-2 control-label" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-2"></div>
+            <div class="col-md-9">
+                @Html.KendoConfirmButton("superiorApproveButton", "check-circle", WidgetResource.Button_Approve_Text, new { @class = "k-button k-button-success k-save-approval", @data_content = MessageHelper.ConfirmSave(), @data_approval_id = Model.SuperiorApprovalID, @data_approval_code = ApprovalCode.Approve })
+                @Html.KendoConfirmButton("superiorRejectButton", "times-circle", WidgetResource.Button_Reject_Text, new { @class = "k-button k-button-danger k-save-approval", @data_content = MessageHelper.ConfirmSave(), @data_approval_id = Model.SuperiorApprovalID, @data_approval_code = ApprovalCode.Reject, data_required_reason = Html.IdFor(m => m.SuperiorRejectReason) })
+                @Html.LabelFor(m => m.SuperiorRejectReason, new { @class = "control-label" })
+                @Html.Kendo().TextBoxFor(m => m.SuperiorRejectReason).HtmlAttributes(new { @style = "width:60%", data_field = Html.DisplayNameFor(m => m.SuperiorRejectReason) })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    if (!String.IsNullOrEmpty(Model.SuperiorApprovalCode))
+    {
+        var css = Model.SuperiorApprovalCode == ApprovalCode.Approve ? "well well-success" : "well well-danger";
+        var textCss = Model.SuperiorApprovalCode == ApprovalCode.Approve ? "k-color-success" : "k-color-danger";
+        <div class="@css">
+            <div class="row">
+                @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.SuperiorEmployee.EmployeeName, new { @class = "col-md-2 control-label" })
+                </div>
+                @(Html.LabelDisplayName<ReqApproverListViewModel>("ApprovalCode", new { @class = "col-md-1 control-label" }))
+                <div class="col-md-2 control-text">
+                    <span class="@textCss">@Html.DisplayApprovalCode(Model.SuperiorApprovalCode)</span>
+                </div>
+                @Html.LabelFor(m => m.SuperiorApprovalDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.SuperiorApprovalDate)
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(Model.SuperiorRejectReason))
+            {
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    @Html.LabelFor(m => m.SuperiorRejectReason, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-6 control-text">
+                        @Html.DisplayFor(m => m.SuperiorRejectReason)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayFor(m => m.SuperiorEmployee.EmployeeName)
+            </div>
+            @(Html.LabelDisplayName<ReqApproverListViewModel>("ApprovalCode", new { @class = "col-md-1 control-label" }))
+            <div class="col-md-2 control-text">
+                <span class="k-color-primary">@Html.DisplayApprovalCode(Model.SuperiorApprovalCode)</span>
+            </div>
+        </div>
+    }
+}
+
+@if (Model.GAApproveUserName == currentUser && String.IsNullOrEmpty(Model.GAApprovalCode) && !String.IsNullOrEmpty(Model.SuperiorApprovalCode) && Model.ViewMode == RequestViewMode.Approval)
+{
+    <div class="well well-info well-sm">
+        <div class="form-group">
+            @Html.LabelFor(m => m.GAApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayFor(m => m.GAEmployee.EmployeeName, new { @class = "col-md-2 control-label" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-2"></div>
+            <div class="col-md-9">
+                @Html.KendoConfirmButton("GAApproveButton", "check-circle", WidgetResource.Button_Approve_Text, new { @class = "k-button k-button-success k-save-approval", @data_content = MessageHelper.ConfirmApprove(), @data_approval_id = Model.GAApprovalID, @data_approval_code = ApprovalCode.Approve })
+                @Html.KendoConfirmButton("GARejectButton", "times-circle", WidgetResource.Button_Reject_Text, new { @class = "k-button k-button-danger k-save-approval", @data_content = MessageHelper.ConfirmReject(), @data_approval_id = Model.GAApprovalID, @data_approval_code = ApprovalCode.Reject, data_required_reason = Html.IdFor(m => m.GARejectReason) })
+                @Html.LabelFor(m => m.GARejectReason, new { @class = "control-label" })
+                @Html.Kendo().TextBoxFor(m => m.GARejectReason).HtmlAttributes(new { @style = "width:60%", data_field = Html.DisplayNameFor(m => m.GARejectReason) })
+            </div>
+     
+        </div>
+    </div>
+}
+else
+{
+
+    if (!String.IsNullOrEmpty(Model.GAApprovalCode))
+    {
+        var css = Model.GAApprovalCode == ApprovalCode.Approve ? "well well-success" : "well well-danger";
+        var textCss = Model.GAApprovalCode == ApprovalCode.Approve ? "k-color-success" : "k-color-danger";
+        <div class="@css">
+            <div class="row">
+                @Html.LabelFor(m => m.GAApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.GAEmployee.EmployeeName, new { @class = "col-md-2 control-label" })
+                </div>
+                @(Html.LabelDisplayName<ReqApproverListViewModel>("ApprovalCode", new { @class = "col-md-1 control-label" }))
+                <div class="col-md-2 control-text">
+                    <span class="@textCss">@Html.DisplayApprovalCode(Model.GAApprovalCode)</span>
+                </div>
+                @Html.LabelFor(m => m.GAApprovalDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.GAApprovalDate)
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(Model.GARejectReason))
+            {
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    @Html.LabelFor(m => m.GARejectReason, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-6 control-text">
+                        @Html.DisplayFor(m => m.GARejectReason)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.GAApproveUserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayFor(m => m.GAEmployee.EmployeeName)
+            </div>
+            @(Html.LabelDisplayName<ReqApproverListViewModel>("ApprovalCode", new { @class = "col-md-1 control-label" }))
+            <div class="col-md-2 control-text">
+                <span class="k-color-primary">@Html.DisplayApprovalCode(Model.GAApprovalCode)</span>
+            </div>
+        </div>
+    }
+}
+
+@if (!String.IsNullOrEmpty(Model.ForceDoneBy))
+{
+    <div class="well well-info well-sm">
+        <div class="row">
+            @Html.LabelFor(m => m.ForceDoneBy, new { @class = "col-md-2 control-label" })
+            <div class="col-md-1 control-text">
+                @(Model.ForceDoneEmployee==null? Html.DisplayFor(m => m.ForceDoneBy) : Html.DisplayFor(m => m.ForceDoneEmployee.EmployeeName))
+            </div>
+            @Html.LabelFor(m => m.ForceDoneDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayDate(Model.ForceDoneDate)
+            </div>
+        </div>
+    </div>
+}

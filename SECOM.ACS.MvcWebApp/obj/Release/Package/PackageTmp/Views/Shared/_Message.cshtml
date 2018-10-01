@@ -1,0 +1,64 @@
+﻿@model MessageViewModel
+@{ 
+    var css = "alert alert-info";
+    var icon = "exclamation-circle";
+    switch (Model.MessageType)
+    {
+        case ApplicationMessageType.Success:
+            css = "alert alert-success";
+            icon = "check-circle";
+            break;
+        case ApplicationMessageType.Warning:
+            css = "alert alert-warning";
+            icon = "exclamation-circle";
+            break;
+        case ApplicationMessageType.Error:
+            css = "alert alert-danger";
+            icon = "times-circle";
+            break;
+        default:
+            css = "alert alert-info";
+            icon = "info-circle";
+            break;
+    }
+}
+<div id="message-container" class="@css">
+    <div class="title"><i class="fa fa-@icon"></i> @Model.Title</div>
+    <div class="content">
+        <p>@Model.Message</p>
+        @if (Model.MessageList.Count > 0) {
+            <ul class="message-list">
+                @foreach (var message in Model.MessageList) {
+                <li>@message</li>
+                }
+            </ul>
+        }
+    </div>
+    
+    <hr class="simple" />
+    <div class="footer">
+        KMT-IS
+    </div>
+</div>
+
+@section styles
+{
+    <style type="text/css">
+        #message-container > .title {
+            font-size: 2.4em;
+            font-weight: 700;
+            border-bottom: dashed 1px #a7a2a2;
+        }
+
+        #message-container > .content {
+            padding: 10px;
+            padding-left: 30px;
+            font-size: 24px;
+        }
+        #message-container > .footer {
+            text-align: right;
+        } 
+    </style>
+    
+}
+

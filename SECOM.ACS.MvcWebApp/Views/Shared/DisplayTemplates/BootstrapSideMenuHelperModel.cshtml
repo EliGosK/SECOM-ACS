@@ -1,0 +1,93 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+@helper  TopMenu(List<SiteMapNodeModel> nodeList)
+{
+    <nav id="side-menu">
+        <div class="login-info">
+            <span>
+                <a href="@Url.Action("Info","Account")" id="show-account" target="_blank">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span>
+                        @User.Identity.Name
+                    </span>
+                </a>
+            </span>
+        </div>
+        <ul>
+            @foreach (SiteMapNodeModel node in nodeList)
+            {
+                var visible = !node.Attributes.ContainsKey("visibility") ? "true" : (string)node.Attributes["visibility"];
+                var iconClass = !node.Attributes.ContainsKey("icon") ? "fa fa-lg fa-fw" : String.Concat("fa fa-lg fa-fw fa-", (string)node.Attributes["icon"]);
+                string url = node.IsClickable ? node.Url : "#";
+
+                if (String.Compare(visible, "false", true) == 0 )
+                {
+                    continue;
+                }
+
+                if (node.Children.Any())
+                {
+                    <li class="@Html.RouteIf(node.Controller, node.Action, "active")">
+                        <a href="@url" title="@node.Title"><i class="@iconClass"></i>&nbsp;<span class="menu-item-parent">@node.Title</span></a>
+                        @DropDownSubMenu(node.Children)
+                    </li>
+                }
+                else
+                {
+                    <li class="@Html.RouteIf(node.Controller,node.Action, "active")">
+                        <a href="@url" title="@node.Title"><i class="@iconClass"></i>&nbsp;<span class="menu-item-parent">@node.Title</span></a>
+                    </li>
+                }
+            }
+            <li class="">
+                <a href="@Url.Action("login", "account")" data-title="Confirm Sign Out?" data-action="userLogout" data-logout-msg="Are you sure you would like to sign out from system?"><i class="fa fa-lg fa-fw fa-sign-out"></i>&nbsp;<span class="menu-item-parent">Sign Out</span></a>
+            </li>
+        </ul>       
+    </nav>
+}
+
+@helper DropDownSubMenu(SiteMapNodeModelList nodeList)
+{
+    <ul class="sub-menu">
+        @foreach (SiteMapNodeModel node in nodeList)
+        {
+            var visible = !node.Attributes.ContainsKey("visibility") ? "true" : (string)node.Attributes["visibility"];
+
+            if (node.Title == "Separator")
+            {
+                <li role="separator" class="divider"></li>
+                continue;
+            }
+
+
+            if (String.Compare(visible, "false", true)==0)
+            {
+                continue;
+            }
+
+
+            var iconClass = !node.Attributes.ContainsKey("icon") ? "fa fa-lg fa-fw" : String.Concat("fa fa-lg fa-fw fa-", (string)node.Attributes["icon"]);
+            string url = node.IsClickable ? node.Url : "#";
+
+            if (node.Children.Any())
+            {
+            <li class="@Html.RouteIf(node.Controller,node.Action, "active")">
+                <a href="@url" title="@node.Title"><span class="menu-item-parent">@node.Title</span></a>
+                @DropDownSubMenu(node.Children)
+            </li>
+            }
+            else
+            {
+            <li class="@Html.RouteIf(node.Controller,node.Action, "active")">
+                <a href="@url" title="@node.Title"><span class="menu-item-parent">@node.Title</span></a>
+            </li>
+        }
+        }
+    </ul>
+}
+@TopMenu(Model.Nodes)

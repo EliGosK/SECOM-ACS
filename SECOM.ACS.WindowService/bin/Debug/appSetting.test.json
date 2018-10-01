@@ -1,0 +1,53 @@
+{
+  "ExportFileOptions": {
+    "TemplateFile": "C:\\Projects\\SECOM-ACS\\AcsShared\\acs-import-template.xlsx",
+    "TargetFileName": "acs-{0:yyyyMMdd_HHmmss}.csv",
+    "TargetFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\acs-export",
+    "DummyAccessGroup": "DUMMY",
+    "DateFormat": "dd/MM/yyyy"
+  },
+  "ImportEmployeeOptions": {
+    "CronExpressions": [ "0 30 04 * * ?", "0 02 14 * * ?" ],
+    "Enabled": true,
+    "ImportFile": "C:\\Projects\\SECOM-ACS\\AcsShared\\employee-import\\employee.xlsx",
+    "UseHeaderRow": true,
+    "User": "ACS010",
+    "EnabledBackup": true,
+    "BackupFileName": "acs-backup-{0:yyyyMMdd_HHmm}.xlsx",
+    "BackupFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\employee-backup",
+    "EnabledCreateErrorFile": false,
+    "ErrorFileName": "employee-{0:yyyyMMdd_HHmm}.xlsx",
+    "ErrorFolder": "employee-import-error",
+    "EnabledSendResultMail": false,
+    "MailTo": null
+  },
+  "updateDocumentStatusOptions": {
+    "CronExpressions": [ "0 0 1 * * ?" ],
+    "Enabled": true,
+    "DocumentTypes": 31,
+    "EnabledNotification": true,
+    "User": "ACS020"
+  },
+  "exportInterfaceFileToAccessControlOptions": {
+    "CronExpressions": [ "0 00 02 * * ?", "0 00 03 * * ?" ],
+    "Enabled": true,
+    "Transactions": null,
+    "ExportModes": 4,
+    "EffectiveDate": "2017-10-30T00:00:00+07:00"
+  },
+  "transferInterfaceFileToAccessControlOptions": {
+    "CronExpressions": [ "0 1/1 * * * ?" ],
+    "Enabled": true,
+    "SourceFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\acs-export",
+    "TargetFileName": "acs.xlsx",
+    "TargetFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\acs-shared",
+    "EnabledArchive": true,
+    "ArchiveFileName": "acs-archive-{0:yyyyMMdd_HHmm}.xlsx",
+    "ArchiveFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\acs-archive",
+    "EnabledNetworkShareAuthenticate": false,
+    "RemoteComputerName": null,
+    "UserName": null,
+    "Password": null
+  },
+  "EmailTemplateFolder": "C:\\Projects\\SECOM-ACS\\AcsShared\\emailTemplates"
+}

@@ -1,0 +1,292 @@
+﻿@{
+
+}
+<div class="select-type">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="control-label col-md-2 ">@(Html.DisplayName<ItemDataViewModel>("ItemTypeID"))</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList().Name("itemType")
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/miscs/list/itm")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+            <label class="control-label col-md-2">@(Html.DisplayName<ItemDataViewModel>("RequestType"))</label>
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect().Name("requestType")
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/systemmiscs/list/RequestType")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .AutoClose(false)
+                    .Placeholder(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">@ViewResource.Item_SearchSection_ItemName</label>
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox().Name("itemName").HtmlAttributes(new { maxlength = "50", style = "width:100%" ,})
+                    )
+            </div>
+
+            <label class="control-label col-md-2">@ViewResource.Item_SearchSection_Status</label>
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect()
+                    .Name("status")
+                    .BindTo(AcsModelHelper.GetItemStatus())
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .Placeholder(WidgetResource.AllOptions)
+                    .AutoClose(false)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="button-container">
+                    @Html.SearchButton(htmlAttributes: new { @class = "k-primary k-search" })
+                    @Html.ClearButton(htmlAttributes: new { @class = "k-button-warning k-clear" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    @(Html.Kendo().Grid<ItemDataViewModel>()
+        .Name("grid")
+            .Scrollable()
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { style = "height:500px" })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("ItemEditor")
+                .Window(w => w.Width(600)
+                .Events(ev => ev.Activate("popupEditActivate")))
+            )
+            .ToolBar(t => {
+                if (this.Context.HasPermission("MAS020", PermissionNames.Add))
+                {
+                    t.Template(Html.GridAddButton().ToHtmlString());
+                }
+            } )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate(Html.GridEditButton().ToHtmlString())
+                    .Visible(this.Context.HasPermission("MAS020", PermissionNames.Edit));
+                c.Template(t => { })
+                 .Width(50)
+                 .ClientTemplate(Html.GridDeleteButton().ToHtmlString())
+                 .Visible(this.Context.HasPermission("MAS020", PermissionNames.Delete));
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=_rowNo#").Title(WidgetResource.Grid_Column_No);
+                c.Bound(f => f.ItemTypeID)
+                    .ClientTemplate("#=data.MiscDisplay#")
+                    .Width(200);
+                c.Bound(f => f.ItemName)
+                   .Width(160);
+                c.Bound(f => f.ItemDisplayEN)
+                    .Width(200);
+                c.Bound(f => f.ItemDisplayTH)
+                    .Width(200);
+                c.Bound(f => f.RequestType)
+                    .Width(200)
+                    .ClientTemplate("#=renderRequestType(data)#");
+                c.Bound(f => f.IsConfdt)
+                    .Width(100)
+
+                    .ClientTemplate("#=renderIsConfdt(data)#");
+                c.Bound(f => f.Status)
+                    .Width(100)
+                    .ClientTemplate("#=renderStatus(data)#");
+            })
+
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("List", "Item")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+                    t.Update(r => r.Action("Update", "Item")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("Delete", "Item")
+                         .DataType("json")
+                         .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("Create", "Item")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+
+                }
+
+            )
+    .Schema(s =>
+    {
+        s.Data("Data");
+        s.Total("Total");
+        s.Errors("Errors");
+        s.Model(m =>
+        {
+            m.Id(f => f.ItemID);
+            m.Field(f => f.ItemName);
+            m.Field(f => f.ItemDisplayEN);
+            m.Field(f => f.ItemDisplayTH);
+            m.Field(f => f.Description);
+            m.Field(f => f.IsConfdt);
+            m.Field(f => f.Status).DefaultValue("1");
+        });
+    })
+    .PageSize(20)
+    .ServerFiltering(true)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .Events(e =>
+    {
+        e.RequestStart("dataSourceRequestStart");
+        e.RequestEnd("dataSourceRequestEnd");
+        e.Error("dataSourceError");
+    })
+    )
+    .Events(ev => { ev.Edit("gridEdit"); ev.DataBinding("gridBinding"); })
+
+    )
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var requestTypes = @Html.JsonSystemMisc("RequestType");        
+        var grid;
+
+        $(document).ready(function (e) {
+            uiState.register("search", [".k-button"]);
+            uiState.register('ajax', ['.k-button']);
+
+            grid = $("#grid").data("kendoGrid");
+
+            $(".k-search").on("click", function (e) {
+                e.preventDefault();
+                grid.dataSource.page(1);
+            });
+
+            $(".k-clear").on("click", function (e) {
+                e.preventDefault();
+                app.ui.clear(["#grid", "#requestType", "#itemType", "#itemName", "#status"]);
+                //app.ui.clear(["#requestType", "#itemType", "#itemName", "#status"]); // status not clear
+                //$('input[name="status"]').prop('checked', false); // clear rdo button
+                document.getElementById("rdoAll").checked = true; // check all button after clear but clear grid
+                //grid.dataSource.data([]);
+            });
+        });
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+        function gridEdit(e) {
+            var options = {
+                create: { title: "@(ViewResource.Item_PopUpSection_Add_Title)", button: { text: "@WidgetResource.Button_Add_Text" } },
+                edit: { title: "@(ViewResource.Item_PopUpSection_Edit_Title)", button: { text: "@WidgetResource.Button_Update_Text" }  },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            if (!e.model.isNew())
+            {
+                e.container.find("#ItemName").attr("readonly", "readonly");
+
+                //e.container.find("#ItemType").attr("readonly", "readonly");
+                e.container.find("#ItemTypeID").data("kendoDropDownList").enable(false);
+            }
+            if(e.model.isNew() == true){
+                e.container.find("#ItemID").attr("display","none");
+            }
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    ItemName: $("#itemName").val(),
+                    RequestType: $("#requestType").data("kendoMultiSelect").value(),
+                    ItemType: $("#itemType").data("kendoDropDownList").value(),
+                    Status: $("#status").data("kendoMultiSelect").value()
+                }
+            };
+        }
+        
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+
+        function renderRequestType(data) {
+            var values = [];
+            if (data.IsItemOut) { values.push("1"); }
+            if (data.IsItemIn) { values.push("2"); }            
+            if (data.IsPhoto) { values.push("3"); }
+
+            var names = [];
+            $.each(values, function (index, item) {
+                names.push(app.data.getName(requestTypes, item));
+            });
+            return names.join(",");
+        }
+
+        function renderStatus(data)
+        {
+            console.log(data.Status)
+            switch (data.Status)
+            {
+                case "1":
+                    return "<label class=\"label label-success\">@ModelMetadataResource.ItemStatus_Active</label>";
+                case "0":
+                    return "<label class=\"label\">@ModelMetadataResource.ItemStatus_Inactive</label>";
+                default:
+                    return data.Status;
+            }
+        }
+
+        function renderIsConfdt(data)
+        {
+            return data.IsConfdt? "<label class=\"label label-danger\">@ViewResource.Confdt_IsTrue</label>": "<label class=\"label label-primary\">@ViewResource.Confdt_IsFalse</label>";
+        }
+    </script>
+
+}

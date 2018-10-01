@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SECOM.ACS.Identity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IdentityContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Roles" EntityType="SECOM.ACS.Identity.Role" />
+    <EntitySet Name="Users" EntityType="SECOM.ACS.Identity.User" />
+    <AssociationSet Name="tbs_RoleUserMapping" Association="SECOM.ACS.Identity.tbs_RoleUserMapping">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsSystemRole" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH01" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH02" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH03" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH04" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH05" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH06" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH07" Type="Boolean" Nullable="false" />
+    <Property Name="ViewDSH08" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="SECOM.ACS.Identity.tbs_RoleUserMapping" FromRole="Role" ToRole="User" />
+    <Property Name="ViewDSH09" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+    <Property Name="LastChangePassword" Type="DateTime" Precision="3" />
+    <Property Name="LastSignedInDate" Type="DateTime" Precision="3" />
+    <Property Name="IsVerifyItemOut" Type="Boolean" Nullable="false" />
+    <Property Name="IsVerifyItemIn" Type="Boolean" Nullable="false" />
+    <Property Name="IsLending" Type="Boolean" Nullable="false" />
+    <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FactoryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Roles" Relationship="SECOM.ACS.Identity.tbs_RoleUserMapping" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="tbs_RoleUserMapping">
+    <End Type="SECOM.ACS.Identity.Role" Role="Role" Multiplicity="*" />
+    <End Type="SECOM.ACS.Identity.User" Role="User" Multiplicity="*" />
+  </Association>
+</Schema>

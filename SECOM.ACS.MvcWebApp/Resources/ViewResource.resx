@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Area_PopUpSection_Add_Title" xml:space="preserve">
+    <value>New Area</value>
+  </data>
+  <data name="Area_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Area</value>
+  </data>
+  <data name="Area_SearchSection_Factory" xml:space="preserve">
+    <value>Factory</value>
+  </data>
+  <data name="Area_SearchSection_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CardRegistration_BusinessTrip_Title" xml:space="preserve">
+    <value>Business Trip Card Registration</value>
+  </data>
+  <data name="CardRegistration_RegisterCardType" xml:space="preserve">
+    <value>Select Card Type</value>
+  </data>
+  <data name="CardRegistration_Visitor_SearchSection_Title" xml:space="preserve">
+    <value>Seacrh Visitor Request</value>
+  </data>
+  <data name="CardRegistration_Visitor_Title" xml:space="preserve">
+    <value>Visitor Card Registration</value>
+  </data>
+  <data name="Confdt_IsFalse" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Confdt_IsTrue" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Item_PopUpSection_Add_Title" xml:space="preserve">
+    <value>New Item Request</value>
+  </data>
+  <data name="Item_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Item Request</value>
+  </data>
+  <data name="Item_SearchSection_ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="Item_SearchSection_ItemType" xml:space="preserve">
+    <value>ItemType</value>
+  </data>
+  <data name="Item_SearchSection_RequestType" xml:space="preserve">
+    <value>Request Type</value>
+  </data>
+  <data name="Item_SearchSection_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Login_FormSection_Title" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Misc_GridSection_Title" xml:space="preserve">
+    <value>Miscellaneous List</value>
+  </data>
+  <data name="Misc_PopUpSection_Add_Title" xml:space="preserve">
+    <value>New Miscellaneous</value>
+  </data>
+  <data name="Misc_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Miscellaneous</value>
+  </data>
+  <data name="Misc_SearchSection_MiscType" xml:space="preserve">
+    <value>Misc Type</value>
+  </data>
+  <data name="Card_PopUpSection_Import_Title" xml:space="preserve">
+    <value>Import File  </value>
+  </data>
+  <data name="AcsPhoto_PhotoEmplyeeMustNotEqualWitnessEmployee" xml:space="preserve">
+    <value>Photo Employee must not be same Witness employee.</value>
+  </data>
+  <data name="UploadHint" xml:space="preserve">
+    <value>You can only upload &lt;strong&gt;{0}&lt;/strong&gt; files. Maximum allowed upload file size is &lt;strong&gt;{1}&lt;/strong&gt;.</value>
+  </data>
+  <data name="InquiryEmployeeList_Title" xml:space="preserve">
+    <value>Employee List</value>
+  </data>
+  <data name="Card_PopUpSection_ImportSuccess" xml:space="preserve">
+    <value>Import Card successfully.</value>
+  </data>
+  <data name="EmployeeEntry_Information_Title" xml:space="preserve">
+    <value>Employee Inofrmation</value>
+  </data>
+  <data name="AcsPhoto_GASection_Title" xml:space="preserve">
+    <value>Return to GA</value>
+  </data>
+  <data name="ApprovalSection_Title" xml:space="preserve">
+    <value>Approval</value>
+  </data>
+  <data name="UserGroup_Title" xml:space="preserve">
+    <value>User Groups</value>
+  </data>
+  <data name="UserGroup_PopUpSection_Add_Title" xml:space="preserve">
+    <value>Add User Group</value>
+  </data>
+  <data name="Area_PopUpSection_AreaApprover_Department_Title" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Area_PopUpSection_AreaApprover_Position_Title" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Area_PopUpSection_AreaApprover_Title" xml:space="preserve">
+    <value>Area Approver</value>
+  </data>
+  <data name="Area_AreaApprover_Substituter1_Title" xml:space="preserve">
+    <value>Substituter 1</value>
+  </data>
+  <data name="Area_AreaApprover_Substituter2_Title" xml:space="preserve">
+    <value>Substituter 2</value>
+  </data>
+  <data name="AcsEmployee_BusinessTripSection_Title" xml:space="preserve">
+    <value>Employee List</value>
+  </data>
+  <data name="AcsEmployee_EmployeeListSection_Title" xml:space="preserve">
+    <value>Employee List</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="AcsEmployee_PopUpSection_ImportSuccess" xml:space="preserve">
+    <value>Import Employee successfully.</value>
+  </data>
+  <data name="AcsEmployee_PopUpSection_Import_Title" xml:space="preserve">
+    <value>Import Employee</value>
+  </data>
+  <data name="ImportData_Error_Title" xml:space="preserve">
+    <value>Total error {0} records</value>
+  </data>
+  <data name="ImportData_Success_Title" xml:space="preserve">
+    <value>Total data {0} records</value>
+  </data>
+  <data name="RequestInquriy_RequestList_Title" xml:space="preserve">
+    <value>RequestList</value>
+  </data>
+  <data name="AcsEmployee_PopUpSection_EmployeeList_Add_Title" xml:space="preserve">
+    <value>New Employee</value>
+  </data>
+  <data name="Card_PopUpSection_Add_Title" xml:space="preserve">
+    <value>New Card</value>
+  </data>
+  <data name="Card_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Card</value>
+  </data>
+  <data name="Area_AreaApprover_Approver_Title" xml:space="preserve">
+    <value>Approver</value>
+  </data>
+  <data name="NoteSection_Title" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Dashboard_ItemIn_Title" xml:space="preserve">
+    <value>Item In Request waiting to Confirm Quantity</value>
+  </data>
+  <data name="Dashboard_ItemOut_Title" xml:space="preserve">
+    <value>Item Out Request waiting to Confirm Quantity</value>
+  </data>
+  <data name="Dashboard_RequestInProgress_Title" xml:space="preserve">
+    <value>Request in Progress</value>
+  </data>
+  <data name="Dashboard_RequestWaitingToApprover_Title" xml:space="preserve">
+    <value>Request waiting to Approver</value>
+  </data>
+  <data name="Dashboard_RequestWaitToAcknowledge_Title" xml:space="preserve">
+    <value>Request waiting to Acknowledge</value>
+  </data>
+  <data name="Dashboard_RequestWaitToInputLending_Title" xml:space="preserve">
+    <value>Request waiting to Input Lending Information</value>
+  </data>
+  <data name="Dashboard_SecurityRoom_Title" xml:space="preserve">
+    <value>Security Room</value>
+  </data>
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>DashBoard</value>
+  </data>
+  <data name="Dashboard_WitnessRequest_Title" xml:space="preserve">
+    <value>Witness Request</value>
+  </data>
+  <data name="AcsVisitor_PopUpSection_ImportSuccess" xml:space="preserve">
+    <value>Import Visitor successfully.</value>
+  </data>
+  <data name="AcsVisitor_PopUpSection_Import_Title" xml:space="preserve">
+    <value>Import Visitor</value>
+  </data>
+  <data name="AcsVisitor_VisitorListSection_Title" xml:space="preserve">
+    <value>Visitor List</value>
+  </data>
+  <data name="AcsVisitor_PopUpSection_Add_Title" xml:space="preserve">
+    <value>Add Visitor</value>
+  </data>
+  <data name="AcsVisitor_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Visitor</value>
+  </data>
+  <data name="Map_Title" xml:space="preserve">
+    <value>View Map</value>
+  </data>
+  <data name="AcsVisitor_TransactionListSection_Title" xml:space="preserve">
+    <value>Transaction List</value>
+  </data>
+  <data name="Confirmtion_Title" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="AcsItemOut_PopUpSection_Add_Title" xml:space="preserve">
+    <value>Add Item Out</value>
+  </data>
+  <data name="AcsItemOut_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Item Out</value>
+  </data>
+  <data name="AcsItemOut_ItemList_Title" xml:space="preserve">
+    <value>Item List</value>
+  </data>
+  <data name="AreaMapping_Title" xml:space="preserve">
+    <value>Area Mapping</value>
+  </data>
+  <data name="AcsItemIn_ItemList_Title" xml:space="preserve">
+    <value>Item List</value>
+  </data>
+  <data name="AcsItemIn_PopUpSection_Add_Title" xml:space="preserve">
+    <value>Add Item In</value>
+  </data>
+  <data name="AcsItemIn_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit Item In</value>
+  </data>
+  <data name="Account_Profile_Title" xml:space="preserve">
+    <value>Account Info</value>
+  </data>
+  <data name="ChangePassword_Title" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="AcsVIP_LatestRequest" xml:space="preserve">
+    <value>Lastest Request:</value>
+  </data>
+  <data name="AcsVIP_Title" xml:space="preserve">
+    <value>VIP Card Registration List</value>
+  </data>
+  <data name="ReceiveReturn_RequesterName" xml:space="preserve">
+    <value>Request Name</value>
+  </data>
+  <data name="ReceiveReturn_BusinessTrip_Title" xml:space="preserve">
+    <value>Business Trip Card Registration</value>
+  </data>
+  <data name="ReceiveReturn_RegisterCardType" xml:space="preserve">
+    <value>Select Card Type</value>
+  </data>
+  <data name="ReceiveReturn_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="ReceiveReturn_EntryDate" xml:space="preserve">
+    <value>Entry Date</value>
+  </data>
+  <data name="ReceiveReturn_Factory" xml:space="preserve">
+    <value>Factory</value>
+  </data>
+  <data name="ReceiveReturn_Visitor_Title" xml:space="preserve">
+    <value>Visitor Card Registration</value>
+  </data>
+  <data name="ReceiveReturn_VisitorName" xml:space="preserve">
+    <value>Visitor Name</value>
+  </data>
+  <data name="CardRegistration_Visitor_PopupSection_Title" xml:space="preserve">
+    <value>Edit Visitor Card Registration</value>
+  </data>
+  <data name="CardRegistration_BusinessEmployeeName" xml:space="preserve">
+    <value>Business Employee Name</value>
+  </data>
+  <data name="CardRegistration_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="CardRegistration_EntryDate" xml:space="preserve">
+    <value>Entry Date</value>
+  </data>
+  <data name="CardRegistration_RequesterName" xml:space="preserve">
+    <value>Requester Name</value>
+  </data>
+  <data name="CardRegistration_VisitorName" xml:space="preserve">
+    <value>Visitor Name</value>
+  </data>
+  <data name="ReceiveReturn_BusinessEmployeeName" xml:space="preserve">
+    <value>Business Employee Name</value>
+  </data>
+  <data name="ReceiveReturn_BusinessTrip_PopupSection_Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ReceiveReturn_Visitor_PopupSection_Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Misc_SearchSection_MiscStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserGroup_ListSection_Title" xml:space="preserve">
+    <value>User Role List</value>
+  </data>
+  <data name="AcsItemOutDetailIsRequire" xml:space="preserve">
+    <value>Item List is required</value>
+  </data>
+  <data name="AcsEmployeeDetailRequired" xml:space="preserve">
+    <value>Employee List is required</value>
+  </data>
+  <data name="Asset_Code" xml:space="preserve">
+    <value>Asset Code</value>
+  </data>
+  <data name="UserGroup_PopUpSection_Edit_Title" xml:space="preserve">
+    <value>Edit User Group</value>
+  </data>
+  <data name="Acknowledge_Status_Title" xml:space="preserve">
+    <value>Status</value>
+  </data>
+</root>

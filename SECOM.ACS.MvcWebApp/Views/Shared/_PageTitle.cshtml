@@ -1,0 +1,20 @@
+﻿@{ 
+    var currentNode = MvcSiteMapProvider.SiteMaps.Current.CurrentNode;
+    var isRootNode = currentNode!=null && currentNode.RootNode.Key == currentNode.Key;
+    var pageTitle = String.IsNullOrEmpty(ViewBag.PageTitle) ? (currentNode == null ? "" : currentNode.Title) : ViewBag.PageTitle;
+    var iconClass = String.IsNullOrEmpty(ViewBag.PageIcon) ? "fa fa-window-restore" : ViewBag.PageIcon;
+    if (currentNode != null && currentNode.Attributes.ContainsKey("icon"))
+    {
+        iconClass =  "fa fa-" + (string)currentNode.Attributes["icon"];
+    }
+    
+}
+
+@if (!String.IsNullOrEmpty(pageTitle) && !isRootNode)
+{
+    <div class="page-title">
+        <h1>
+            <i class="@iconClass"></i> @pageTitle
+        </h1>
+    </div>
+}

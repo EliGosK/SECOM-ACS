@@ -1,0 +1,380 @@
+﻿@model EmployeeInformationViewModel
+@using Vereyon.Web;
+
+@Html.RenderFlashMessages()
+<h2><i class="fa fa-info-circle"></i> @ViewResource.EmployeeEntry_Information_Title</h2>
+@using (Html.BeginForm("Edit", "Employee", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.EmployeeID)
+    @Html.HiddenFor(m => m.CardID)
+    <div class="well well-sm">
+        <div class="row">
+            @(Html.LabelFor(m => m.EmployeeID, new { @class = "col-md-2 control-label" }))
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.EmployeeID)
+            </div>
+            @(Html.LabelFor(m => m.CardID, new { @class = "col-md-2 control-label" }))
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.CardID)
+            </div>
+        </div>
+        @*-------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            @Html.LabelFor(m => m.EmployeeName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.EmployeeName)
+            </div>
+            @Html.LabelFor(m => m.Department, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.Department)
+            </div>
+        </div>
+        @*-------------------------------------------------------------------------------------------------------*@
+        <div class="form-group">
+            @Html.LabelFor(m => m.Position, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.Position)
+            </div>
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-4 control-text">
+                @Html.DisplayFor(m => m.Email)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <ul class="list-unstyled list-inline">
+                    <li>@Html.Kendo().CheckBoxFor(m => m.IsLending).HtmlAttributes(new { @data_default = Model.IsLending })</li>
+                    <li style=@(Model.IsVerifyItemIn ? "display:inline-block" : "display:none")><i class="fa fa-check-circle"></i> @Html.LabelFor(m => m.IsVerifyItemIn)</li>
+                    <li style=@(Model.IsVerifyItemOut ? "display:inline-block" : "display:none")><i class="fa fa-check-circle"></i> @Html.LabelFor(m => m.IsVerifyItemOut)</li>
+                </ul>
+            </div>
+        </div>
+        @if (ViewContext.Controller.HasPermission("MAS051", PermissionNames.ResetPassword))
+        {
+            <div class="row">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.KendoConfirmButton("resetPasswordButton", "key", WidgetResource.Button_ResetPassword_Text, new { @class = "k-button-warning", @data_title = ViewResource.Confirmtion_Title, @data_employee_id = Model.EmployeeID, @data_content = MessageResource.ConfirmResetPassword })
+                </div>
+            </div>
+        }
+    </div>
+
+    if (!String.IsNullOrEmpty(Model.UserName))
+    {
+        @Html.Partial("_UserGroup", @Model)
+        @Html.HiddenFor(m => m.UserGroups)
+    }
+    else
+    {
+        <div class="alert alert-warning k-text-lg">
+            @MessageResource.CouldNotUpdateUserRoleMappingWhenUserNameNotFound
+        </div>
+    }
+
+    if (!String.IsNullOrEmpty(Model.CardID))
+    {
+        <div style="margin-top:10px"></div>
+        @Html.Partial("_AreaMapping", @Model)
+        @Html.HiddenFor(m => m.Areas)
+    }
+    else
+    {
+        <div class="alert alert-warning k-text-lg">
+            @MessageResource.CouldNotUpdateUserAreaMappingWhenCardIDNotFound
+        </div>
+    }
+
+    if (!String.IsNullOrEmpty(Model.CardID) && !String.IsNullOrEmpty(Model.UserName))
+    {
+        <div class="button-container">
+            <div class="text-center">
+                @Html.KendoConfirmButton("saveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-primary", @data_title = ViewResource.Confirmtion_Title, @data_content = MessageHelper.ConfirmSave() })
+                @Html.KendoConfirmButton("resetButton", "times-circle", WidgetResource.Button_Reset_Text, new { @class = "k-button-warning", @data_title = ViewResource.Confirmtion_Title, @data_content = MessageHelper.ConfirmReset() })
+            </div>
+        </div>
+        @Html.KendoValidationSummary()
+    }
+}
+@section styles{
+    <style type="text/css">
+        #k-validation-summary {
+            margin: 10px;
+        }
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+                    var uiState = new AppUIState();
+                    var msUserGroups, msAreaMappings;
+                    var areaGrid, roleGrid;
+                    var validator;
+
+                    $(document).ready(function () {
+                        app.initPage();
+                        uiState.register("grid", [".k-button"]);
+                        uiState.register("ajax", [".k-button"]);
+                        uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text" }, ".k-button"]);
+
+                        msUserGroups = $("#userGroups").data("kendoMultiSelect");
+                        msAreaMappings = $("#areaMappings").data("kendoMultiSelect");
+                        areaGrid = $("#areaGrid").data("kendoGrid");
+                        roleGrid = $("#roleGrid").data("kendoGrid");
+
+                        validator = $("form").kendoValidator({
+                            rules: {
+                                requiredUserGroups: function (input) {
+                                    if (roleGrid && input.is("[name=@Html.IdFor(m=>m.UserGroups)]")) {
+                                        return roleGrid.dataSource.data().length > 0;
+                                    }
+                                    return true;
+                                },
+                                requiredArea: function (input) {
+                                    if (areaGrid && input.is("[name=@Html.IdFor(m=>m.Areas)]")) {
+                                        return areaGrid.dataSource.data().length > 0;
+                                    }
+                                    return true;
+                                },
+                                @*requireMainArea: function (input) {
+                                    if (areaGrid && input.is("[name=@Html.IdFor(m=>m.Areas)]")) {
+                                        var result = 0;
+                                        $.each(areaGrid.dataSource.data().toJSON(), function (index, item) {
+                                            result += item.IsMainArea ? 1 : 0;
+                                        });
+                                        return result > 0;
+                                    }
+                                    return true;
+                                }*@
+                            },
+                            messages: {
+                                requiredUserGroups: kendo.format(app.messages.validators.required, "User Group"),
+                                requiredArea: kendo.format(app.messages.validators.required, "Area Mapping"),
+                                //requireMainArea: "Main area is required. Please choose main area from area mapping list.",
+                            },
+                            validateOnBlur: false,
+                            validate: function (e) {
+                                app.ui.showValidateSummary(this.errors());
+                            }
+                        }).data("kendoValidator");
+
+                        $("#saveButton")
+                            .on("validating", function (sender, args) {
+                                args.isValid = validator.validate();
+                            })
+                            .on("openDialog", function (sender, e) {
+                                e.buttons.yes.action = function (sender, args) {
+                                    $("#@Html.IdFor(m=>m.UserGroups)").val(kendo.stringify(roleGrid ? roleGrid.dataSource.data().toJSON() : []));
+                                    $("#@Html.IdFor(m=>m.Areas)").val(kendo.stringify(areaGrid ? areaGrid.dataSource.data().toJSON() : []));
+                                    uiState.busy("save", true);
+                                    $("form").submit();
+                                }
+                            });
+
+                        $("#resetPasswordButton")
+                           .on("openDialog", function (sender, e) {
+                               e.buttons.yes.action = function (sender, args) {
+                                   uiState.busy("ajax", true);
+                                   var employeeId = $("#resetPasswordButton").data("employee-id");
+                                   $.ajax({
+                                       url: "@Url.Action("ResetPassword")",
+                                       data: { "employeeId": employeeId },
+                                       type: "POST",
+                                       success: function (data, status, xhr) {
+                                           app.ui.handleAjaxSuccess(data, status, xhr);
+                                       },
+                                       error: function (xhr, status, error) {
+                                           app.ui.handleAjaxError(xhr, status, error);
+                                       },
+                                       complete: function () {
+                                           uiState.busy("ajax", false);
+                                       }
+                                   });
+                               }
+                           });
+
+
+
+
+                        $("#resetButton").on("openDialog", function (sender, e) {
+                            e.buttons.yes.action = function (sender, args) {
+                                uiState.busy("ajax", true);
+
+                                $.ajax({
+                                    url: "@Url.Action("Reset", "Employee")",
+                                    type: "POST",
+                                    data: app.addAntiForgeryToken({ tempDataId: ["@Model.UserGroupDataTempId", "@Model.AreaMappingDataTempId"] }),
+                                    success: function (data, status, xhr) {
+                                        //app.ui.handleAjaxSuccess(data, status, xhr);
+                                        if (roleGrid) { roleGrid.dataSource.page(1); }
+                                        if (areaGrid) { areaGrid.dataSource.page(1); }
+                                        $("#@Html.IdFor(m=>m.IsLending)").prop("checked", $("#@Html.IdFor(m=>m.IsLending)").data("default"));
+                                    },
+                                    error: function (xhr, status, error) {
+                                        app.ui.handleAjaxError(xhr, status, error);
+                                    },
+                                    complete: function () {
+                                        uiState.busy("ajax", false);
+                                    }
+                                });
+                            }
+                        });
+
+                        $(".k-usergroup-add").on("click", function (e) {
+                            e.preventDefault();
+                            uiState.busy('ajax', true);
+                            var data = {
+                                "roles": msUserGroups.value() || []
+                            };
+                            $.ajax({
+                                url: "@Url.Action("CreateTempUserGroup", "Employee",new { tempDataId = Model.UserGroupDataTempId })",
+                                data: app.addAntiForgeryToken(data),
+                                type: "POST",
+                                dataType: "json",
+                                success: function (data, status, xhr) {
+                                    //app.ui.handleAjaxSuccess(data, status, xhr);
+                                    // Reload grid
+                                    roleGrid.dataSource.page(1);
+                                },
+                                error: function (xhr, status, error) {
+                                    app.ui.handleAjaxError(xhr, status, error);
+                                },
+                                complete: function () {
+                                    uiState.busy('ajax', false);
+                                }
+                            })
+                        });
+
+                        $(".k-area-add").on("click", function (e) {
+                            e.preventDefault();
+                            uiState.busy('ajax', true);
+                            var data = {
+                                "areas": msAreaMappings.value() || []
+                            };
+                            $.ajax({
+                                url: "@Url.Action("CreateTempAreaMapping", "Employee",new { tempDataId = Model.AreaMappingDataTempId })",
+                                data: app.addAntiForgeryToken(data),
+                                type: "POST",
+                                dataType: "json",
+                                success: function (data, status, xhr) {
+                                    //app.ui.handleAjaxSuccess(data, status, xhr);
+                                    areaGrid.dataSource.page(1);
+                                },
+                                error: function (xhr, status, error) {
+                                    app.ui.handleAjaxError(xhr, status, error);
+                                },
+                                complete: function () {
+                                    uiState.busy('ajax', false);
+                                }
+                            })
+                        });
+
+                        if (roleGrid) { roleGrid.dataSource.read(); }
+                        if (areaGrid) { areaGrid.dataSource.read(); }
+                    });
+
+                    function gridDataBinding(e) {
+                        app.ui.initGridRowNo(this);
+                    }
+
+                    function dataSourceRequestStart(e) {
+                        uiState.busy('grid', true);
+                    }
+
+                    function userGroupGridDataBound(e) {
+                        msUserGroups.dataSource.read();
+                    }
+
+                    function areaGridDataBound(e) {
+
+                        msAreaMappings.dataSource.read();
+
+                        $(".main-area-cell").bind("click", function (e) {
+                            var dataRow = areaGrid.dataItem($(this).closest("tr"));
+                            if (!dataRow) { return; }
+                            $.each(areaGrid.dataSource.data(), function (index, item) {
+                                if (item.AreaID !== dataRow.AreaID) {
+                                    item.IsMainArea = false;
+                                }
+                            });
+                            dataRow.IsMainArea = !dataRow.IsMainArea;
+                            areaGrid.refresh();
+                            console.log(areaGrid.dataSource.data().toJSON());
+                        });
+                    }
+
+                    function dataSourceRequestEnd(e) {
+                        uiState.busy('grid', false);
+                        //app.ui.handleDataSourceRequestEnd(e);
+                    }
+
+                    function dataSourceError(e) {
+                        var h = app.ui.handleDataSourceError(e);
+                        $("#k-validation-summary").empty();
+                        if (h.handled) {
+                            $("#k-validation-summary").show().html(h.message);
+                        }
+                    }
+
+                    function getSelectedUserGroups() {
+                        var values = [];
+                        $.each(roleGrid.dataSource.data().toJSON(), function (index, item) {
+                            values.push(item.RoleID);
+                        });
+                        return { "roles": values };
+                    }
+
+                    function getSelectedAreas() {
+                        var values = [];
+                        $.each(areaGrid.dataSource.data().toJSON(), function (index, item) {
+                            values.push(item.AreaID);
+                        });
+                        return { "areas": values };
+                    }
+
+                    function renderMainArea(data) {
+                        var id = "main-area-" + data.AreaID;
+                        return data.IsMainArea ? '<input id="' + id + '" type="checkbox" class="k-checkbox" checked="checked"><label class="k-checkbox-label" for="' + id + '"></label>' : '<input id="' + id + '" type="checkbox" class="k-checkbox"><label class="k-checkbox-label" for="' + id + '"></label>';
+                    }
+
+                    function userGroupsChange(e) { updateUIState(); }
+                    function areaMappingsChange(e) { updateUIState(); }
+
+                    function updateUIState() {
+                        setTimeout(function () {
+                            if (msUserGroups && msUserGroups.value().length == 0)
+                                $("#addUserGroupButton").attr("disabled", "disabled").addClass('k-state-disabled');
+                            else
+                                $("#addUserGroupButton").removeAttr("disabled").removeClass('k-state-disabled');
+
+                            if (msAreaMappings && msAreaMappings.value().length == 0)
+                                $("#addAreaButton").attr("disabled", "disabled").addClass('k-state-disabled');
+                            else
+                                $("#addAreaButton").removeAttr("disabled").removeClass('k-state-disabled');
+                        }, 100);
+
+                    }
+
+                    function userGroupsDataBound(e) {
+                        msUserGroups.value([]);
+                        updateUIState();
+                    }
+
+                    function areaMappingsDataBound(e) {
+                        msAreaMappings.value([]);
+                        updateUIState();
+                    }
+
+                    function changePassword(data) {
+                        $.ajax({
+                            url: "@Url.Action("ChangePassword")",
+                            type: "POST",
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            }
+                        });
+                    }
+    </script>
+}

@@ -1,0 +1,12 @@
+﻿@model object
+
+@(Html.Kendo().DropDownListFor(model => model)
+    .BindTo(new string[] { "MTN","VENDOR" })
+    .MinLength(2)
+    .AutoBind(true)
+    .Filter(FilterType.StartsWith)
+    .HtmlAttributes(new { @style= "width:160px" })
+)
+
+
+    

@@ -1,0 +1,373 @@
+﻿@model  AcsItemInViewModel
+@using Vereyon.Web
+@{
+    var currentUser = User.Identity.Name;
+    var areaApprovalFormat = ViewResource.Area + " ({0}: {1})";
+    var displayArea = String.Format(areaApprovalFormat, AcsModelHelper.GetFactory(Model.Area.FactoryCode), ModelLocalizeManager.GetValue( Model.Area,"AreaDisplay"));
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+    var showActualColumns = Model.AllowForActualReturnDate(User);
+    var dateFormat = AcsModelHelper.GetDateFormat();
+}
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("Create", "RequestItemIn", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ReqNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.ReqNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text"> @Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.RequestEmployeeName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-3 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployeeDepartmentName, new { @class = "col-md-1 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate, dateFormat)
+                </div>
+               
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.TakeInName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.TakeInName)
+                </div>
+                @Html.LabelFor(m => m.Company, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.Company)
+                </div>
+                @Html.LabelFor(m => m.DeptName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.DeptName)
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.TakeInDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.TakeInDate, dateFormat)
+                </div>
+                @Html.LabelFor(m => m.AreaID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFactory(Model.Area.FactoryCode): @Html.DisplayLocalize(Model.Area, "AreaDisplay")
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayLocalize(Model.Purpose, "MiscDisplay")</label>
+                @if (!String.IsNullOrEmpty(Model.OtherPurpose))
+                {
+                    @Html.LabelFor(m => m.OtherPurpose, new { @class = "col-md-2 control-label" })
+                    <label class="col-md-4 control-text">@Model.OtherPurpose</label>
+                }
+            </div>
+           
+        </div>
+
+        <h2><i class="fa fa-th-list"></i> @ViewResource.AcsItemIn_ItemList_Title</h2>
+        <div class="row">
+            <div class="grid-container col-sm-12">
+                @(Html.Kendo().Grid<AcsItemInDetailViewModel>()
+                    .Name("itemGrid")
+                    .Scrollable()
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(60)
+                    .Title(WidgetResource.Grid_Column_No)
+                    .HtmlAttributes(new { @class = "text-right" })
+                    .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.ItemTypeName)
+                .Width(100);
+                c.Bound(f => f.ItemName)
+                .Width(150);
+                c.Bound(f => f.Description)
+                .Width(280);
+                c.Bound(f => f.Confidential)
+                    .Width(100)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .ClientTemplate("#=renderConfidential(data)#");
+
+                c.Bound(f => f.RequestItemQty)
+                    .Width(120)
+                    .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.PlanReturnDate)
+               .Width(140)
+               .Format(gridDateFormat)
+               .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.ActualTakeInQty)
+                                 .Width(120)
+
+                                 .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.ActualReturnQty)
+                    .Width(120)
+
+                    .HtmlAttributes(new { @class = "text-right" });
+
+                c.Bound(f => f.ActualReturnDate)
+                  .Format(gridDateFormat)
+                  .Width(100)
+
+                  .HtmlAttributes(new { @class = "text-center" });
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListItemInDetails", "AcsItemIn", new { reqNo = Model.ReqNo })
+                        .Type(HttpVerbs.Post)
+                        .DataType("json"));
+                }
+            )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.DetailID);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+                )
+                .Events(ev => { ev.DataBinding("gridBinding"); })
+                .AutoBind(true)
+                )
+            </div>
+        </div>
+        <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+     <div class="well well-sm form-horizontal">
+         @{
+             Model.ViewMode = RequestViewMode.Approval;
+             Html.RenderPartial("_DisplayApproverList", Model);
+         }
+         
+     </div>
+
+    <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+        <div class="well well-sm">
+            <div style="padding:5px">
+                @Html.DisplayHtmlFor(m => m.Note)
+            </div>
+        </div>
+
+        <div class="text-center">
+            <div class="button-container">
+                @if (ViewContext.Controller.HasPermission("ACS050", PermissionNames.Edit))
+                {
+                @Html.KendoActionLink("editLink", "edit", WidgetResource.Button_Edit_Text, Url.Action("Edit", new { id = Model.ReqNo }), new { @class = "k-primary" })
+                }
+                @if (Model.AllowCancelRequest(User))
+                {
+                    @Html.KendoConfirmButton("cancelRequestButton", "times-circle", WidgetResource.Button_CancelRequest_Text, new { @class = "k-button-danger k-cancel-request", data_content = MessageHelper.ConfirmCancelRequest() })
+                }
+
+                @if (Model.AllowForceDone(User))
+                {
+                    @Html.ConfirmButton("doneButton", "<i class=\"fa fa-times-circle\"></i> " + WidgetResource.Button_ForceDone_Text, new { @class = "k-button k-button-success k-force-done", data_content = MessageHelper.ConfirmForceDone() })
+                }
+
+                @if (ViewContext.Controller.HasPermission("ACS050", PermissionNames.Add))
+                {
+                    @Html.KendoActionLink("duplicateLink", "copy", WidgetResource.Button_Duplicate_Text, Url.Action("Duplicate", new { id = Model.ReqNo }), new { @class = "k-button-warning k-duplicate", target = "_blank" })
+                }
+            </div>
+        </div>
+    }
+</div>
+@Html.ValidationSummary()
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        @*var itemTypes = @Html.Raw(Json.Encode(ItemType.GetList()));*@
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register('ajax', ['.k-button']);
+            validator = $("form").kendoValidator({
+                rules: {
+                    requiredRejectReason: function (input) {
+                        return input.val() !== "";
+                    }
+                },
+                messages: {
+                    requiredRejectReason: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    }
+                },
+                validateOnBlur: false
+            }).data("kendoValidator");
+
+
+            $("#ackButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    $(".k-validation-summary").hide();
+                    uiState.busy("ajax", true);
+                    $.ajax({
+                        url: "@Url.Action("Acknowledge",new { id = Model.ReqNo })",
+                        type: "POST",
+                    data: app.addAntiForgeryToken(),
+                    success: function (data, status, xhr) {
+                        app.ui.handleAjaxSuccess(data, status, xhr);
+                        window.location = "@Url.Action("Detail",new { id = Model.ReqNo })";
+                    },
+                    error: function (xhr, status, error) {
+                        var message = app.ui.handleAjaxError(xhr, status, error);
+                        showMessage(message);
+                    },
+                    complete: function () {
+                        uiState.busy("ajax", false);
+                    }
+                });
+            };
+        });
+
+            $("#cancelRequestButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    $(".k-validation-summary").hide();
+                    uiState.busy("cancelRequest", true);
+                    var data = {
+                        reqNo: "@Model.ReqNo"
+
+                    };
+                    $.ajax({
+                        url: "@Url.Action("CancelRequest", "AcsItemIn")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken(data),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            window.location = "@Url.Action("Detail",new { id = Model.ReqNo })";
+                        },
+                        error: function (xhr, status, error) {
+                            var message = app.ui.handleAjaxError(xhr, status, error);
+                            showMessage(message);
+                        },
+                        complete: function () {
+                            uiState.busy("cancelRequest", false);
+                        }
+                    });
+                };
+        });
+
+
+            $("#doneButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    $(".k-validation-summary").hide();
+                    uiState.busy("ajax", true);
+                    $.ajax({
+                        url: "@Url.Action("ForceDone",new { id = Model.ReqNo })",
+                        type: "POST",
+                    data: app.addAntiForgeryToken(),
+                    success: function (data, status, xhr) {
+                        app.ui.handleAjaxSuccess(data, status, xhr);
+                        window.location = "@Url.Action("Detail",new { id = Model.ReqNo })";
+                    },
+                    error: function () {
+                        var message = app.ui.handleAjaxError(xhr, status, error);
+                        showMessage(message);
+                    },
+                    complete: function () {
+                        uiState.busy("ajax", false);
+                    }
+                });
+            }
+            });
+
+
+            $(".k-save-approval")
+                .on("validating", function (sender, args, elem) {
+                    validator.hideMessages();
+                    var input = $(elem).data("required-reason");
+                    if (input)
+                        args.isValid = validator.validateInput("#" + input);
+                })
+                .on("openDialog", function (sender, args,elem) {
+                    args.buttons.yes.action = function () {
+                        var data = {
+                            approvalID: $(elem).data("approval-id"),
+                            requestNo: "@Model.ReqNo",
+                            approvalCode: $(elem).data("approval-code"),
+                            rejectReason: $(elem).data("approval-code") =="@ApprovalCode.Reject"? $("#" + $(elem).data("required-reason")).val()||"" :""
+                        };
+                        $(".k-validation-summary").hide();
+                        uiState.busy("approval", true);
+                        $.ajax({
+                            url: "@Url.Action("Approval")",
+                            type: "POST",
+                        data: app.addAntiForgeryToken(data),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            window.location =  "@Url.Action("Detail",new { id = Model.ReqNo })";
+                        },
+                        error: function (xhr, status, error) {
+                            var message = app.ui.handleAjaxError(xhr, status, error);
+                            showMessage(message);
+                        },
+                        complete: function () {
+                            uiState.busy("approval", false);
+                        }
+                    });
+                };
+        });
+
+
+        });
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+
+        function getItemTypeName(data) {
+            return app.data.getName(itemTypes, data.ItemType);
+        }
+
+        function renderConfidential(data) {
+            return data.Confidential ? "<label class=\"label label-md label-primary\">@ViewResource.Confdt_IsTrue</label>" : "<label>@ViewResource.Confdt_IsFalse</label>";
+        }
+
+        function showMessage(message) {
+            $(".k-validation-summary").show().html(message);
+        }
+    </script>
+}

@@ -1,0 +1,72 @@
+﻿@model AcsVisitorDetailViewModel
+<div class="k-edit-form-container">
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.VerifyTypeID)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().DropDownListFor(m => m.VerifyTypeID)
+            .DataSource(ds=>ds.Read(r=>r.Url("/api/miscs/list/vrf")))
+            .DataTextField("Name")
+            .DataValueField("Value")
+            .OptionLabel(new { Name = WidgetResource.List_NA_Options, Value = 0 })
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.VerifyTypeID) })
+        )
+        @Html.KendoValidationMessageFor(m => m.VerifyNo)
+    </div>
+    <label class="k-edit-label k-text-bold k-verifyno-field">@Html.LabelRequiredHintFor(m => m.VerifyNo)</label>
+    <div class="k-edit-field k-verifyno-field">
+        @(Html.Kendo().TextBoxFor(m => m.VerifyNo)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.VerifyNo), @maxlength = 50 })
+        )
+        @Html.KendoValidationMessageFor(m => m.VerifyNo)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.VisitorName)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.VisitorName)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.VisitorName),  @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.VerifyNo)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.Company)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Company)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Company), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.VerifyNo)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.DepartmentName)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.DepartmentName)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.DepartmentName), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.VerifyNo)
+    </div>
+
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.ItemInOut)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.ItemInOut)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.ItemInOut), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.ItemInOut)
+    </div>
+
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.Photographing)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Photographing)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Photographing), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Photographing)
+    </div>
+
+    <label class="k-edit-label k-text-bold">@Html.LabelRequiredHintFor(m => m.Description)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Description)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Description), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+
+
+
+
+

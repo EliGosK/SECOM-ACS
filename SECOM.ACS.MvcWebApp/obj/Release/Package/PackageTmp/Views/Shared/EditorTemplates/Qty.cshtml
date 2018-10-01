@@ -1,0 +1,11 @@
+﻿@model int?
+
+@(Html.Kendo().NumericTextBoxFor(m => m)
+    .Spinners(false)
+    .Format("0")
+    .Decimals(0)
+    .RestrictDecimals(true)
+    .Min(0)
+    .Max(999)
+    .HtmlAttributes(new { @min = 0, @max=999 })
+)

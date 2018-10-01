@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6244D808-BF55-4483-BD15-D938604E52C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSI</RootNamespace>
+    <AssemblyName>CSI.ComponentModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Migrate|AnyCPU'">
+    <OutputPath>bin\Release_Migrate\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\ObjectExtension.cs" />
+    <Compile Include="ComponentModel\EventArgs\MessageEventArgs.cs" />
+    <Compile Include="ComponentModel\ISearchCriteria.cs" />
+    <Compile Include="ComponentModel\DuplicateDataException.cs" />
+    <Compile Include="InteropServices\Impersonate.cs" />
+    <Compile Include="Localization\ModelLocalizeManager.cs" />
+    <Compile Include="Localization\LocalizePropertyAttribute.cs" />
+    <Compile Include="ComponentModel\ObjectResult.cs" />
+    <Compile Include="ComponentModel\ObjectResults.cs" />
+    <Compile Include="ComponentModel\NameValueOption.cs" />
+    <Compile Include="ComponentModel\SortExpressionHandler.cs" />
+    <Compile Include="ComponentModel\TypeConverters\BooleanTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\DateTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\NullableDateTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\NullableDoubleTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\NullableIntegerTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\PointTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\TimestampConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\AssemblyQualifiedTypeNameConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\ByteArrayTypeConverter.cs" />
+    <Compile Include="ComponentModel\Design\Editors\FolderNameEditor.cs" />
+    <Compile Include="ComponentModel\Design\Editors\FolderNameEditorAttribute.cs" />
+    <Compile Include="ComponentModel\TypeConverters\DotNetTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\IPAddressTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\TimeTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\TrimStringTypeConverter.cs" />
+    <Compile Include="Configuration\Providers\GenericProviderCollection.cs" />
+    <Compile Include="ComponentModel\TypeConverters\SizeTypeConverter.cs" />
+    <Compile Include="ComponentModel\Sorting\SortingType.cs" />
+    <Compile Include="ComponentModel\TypeConverters\TimeSpanTypeConverter.cs" />
+    <Compile Include="ComponentModel\TypeConverters\VersionTypeConverter.cs" />
+    <Compile Include="ComponentModel\ValueSelfTracking.cs" />
+    <Compile Include="ComponentModel\TypeConverters\XmlPropertyTypeConverter.cs" />
+    <Compile Include="Configuration\ConfigurationDesignResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfigurationDesignResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\ConfigurationElementCollectionBase.cs" />
+    <Compile Include="Configuration\DataProviderSection.cs" />
+    <Compile Include="Configuration\NamedConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\NameTypePairConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\PathConfigurationElement.cs" />
+    <Compile Include="Configuration\PathConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\TypeConfigurationElementCollection.cs" />
+    <Compile Include="Core\EntityObjectExtensions.cs" />
+    <Compile Include="Core\ExpressionExtensions.cs" />
+    <Compile Include="Core\GenericListExtensions.cs" />
+    <Compile Include="Core\IEntityBase.cs" />
+    <Compile Include="Core\Infrastructure\Singleton.cs" />
+    <Compile Include="Core\IPagedList.cs" />
+    <Compile Include="Core\PagedList.cs" />
+    <Compile Include="Core\PagingOptions.cs" />
+    <Compile Include="DataAnnotation\DataAnnotationExtensions.cs" />
+    <Compile Include="Data\DataColumMapping.cs" />
+    <Compile Include="Data\Extensions\DatabaseResultExtensions.cs" />
+    <Compile Include="Data\Extensions\DataTableExtension.cs" />
+    <Compile Include="Data\DataTableHelper.cs" />
+    <Compile Include="Data\OleDbDatabase.cs" />
+    <Compile Include="Data\DbDataReaderHelper.cs" />
+    <Compile Include="Data\DbParameterHelper.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\Sql\MSSQLDataTypeHelper.cs" />
+    <Compile Include="Drawing\ResizeImageQuality.cs" />
+    <Compile Include="Drawing\ImageHelper.cs" />
+    <Compile Include="Enumerations\EnumIgnoreDisplayAttribute.cs" />
+    <Compile Include="Enumerations\EnumHelper.cs" />
+    <Compile Include="Enumerations\EnumItem.cs" />
+    <Compile Include="Enumerations\EnumItemCollection.cs" />
+    <Compile Include="Enumerations\EnumItemComparer.cs" />
+    <Compile Include="Enumerations\EnumItemEnumerator.cs" />
+    <Compile Include="ComponentModel\AttributeNotFoundException.cs" />
+    <Compile Include="ComponentModel\ExceptionAttribute.cs" />
+    <Compile Include="Exceptions\ExceptionUtility.cs" />
+    <Compile Include="IO\DirectoryHelper.cs" />
+    <Compile Include="IO\FileHelper.cs" />
+    <Compile Include="IO\PathHelper.cs" />
+    <Compile Include="InteropServices\NetworkShareAccesser.cs" />
+    <Compile Include="Linq\Dynamic.cs" />
+    <Compile Include="ObjectCompare\ObjectCompareOptions.cs" />
+    <Compile Include="ObjectCompare\ObjectComparer.cs" />
+    <Compile Include="ObjectCompare\ObjectCompareResult.cs" />
+    <Compile Include="ObjectCompare\ObjectCompareResultCollection.cs" />
+    <Compile Include="ObjectCompare\ObjectComparerHelper.cs" />
+    <Compile Include="ObjectCompare\TypeHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reflection\ReflectionUtils.cs" />
+    <Compile Include="Resources\StringResourceHelper.cs" />
+    <Compile Include="Serialization\Binary\BinarySerializeHelper.cs" />
+    <Compile Include="ComponentModel\Sorting\GenericObjectComparer.cs" />
+    <Compile Include="ComponentModel\Sorting\SortExpression.cs" />
+    <Compile Include="Text\StringBuilderExtensions.cs" />
+    <Compile Include="Text\TextGenerator.cs" />
+    <Compile Include="Utilities\DateTimeUtility.cs" />
+    <Compile Include="Web\MimeTypeHelper.cs" />
+    <Compile Include="Xml\Serialization\XmlSerializeHelper.cs" />
+    <Compile Include="Configuration\NamedConfigurationElement.cs" />
+    <Compile Include="Configuration\NameTypePairConfigurationElement.cs" />
+    <Compile Include="Configuration\PropertyConfigurationHelper.cs" />
+    <Compile Include="Configuration\ProviderSettingsCollectionElement.cs" />
+    <Compile Include="Configuration\Providers\ProviderSettingHelper.cs" />
+    <Compile Include="Configuration\RuntimeConfiguration.cs" />
+    <Compile Include="Configuration\TypeConfigurationElement.cs" />
+    <Compile Include="ComponentModel\Design\ResourceDisplayNameAttribute.cs" />
+    <Compile Include="InteropServices\NetworkManagement\ServerEnumerator.cs" />
+    <Compile Include="InteropServices\NetworkManagement\Servers.cs" />
+    <Compile Include="InteropServices\NetworkManagement\ServerType.cs" />
+    <Compile Include="InteropServices\Win32API.cs" />
+    <Compile Include="ComponentModel\Design\ResourceCategoryAttribute.cs" />
+    <Compile Include="ComponentModel\Design\ResourceDescriptionAttribute.cs" />
+    <Compile Include="Utilities\AttributeHelper.cs" />
+    <Compile Include="Utilities\ConvertHelper.cs" />
+    <Compile Include="Utilities\AssemblyUtility.cs" />
+    <Compile Include="Utilities\EncryptionUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configuration\ConfigurationDesignResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConfigurationDesignResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

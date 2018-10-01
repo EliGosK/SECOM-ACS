@@ -1,0 +1,12 @@
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\CSI.Data.EntityFramework.dll.config
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\CSI.Data.EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\CSI.Data.EntityFramework.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\CSI.ComponentModel.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\CSI.ComponentModel.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\EntityFramework.xml
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Debug\CSI.Data.EntityFramework.csprojResolveAssemblyReference.cache
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Debug\CSI.Data.EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Debug\CSI.Data.EntityFramework.pdb

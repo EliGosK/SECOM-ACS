@@ -1,0 +1,365 @@
+﻿@model RequestInquriyDataViewModel
+@{
+    var defaultDateFrom = DateTime.Now;
+    var defaultDateTo = AcsModelHelper.GetLastDateOfMonth(1);
+    var defaultDateFromString = defaultDateFrom.ToString();
+    var defaultDateToString = defaultDateTo.ToString();
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+
+
+    var minDate = DateTime.Now;
+    var maxDate = AcsModelHelper.GetLastDateOfMonth(1);
+
+    var minEntryDateFrom = AcsModelHelper.GetFirstDateOfMonth();
+    var maxEntryDateFrom = AcsModelHelper.GetLastDateOfMonth(1);
+    var minEntryDateTo = minEntryDateFrom;
+    var maxEntryDateTo = AcsModelHelper.GetLastDateOfMonth();
+}
+
+<div class="select-type">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            @*<label class="control-label col-md-2">Document Type</label>*@
+            @Html.LabelFor(m => m.DocumentType, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect().Name("documentType")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/doctype")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .AutoClose(false)
+                    .Placeholder(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+            @*<label class="control-label col-md-2">Request No</label>*@
+            @Html.LabelFor(m => m.ReqNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox()
+                    .Name("ReqNo")
+                    .HtmlAttributes(new { maxlength = 100, style = "width:100%" }))
+
+            </div>
+        </div>
+        <div class="form-group">
+            @*<label class="control-label col-md-2">Request By</label>*@
+            @Html.LabelFor(m => m.RequestBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().AutoComplete().Name("requestBy")
+                    .DataSource(ds =>
+                        ds.Read(r =>
+                           r.Action("FindEmployeesByEmployeeName", "Employee").Type(HttpVerbs.Post)
+                        )
+                        .ServerFiltering(true)
+                    )
+                    .Filter(FilterType.Contains)
+                    .DataTextField("EmployeeName")
+                    .MinLength(2)
+                    .HtmlAttributes(new { style = "width:100%", maxlength = 100 })
+
+                )
+            </div>
+            @Html.LabelFor(m => m.Area, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect()
+                    .Name("area")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/area/list")))
+                    .DataTextField("Name")
+                    .DataValueField("AreaID")
+                      .AutoClose(false)
+                    .Placeholder(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EntryDateFrom, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().DatePicker().Name("dateFrom")
+                    .Value(minEntryDateFrom)
+                    .HtmlAttributes(new { @data_default = @defaultDateFromString }))
+                @(Html.Kendo().DatePicker().Name("dateTo")
+                    .Value(maxEntryDateTo)
+                    .HtmlAttributes(new { @data_default = @defaultDateToString }))
+            </div>
+            @Html.LabelFor(m => m.ReqStatus, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect()
+                    .Name("status")
+                     .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/Status")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .AutoClose(false)
+                    .Placeholder(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">@ViewResource.Asset_Code</label>
+          @*  @Html.LabelFor(, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox()
+                    .Name("AssetCode")
+                    .HtmlAttributes(new { maxlength = 50, style = "width:100%" }))
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="button-container">
+                    @Html.SearchButton(htmlAttributes: new { @class = "k-primary k-search" }).Events(e => e.Click("searchButtonClicked"))
+                    @Html.ClearButton(htmlAttributes: new { @class = "k-button-warning k-clear" }).Events(e => e.Click("clearButtonClicked"))
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2><i class="fa fa-th-list"></i> @ViewResource.RequestInquriy_RequestList_Title</h2>
+    <div class="grid-container">
+        @(Html.Kendo().Grid<RequestInquriyDataViewModel>()
+            .Name("grid")
+            .AutoBind(false)
+            .Scrollable()
+            .ToolBar(t =>
+                   t.Template(Html.Kendo().Button().Name("exportButton").Content("<i class=\"fa fa-file-text-o\"></i> " + WidgetResource.Button_Export_Text).HtmlAttributes(new { @class = "k-primary k-export" }).Events(ev => ev.Click("exportButtonClicked")).ToHtmlString())
+             )
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { @style = "height:500px" })
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=renderViewDetail(data)#");
+                c.Template(t => { })
+                    .Title(WidgetResource.Grid_Column_No)
+                    .Width(60)
+                    .ClientTemplate("#=_rowNo#")
+                    .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.DocumentType)
+                    .Width(200);
+                c.Bound(f => f.ReqNo)
+                    .Width(160);
+                c.Bound(f => f.EntryDateFrom)
+                .HtmlAttributes(new { @class = "text-center" })
+                    .Width(120)
+                    .Format(gridDateFormat)
+                    .ClientTemplate("#=data.EntryDateTimeFrom#");
+                //c.Bound(f => f.EntryTimeFrom)
+                //    .HtmlAttributes(new { @class = "text-center" })
+                //    .ClientTemplate("#=data.EntryTimeFromString#")
+                //    .Width(120);
+                c.Bound(f => f.EntryDateTo)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(120)
+                    .Format(gridDateFormat)
+                    .ClientTemplate("#=data.EntryDateTimeTo#");
+                //c.Bound(f => f.EntryTimeTo)
+                //    .HtmlAttributes(new { @class = "text-center" })
+                //    .ClientTemplate("#=data.EntryTimeToString#")
+                //    .Width(120);
+                c.Bound(f => f.ReqStatus)
+                    .Width(100)
+                    .ClientTemplate("#=renderRequestStatus(data)#")
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.RequestBy)
+                    .Width(200);
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListRequestInquiry", "Request")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+
+                })
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.ReqNo);
+                        m.Field(f => f.DocumentType);
+                        m.Field(f => f.ReqNo);
+                        m.Field(f => f.ReqStatus);
+                        m.Field(f => f.EntryDateFrom);
+                        m.Field(f => f.EntryTimeFrom);
+                        m.Field(f => f.EntryDateTo);
+                        m.Field(f => f.EntryTimeTo);
+                        m.Field(f => f.RequestBy);
+                        m.Field(f => f.RequestDate);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+            )
+            .Events(ev => { ev.DataBinding("gridDataBinding"); })
+        )
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid;
+        var documentTypes = @Html.Raw(Json.Encode(DocumentTypes.GetList()));
+
+        $(document).ready(function (e) {
+            uiState.register("search", [".k-button"]);
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('export',[
+                 {
+                     elem: '.k-export',
+                     busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> Exporting"
+                 }
+                 , ".k-button"
+            ]);
+
+            grid = $("#grid").data("kendoGrid");
+            app.ui.datePickerRelate($("#dateFrom").data("kendoDatePicker"), $("#dateTo").data("kendoDatePicker"));
+
+        });
+
+        function exportButtonClicked(e) {
+            e.preventDefault();
+            uiState.busy('export', true);
+
+            var data =getSearchCriteria();
+            $.ajax({
+                url: "@Url.Action("ExportRequestInquiryResultAsync", "Request")",
+                data: data,
+                async: false,
+                type: "POST",
+                success: function (data, status,xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    window.location = kendo.format("@Url.Action("Download","Media")?id={0}&filename={1}", data.id,escape(data.filename));
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+
+                }, complete: function () {
+                    uiState.busy('export', false);
+                }
+            });
+        }
+
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+
+            if (this.total() === 0) {
+                $("#exportButton").prop('disabled', true);
+            }
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria:
+                {
+                    ObjectID: $("#documentType").data("kendoMultiSelect").value(),
+                    EntryDateFrom: app.data.toDateString($("#dateFrom").data("kendoDatePicker").value()),
+                    EntryDateTo: app.data.toDateString($("#dateTo").data("kendoDatePicker").value()),
+                    Area: $("#area").data("kendoMultiSelect").value(),
+                    Status: $("#status").data("kendoMultiSelect").value(),
+                    CreateBy: $("#requestBy").val(),
+                    ReqNo:$("#ReqNo").val(),
+                    AssetCode:$("#AssetCode").val()
+                }
+            };
+        }
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+            console.log(grid.dataSource.total());
+        }
+
+        function clearButtonClicked(e) {
+            e.preventDefault();
+            app.ui.clear(["#grid", "#documentType", "#area", "#AssetCode", "#requestBy", "#status", "#ReqNo", "#dateFrom","#dateTo"]);
+            $("#exportButton").prop('disabled', true);
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+
+        }
+
+        function getDocumentTypeName(data)
+        {
+            return app.data.getName(documentTypes, data.DocumentType);
+        }
+
+        function renderViewDetail(data) {
+            var url = "";
+            switch (data.ObjectID)
+            {
+                case "ACS020":
+                    url = "@Url.Action("Detail", "AcsEmployee")";
+                    break;
+                case "ACS030":
+                    url = "@Url.Action("Detail", "AcsVisitor")";
+                    break;
+                case "ACS050":
+                    url = "@Url.Action("Detail", "AcsItemIn")";
+                    break;
+                case "ACS040":
+                    url = "@Url.Action("Detail", "AcsItemOut")";
+                    break;
+                case "ACS060":
+                    url = "@Url.Action("Detail", "AcsPhoto")";
+                    break;
+            }
+            url = url + "/" + data.ReqNo ;
+            return "<a href = \""+ url + "\"target=\"_blank\" class=\"k-button k-button-primary k-button-cmd k-grid-view\"><i class=\"fa fa-search\"></i></a>";
+        }
+
+         function renderRequestStatus(data) {
+            switch (data.ReqStatus)
+            {
+                 case "@RequestStatus.Requesting":
+                    return "<label class='label label-md label-primary'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Approving":
+                    return "<label class='label label-md label-info'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Approved":
+                    return "<label class='label label-md label-success'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Done":
+                    return "<label class='label label-md label-default'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Cancel":
+                    return "<label class='label label-md label-warning'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Rejected":
+                case "@RequestStatus.Expired":
+                    return "<label class='label label-md label-danger'>" + data.ReqStatusName + "</label>";
+                default:
+                    return "<label class='label label-md'>" + data.ReqStatus + "</label>";
+            }
+        }
+    </script>
+}

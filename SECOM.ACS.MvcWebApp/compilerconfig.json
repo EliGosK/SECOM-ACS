@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "assets/css/site.css",
+    "inputFile": "assets/css/site.scss"
+  },
+  {
+    "outputFile": "assets/libs/kendo/js/messages/kendo.messages.th-TH.es5.js",
+    "inputFile": "assets/libs/kendo/js/messages/kendo.messages.th-TH.js"
+  },
+  {
+    "outputFile": "assets/js/app.messages.th-TH.es5.js",
+    "inputFile": "assets/js/app.messages.th-TH.js"
+  }
+]

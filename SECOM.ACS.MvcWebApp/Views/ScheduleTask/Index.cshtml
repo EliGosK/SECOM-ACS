@@ -1,0 +1,446 @@
+﻿@{ 
+
+    var gridDateTimeFormat = AcsModelHelper.GetGridDateTimeFormat();
+}
+<h2><i class="fa fa-th-list"></i> Schedule Task List</h2>
+@Html.AntiForgeryToken()
+<div class="grid-cotnainer">
+    @(Html.Kendo().Grid<AcsTaskViewModel>()
+            .Name("grid")
+            .ToolBar(t => t.Template(@<text>
+                @Html.KendoConfirmButton("runAllButton", "play-circle", "Run All Task", new { @class = "k-primary k-task" })
+                @Html.CommandButton("refreshButton", "refresh", "Refresh", new { @class = "k-task k-button-info" }).Events(ev=>ev.Click("refreshButtonClicked"))
+                @Html.KendoConfirmButton("restartButton", "repeat", "Restart Service", new { @class = "k-task k-button-warning" })
+                @Html.KendoConfirmButton("startStopButton", "start", "Start Service", new { @class = "k-task k-button" })
+            </text>))
+            .Editable(et => et.Mode(GridEditMode.PopUp).TemplateName("ScheduleTimeEditor").Window(w => w.Width(600)))
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(120)
+                    .ClientTemplate("#=renderActionButton(data)#");
+                //c.Template(t => { })
+                //    .Title("No.")
+                //    .ClientTemplate("#=_rowNo#")
+                //    .HtmlAttributes(new { @class = "text-right" })
+                //    .Width(50);
+                c.Bound(f => f.TaskName)
+                    .ClientTemplate("#=data.TaskID#: #=data.TaskName#")
+                    .Width(240);
+                c.Bound(f => f.Schedules)
+                    .ClientTemplate("#=renderScheduleTimes(data)#")
+                    .Width(100);
+                c.Bound(f => f.LastResultMessage)
+                    .ClientTemplate("#=renderLastResultMessage(data)#")
+                    .HtmlAttributes(new { });
+                c.Bound(f => f.LastRunDateTime)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Format(gridDateTimeFormat)
+                    .Width(140);
+                //c.Bound(f => f.Success)
+                //    .HtmlAttributes(new { @class = "text-center" })
+                //    .Width(70);
+                //c.Bound(f => f.Fail)
+                //    .HtmlAttributes(new { @class = "text-center" })
+                //    .Width(70);
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListTasks", "ScheduleTask")
+                        .Type(HttpVerbs.Post)
+                        .DataType("json"));
+                    t.Update(r => r.Action("UpdateScheduleTime", "ScheduleTask")
+                        .Type(HttpVerbs.Post)
+                        .DataType("json"));
+                })
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TaskID);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+            )
+            .Events(ev => ev.DataBinding("gridDataBinding").DataBound("gridDataBound").Edit("gridEdit").Save("gridSave"))
+    )
+
+</div>
+<div class="alert alert-warning" style="margin-top:5px">
+   <i class="fa fa-warning"></i> @MessageResource.ScheduleTask_RequiredRestart
+</div>
+@(Html.Kendo().Dialog()
+        .Name("loggingDialog")
+        .Width(800)
+        .Height(600)
+        .Title("Logging Information")
+        .Animation(a =>
+        {
+            a.Open(o => o.Fade(FadeDirection.In));
+            a.Close(c => c.Fade(FadeDirection.Out));
+        })
+        .Visible(false)
+        .Content("<div id=\"logging-container\" class=\"well well-sm\"></div>")
+        .Actions(act => act.Add().Text("<i class=\"fa fa-times-circle\"></i> Close"))
+)
+
+<script id="errorDetailTemplate" type="text/x-kendo-template">
+    <div id="logging-container">
+        <h3><i class="fa fa-cogs"></i> Task ID: #: data.TaskID #</h3>
+        <h3><i class="fa fa-file-text-o"></i> Log File: #: data.LogFile#</h3>
+        <div class="logging-message well well-sm">
+            <ul class="list-unstyled list-message">
+                # for (var i=0;i < data.LoggingMessages.length; i++){ #
+                <li>#: data.LoggingMessages[i] #</li>
+                # } #
+            </ul>
+        </div>
+    </div>
+</script>
+<script id="scheduleTimesTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled">
+        # for (var i=0; i< data.length ;i++){ #
+        <li><i class="fa fa-clock-o"></i> #=data[i].Description #</li>
+        # } #
+    </ul>
+</script>
+
+<script id="actionButtonTemplate" type="text/x-kendo-template">
+    # if (data.CanRun){ #
+    <a href="javascript:runTask('#=data.TaskID#')" class="k-button k-primary k-button-cmd k-task k-run" title="Run task" data-task-id="#=data.TaskID#" data-theme="dark" data-content="@MessageHelper.ConfirmRunTask()"><i class="fa fa-play-circle"></i></a>
+    # } #
+    
+    <a href="javascript:viewLog('#=data.TaskID#')" class="k-button k-button-warning k-button-cmd k-task k-view-log" title="View log file" data-task-id="#=data.TaskID#"><i class="fa fa-file-text-o"></i></a>
+    
+    # if (data.CanEdit){ #
+    <a href="javascript:void(0)" class="k-button k-button-cmd k-task k-grid-edit" title="Edit schedule times"><i class="fa fa-edit"></i></a>
+    # } #
+</script>
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid;
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('state', ['.k-button']);
+
+            $("#runAllButton").on("openDialog", function (sender, e, elem) {
+                e.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "@Url.Action("RunAllTask")",
+                        data: app.addAntiForgeryToken({}),
+                        type: 'POST',
+                        data: 'json',
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);
+                        }
+                    });
+                }
+            });
+
+            $("#restartButton").on("openDialog", function (sender, e, elem) {
+                e.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "@Url.Action("RestartService")",
+                        data: app.addAntiForgeryToken({}),
+                        type: 'POST',
+                        data: 'json',
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);
+                        }
+                    });
+                }
+            });
+
+            $("#startStopButton").on("openDialog", function (sender, e, elem) {
+                e.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "@Url.Action("StartService")",
+                        data: { start: $("#startStopButton").attr("data-status") },
+                        type: 'POST',
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            setTimeout(function () {
+                                updateWindowServiceState();
+                            }, 100);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);                            
+                        }
+                    });
+                }
+            });
+
+            updateWindowServiceState();
+        });
+
+        function updateWindowServiceState() {
+            uiState.busy("state", true);
+            $.ajax({
+                url: "@Url.Action("GetServiceStatus")",
+                type: 'POST',
+                data: 'json',
+                success: function (data, status, xhr) {
+                    if (data.status == 4) {
+                        $("#startStopButton").html("<i class=\"fa fa-stop\"></i> Stop Service").removeClass("k-button-success").addClass("k-button-danger").attr("data-status",false);
+                    } else {
+                        $("#startStopButton").html("<i class=\"fa fa-start\"></i> Start Service").removeClass("k-button-danger").addClass("k-button-success").attr("data-status", true);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    
+                },
+                complete: function () {
+                    uiState.busy("state", false);
+                }
+            });
+        }
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function gridDataBound(e)
+        {
+            uiState.register('task', ['.k-task']);
+        }
+
+        function showLogMessage(data) {
+            $("#logging-container").empty();
+            var dialog = $("#loggingDialog").data("kendoDialog");
+            dialog.content(kendo.template($("#errorDetailTemplate").html())(data));
+            dialog.open();
+        }
+
+        function renderLastResultMessage(data) {
+            return data.IsLastResultSuccess ? "<span class=\"k-color-primary\">" + data.LastResultMessage + "</span>" : "<span class=\"k-color-danger\">" + data.LastResultMessage + "</span>";
+        }
+
+        function renderScheduleTimes(data) {
+            return kendo.template($("#scheduleTimesTemplate").html())(data.Schedules);
+        }
+
+        function gridEdit(e) {
+            var options = {
+
+            };
+
+            var dataItems = [];
+            $.each(e.model.Schedules, function (index, item) {
+                var date = kendo.parseDate(item.Description.substring(3), "HH:mm");
+                dataItems.push({ ID: app.guid() , CronExpression: item.CronExpression, ScheduleTime: date });
+            });
+            localStorage["grid_data"] = kendo.stringify(dataItems);
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    create: function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+                        options.data.ID = app.guid();
+                        localData.push(options.data);
+                        localStorage["grid_data"] = JSON.stringify(localData);
+                        options.success(options.data);
+                    },
+                    update: function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+
+                        for (var i = 0; i < localData.length; i++) {
+                            if (localData[i].ID == options.data.ID) {
+                                localData[i].ScheduleTime = options.data.ScheduleTime;
+                            }
+                        }
+                        localStorage["grid_data"] = JSON.stringify(localData);
+                        options.success(options.data);
+                    },
+                    read: function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+                        options.success(localData);
+                    },
+                    destroy: function (options) {
+                        var localData = JSON.parse(localStorage["grid_data"]);
+                        for (var i = 0; i < localData.length; i++) {
+                            if (localData[i].ID === options.data.ID) {
+                                localData.splice(i, 1);
+                                break;
+                            }
+                        }
+                        localStorage["grid_data"] = JSON.stringify(localData);
+                        options.success(localData);
+                    },
+                },
+                schema: {
+                    model: {
+                        id: "ID",
+                        fields: {
+                            ID: { type: "string", editable: false },
+                            CronExpression: { type: "string", editable: false },
+                            ScheduleTime: { type: "date"  }
+                        }
+                    }
+                },
+                pageSize: 20
+            });
+
+            var grid = $("#scheduleTimeGrid").kendoGrid({
+                dataSource: dataSource,
+                toolbar: ["create"],
+                columns: [
+                    //{ field: "CronExpression", visible: false },
+                    { field: "ScheduleTime", editor: scheduleEditor, template: "#=kendo.format(\"{0:HH:mm}\",data.ScheduleTime)#"},
+                    { command: ["edit","destroy"], width: "240px" }
+                ],
+                editable: "inline",
+            }).data("kendoGrid");
+
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function scheduleEditor(container, options) {
+            $('<input data-bind="value:' + options.field + '"/>')
+                .appendTo(container)
+                .kendoTimePicker({
+                    format: 'HH:mm',
+                    change: function (e) { app.ui.handleDatePickerNullValue(this); }
+                });
+        }
+
+        function gridSave(e) {
+            e.model.Schedules = [];
+            var dataItems = JSON.parse(localStorage["grid_data"] || []);
+            $.each(dataItems, function (index, item) {
+                var date = kendo.parseDate(item.ScheduleTime);
+                //console.log(kendo.toString(date, "s m H")+" * * ?");
+                e.model.Schedules.push({ CronExpression: kendo.format("0 {0:mm} {0:HH} * * ?", date), Description: kendo.format("At {0:HH:mm}", date) });
+            });
+            e.model.dirty = true;
+        }
+
+        function viewLog(taskId) {
+            uiState.busy('task', true);
+            $.ajax({
+                url: "@Url.Action("ViewLogMessage")",
+                data: app.addAntiForgeryToken({ "taskId": taskId }),
+                type: 'POST',
+                dataType: 'json',
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    // Show log in dialog
+                    showLogMessage(data);
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+                },
+                complete: function () {
+                    uiState.busy('task', false);
+                }
+            });
+        }
+
+        function runTask(taskId) {
+            $.confirm({
+                title: 'Confirm Run Task',
+                theme: 'dark',
+                content: '@MessageHelper.ConfirmRunTask()',
+                buttons: {
+                    confirm: {
+                        text: "<i class=\"fa fa-check-circle\"></i> Proceed",
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            uiState.busy('task', true);
+                            $.ajax({
+                                url: "@Url.Action("RunTask")",
+                                data: app.addAntiForgeryToken({ "taskId": taskId }),
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (data, status, xhr) {
+                                    app.ui.handleAjaxSuccess(data, status, xhr);
+                                },
+                                error: function (xhr, status, error) {
+                                    app.ui.handleAjaxError(xhr, status, error);
+                                },
+                                complete: function () {
+                                    uiState.busy('task', false);
+                                    grid.dataSource.read();
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: "<i class=\"fa fa-times-circle\"></i> Cancel",
+                        btnClass: 'btn-danger',
+                        action: function () { }
+                    }
+                }
+            });
+        }
+
+        function refreshButtonClicked(e) {
+            grid.dataSource.read();
+        }
+
+        function renderActionButton(data) {
+            return kendo.template($("#actionButtonTemplate").html())(data);
+        }
+    </script>
+}

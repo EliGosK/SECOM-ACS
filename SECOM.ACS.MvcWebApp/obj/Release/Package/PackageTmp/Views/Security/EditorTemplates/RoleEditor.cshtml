@@ -1,0 +1,28 @@
+﻿@model RoleViewModel
+@Html.HiddenFor(m => m.RoleID)
+<div class="k-edit-form-container">
+    @Html.LabelRequiredHintFor(m => m.Name, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Name)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Name), @required = "required", @maxlength = 50 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Name)
+    </div>    
+    @Html.LabelRequiredHintFor(m=>m.Description,new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Description)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Description),  @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Description)
+    </div>   
+    <div class="k-edit-field">
+        @Html.Kendo().CheckBoxFor(m=>m.IsActive)      
+    </div>
+    
+</div>
+<div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+
+
+
+
+

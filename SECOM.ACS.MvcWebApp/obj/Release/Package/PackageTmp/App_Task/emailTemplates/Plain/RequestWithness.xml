@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<email>
+    <subject>Request @Model.RequestNo withness</subject>
+    <from display="SECOM-ACS">secomacs-noreply@secom.co.th</from>
+    <cc />
+    <bcc />
+</email>

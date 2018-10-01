@@ -1,0 +1,2346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SECOM.ACS.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ACSContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AreaApprovers" EntityType="SECOM.ACS.Models.AreaApprover" />
+    <EntitySet Name="Employees" EntityType="SECOM.ACS.Models.Employee" />
+    <EntitySet Name="Gates" EntityType="SECOM.ACS.Models.Gate" />
+    <EntitySet Name="Items" EntityType="SECOM.ACS.Models.Item" />
+    <EntitySet Name="Miscs" EntityType="SECOM.ACS.Models.Misc" />
+    <EntitySet Name="AcsItemInDetails" EntityType="SECOM.ACS.Models.AcsItemInDetail" />
+    <EntitySet Name="AcsItemOutDetails" EntityType="SECOM.ACS.Models.AcsItemOutDetail" />
+    <EntitySet Name="AcsVisitorDetails" EntityType="SECOM.ACS.Models.AcsVisitorDetail" />
+    <EntitySet Name="ReqAreaMappings" EntityType="SECOM.ACS.Models.ReqAreaMapping" />
+    <EntitySet Name="PermissionMappings" EntityType="SECOM.ACS.Models.PermissionMapping" />
+    <EntitySet Name="TransactionAcs" EntityType="SECOM.ACS.Models.TransactionAcs" />
+    <AssociationSet Name="FK_tbr_AcsItemInDetail_tbm_Item" Association="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbm_Item">
+      <End Role="tbm_Item" EntitySet="Items" />
+      <End Role="tbr_AcsItemInDetail" EntitySet="AcsItemInDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsItemOutDetail_tbm_Item" Association="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbm_Item">
+      <End Role="tbm_Item" EntitySet="Items" />
+      <End Role="tbr_AcsItemOutDetail" EntitySet="AcsItemOutDetails" />
+    </AssociationSet>
+    <FunctionImport Name="GetMiscsByCriteria" EntitySet="Miscs" ReturnType="Collection(SECOM.ACS.Models.Misc)">
+      <Parameter Name="MiscType" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Departments" EntityType="SECOM.ACS.Models.Department" />
+    <EntitySet Name="Positions" EntityType="SECOM.ACS.Models.Position" />
+    <AssociationSet Name="FK_tbm_AreaApprover_tbm_Position" Association="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Position">
+      <End Role="tbm_Position" EntitySet="Positions" />
+      <End Role="AreaApprover" EntitySet="AreaApprovers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbm_Employee_tbm_Position" Association="SECOM.ACS.Models.FK_tbm_Employee_tbm_Position">
+      <End Role="tbm_Position" EntitySet="Positions" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <FunctionImport Name="DeleteMisc">
+      <Parameter Name="MiscID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateMisc">
+      <Parameter Name="MiscID" Mode="In" Type="Int32" />
+      <Parameter Name="MiscType" Mode="In" Type="String" />
+      <Parameter Name="MiscName" Mode="In" Type="String" />
+      <Parameter Name="MiscDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="MiscDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="MiscRemark" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="DeleteAble" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertMisc" ReturnType="Collection(Int32)">
+      <Parameter Name="MiscType" Mode="In" Type="String" />
+      <Parameter Name="MiscName" Mode="In" Type="String" />
+      <Parameter Name="MiscDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="MiscDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="MiscRemark" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="DeleteAble" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteItem">
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetItemDataViewsByCriteria" ReturnType="Collection(SECOM.ACS.Models.ItemDataView)">
+      <Parameter Name="ItemName" Mode="In" Type="String" />
+      <Parameter Name="ItemType" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="IsItemIn" Mode="In" Type="Boolean" />
+      <Parameter Name="IsItemOut" Mode="In" Type="Boolean" />
+      <Parameter Name="IsPhoto" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateItem">
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="ItemsTypeID" Mode="In" Type="Int32" />
+      <Parameter Name="ItemsName" Mode="In" Type="String" />
+      <Parameter Name="ItemsDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="ItemsDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="IsConfdt" Mode="In" Type="Boolean" />
+      <Parameter Name="IsItemIn" Mode="In" Type="Boolean" />
+      <Parameter Name="IsItemOut" Mode="In" Type="Boolean" />
+      <Parameter Name="IsPhoto" Mode="In" Type="Boolean" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertItem" ReturnType="Collection(Int32)">
+      <Parameter Name="ItemsTypeID" Mode="In" Type="Int32" />
+      <Parameter Name="ItemsName" Mode="In" Type="String" />
+      <Parameter Name="ItemsDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="ItemsDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="IsConfdt" Mode="In" Type="Boolean" />
+      <Parameter Name="IsItemIn" Mode="In" Type="Boolean" />
+      <Parameter Name="IsItemOut" Mode="In" Type="Boolean" />
+      <Parameter Name="IsPhoto" Mode="In" Type="Boolean" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePermissionMappingsByRoleId">
+      <Parameter Name="RoleId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdatePermissionDashboard">
+      <Parameter Name="RoleID" Mode="In" Type="Int32" />
+      <Parameter Name="ViewDSH01" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH02" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH03" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH04" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH05" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH06" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH07" Mode="In" Type="Boolean" />
+      <Parameter Name="ViewDSH08" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetPermissionDashboard" ReturnType="Collection(SECOM.ACS.Models.PermissionDashboard)">
+      <Parameter Name="RoleId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetFactory" />
+    <FunctionImport Name="GetGatesByFactoryCode" EntitySet="Gates" ReturnType="Collection(SECOM.ACS.Models.Gate)">
+      <Parameter Name="FactoryCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaByCriteria" EntitySet="Areas" ReturnType="Collection(SECOM.ACS.Models.Area)">
+      <Parameter Name="FactoryCode" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckMiscInUse" ReturnType="Collection(Int32)">
+      <Parameter Name="MiscID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CheckDuplicateMisc" ReturnType="Collection(Int32)">
+      <Parameter Name="MiscType" Mode="In" Type="String" />
+      <Parameter Name="MiscName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaDataViews" ReturnType="Collection(SECOM.ACS.Models.AreaDataView)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="AreaMapping" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="CheckItemInUse" ReturnType="Collection(Boolean)">
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CheckDuplicateItem" ReturnType="Collection(Int32)">
+      <Parameter Name="ItemTypeID" Mode="In" Type="Int32" />
+      <Parameter Name="ItemName" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AcsItemOuts" EntityType="SECOM.ACS.Models.AcsItemOut" />
+    <EntitySet Name="AcsPhotoes" EntityType="SECOM.ACS.Models.AcsPhoto" />
+    <EntitySet Name="AcsVisitors" EntityType="SECOM.ACS.Models.AcsVisitor" />
+    <EntitySet Name="ReqApproverLists" EntityType="SECOM.ACS.Models.ReqApproverList" />
+    <AssociationSet Name="FK_tbr_AcsPhoto_tbm_Item" Association="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="tbr_AcsPhoto" EntitySet="AcsPhotoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsItemOutDetail_tbr_AcsItemOut" Association="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbr_AcsItemOut">
+      <End Role="tbr_AcsItemOut" EntitySet="AcsItemOuts" />
+      <End Role="AcsItemOutDetail" EntitySet="AcsItemOutDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsItemOut" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemOut">
+      <End Role="tbr_AcsItemOut" EntitySet="AcsItemOuts" />
+      <End Role="tbr_ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsPhoto" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsPhoto">
+      <End Role="tbr_AcsPhoto" EntitySet="AcsPhotoes" />
+      <End Role="tbr_ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsVisitorDetail_tbr_AcsVisitor" Association="SECOM.ACS.Models.FK_tbr_AcsVisitorDetail_tbr_AcsVisitor">
+      <End Role="tbr_AcsVisitor" EntitySet="AcsVisitors" />
+      <End Role="AcsVisitorDetail" EntitySet="AcsVisitorDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsVisitor" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVisitor">
+      <End Role="tbr_AcsVisitor" EntitySet="AcsVisitors" />
+      <End Role="tbr_ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqAreaMapping_tbr_AcsVisitor" Association="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVisitor">
+      <End Role="tbr_AcsVisitor" EntitySet="AcsVisitors" />
+      <End Role="ReqAreaMapping" EntitySet="ReqAreaMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbt_TransactionAcs_tbr_AcsVisitor" Association="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVisitor">
+      <End Role="tbr_AcsVisitor" EntitySet="AcsVisitors" />
+      <End Role="TransactionAcs" EntitySet="TransactionAcs" />
+    </AssociationSet>
+    <EntitySet Name="AcsVIPs" EntityType="SECOM.ACS.Models.AcsVIP" />
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsVIP" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVIP">
+      <End Role="tbr_AcsVIP" EntitySet="AcsVIPs" />
+      <End Role="ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqAreaMapping_tbr_AcsVIP" Association="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVIP">
+      <End Role="tbr_AcsVIP" EntitySet="AcsVIPs" />
+      <End Role="ReqAreaMapping" EntitySet="ReqAreaMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbt_TransactionAcs_tbr_AcsVIP" Association="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVIP">
+      <End Role="tbr_AcsVIP" EntitySet="AcsVIPs" />
+      <End Role="TransactionAcs" EntitySet="TransactionAcs" />
+    </AssociationSet>
+    <EntitySet Name="AcsEmployees" EntityType="SECOM.ACS.Models.AcsEmployee" />
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsEmployee" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsEmployee">
+      <End Role="tbr_AcsEmployee" EntitySet="AcsEmployees" />
+      <End Role="ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqAreaMapping_tbr_AcsEmployee" Association="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsEmployee">
+      <End Role="tbr_AcsEmployee" EntitySet="AcsEmployees" />
+      <End Role="ReqAreaMapping" EntitySet="ReqAreaMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbt_TransactionAcs_tbr_AcsEmployee" Association="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsEmployee">
+      <End Role="tbr_AcsEmployee" EntitySet="AcsEmployees" />
+      <End Role="TransactionAcs" EntitySet="TransactionAcs" />
+    </AssociationSet>
+    <FunctionImport Name="GetCardTypeForSearch" EntitySet="SystemMiscs" ReturnType="Collection(SECOM.ACS.Models.SystemMisc)" />
+    <FunctionImport Name="GetCardTypeForCreate" EntitySet="SystemMiscs" ReturnType="Collection(SECOM.ACS.Models.SystemMisc)" />
+    <FunctionImport Name="GetCardsByCriteria" EntitySet="Cards" ReturnType="Collection(SECOM.ACS.Models.Card)">
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AcsItemIns" EntityType="SECOM.ACS.Models.AcsItemIn" />
+    <AssociationSet Name="FK_tbr_AcsItemInDetail_tbr_AcsItemIn" Association="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbr_AcsItemIn">
+      <End Role="tbr_AcsItemIn" EntitySet="AcsItemIns" />
+      <End Role="AcsItemInDetail" EntitySet="AcsItemInDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqApproverList_tbr_AcsItemIn" Association="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemIn">
+      <End Role="tbr_AcsItemIn" EntitySet="AcsItemIns" />
+      <End Role="ReqApproverList" EntitySet="ReqApproverLists" />
+    </AssociationSet>
+    <FunctionImport Name="InsertArea" ReturnType="Collection(Int32)">
+      <Parameter Name="FactoryCode" Mode="In" Type="String" />
+      <Parameter Name="AreaName" Mode="In" Type="String" />
+      <Parameter Name="AreaDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="AreaDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="ConfdtLevel" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateArea">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="FactoryCode" Mode="In" Type="String" />
+      <Parameter Name="AreaName" Mode="In" Type="String" />
+      <Parameter Name="AreaDisplayEN" Mode="In" Type="String" />
+      <Parameter Name="AreaDisplayTH" Mode="In" Type="String" />
+      <Parameter Name="ConfdtLevel" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAreaGateMapping">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="GateID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAreaGateMapping">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteCard">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckDuplicateCard" ReturnType="Collection(Int32)">
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckCardInUse" ReturnType="Collection(Boolean)">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertCard">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAreaCardMapping">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="IsMainArea" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateCard">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAreaCardMapping">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckDuplicateArea" ReturnType="Collection(Int32)">
+      <Parameter Name="AreaName" Mode="In" Type="String" />
+      <Parameter Name="FactoryCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckAreaInUse" ReturnType="Collection(Boolean)">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetSuperiorApprover" ReturnType="Collection(SECOM.ACS.Models.EmployeeApprovalDataView)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaApprover" ReturnType="Collection(SECOM.ACS.Models.EmployeeApprovalDataView)">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcknowledgePerson" ReturnType="Collection(SECOM.ACS.Models.EmployeeApprovalDataView)" />
+    <FunctionImport Name="FindArea" EntitySet="Areas" ReturnType="Collection(SECOM.ACS.Models.Area)">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="FindDepartment" EntitySet="Departments" ReturnType="Collection(SECOM.ACS.Models.Department)">
+      <Parameter Name="DepartmentID" Mode="In" Type="String" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeInformation" ReturnType="Collection(SECOM.ACS.Models.EmployeeInformation)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="FindEmployee" ReturnType="Collection(SECOM.ACS.Models.EmployeeDataView)">
+      <Parameter Name="EmployeeID" Mode="In" Type="String" />
+      <Parameter Name="EmployeeName" Mode="In" Type="String" />
+      <Parameter Name="Position" Mode="In" Type="String" />
+      <Parameter Name="Department" Mode="In" Type="String" />
+      <Parameter Name="FilterType" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsPhoto" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="TakePhotoDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="TakePhotoTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="TakePhotoDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="TakePhotoTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="PhotoByType" Mode="In" Type="String" />
+      <Parameter Name="PhotoEmpID" Mode="In" Type="String" />
+      <Parameter Name="TakePhotoName" Mode="In" Type="String" />
+      <Parameter Name="WitnessEmpID" Mode="In" Type="String" />
+      <Parameter Name="TargetItem" Mode="In" Type="String" />
+      <Parameter Name="EquipItemID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherEquip" Mode="In" Type="String" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="IsLending" Mode="In" Type="Boolean" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+      <Parameter Name="AckBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertReqApproverList">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Step" Mode="In" Type="Int32" />
+      <Parameter Name="ApproveUserName" Mode="In" Type="String" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="ReferenceApprovalID" Mode="In" Type="Guid" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDefaultEntryTime" ReturnType="Collection(SECOM.ACS.Models.EntryTimeSetting)" />
+    <FunctionImport Name="FindPosition" EntitySet="Positions" ReturnType="Collection(SECOM.ACS.Models.Position)">
+      <Parameter Name="PositionID" Mode="In" Type="String" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Cards" EntityType="SECOM.ACS.Models.Card" />
+    <EntitySet Name="Areas" EntityType="SECOM.ACS.Models.Area" />
+    <EntitySet Name="AreaCardMappings" EntityType="SECOM.ACS.Models.AreaCardMapping" />
+    <AssociationSet Name="FK_tbm_AreaApprover_tbm_Area" Association="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="AreaApprover" EntitySet="AreaApprovers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbm_AreaCardMapping_tbm_Area" Association="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="tbm_AreaCardMapping" EntitySet="AreaCardMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsItemIn_tbm_Area" Association="SECOM.ACS.Models.FK_tbr_AcsItemIn_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="AcsItemIn" EntitySet="AcsItemIns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsItemOut_tbm_Area" Association="SECOM.ACS.Models.FK_tbr_AcsItemOut_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="AcsItemOut" EntitySet="AcsItemOuts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_AcsPhoto_tbm_Area" Association="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="AcsPhoto" EntitySet="AcsPhotoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbr_ReqAreaMapping_tbm_Area" Association="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbm_Area">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="ReqAreaMapping" EntitySet="ReqAreaMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbm_AreaCardMapping_tbm_Card" Association="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="tbm_AreaCardMapping" EntitySet="AreaCardMappings" />
+    </AssociationSet>
+    <AssociationSet Name="tbm_AreaGateMapping" Association="SECOM.ACS.Models.tbm_AreaGateMapping">
+      <End Role="tbm_Area" EntitySet="Areas" />
+      <End Role="Gate" EntitySet="Gates" />
+    </AssociationSet>
+    <FunctionImport Name="DeleteReqApproverList">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeDataViewsByCriteria" ReturnType="Collection(SECOM.ACS.Models.EmployeeDataView)">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+      <Parameter Name="EmpName" Mode="In" Type="String" />
+      <Parameter Name="DepartmentID" Mode="In" Type="String" />
+      <Parameter Name="PositionID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetUserRolesByEmployeeID" ReturnType="Collection(SECOM.ACS.Models.UserRole)">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaByEmployeeID" ReturnType="Collection(SECOM.ACS.Models.AreaMapping)">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertOrUpdateCard">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetVisitorCardRegistrationViews" ReturnType="Collection(SECOM.ACS.Models.VisitorCardRegistrationView)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="VisitorName" Mode="In" Type="String" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetBusinessTripCardRegistrationViews" ReturnType="Collection(SECOM.ACS.Models.BusinessTripCardRegistrationView)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="BusinessName" Mode="In" Type="String" />
+      <Parameter Name="RequesterName" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AcsEmployeeDetails" EntityType="SECOM.ACS.Models.AcsEmployeeDetail" />
+    <FunctionImport Name="GetUserByEmployeeID">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="SystemMiscs" EntityType="SECOM.ACS.Models.SystemMisc" />
+    <FunctionImport Name="UpdateAcsPhoto">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="TakePhotoDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="TakePhotoTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="TakePhotoDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="TakePhotoTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="IsLending" Mode="In" Type="Boolean" />
+      <Parameter Name="AssetCode" Mode="In" Type="String" />
+      <Parameter Name="ActReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="ForceDoneBy" Mode="In" Type="String" />
+      <Parameter Name="ForceDoneDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateReqPhotoStatus">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckOverlapPeriodCardNo" ReturnType="Collection(SECOM.ACS.Models.CheckOverlapPeriodCardNoList)">
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckOverlapCardNo" ReturnType="Collection(SECOM.ACS.Models.CheckOverlapCardNoList)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CardNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetCardNo" ReturnType="Collection(SECOM.ACS.Models.CardNoView)">
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeDataViewsForRequest" ReturnType="Collection(SECOM.ACS.Models.EmployeeDataView)">
+      <Parameter Name="LoginUser" Mode="In" Type="String" />
+      <Parameter Name="RequestFor" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteRoleUserMapping">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertRoleUserMapping">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+      <Parameter Name="RoleID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetDepartment" EntitySet="Departments" ReturnType="Collection(SECOM.ACS.Models.Department)" />
+    <FunctionImport Name="GetPositionsForAreaApproval" EntitySet="Positions" ReturnType="Collection(SECOM.ACS.Models.Position)" />
+    <FunctionImport Name="DeleteAreaApprover">
+      <Parameter Name="AreaId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteArea">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetRequestDataViewsByCriteria" ReturnType="Collection(SECOM.ACS.Models.RequestDataView)">
+      <Parameter Name="ObjectID" Mode="In" Type="String" />
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+      <Parameter Name="Areas" Mode="In" Type="String" />
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="AssetCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDocumentType" ReturnType="Collection(SECOM.ACS.Models.DocumentTypeData)" />
+    <FunctionImport Name="GetDashboardRequestInProgress" ReturnType="Collection(SECOM.ACS.Models.RequestDH01DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+      <Parameter Name="ObjectID" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardRequestWaitToApprover" ReturnType="Collection(SECOM.ACS.Models.RequestDH02DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+      <Parameter Name="ObjectID" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardReqWaitToAcknowledge" ReturnType="Collection(SECOM.ACS.Models.RequestDH03DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+      <Parameter Name="ObjectID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardSecurityRoom" ReturnType="Collection(SECOM.ACS.Models.RequestDH04DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+      <Parameter Name="ObjectID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardItemOut" ReturnType="Collection(SECOM.ACS.Models.RequestDH05DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardItemIn" ReturnType="Collection(SECOM.ACS.Models.RequestDH06DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardLending" ReturnType="Collection(SECOM.ACS.Models.RequestDH07DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetDashboardWitness" ReturnType="Collection(SECOM.ACS.Models.RequestDH08DataView)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <AssociationSet Name="FK_tbr_AcsEmployeeDetail_tbr_AcsEmployee" Association="SECOM.ACS.Models.FK_tbr_AcsEmployeeDetail_tbr_AcsEmployee">
+      <End Role="AcsEmployee" EntitySet="AcsEmployees" />
+      <End Role="AcsEmployeeDetail" EntitySet="AcsEmployeeDetails" />
+    </AssociationSet>
+    <FunctionImport Name="InsertAcsEmployee" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="RequestFor" Mode="In" Type="String" />
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsEmployeeDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+      <Parameter Name="Seq" Mode="In" Type="Int32" />
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAcsEmployeeDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsEmployee">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteReqAreaMappings">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertReqAreaMapping">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateBusinessTripCardRegistration">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetVIPCardRegistrationView" ReturnType="Collection(SECOM.ACS.Models.VIPCardRegistrationView)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CardType" Mode="In" Type="String" />
+      <Parameter Name="CardStatus" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcsEmployeeDetailDataViews" ReturnType="Collection(SECOM.ACS.Models.AcsEmployeeDetailDataView)">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeByUserName" EntitySet="Employees" ReturnType="Collection(SECOM.ACS.Models.Employee)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetPrivilegeViewUser" ReturnType="Collection(SECOM.ACS.Models.PrivilegeViewDSHData)">
+      <Parameter Name="LoginUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsVIP" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="PositionMiscID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertVIPTransactionAcs">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsVIP">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateVIPTransactionAcs">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetReceiveRetrunVisitorCardDataView" ReturnType="Collection(SECOM.ACS.Models.ReceiveReturnVisitorCardDataView)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="VisitorName" Mode="In" Type="String" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="Factory" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetReceiveReturnBusinessCardDataView" ReturnType="Collection(SECOM.ACS.Models.ReceiveReturnBusinessTripCardDataView)">
+      <Parameter Name="EntryDate" Mode="In" Type="DateTime" />
+      <Parameter Name="BusinessName" Mode="In" Type="String" />
+      <Parameter Name="RequesterName" Mode="In" Type="String" />
+      <Parameter Name="Factory" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsVisitor" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsVisitorDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+      <Parameter Name="Seq" Mode="In" Type="Int32" />
+      <Parameter Name="VerifyTypeID" Mode="In" Type="Int32" />
+      <Parameter Name="VerifyNo" Mode="In" Type="String" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+      <Parameter Name="ItemInOut" Mode="In" Type="String" />
+      <Parameter Name="Photographing" Mode="In" Type="String" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsVisitor">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="EntryDateFrom" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeFrom" Mode="In" Type="Time" />
+      <Parameter Name="EntryDateTo" Mode="In" Type="DateTime" />
+      <Parameter Name="EntryTimeTo" Mode="In" Type="Time" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAcsVisitorDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcsVisitorDetailDataViews" ReturnType="Collection(SECOM.ACS.Models.AcsVisitorDetailDataView)">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ReceiveBusinessTripCard">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ReturnBusinessTripCard">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ReceiveVisitorCard">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ReturnVisitorCard">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAreaMapping">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+      <Parameter Name="AreaId" Mode="In" Type="Int32" />
+      <Parameter Name="IsMainArea" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAreaMapping">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAreaApprover">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Seq" Mode="In" Type="Byte" />
+      <Parameter Name="Department" Mode="In" Type="String" />
+      <Parameter Name="PositionID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateEmployee">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+      <Parameter Name="IsLending" Mode="In" Type="Boolean" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeForImportAcs" ReturnType="Collection(SECOM.ACS.Models.EmployeeForImportAcs)">
+      <Parameter Name="EmpID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeForImportAcsToAdd" ReturnType="Collection(SECOM.ACS.Models.EmployeeForImportAcs)">
+      <Parameter Name="TranID" Mode="In" Type="String" />
+      <Parameter Name="SendDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeForImportAcsToCancel" ReturnType="Collection(SECOM.ACS.Models.EmployeeForImportAcs)">
+      <Parameter Name="TranID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetBatchProcess" />
+    <FunctionImport Name="InsertAcsItemOutDetail">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Seq" Mode="In" Type="Int16" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="ConfdtFlag" Mode="In" Type="Boolean" />
+      <Parameter Name="ReqQty" Mode="In" Type="Int32" />
+      <Parameter Name="PlanReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ActOutQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcsItemOutDetailDataViews" ReturnType="Collection(SECOM.ACS.Models.AcsItemOutDetailDataView)">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsItemInDetail">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Seq" Mode="In" Type="Int16" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="ConfdtFlag" Mode="In" Type="Boolean" />
+      <Parameter Name="ReqQty" Mode="In" Type="Int32" />
+      <Parameter Name="PlanReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ActInQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AcsTasks" EntityType="SECOM.ACS.Models.AcsTask" />
+    <FunctionImport Name="InsertAcsItemOut" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="TakeOutDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+      <Parameter Name="TakeOutName" Mode="In" Type="String" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertAcsItemIn" ReturnType="Collection(String)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="TakeInDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+      <Parameter Name="TakeInName" Mode="In" Type="String" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="AckBy" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployeeForImportAcsByEffectiveDate" ReturnType="Collection(SECOM.ACS.Models.EmployeeForImportAcs)">
+      <Parameter Name="SendDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsItemOut">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="TakeOutDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+      <Parameter Name="TakeOutName" Mode="In" Type="String" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsItemOutDetail">
+      <Parameter Name="DetailID" Mode="In" Type="Guid" />
+      <Parameter Name="Seq" Mode="In" Type="Int16" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="ConfdtFlag" Mode="In" Type="Boolean" />
+      <Parameter Name="ReqQty" Mode="In" Type="Int32" />
+      <Parameter Name="PlanReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ActOutQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcsItemInDetailDataViews" ReturnType="Collection(SECOM.ACS.Models.AcsItemInDetailDataView)">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsItemInDetail">
+      <Parameter Name="DetailID" Mode="In" Type="Guid" />
+      <Parameter Name="Seq" Mode="In" Type="Int16" />
+      <Parameter Name="ItemID" Mode="In" Type="Int32" />
+      <Parameter Name="Description" Mode="In" Type="String" />
+      <Parameter Name="ConfdtFlag" Mode="In" Type="Boolean" />
+      <Parameter Name="ReqQty" Mode="In" Type="Int32" />
+      <Parameter Name="PlanReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ActInQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnQty" Mode="In" Type="Int32" />
+      <Parameter Name="ActReturnDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsItemIn">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="TakeInDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="DeptName" Mode="In" Type="String" />
+      <Parameter Name="TakeInName" Mode="In" Type="String" />
+      <Parameter Name="PurposeCodeID" Mode="In" Type="Int32" />
+      <Parameter Name="OtherPurpose" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateAcsItemInForAuthor">
+      <Parameter Name="ReqNo" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Note" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaDataView" ReturnType="Collection(SECOM.ACS.Models.AreaDataView)">
+      <Parameter Name="AreaID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetLatestReqApproverList" EntitySet="ReqApproverLists" ReturnType="Collection(SECOM.ACS.Models.ReqApproverList)">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAcsVisitorTransactionDataViews" ReturnType="Collection(SECOM.ACS.Models.AcsVisitorTransactionDataView)">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateVisitorCardRegistration">
+      <Parameter Name="TranID" Mode="In" Type="Guid" />
+      <Parameter Name="DetailID" Mode="In" Type="Guid" />
+      <Parameter Name="CardID" Mode="In" Type="String" />
+      <Parameter Name="UpdateBy" Mode="In" Type="String" />
+      <Parameter Name="VerifyType" Mode="In" Type="Int32" />
+      <Parameter Name="VerifyNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetGAApprover" ReturnType="Collection(SECOM.ACS.Models.EmployeeApprovalDataView)" />
+    <FunctionImport Name="DeleteAcsItemInDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteAcsItemOutDetail">
+      <Parameter Name="RequestNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CreateUser" ReturnType="Collection(Int32)">
+      <Parameter Name="EmployeeID" Mode="In" Type="String" />
+      <Parameter Name="CreateBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CreateEmployeeRoleMapping">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetAreaOrganizeMappings" EntitySet="AreaOrganizeMappings" ReturnType="Collection(SECOM.ACS.Models.AreaOrganizeMapping)">
+      <Parameter Name="PositionID" Mode="In" Type="String" />
+      <Parameter Name="DepartmentID" Mode="In" Type="String" />
+      <Parameter Name="SpecialPositionID" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AreaOrganizeMappings" EntityType="SECOM.ACS.Models.AreaOrganizeMapping" />
+    <FunctionImport Name="UpdateDocument" ReturnType="Collection(DateTime)">
+      <Parameter Name="RequestType" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="AreaApprover">
+    <Key>
+      <PropertyRef Name="AreaID" />
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="Seq" Type="Byte" Nullable="false" />
+    <Property Name="DepartmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PositionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Position" Relationship="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Position" FromRole="AreaApprover" ToRole="tbm_Position" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Area" FromRole="AreaApprover" ToRole="tbm_Area" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CardID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmpNameTH" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="EmpNameEN" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PositionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsHRLink" Type="Boolean" Nullable="false" />
+    <Property Name="IsShow" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="StartWorkingDate" Type="DateTime" Precision="0" />
+    <Property Name="ResignDate" Type="DateTime" Precision="0" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Position" Relationship="SECOM.ACS.Models.FK_tbm_Employee_tbm_Position" FromRole="Employee" ToRole="tbm_Position" />
+    <Property Name="SpecialPositionID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Gate">
+    <Key>
+      <PropertyRef Name="GateID" />
+    </Key>
+    <Property Name="GateID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FactoryCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.tbm_AreaGateMapping" FromRole="Gate" ToRole="tbm_Area" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ItemDisplayEN" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ItemDisplayTH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsConfdt" Type="Boolean" Nullable="false" />
+    <Property Name="IsItemOut" Type="Boolean" Nullable="false" />
+    <Property Name="IsItemIn" Type="Boolean" Nullable="false" />
+    <Property Name="IsPhoto" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AcsItemInDetails" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbm_Item" FromRole="tbm_Item" ToRole="tbr_AcsItemInDetail" />
+    <NavigationProperty Name="AcsItemOutDetails" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbm_Item" FromRole="tbm_Item" ToRole="tbr_AcsItemOutDetail" />
+    <Property Name="ItemTypeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AcsPhoto" Relationship="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Item" FromRole="Item" ToRole="tbr_AcsPhoto" />
+  </EntityType>
+  <EntityType Name="Misc">
+    <Key>
+      <PropertyRef Name="MiscID" />
+    </Key>
+    <Property Name="MiscID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MiscType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MiscName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MiscDisplayEN" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MiscDisplayTH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MiscRemark" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DeleteAble" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="AcsItemInDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="Guid" Nullable="false" />
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Seq" Type="Int16" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConfdtFlag" Type="Boolean" Nullable="false" />
+    <Property Name="ReqQty" Type="Int32" Nullable="false" />
+    <Property Name="PlanReturnDate" Type="DateTime" Precision="3" />
+    <Property Name="ActInQty" Type="Int32" />
+    <Property Name="ActReturnQty" Type="Int32" />
+    <Property Name="ActReturnDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbm_Item" FromRole="tbr_AcsItemInDetail" ToRole="tbm_Item" />
+    <NavigationProperty Name="AcsItemIn" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbr_AcsItemIn" FromRole="AcsItemInDetail" ToRole="tbr_AcsItemIn" />
+  </EntityType>
+  <EntityType Name="AcsItemOutDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="Guid" Nullable="false" />
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Seq" Type="Int16" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ConfdtFlag" Type="Boolean" Nullable="false" />
+    <Property Name="ReqQty" Type="Int32" Nullable="false" />
+    <Property Name="PlanReturnDate" Type="DateTime" Precision="3" />
+    <Property Name="ActOutQty" Type="Int32" />
+    <Property Name="ActReturnQty" Type="Int32" />
+    <Property Name="ActReturnDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbm_Item" FromRole="tbr_AcsItemOutDetail" ToRole="tbm_Item" />
+    <NavigationProperty Name="AcsItemOut" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbr_AcsItemOut" FromRole="AcsItemOutDetail" ToRole="tbr_AcsItemOut" />
+  </EntityType>
+  <EntityType Name="AcsVisitorDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="Guid" Nullable="false" />
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Seq" Type="Int16" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DeptName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ItemInOut" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Photographing" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="VerifyTypeID" Type="Int32" />
+    <Property Name="VerifyNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AcsVisitor" Relationship="SECOM.ACS.Models.FK_tbr_AcsVisitorDetail_tbr_AcsVisitor" FromRole="AcsVisitorDetail" ToRole="tbr_AcsVisitor" />
+  </EntityType>
+  <EntityType Name="ReqAreaMapping">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ReqType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AcsVisitor" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVisitor" FromRole="ReqAreaMapping" ToRole="tbr_AcsVisitor" />
+    <NavigationProperty Name="AcsVIP" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVIP" FromRole="ReqAreaMapping" ToRole="tbr_AcsVIP" />
+    <NavigationProperty Name="AcsEmployee" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsEmployee" FromRole="ReqAreaMapping" ToRole="tbr_AcsEmployee" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbm_Area" FromRole="ReqAreaMapping" ToRole="tbm_Area" />
+  </EntityType>
+  <EntityType Name="PermissionMapping">
+    <Key>
+      <PropertyRef Name="ObjectID" />
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="PermissionName" />
+    </Key>
+    <Property Name="ObjectID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="PermissionName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TransactionAcs">
+    <Key>
+      <PropertyRef Name="TranID" />
+    </Key>
+    <Property Name="TranID" Type="Guid" Nullable="false" />
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ReqType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="DetailID" Type="Guid" Nullable="false" />
+    <Property Name="EntryDateFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeFrom" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EntryDateTo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeTo" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="CardID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CardReceiveTime" Type="DateTime" Precision="3" />
+    <Property Name="CardReturnTime" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Byte" Nullable="false" />
+    <Property Name="SendAcsDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AcsVisitor" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVisitor" FromRole="TransactionAcs" ToRole="tbr_AcsVisitor" />
+    <NavigationProperty Name="AcsVIP" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVIP" FromRole="TransactionAcs" ToRole="tbr_AcsVIP" />
+    <NavigationProperty Name="AcsEmployee" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsEmployee" FromRole="TransactionAcs" ToRole="tbr_AcsEmployee" />
+    <Property Name="CancelAcsDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_tbr_AcsItemInDetail_tbm_Item">
+    <End Type="SECOM.ACS.Models.Item" Role="tbm_Item" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemInDetail" Role="tbr_AcsItemInDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="tbr_AcsItemInDetail">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsItemOutDetail_tbm_Item">
+    <End Type="SECOM.ACS.Models.Item" Role="tbm_Item" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemOutDetail" Role="tbr_AcsItemOutDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="tbr_AcsItemOutDetail">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NameEN" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="NameTH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AreaApprover" Relationship="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Position" FromRole="tbm_Position" ToRole="AreaApprover" />
+    <NavigationProperty Name="Employee" Relationship="SECOM.ACS.Models.FK_tbm_Employee_tbm_Position" FromRole="tbm_Position" ToRole="Employee" />
+    <Property Name="NameEN" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="NameTH" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PositionLevel" Type="Byte" Nullable="true" />
+    <Property Name="PositionRank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Detail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_tbm_AreaApprover_tbm_Position">
+    <End Type="SECOM.ACS.Models.Position" Role="tbm_Position" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AreaApprover" Role="AreaApprover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="AreaApprover">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbm_Employee_tbm_Position">
+    <End Type="SECOM.ACS.Models.Position" Role="tbm_Position" Multiplicity="0..1" />
+    <End Type="SECOM.ACS.Models.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="PermissionDashboard">
+    <Property Type="Int32" Name="RoleId" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH01" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH02" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH03" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH04" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH05" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH06" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH07" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH08" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ItemDataView">
+    <Property Type="Int32" Name="ItemID" Nullable="false" />
+    <Property Type="String" Name="ItemName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ItemDisplayEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ItemDisplayTH" Nullable="false" MaxLength="256" />
+    <Property Type="Boolean" Name="IsItemOut" Nullable="false" />
+    <Property Type="Boolean" Name="IsItemIn" Nullable="false" />
+    <Property Type="Boolean" Name="IsPhoto" Nullable="false" />
+    <Property Type="Boolean" Name="IsConfdt" Nullable="false" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="String" Name="CreateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UpdateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="UpdateDate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="ItemTypeID" Nullable="false" />
+    <Property Type="String" Name="MiscName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="MiscDisplayTH" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="MiscDisplayEN" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="GateDataView">
+    <Property Type="String" Name="GateID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="GateName" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="AreaDataView">
+    <Property Type="Int32" Name="AreaID" Nullable="false" />
+    <Property Type="String" Name="FactoryCode" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AreaDisplayEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="AreaDisplayTH" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <EntityType Name="AcsItemOut">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="TakeOutDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="Company" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DeptName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="TakeOutName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PurposeCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OtherPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AcsItemOutDetail" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOutDetail_tbr_AcsItemOut" FromRole="tbr_AcsItemOut" ToRole="AcsItemOutDetail" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemOut" FromRole="tbr_AcsItemOut" ToRole="tbr_ReqApproverList" />
+    <Property Name="ForceDoneBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ForceDoneDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOut_tbm_Area" FromRole="AcsItemOut" ToRole="tbm_Area" />
+  </EntityType>
+  <EntityType Name="AcsPhoto">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="TakePhotoDateFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TakePhotoTimeFrom" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="TakePhotoDateTo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TakePhotoTimeTo" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="PhotoByType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhotoEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TakePhotoName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="WitnessEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TargetItem" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EquipItemID" Type="Int32" Nullable="false" />
+    <Property Name="OtherEquip" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PurposeCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OtherPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsLending" Type="Boolean" Nullable="false" />
+    <Property Name="AssetCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ActReturnDate" Type="DateTime" Precision="3" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Item" FromRole="tbr_AcsPhoto" ToRole="Item" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsPhoto" FromRole="tbr_AcsPhoto" ToRole="tbr_ReqApproverList" />
+    <Property Name="AckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AckDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Area" FromRole="AcsPhoto" ToRole="tbm_Area" />
+    <Property Name="ForceDoneBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ForceDoneDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="AcsVisitor">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="EntryDateFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeFrom" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EntryDateTo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeTo" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="PurposeCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OtherPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AcsVisitorDetails" Relationship="SECOM.ACS.Models.FK_tbr_AcsVisitorDetail_tbr_AcsVisitor" FromRole="tbr_AcsVisitor" ToRole="AcsVisitorDetail" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVisitor" FromRole="tbr_AcsVisitor" ToRole="tbr_ReqApproverList" />
+    <NavigationProperty Name="ReqAreaMappings" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVisitor" FromRole="tbr_AcsVisitor" ToRole="ReqAreaMapping" />
+    <NavigationProperty Name="TransactionAcs" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVisitor" FromRole="tbr_AcsVisitor" ToRole="TransactionAcs" />
+  </EntityType>
+  <EntityType Name="ReqApproverList">
+    <Key>
+      <PropertyRef Name="ApprovalID" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ReqType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Step" Type="Byte" Nullable="false" />
+    <Property Name="ApproveUserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AreaID" Type="Int32" />
+    <Property Name="ApprovalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalDate" Type="DateTime" Precision="3" />
+    <Property Name="RejectReason" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcsItemOut" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemOut" FromRole="tbr_ReqApproverList" ToRole="tbr_AcsItemOut" />
+    <NavigationProperty Name="AcsPhoto" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsPhoto" FromRole="tbr_ReqApproverList" ToRole="tbr_AcsPhoto" />
+    <NavigationProperty Name="AcsVisitor" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVisitor" FromRole="tbr_ReqApproverList" ToRole="tbr_AcsVisitor" />
+    <NavigationProperty Name="AcsVIP" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVIP" FromRole="ReqApproverList" ToRole="tbr_AcsVIP" />
+    <NavigationProperty Name="AcsEmployee" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsEmployee" FromRole="ReqApproverList" ToRole="tbr_AcsEmployee" />
+    <NavigationProperty Name="AcsItemIn" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemIn" FromRole="ReqApproverList" ToRole="tbr_AcsItemIn" />
+    <Property Name="ApprovalID" Type="Guid" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ReferenceApprovalID" Type="Guid" />
+  </EntityType>
+  <Association Name="FK_tbr_AcsPhoto_tbm_Item">
+    <End Type="SECOM.ACS.Models.Item" Role="Item" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsPhoto" Role="tbr_AcsPhoto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="tbr_AcsPhoto">
+        <PropertyRef Name="EquipItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsItemOutDetail_tbr_AcsItemOut">
+    <End Type="SECOM.ACS.Models.AcsItemOut" Role="tbr_AcsItemOut" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemOutDetail" Role="AcsItemOutDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsItemOut">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="AcsItemOutDetail">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsItemOut">
+    <End Type="SECOM.ACS.Models.AcsItemOut" Role="tbr_AcsItemOut" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="tbr_ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsItemOut">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="tbr_ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsPhoto">
+    <End Type="SECOM.ACS.Models.AcsPhoto" Role="tbr_AcsPhoto" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="tbr_ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsPhoto">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="tbr_ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsVisitorDetail_tbr_AcsVisitor">
+    <End Type="SECOM.ACS.Models.AcsVisitor" Role="tbr_AcsVisitor" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsVisitorDetail" Role="AcsVisitorDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVisitor">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="AcsVisitorDetail">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsVisitor">
+    <End Type="SECOM.ACS.Models.AcsVisitor" Role="tbr_AcsVisitor" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="tbr_ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVisitor">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="tbr_ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqAreaMapping_tbr_AcsVisitor">
+    <End Type="SECOM.ACS.Models.AcsVisitor" Role="tbr_AcsVisitor" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqAreaMapping" Role="ReqAreaMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVisitor">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqAreaMapping">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbt_TransactionAcs_tbr_AcsVisitor">
+    <End Type="SECOM.ACS.Models.AcsVisitor" Role="tbr_AcsVisitor" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.TransactionAcs" Role="TransactionAcs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVisitor">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="TransactionAcs">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcsVIP">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PositionMiscID" Type="Int32" Nullable="false" />
+    <Property Name="Company" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsVIP" FromRole="tbr_AcsVIP" ToRole="ReqApproverList" />
+    <NavigationProperty Name="ReqAreaMapping" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsVIP" FromRole="tbr_AcsVIP" ToRole="ReqAreaMapping" />
+    <NavigationProperty Name="TransactionAcs" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsVIP" FromRole="tbr_AcsVIP" ToRole="TransactionAcs" />
+  </EntityType>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsVIP">
+    <End Type="SECOM.ACS.Models.AcsVIP" Role="tbr_AcsVIP" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVIP">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqAreaMapping_tbr_AcsVIP">
+    <End Type="SECOM.ACS.Models.AcsVIP" Role="tbr_AcsVIP" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqAreaMapping" Role="ReqAreaMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVIP">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqAreaMapping">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbt_TransactionAcs_tbr_AcsVIP">
+    <End Type="SECOM.ACS.Models.AcsVIP" Role="tbr_AcsVIP" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.TransactionAcs" Role="TransactionAcs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsVIP">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="TransactionAcs">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcsEmployee">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="RequestFor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EntryDateFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeFrom" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EntryDateTo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EntryTimeTo" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="PurposeCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OtherPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsEmployee" FromRole="tbr_AcsEmployee" ToRole="ReqApproverList" />
+    <NavigationProperty Name="ReqAreaMappings" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbr_AcsEmployee" FromRole="tbr_AcsEmployee" ToRole="ReqAreaMapping" />
+    <NavigationProperty Name="TransactionAcs" Relationship="SECOM.ACS.Models.FK_tbt_TransactionAcs_tbr_AcsEmployee" FromRole="tbr_AcsEmployee" ToRole="TransactionAcs" />
+    <NavigationProperty Name="AcsEmployeeDetails" Relationship="SECOM.ACS.Models.FK_tbr_AcsEmployeeDetail_tbr_AcsEmployee" FromRole="AcsEmployee" ToRole="AcsEmployeeDetail" />
+  </EntityType>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsEmployee">
+    <End Type="SECOM.ACS.Models.AcsEmployee" Role="tbr_AcsEmployee" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsEmployee">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqAreaMapping_tbr_AcsEmployee">
+    <End Type="SECOM.ACS.Models.AcsEmployee" Role="tbr_AcsEmployee" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqAreaMapping" Role="ReqAreaMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsEmployee">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqAreaMapping">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbt_TransactionAcs_tbr_AcsEmployee">
+    <End Type="SECOM.ACS.Models.AcsEmployee" Role="tbr_AcsEmployee" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.TransactionAcs" Role="TransactionAcs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsEmployee">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="TransactionAcs">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcsItemIn">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="TakeInDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="Company" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DeptName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="TakeInName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PurposeCodeID" Type="Int32" Nullable="false" />
+    <Property Name="OtherPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AcsItemInDetails" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemInDetail_tbr_AcsItemIn" FromRole="tbr_AcsItemIn" ToRole="AcsItemInDetail" />
+    <NavigationProperty Name="ReqApproverList" Relationship="SECOM.ACS.Models.FK_tbr_ReqApproverList_tbr_AcsItemIn" FromRole="tbr_AcsItemIn" ToRole="ReqApproverList" />
+    <Property Name="AckBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AckDate" Type="DateTime" Precision="3" />
+    <Property Name="ForceDoneBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ForceDoneDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemIn_tbm_Area" FromRole="AcsItemIn" ToRole="tbm_Area" />
+  </EntityType>
+  <Association Name="FK_tbr_AcsItemInDetail_tbr_AcsItemIn">
+    <End Type="SECOM.ACS.Models.AcsItemIn" Role="tbr_AcsItemIn" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemInDetail" Role="AcsItemInDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsItemIn">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="AcsItemInDetail">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqApproverList_tbr_AcsItemIn">
+    <End Type="SECOM.ACS.Models.AcsItemIn" Role="tbr_AcsItemIn" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqApproverList" Role="ReqApproverList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbr_AcsItemIn">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="ReqApproverList">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="EmployeeInformation">
+    <Property Type="String" Name="EmpID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PositionEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="PositionTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DepartmentEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DepartmentTH" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="LendingFlag" Nullable="false" />
+    <Property Type="Boolean" Name="IsVerifyItemIn" Nullable="false" />
+    <Property Type="Boolean" Name="IsVerifyItemOut" Nullable="false" />
+    <Property Type="String" Name="PositionID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="DepartmentID" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="EntryTimeSetting">
+    <Property Type="String" Name="EntryTimeFrom" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EntryTimeTo" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardID" />
+    </Key>
+    <Property Name="CardID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CardType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CardNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Note" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EditAble" Type="Boolean" Nullable="false" />
+    <Property Name="DeleteAble" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AreaCardMappings" Relationship="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Card" FromRole="Card" ToRole="tbm_AreaCardMapping" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="AreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FactoryCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AreaName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="AreaDisplayEN" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="AreaDisplayTH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ConfdtLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="AreaApprovers" Relationship="SECOM.ACS.Models.FK_tbm_AreaApprover_tbm_Area" FromRole="tbm_Area" ToRole="AreaApprover" />
+    <NavigationProperty Name="AreaCardMappings" Relationship="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Area" FromRole="tbm_Area" ToRole="tbm_AreaCardMapping" />
+    <NavigationProperty Name="AcsItemIns" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemIn_tbm_Area" FromRole="tbm_Area" ToRole="AcsItemIn" />
+    <NavigationProperty Name="AcsItemOuts" Relationship="SECOM.ACS.Models.FK_tbr_AcsItemOut_tbm_Area" FromRole="tbm_Area" ToRole="AcsItemOut" />
+    <NavigationProperty Name="AcsPhotoes" Relationship="SECOM.ACS.Models.FK_tbr_AcsPhoto_tbm_Area" FromRole="tbm_Area" ToRole="AcsPhoto" />
+    <NavigationProperty Name="ReqAreaMappings" Relationship="SECOM.ACS.Models.FK_tbr_ReqAreaMapping_tbm_Area" FromRole="tbm_Area" ToRole="ReqAreaMapping" />
+    <NavigationProperty Name="Gates" Relationship="SECOM.ACS.Models.tbm_AreaGateMapping" FromRole="tbm_Area" ToRole="Gate" />
+  </EntityType>
+  <EntityType Name="AreaCardMapping">
+    <Key>
+      <PropertyRef Name="CardID" />
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="CardID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="IsMainArea" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Area" Relationship="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Area" FromRole="tbm_AreaCardMapping" ToRole="tbm_Area" />
+    <NavigationProperty Name="Card" Relationship="SECOM.ACS.Models.FK_tbm_AreaCardMapping_tbm_Card" FromRole="tbm_AreaCardMapping" ToRole="Card" />
+  </EntityType>
+  <Association Name="FK_tbm_AreaApprover_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AreaApprover" Role="AreaApprover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="AreaApprover">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbm_AreaCardMapping_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AreaCardMapping" Role="tbm_AreaCardMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="tbm_AreaCardMapping">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsItemIn_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemIn" Role="AcsItemIn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="AcsItemIn">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsItemOut_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsItemOut" Role="AcsItemOut" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="AcsItemOut">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_AcsPhoto_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AcsPhoto" Role="AcsPhoto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="AcsPhoto">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbr_ReqAreaMapping_tbm_Area">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.ReqAreaMapping" Role="ReqAreaMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbm_Area">
+        <PropertyRef Name="AreaID" />
+      </Principal>
+      <Dependent Role="ReqAreaMapping">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbm_AreaCardMapping_tbm_Card">
+    <End Type="SECOM.ACS.Models.Card" Role="Card" Multiplicity="1" />
+    <End Type="SECOM.ACS.Models.AreaCardMapping" Role="tbm_AreaCardMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="CardID" />
+      </Principal>
+      <Dependent Role="tbm_AreaCardMapping">
+        <PropertyRef Name="CardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbm_AreaGateMapping">
+    <End Type="SECOM.ACS.Models.Area" Role="tbm_Area" Multiplicity="*" />
+    <End Type="SECOM.ACS.Models.Gate" Role="Gate" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="AreaMapping">
+    <Property Type="Int32" Name="AreaID" Nullable="false" />
+    <Property Type="Boolean" Name="IsMainArea" Nullable="false" />
+    <Property Type="String" Name="AreaDisplayEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="AreaDisplayTH" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="EmpID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FactoryCode" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="VisitorCardRegistrationView">
+    <Property Type="Guid" Name="TranID" Nullable="false" />
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="VisitorName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Company" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="Int32" Name="VerifyTypeID" Nullable="true" />
+    <Property Type="String" Name="VerifyNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+    <Property Type="DateTime" Name="SendAcsDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="Int32" Name="AllowEditCardRegis" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="BusinessTripCardRegistrationView">
+    <Property Type="Guid" Name="TranID" Nullable="false" />
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="BusinessEmployee" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+    <Property Type="DateTime" Name="SendAcsDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="AllowEditCardRegis" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="AcsEmployeeDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="Guid" Nullable="false" />
+    <Property Name="ReqNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Seq" Type="Int16" Nullable="false" />
+    <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DeptName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcsEmployee" Relationship="SECOM.ACS.Models.FK_tbr_AcsEmployeeDetail_tbr_AcsEmployee" FromRole="AcsEmployeeDetail" ToRole="AcsEmployee" />
+  </EntityType>
+  <EntityType Name="SystemMisc">
+    <Key>
+      <PropertyRef Name="SysMiscType" />
+      <PropertyRef Name="SysMiscCode" />
+    </Key>
+    <Property Name="SysMiscType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SysMiscCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SysMiscValue1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="SysMiscValue2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="SysMiscValue3" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="SysMiscSortNo" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="CheckOverlapPeriodCardNoList">
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="VisitorName" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="CheckOverlapCardNoList">
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="VisitorName" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="CardNoView">
+    <Property Type="String" Name="CardID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CardNo" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="EmployeeApprovalDataView">
+    <Property Type="String" Name="EmpID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="PositionEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="PositionTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DepartmentID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="PositionID" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="AreaID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="EmployeeDataView">
+    <Property Type="String" Name="EmpID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DepartmentID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PositionID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Level" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="IsHRLink" Nullable="false" />
+    <Property Type="Boolean" Name="IsShow" Nullable="false" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="CreateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UpdateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="UpdateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="PositionTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PositionEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DepartmentTH" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DepartmentEN" Nullable="false" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="RequestDataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" Precision="23" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaDisplayEN" Nullable="true" />
+    <Property Type="String" Name="AreaDisplayTH" Nullable="true" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="DocumentTypeData">
+    <Property Type="String" Name="DocObjectID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="DocTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocTypeTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="RequestDH01DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" Precision="23" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" Precision="23" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+    <Property Type="String" Name="ReqStatus" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="RequestDH02DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="RequestDH03DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaDisplayEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AreaDisplayTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="RequestDH04DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" Precision="23" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="RequestDH05DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="TakeOutDate" Nullable="false" />
+    <Property Type="Int32" Name="EntrTimeFrom" Nullable="true" />
+    <Property Type="Int32" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Int32" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="SourcePlace" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="TakeOutCompany" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="TakeOutDepartment" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="TakeOutName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SourcePlaceTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="RequestDH06DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="TakeInDate" Nullable="false" />
+    <Property Type="Int32" Name="EntrTimeFrom" Nullable="true" />
+    <Property Type="Int32" Name="EntryDateTo" Nullable="true" />
+    <Property Type="Int32" Name="EntryTimeTo" Nullable="true" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="BringingArea" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="TakeOutCompany" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="TakeOutDepartment" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="TakeInName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ReqStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="BringingAreaTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="RequestDH07DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="false" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AreaTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EquipNameEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EquipNameTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AssetCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ReqStatus" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="RequestDH08DataView">
+    <Property Type="String" Name="ObjectID" Nullable="false" MaxLength="6" />
+    <Property Type="String" Name="DocumentTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DocumentTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ReqStatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="false" />
+    <Property Type="String" Name="RequestByEN" Nullable="false" MaxLength="400" />
+    <Property Type="String" Name="RequestByTH" Nullable="false" MaxLength="400" />
+    <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="AreaEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AreaTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EquipNameEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EquipNameTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ReqStatus" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_tbr_AcsEmployeeDetail_tbr_AcsEmployee">
+    <End Type="SECOM.ACS.Models.AcsEmployee" Role="AcsEmployee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SECOM.ACS.Models.AcsEmployeeDetail" Role="AcsEmployeeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcsEmployee">
+        <PropertyRef Name="ReqNo" />
+      </Principal>
+      <Dependent Role="AcsEmployeeDetail">
+        <PropertyRef Name="ReqNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="AcsEmployeeDetailDataView">
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="Int16" Name="Seq" Nullable="false" />
+    <Property Type="String" Name="EmpID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DeptName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="DepartmentNameTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="DepartmentNameEN" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="VIPCardRegistrationView">
+    <Property Type="String" Name="CardNo" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Company" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="true" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="PositionMiscID" Nullable="true" />
+    <Property Type="String" Name="AreaID" Nullable="true" />
+    <Property Type="String" Name="StatusEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="StatusTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Status" Nullable="false" MaxLength="2" />
+  </ComplexType>
+  <ComplexType Name="PrivilegeViewDSHData">
+    <Property Type="Boolean" Name="ViewDSH01" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH02" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH03" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH04" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH05" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH06" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH07" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH08" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH09" Nullable="false" />
+    <Property Type="Boolean" Name="IsVerifyItemIn" Nullable="false" />
+    <Property Type="Boolean" Name="IsVerifyItemOut" Nullable="false" />
+    <Property Type="Boolean" Name="IsLending" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ReceiveReturnVisitorCardDataView">
+    <Property Type="Guid" Name="TranID" Nullable="false" />
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="VisitorName" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Company" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+    <Property Type="DateTime" Name="TimeIn" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="TimeOut" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="VerifyTypeID" Nullable="true" />
+    <Property Type="String" Name="VerifyNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CardNo" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ReceiveReturnBusinessTripCardDataView">
+    <Property Type="Guid" Name="TranID" Nullable="false" />
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="EmpNameEN" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="EmpNameTH" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="AreaEN" Nullable="true" />
+    <Property Type="String" Name="AreaTH" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CardNo" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="TimeIn" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="TimeOut" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BusinessEmployee" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="AcsVisitorDetailDataView">
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="Int16" Name="Seq" Nullable="false" />
+    <Property Type="Int32" Name="VerifyTypeID" Nullable="true" />
+    <Property Type="String" Name="VerifyNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Company" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DeptName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ItemInOut" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Photographing" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="VerifyTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="VerifyTypeTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="GenerateReqNoData">
+    <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="UserRole">
+    <Property Type="Int32" Name="RoleID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="256" />
+    <Property Type="Boolean" Name="IsSystemRole" Nullable="false" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH01" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH02" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH03" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH04" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH05" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH06" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH07" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH08" Nullable="false" />
+    <Property Type="Boolean" Name="ViewDSH09" Nullable="false" />
+    <Property Type="String" Name="CreateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="UpdateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="UpdateDate" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="EmployeeForImportAcs">
+    <Property Type="String" Name="EmpID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardFormat" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="400" />
+    <Property Type="String" Name="Company" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Department" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="Position" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="AccessGroup1" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup1" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup1" Nullable="true" />
+    <Property Type="String" Name="AccessGroup2" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup2" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup2" Nullable="true" />
+    <Property Type="String" Name="AccessGroup3" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup3" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup3" Nullable="true" />
+    <Property Type="String" Name="AccessGroup4" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup4" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup4" Nullable="true" />
+    <Property Type="String" Name="AccessGroup5" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup5" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup5" Nullable="true" />
+    <Property Type="String" Name="AccessGroup6" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup6" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup6" Nullable="true" />
+    <Property Type="String" Name="AccessGroup7" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup7" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup7" Nullable="true" />
+    <Property Type="String" Name="AccessGroup8" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup8" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup8" Nullable="true" />
+    <Property Type="String" Name="AccessGroup9" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup9" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup9" Nullable="true" />
+    <Property Type="String" Name="AccessGroup10" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup10" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup10" Nullable="true" />
+    <Property Type="String" Name="AccessGroup11" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup11" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup11" Nullable="true" />
+    <Property Type="String" Name="AccessGroup12" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup12" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup12" Nullable="true" />
+    <Property Type="String" Name="AccessGroup13" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup13" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup13" Nullable="true" />
+    <Property Type="String" Name="AccessGroup14" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup14" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup14" Nullable="true" />
+    <Property Type="String" Name="AccessGroup15" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup15" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup15" Nullable="true" />
+    <Property Type="String" Name="AccessGroup16" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup16" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup16" Nullable="true" />
+    <Property Type="String" Name="AccessGroup17" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup17" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup17" Nullable="true" />
+    <Property Type="String" Name="AccessGroup18" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup18" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup18" Nullable="true" />
+    <Property Type="String" Name="AccessGroup19" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup19" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup19" Nullable="true" />
+    <Property Type="String" Name="AccessGroup20" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup20" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup20" Nullable="true" />
+    <Property Type="String" Name="AccessGroup21" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup21" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup21" Nullable="true" />
+    <Property Type="String" Name="AccessGroup22" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup22" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup22" Nullable="true" />
+    <Property Type="String" Name="AccessGroup23" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup23" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup23" Nullable="true" />
+    <Property Type="String" Name="AccessGroup24" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup24" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup24" Nullable="true" />
+    <Property Type="String" Name="AccessGroup25" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup25" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup25" Nullable="true" />
+    <Property Type="String" Name="AccessGroup26" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup26" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup26" Nullable="true" />
+    <Property Type="String" Name="AccessGroup27" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup27" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup27" Nullable="true" />
+    <Property Type="String" Name="AccessGroup28" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup28" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup28" Nullable="true" />
+    <Property Type="String" Name="AccessGroup29" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup29" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup29" Nullable="true" />
+    <Property Type="String" Name="AccessGroup30" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup30" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup30" Nullable="true" />
+    <Property Type="String" Name="AccessGroup31" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup31" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup31" Nullable="true" />
+    <Property Type="String" Name="AccessGroup32" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup32" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup32" Nullable="true" />
+    <Property Type="String" Name="AccessGroup33" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup33" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup33" Nullable="true" />
+    <Property Type="String" Name="AccessGroup34" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup34" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup34" Nullable="true" />
+    <Property Type="String" Name="AccessGroup35" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup35" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup35" Nullable="true" />
+    <Property Type="String" Name="AccessGroup36" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup36" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup36" Nullable="true" />
+    <Property Type="String" Name="AccessGroup37" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup37" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup37" Nullable="true" />
+    <Property Type="String" Name="AccessGroup38" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup38" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup38" Nullable="true" />
+    <Property Type="String" Name="AccessGroup39" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup39" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup39" Nullable="true" />
+    <Property Type="String" Name="AccessGroup40" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup40" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup40" Nullable="true" />
+    <Property Type="String" Name="AccessGroup41" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup41" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup41" Nullable="true" />
+    <Property Type="String" Name="AccessGroup42" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup42" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup42" Nullable="true" />
+    <Property Type="String" Name="AccessGroup43" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup43" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup43" Nullable="true" />
+    <Property Type="String" Name="AccessGroup44" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup44" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup44" Nullable="true" />
+    <Property Type="String" Name="AccessGroup45" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup45" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup45" Nullable="true" />
+    <Property Type="String" Name="AccessGroup46" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup46" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup46" Nullable="true" />
+    <Property Type="String" Name="AccessGroup47" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup47" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup47" Nullable="true" />
+    <Property Type="String" Name="AccessGroup48" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup48" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup48" Nullable="true" />
+    <Property Type="String" Name="AccessGroup49" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup49" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup49" Nullable="true" />
+    <Property Type="String" Name="AccessGroup50" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="StartGroup50" Nullable="true" />
+    <Property Type="DateTime" Name="ExpireGroup50" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="AcsItemOutDetailDataView">
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="Int16" Name="Seq" Nullable="false" />
+    <Property Type="Int32" Name="ItemID" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="256" />
+    <Property Type="Boolean" Name="ConfdtFlag" Nullable="false" />
+    <Property Type="Int32" Name="ReqQty" Nullable="false" />
+    <Property Type="DateTime" Name="PlanReturnDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="ActOutQty" Nullable="true" />
+    <Property Type="Int32" Name="ActReturnQty" Nullable="true" />
+    <Property Type="DateTime" Name="ActReturnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="UpdateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="UpdateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="ItemDisplayEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ItemDisplayTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ItemTypeDisplayEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ItemTypeDisplayTH" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <EntityType Name="AcsTask">
+    <Key>
+      <PropertyRef Name="TaskID" />
+    </Key>
+    <Property Name="TaskID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TaskName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsLastResultSuccess" Type="Boolean" Nullable="false" />
+    <Property Name="LastResultMessage" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="LastRunDateTime" Type="DateTime" Precision="3" />
+    <Property Name="Success" Type="Int32" Nullable="false" />
+    <Property Name="Fail" Type="Int32" Nullable="false" />
+    <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="AcsItemInDetailDataView">
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="String" Name="ReqNo" Nullable="false" MaxLength="20" />
+    <Property Type="Int16" Name="Seq" Nullable="false" />
+    <Property Type="Int32" Name="ItemID" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="Boolean" Name="ConfdtFlag" Nullable="false" />
+    <Property Type="Int32" Name="ReqQty" Nullable="false" />
+    <Property Type="DateTime" Name="PlanReturnDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="ActInQty" Nullable="true" />
+    <Property Type="Int32" Name="ActReturnQty" Nullable="true" />
+    <Property Type="DateTime" Name="ActReturnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="UpdateBy" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="UpdateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="ItemDisplayEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ItemDisplayTH" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ItemTypeDisplayEN" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="ItemTypeDisplayTH" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ItemTypeID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="AcsVisitorTransactionDataView">
+    <Property Type="Guid" Name="TranID" Nullable="false" />
+    <Property Type="Guid" Name="DetailID" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateFrom" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeFrom" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTo" Nullable="false" />
+    <Property Type="Time" Name="EntryTimeTo" Nullable="false" />
+    <Property Type="Int32" Name="VerifyTypeID" Nullable="true" />
+    <Property Type="String" Name="VerifyTypeEN" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="VerifyTypeTH" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="VerifyNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CardNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="Company" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DeptName" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <EntityType Name="AreaOrganizeMapping">
+    <Key>
+      <PropertyRef Name="MappingID" />
+    </Key>
+    <Property Name="MappingID" Type="Guid" Nullable="false" />
+    <Property Name="PositionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AreaID" Type="Int32" Nullable="false" />
+    <Property Name="SpecialPositionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

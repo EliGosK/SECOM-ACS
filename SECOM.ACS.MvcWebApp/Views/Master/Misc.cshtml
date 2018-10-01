@@ -1,0 +1,191 @@
+﻿@using SECOM.ACS.Models
+@{
+    ViewBag.Title = "Miscellaneous";
+}
+
+<div class="search-container">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Type</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList()
+                    .Name("MiscType")
+                    .BindTo(MiscTypes.GetList())
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(CommonResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+            <div class="col-md-6">
+                <butotn class="k-button k-primary k-search"><i class="fa fa-search"></i> Search</butotn>
+                <butotn class="k-button k-button-warning k-clear"><i class="fa fa-times-circle"></i> Clear</butotn>
+            </div>
+        </div>
+    </div>
+</div>
+<h2><i class="fa fa-th-list"></i> Miscellaneous List</h2>
+<div class="grid-cotnainer">
+    @(Html.Kendo().Grid<MiscViewModel>()
+        .Name("grid")
+            .Scrollable(s=>s.Height(500))
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { style = "min-height:200px" })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("MiscEditor")
+                .Window(w => w.Width(600)
+                .Events(ev => ev.Activate("popupEditActivate")))
+            )
+            .ToolBar(t => t.Template("<button class=\"k-button k-button-primary k-grid-add\"><i class=\"fa fa-plus-circle\"></i> Add</button>"))
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                  .Width(90)
+                  .ClientTemplate("<a class=\"k-button k-button-primary k-button-cmd k-grid-edit\"><i class=\"fa fa-edit\"></i></a> <a class=\"k-button k-button-danger k-button-cmd k-grid-delete\"><i class=\"fa fa-trash-o\"></i></a>");
+                c.Template(t => { })
+                    .Width(50)
+                    .Title("No.")
+                    .HtmlAttributes(new { @class = "text-right" })
+                    .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.Type)
+                    .ClientTemplate("#=getMiscTypeName(data) #");
+
+                c.Bound(f => f.NameEn1).Title("Name 1");
+                //c.Bound(f => f.NameTh1);
+                c.Bound(f => f.NameEn2).Title("Name 2");
+                //c.Bound(f => f.NameTh2);
+                c.Bound(f => f.Description);
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListMisc", "Miscellaneous")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+                    t.Update(r => r.Action("Update", "Miscellaneous")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("Delete", "Miscellaneous")
+                         .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("Create", "Miscellaneous")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                })
+    .Schema(s =>
+    {
+        s.Data("Data");
+        s.Total("Total");
+        s.Errors("Errors");
+        s.Model(m =>
+        {
+            m.Id(f => f.MiscId);
+            m.Field(f => f.Type);
+            m.Field(f => f.NameEn1);
+            //m.Field(f => f.NameTh1);
+            m.Field(f => f.NameEn2);
+            //m.Field(f => f.NameTh2);
+            m.Field(f => f.Description);
+            m.Field(f => f.Status).DefaultValue("A");
+        });
+    })
+    .PageSize(20)
+    .ServerFiltering(true)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .Events(e =>
+    {
+        e.RequestStart("dataSourceRequestStart");
+        e.RequestEnd("dataSourceRequestEnd");
+        e.Error("dataSourceError");
+    })
+    )
+    .Events(ev => { ev.Edit("gridEdit"); ev.DataBinding("gridBinding"); })
+    )
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+        var miscTypes = @Html.Raw(Json.Encode(MiscTypes.GetList()));
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            uiState.register('ajax', ['.k-button']);
+            $(".k-search").on("click", function (e) {
+                e.preventDefault();
+                grid.dataSource.page(1);
+            });
+            $(".k-clear").on("click", function (e) {
+                e.preventDefault();
+                app.ui.clear(["#grid", "#MiscType"]);
+                grid.dataSource.data([]);
+            });
+
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+        function gridEdit(e) {
+            var options = {
+                create: { title: "Miscellaneous Entry" },
+                edit: { title: "Edit Miscellaneous" }
+            };
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    Type: $("#MiscType").data("kendoDropDownList").value()
+                }
+            };
+        }
+
+        function getMiscTypeName(data){
+            return app.data.getName(miscTypes,data.Type);
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+    </script>
+}

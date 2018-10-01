@@ -1,0 +1,57 @@
+﻿@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+<div class="grid-container">
+    @(Html.Kendo().Grid<RequestDH05DataViewModel>()
+            .Name("ds05Grid")
+
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .ToolBar(t => t.Template(@<text>
+                @Html.CommandButton("ds05RefreshButton", "refresh", WidgetResource.Button_Refresh_Text, new { @class = "k-primary k-refresh", data_grid_id = "ds05Grid" }).Events(ev => ev.Click("searchButtonClicked"))
+            </text>))
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=renderActionButton(data,'view')#");
+
+                c.Template(t => { })
+                    .Title(WidgetResource.Grid_Column_No)
+                    .Width(60)
+                    .ClientTemplate("#=_rowNo#")
+                    .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.ReqNo)
+                    .HtmlAttributes(new { @class = "text-center" })            
+                    .Width(100);
+                c.Bound(f => f.TakeOutDate)
+                    .Width(140)
+                    .Format(gridDateFormat)
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.SourcePlace)
+                    .HtmlAttributes(new {  });
+                c.Bound(f => f.TakeOutCompany)
+                    .HtmlAttributes(new {  });
+                c.Bound(f => f.TakeOutDepartment)
+                    .HtmlAttributes(new {  });
+                c.Bound(t => t.TakeOutName)
+                    .HtmlAttributes(new {  });
+                c.Bound(t => t.RequestBy)
+                    .HtmlAttributes(new {  });
+            })
+            .DataSource(ds => ds
+                 .Ajax()
+                .Read(r => r.Action("DashboardReq05", "Request").Data("getDSH05SearchCriteria").Type(HttpVerbs.Post))
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+            )
+            .Events(ev => { ev.DataBinding("gridDataBinding"); })
+    )
+</div>

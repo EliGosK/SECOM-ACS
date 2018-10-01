@@ -1,0 +1,14 @@
+﻿@model object
+@(Html.Kendo().DropDownListFor(m => m)
+    .DataSource(ds => ds.Read(r =>
+            r.Action("FindCards", "CardRegistration", new { cardType = CardType.BusinessTrip, pageSize = 20 })
+            .Type(HttpVerbs.Post))
+        .ServerFiltering(true)
+    )
+    .DataTextField("CardNo")
+    .DataValueField("CardID")
+    .ValuePrimitive(true)
+    .Filter(FilterType.Contains)
+    .OptionLabel(WidgetResource.List_ClearOptions)
+    .HtmlAttributes(new { @style = "width:100%" })
+)

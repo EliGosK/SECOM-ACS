@@ -1,0 +1,12 @@
+{
+  "name": "kendo-ui-for-aspnet-mvc",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "4.7.0",
+    "jQuery": "3.2.1",
+    "bootstrap": "3.3.7",
+    "animate.css": "animate-css#v3.1.0",
+    "jquery.nicescroll": "jquery-nicescroll#v3.6.8-fix",
+    "bootstrap-hover-dropdown": "v2.2.1"
+  }
+}

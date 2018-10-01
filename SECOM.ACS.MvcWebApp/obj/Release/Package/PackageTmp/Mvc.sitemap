@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+  <mvcSiteMapNode title="Home" controller="Home" action="Index" icon="home" visibility="false" ignoreSecurity="true" >
+    <mvcSiteMapNode objectId="ACS010" title="Dashboard" clickable="true" controller="Request" action="Dashboard" icon="window-restore" ignoreSecurity="true"/>
+    
+    <mvcSiteMapNode title="Request" clickable="false" icon="edit" objectId="REQ">
+      <mvcSiteMapNode objectId="ACS020" title="ACS020: Request Access for Employee" controller="AcsEmployee" action="Create" icon="edit" permission="Add" permissions="View,Add,Edit" />
+      <mvcSiteMapNode objectId="ACS030" title="ACS030: Request Access for Visitor" controller="AcsVisitor" action="Create" icon="edit" permission="Add" permissions="View,Add,Edit" />
+      <mvcSiteMapNode objectId="ACS040" title="ACS040: Request Item Out" controller="AcsItemOut" action="Create" icon="upload" permission="Add" permissions="View,Add,Edit"/>
+      <mvcSiteMapNode objectId="ACS050" title="ACS050: Request Item In" controller="AcsItemIn" action="Create" icon="download" permission="Add" permissions="View,Add,Edit" />
+      <mvcSiteMapNode objectId="ACS060" title="ACS060: Request Photographing" controller="AcsPhoto" action="Create" icon="image" permission="Add" permissions="View,Add,Edit"/>
+      <mvcSiteMapNode objectId="ACS070" title="ACS070: Request Inquiry" controller="Request" action="Inquiry" icon="search" permissions="View" />
+
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Card Registration" clickable="false" icon="edit" objectId="CARDREGIST">
+      <mvcSiteMapNode objectId="ACS080" title="ACS080: Visitor Card Registration" controller="CardRegistration" action="Index" icon="edit" permissions="View" />
+      <mvcSiteMapNode objectId="ACS081" title="ACS081: Entrance-Exit" controller="CardReceiveReturn" action="Index" icon="retweet" permissions="View" />
+      <mvcSiteMapNode objectId="ACS090" title="ACS090: VIP Card Registration" controller="AcsVIP" action="Index" icon="edit" permissions="View" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="System" clickable="false" icon="lock" objectId="SYSTEM">
+      <mvcSiteMapNode objectId="SYS020" title="SYS020: User Role" controller="Security" action="UserRole" icon="users"  permissions="View,Edit,Delete,Add" />
+      <mvcSiteMapNode objectId="SYS030" title="SYS030: User Role Authorization" controller="Security" action="UserRoleAuthorize" icon="lock"  permissions="View"/>
+      <mvcSiteMapNode objectId="SYS050" title="SYS050: Schedule Task" controller="ScheduleTask" action="Index" icon="cogs"  permissions="View"/>
+      <mvcSiteMapNode objectId="SYS060" title="SYS060: Application Log" controller="ApplicationLog" action="Index" icon="edit" permissions="View"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Master" clickable="false" icon="wrench" objectId="MASTER">
+      <mvcSiteMapNode objectId="MAS010" title="MAS010: Miscellaneous" controller="Misc" action="Index" icon="cubes"  permissions="View,Add,Edit,Delete"/>
+      <mvcSiteMapNode objectId="MAS020" title="MAS020: Item Master" controller="Item" action="Index" icon="wrench"  permissions="View,Add,Edit,Delete"/>
+      <mvcSiteMapNode objectId="MAS030" title="MAS030: Area Master" controller="Area" action="Index" icon="bullseye"  permissions="View,Add,Edit,Delete"/>
+      <mvcSiteMapNode objectId="MAS040" title="MAS040: Offline/Online System" controller="SystemStatus" action="Index" icon="cogs"  permissions="View"/>
+      <mvcSiteMapNode objectId="MAS050" title="MAS050: Inquiry Employee" controller="Employee" action="Inquiry" icon="search"  permissions="View"/>
+      <mvcSiteMapNode objectId="MAS051" title="MAS051: Employee Entry" controller="Employee" action="Edit" icon="edit"  permissions="View,ResetPassword" visibility="false"/>
+      <mvcSiteMapNode objectId="MAS052" title="MAS052: Employee Import" controller="Employee" action="Import" icon="download"  permissions="View" />
+      <mvcSiteMapNode objectId="MAS060" title="MAS060: Card Master" controller="Card" action="Index" icon="address-card-o"  permissions="View,Add,Edit,Delete"/>
+    </mvcSiteMapNode>
+    
+    <!--<mvcSiteMapNode title="Test" clickable="false" icon="flask" ignoreSecurity="true">
+      <mvcSiteMapNode objectId="TEST101" title="TEST101: Sample 1" controller="Test" action="Sample1" icon="flask" permissions="View"/>
+    </mvcSiteMapNode>-->
+
+  </mvcSiteMapNode>
+</mvcSiteMap>

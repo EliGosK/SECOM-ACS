@@ -1,0 +1,152 @@
+﻿@model EmployeeInformationViewModel
+@using Vereyon.Web
+@Html.RenderFlashMessages()
+<h2><i class="fa fa-info-circle"></i> @ViewResource.EmployeeEntry_Infomation_Title</h2>
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+{
+<div class="form-horizontal well well-sm">
+    <div class="form-group">
+        @(Html.LabelRequiredHintFor(m=>m.EmployeeID, new { @class = "col-md-2 control-label" }))
+        <div class="col-md-4">
+            @Html.Kendo().TextBoxFor(m=>m.EmployeeID).HtmlAttributes(new { @style="width:100%" })  
+        </div>
+        <div class="col-md-offset-2 col-md-4">
+            @Html.Kendo().CheckBoxFor(m => m.IsLending)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelRequiredHintFor(m=>m.EmployeeName,new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+           @Html.Kendo().TextBoxFor(m => m.EmployeeName).HtmlAttributes(new { @style = "width:100%" }) 
+        </div>
+        @Html.LabelFor(m=>m.Department,new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+           @Html.Kendo().TextBoxFor(m => m.Department).HtmlAttributes(new { @style = "width:100%" }) 
+        </div>
+    </div>
+    <div class="form-group">
+        @(Html.LabelFor(m => m.Position, new { @class = "col-md-2 control-label" }))
+        <div class="col-md-4 control-text">
+             @Html.Kendo().TextBoxFor(m => m.Position).HtmlAttributes(new { @style = "width:100%" }) 
+        </div>
+        @(Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" }))
+        <div class="col-md-4 control-text">
+            @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { @style = "width:100%" })
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_UserGroup", @Model)
+
+@*@Html.Partial("_AreaGroup", @Model)*@
+
+<div class="text-center">
+    <div class="button-container">
+        @Html.ConfirmButton("saveButton", "<i class=\"fa fa-save\"></i> "+WidgetResource.Button_Save_Text, new { @class = "k-button-primary", @data_content = MessageHelper.ConfirmSave()})
+        @Html.ResetButton("resetButton", new { @class = "k-button-warning" })
+    </div>
+</div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register("grid", [".k-button"]);
+
+            $("#saveButton").on("openDialog", function (sender, e) {
+                e.buttons.yes = function (sender,args) {
+                    var grid = $("#roleGrid").data("kendoGrid");
+                    console.log(grid.dataSource.data().toJSON());
+                }
+            });
+        });
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy('grid', true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy('grid', false);
+            app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function userGroupGridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.UserGroup_PopUpSection_Add_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            var container = e.container;
+            var roleDropDowList = $("#RoleID").data("kendoDropDownList");
+            roleDropDowList.bind("change", function (e) {
+                var dataItem = this.dataItem();
+                container.find(".description-field").empty();
+                container.find("#Name").val('');
+                if (dataItem) {
+                    container.find(".description-field").html(dataItem.Description);
+                    container.find("#Name").val(dataItem.Name);
+                }
+            });
+
+            if (!e.model.isNew()) {
+                e.container.find(".description-field").html(e.model.Name);
+            } else {
+                e.container.find(".description-field").empty();
+            }
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function userGroupGridSave(e) {
+            e.model.dirty = true;
+        }
+
+        function userGroupGridCancel() {
+            this.refresh();
+        }
+
+        function areaGroupGridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.UserGroup_PopUpSection_Add_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            var container = e.container;
+            var roleDropDowList = $("#RoleID").data("kendoDropDownList");
+            roleDropDowList.bind("change", function (e) {
+                var dataItem = this.dataItem();
+                container.find(".description-field").empty();
+                container.find("#Name").val('');
+                if (dataItem) {
+                    container.find(".description-field").html(dataItem.Description);
+                    container.find("#Name").val(dataItem.Name);
+                }
+
+            });
+
+            if (!e.model.isNew()) {
+                e.container.find(".description-field").html(e.model.Name);
+            } else {
+                e.container.find(".description-field").empty();
+            }
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function areaGroupGridSave(e) {
+            e.model.dirty = true;
+        }
+
+        function areaGroupGridCancel() {
+            this.refresh();
+        }
+    </script>
+    }
+

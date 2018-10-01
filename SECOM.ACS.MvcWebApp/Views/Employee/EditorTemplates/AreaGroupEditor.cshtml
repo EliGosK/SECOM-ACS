@@ -1,0 +1,24 @@
+﻿@model AreaForEmployeeEntryViewModel
+
+<div class="k-edit-form-container" id="area-group-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.AreaID, new { @class = "control-label col-md-2" })
+            <div class="col-md-6 control-text">
+                @(Html.Kendo().DropDownListFor(m => m.AreaID)
+                    .DataTextField("AreaDisplay")
+                    .DataValueField("AreaID")
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/area")))
+                    .HtmlAttributes(new { style = "width:100%", @required = "required" })                
+                )
+            </div>
+        </div>
+        <div class="form-group">
+           @Html.LabelFor(m => m.IsMainArea, new { @class = "control-label col-md-2" })
+            <div class="col-md-4 description-field control-text">
+                @Html.Kendo().CheckBoxFor(m=>m.IsMainArea)
+            </div>
+        </div>
+    </div>
+</div>

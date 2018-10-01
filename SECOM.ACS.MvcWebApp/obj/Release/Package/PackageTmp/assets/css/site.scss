@@ -1,0 +1,305 @@
+﻿$color-1: #000;
+$color-2: #000;
+$bg-color-1: #fff;
+
+$link-color: #fff;
+$link-color-hover: #e9df1f;
+
+$navbar-color: #fff;
+$navbar-bg-color: #2196F3;
+$navbar-border-color: #2196F3;
+$navbar-bg-color-hover: #58b0f6;
+
+$sidebar-button-bg-color: #58555f;
+$sidebar-button-bg-color-hover: #efdd6c;
+$sidebar-button-iconbar-color: #fff;
+$sidebar-button-iconbar-color-hover: #fff;
+
+$content-margin-bottom: 60 * 1px;
+
+$footer-height: 40 * 1px;
+$footer-color-1: #000;
+$footer-bg-color-1: #abcfeb;
+$footer-border-color-1: #abcfeb;
+$footer-link-color-1: #000;
+$footer-link-color-hover-1: #3c3838;
+
+$footer-color-2: #fff;
+$footer-bg-color-2: #1A76BF;
+$footer-border-color-2: #1A76BF;
+$footer-link-color-2: #000;
+$footer-link-color-hover-2: #575151;
+
+$footer-app-info-height: 40 * 1px;
+
+
+@import "https://fonts.googleapis.com/css?family=Poppins:400,500,600,700";
+
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    background: $bg-color-1;
+    margin-bottom: $footer-height;
+}
+
+label {
+    font-weight: normal;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+/*
+ * HR
+ */
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+hr.dashed {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-style: dashed;
+    border-top: 1px dashed #a7a2a2;
+}
+/*
+ * Headers
+ */
+h1 {
+    letter-spacing: -1px;
+    font-size: 2.0em;
+    margin: 5px 0;
+}
+
+h2 {
+    letter-spacing: -1px;
+    font-size: 1.6em;
+    margin: 3px 0;
+    line-height: normal;
+}
+
+h3 {
+    font-size: 1.4em;
+    margin: 3px 0;
+    line-height: normal;
+}
+
+h4 {
+    font-size: 1.2em;
+    line-height: normal;
+}
+
+h5 {
+    font-size: 1.0em;
+    font-weight: 400;
+    margin: 3px 0;
+    line-height: normal;
+}
+
+h6 {
+    font-size: 1.0em;
+    margin: 3px 0;
+    font-weight: bold;
+    line-height: normal;
+}
+
+
+header {
+    
+    color: $color-1;
+    height: 60px;
+    line-height: 60px;
+    background-color: $bg-color-1;
+}
+
+header .logo {
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+header .logo img {
+    height: 40px;
+    vertical-align: middle;
+}
+
+header .logo-group {
+    padding-top: 10px;
+    vertical-align: middle;
+}
+
+.navbar-default {
+    background: $navbar-bg-color;
+    border-color: $navbar-border-color;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform:uppercase;
+}
+
+.navbar-default .navbar-brand {
+    color: $navbar-color;
+    font-size: 1.6em;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: $color-2;
+}
+
+.btn-sidebar {
+    /*display: block;*/
+    float: left;
+    background-color: $sidebar-button-bg-color !important;
+}
+
+.btn-sidebar .icon-bar {
+    background-color: $sidebar-button-iconbar-color !important;
+}
+
+.btn-sidebar .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+
+.btn-sidebar:hover {
+    background-color: $sidebar-button-bg-color-hover !important;
+}
+
+.btn-sidebar:hover .icon-bar {
+    background-color: $sidebar-button-iconbar-color-hover !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: 100%;
+    font-size: 0.9em;
+    transition: all 0.3s;
+}
+
+.page-title {
+    padding: 5px 15px;
+    background-color: #d1e3f2;
+    color: #3c3838;
+}
+
+.page-content {
+    padding: 5px 10px;
+}
+
+.page-content > h2 {
+    margin-top: 10px;
+}
+
+footer {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: $color-1;
+    z-index: 900;
+    height: $footer-height;
+}
+
+footer .resources {
+    color: $footer-color-1;
+    background: $footer-bg-color-1;
+    border-color: $footer-border-color-1;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 5px 20px;
+}
+
+    .list-resource li a{
+        color: $footer-link-color-1;
+    }
+
+    .list-resource li a:hover {
+        color: $footer-link-color-hover-1;
+    }
+
+footer .app-info {
+    color: $footer-color-2;
+    background: $footer-bg-color-2;
+    border-color: $footer-border-color-2;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    height: $footer-app-info-height;
+}
+
+
+.resources h3 {
+    color: $color-2;
+    margin: 5px 0px 10px 0px;
+}
+
+.login-container {
+    margin-top: 60px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.navbar-account {
+    margin-right: 20px;
+}
+
+.navbar-menu {
+    background: $navbar-bg-color;
+    border-color: $navbar-border-color;
+    /*box-shadow: 1px 1px 3px rgba(0, 0, 0,0.1);*/
+}
+
+.navbar-menu > li > a,
+.navbar-menu > li > a:link,
+.navbar-menu > li > a:visited,
+.navbar-menu > li > a:active {
+    color: $link-color !important;
+    background-color: $navbar-bg-color !important;
+}
+
+.navbar-menu > li > a:hover,
+.navbar-menu > li > a:focus {
+    color: $link-color-hover !important;
+    background-color: $navbar-bg-color-hover !important;
+}
+
+.navbar-user {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.dropdown-menu {
+    color: $navbar-color;
+    background-color: $navbar-bg-color;
+}
+
+.dropdown-menu > li {
+    
+}
+
+.dropdown-menu > li:hover {
+}
+
+.dropdown-menu > li > a {
+    color: $link-color !important;
+}
+
+.dropdown-menu > li > a:hover {
+    color: $link-color-hover !important;
+    background-color: $navbar-bg-color-hover !important;
+}
+
+.button-container {
+    margin: 10px 0px;
+}

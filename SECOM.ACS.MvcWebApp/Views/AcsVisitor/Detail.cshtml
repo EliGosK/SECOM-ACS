@@ -1,0 +1,379 @@
+﻿@model AcsVisitorViewModel
+@using Vereyon.Web;
+@{
+    var currentUser = User.Identity.Name;
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+@section styles{
+    <style type="text/css">
+        .k-content-visitor {
+            display: block;
+            min-height: 300px;
+        }
+
+        .k-tab-visitor-list,
+        .k-tab-transaction {
+            font-weight: bold;
+        }
+    </style>
+}
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("Edit", "AcsVisitor", FormMethod.Post, new { @id = "request-form", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ReqNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.ReqNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployee.Department, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.EntryDateFrom, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4 control-text">
+                    @Html.DisplayDate(Model.EntryDateFrom.AddMinutes(Model.EntryTimeFrom), "d MMM yyyy HH:mm")
+                    <span>-</span>
+                    @Html.DisplayDate(Model.EntryDateTo.AddMinutes(Model.EntryTimeTo), "d MMM yyyy HH:mm")
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Areas, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 control-text">
+                    <ul class="list-unstyled list-inline">
+                        @{
+                            foreach (var areaApprover in Model.AreaApprovals.Where(t => t.AreaID.HasValue).ToList())
+                            {
+                                <li><label class="label label-primary label-md">@Html.DisplayFactory(areaApprover.Area.FactoryCode): @ModelLocalizeManager.GetValue(areaApprover.Area, "AreaDisplay")</label></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayLocalize(Model.Purpose, "MiscDisplay")</label>
+                @if (!String.IsNullOrEmpty(Model.OtherPurpose))
+                {
+                    @Html.LabelFor(m => m.OtherPurpose, new { @class = "col-md-2 control-label" })
+                    <label class="col-md-4 control-text">@Model.OtherPurpose</label>
+                }
+            </div>
+        </div>
+
+    @(Html.Kendo().TabStrip()
+        .Name("visitorTabstrip")
+        .Animation(a => a.Open(ef => ef.Fade(FadeDirection.In)))
+        .HtmlAttributes(new { @class = "k-content-visitor k-content" })
+        .SelectedIndex(0)
+        .Items(ts =>
+        {
+        ts.Add()
+        .Text(ViewResource.AcsVisitor_VisitorListSection_Title)       
+        .HtmlAttributes(new { @class = "k-tab-visitor-list" })
+        .Content(@<text>
+            <div class="grid-container">
+                @(Html.Kendo().Grid<AcsVisitorDetailViewModel>()
+                    .Name("visitorGrid")
+                    .Scrollable()
+                    .Pageable(p => p.Refresh(true).PageSizes(true).ButtonCount(5))
+                    .HtmlAttributes(new { style = "height:300px;" })
+                    .Columns(c =>
+                    {
+                        c.Template(f => { })
+                            .ClientTemplate("#=_rowNo#")
+                            .HtmlAttributes(new { @class = "text-right" })
+                            .Title(WidgetResource.Grid_Column_No)
+                            .Width(60);
+                        c.Bound(f => f.VisitorName);
+                        c.Bound(f => f.Company);
+                        c.Bound(f => f.DepartmentName);
+                        c.Bound(f => f.VerifyType);
+                        c.Bound(f => f.VerifyNo);
+                        c.Bound(f => f.ItemInOut);
+                        c.Bound(f => f.Photographing);
+                        c.Bound(f => f.Description);
+                    })
+                    .DataSource(ds => ds
+                        .Custom().Transport(t =>
+                        {
+                            t.Read(r =>
+                                r.Action("ListVisitorDetail", "AcsVisitor", new { requestNo = Model.ReqNo })
+                                .Type(HttpVerbs.Post)
+                            );
+                        })
+                        .Schema(s =>
+                        {
+                            s.Model(m =>
+                            {
+                                m.Id(f => f.DetailID);
+                            });
+                            s.Data("Data").Total("Total").Errors("Errors");
+                        })
+                        .Events(ev =>
+                        {
+                            ev.RequestStart("dataSourceRequestStart");
+                            ev.RequestEnd("visitorDataSourceRequestEnd");
+                            ev.Error("dataSourceError");
+                        })
+                        .PageSize(20)
+                        .ServerFiltering(true)
+                        .ServerPaging(true)
+                        .ServerSorting(true)
+                    )
+                    .AutoBind(true)
+                    .Events(ev => ev.DataBinding("gridDataBinding"))
+                )
+            </div>
+        </text>);
+ts.Add()
+.Text(ViewResource.AcsVisitor_TransactionListSection_Title)
+.HtmlAttributes(new { @class = "k-tab-transaction" })
+.Content(@<text>
+            <div class="grid-container">
+                @(Html.Kendo().Grid<AcsVisitorTransactionDataViewModel>()
+                    .Name("transactionGrid")
+                    .HtmlAttributes(new { style = "height:300px;" })
+                        .Pageable(p => p
+                        .PageSizes(true)
+                        .Refresh(true)
+                        .ButtonCount(5)
+                    )
+                    .Columns(c =>
+                    {
+                        c.Template(t => { })
+                            .Width(60)
+                            .Title(WidgetResource.Grid_Column_No)
+                            .HtmlAttributes(new { @class = "text-right" })
+                            .ClientTemplate("#=_rowNo#");
+                        c.Bound(f => f.EntryDateFrom)
+                            .Format(gridDateFormat)
+                            .Width(120);
+                        c.Bound(f => f.EntryTimeFrom)
+                            .Width(100)
+                            .Format("{0:HH:mm}");
+                        c.Bound(f => f.EntryTimeTo)
+                            .Width(100)
+                            .Format("{0:HH:mm}");
+                        c.Bound(f => f.Name)
+                          .Width(160);
+                        c.Bound(f => f.Company)
+                            .Width(200);
+                        c.Bound(f => f.DepartmentName)
+                            .Width(200);
+                        c.Bound(f => f.CardNo)
+                           .Width(160);
+                        c.Bound(f => f.VerifyTypeName)
+                            .Width(160);
+                        c.Bound(f => f.VerifyNo)
+                            .Width(160);
+
+
+                    })
+                    .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListTransaction", "AcsVisitor", new { requestNo = Model.ReqNo })
+                            .Type(HttpVerbs.Post)
+                            .DataType("json"));
+                    }
+                    )
+                    .Schema(s =>
+                    {
+                        s.Data("Data");
+                        s.Total("Total");
+                        s.Errors("Errors");
+                        s.Model(m =>
+                        {
+                            m.Id(f => f.TranID);
+                        });
+                    })
+                    .PageSize(20)
+                    .ServerFiltering(true)
+                    .ServerPaging(true)
+                    .ServerSorting(true)
+                    .Events(e =>
+                    {
+                        e.RequestStart("dataSourceRequestStart");
+                        e.RequestEnd("transactionDataSourceRequestEnd");
+                        e.Error("dataSourceError");
+                    })
+                    )
+                    .Events(ev => ev.DataBinding("gridDataBinding"))
+                )
+            </div>
+</text>);
+        }))
+
+                            <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+                            <div class="well well-sm form-horizontal">
+                                @{
+                                    Model.ViewMode = RequestViewMode.Approval;
+                                    Html.RenderPartial("_DisplayApproverList", Model);
+                                }
+                            </div>
+                            <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+                            <div class="well well-sm">
+                                <div style="padding:5px">
+                                    @Html.DisplayHtmlFor(m => m.Note)
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="button-container">
+                                    @if (ViewContext.Controller.HasPermission("ACS030", PermissionNames.Edit))
+                                    {
+                                        @Html.KendoActionLink("editLink", "edit", WidgetResource.Button_Edit_Text, Url.Action("Edit", new { id = Model.ReqNo }), new { @class = "k-primary" })
+                                    }
+                                        @if (Model.AllowCancelRequest(User))
+                                    {
+                                        @Html.KendoConfirmButton("cancelRequestButton", "times-circle", WidgetResource.Button_CancelRequest_Text, new { @class = "k-button-danger k-cancel-request", data_content = MessageHelper.ConfirmCancelRequest() })
+                                    }
+
+                                    @if (ViewContext.Controller.HasPermission("ACS030", PermissionNames.Add))
+                                    {
+                                        @Html.KendoActionLink("duplicateLink", "copy", WidgetResource.Button_Duplicate_Text, Url.Action("Duplicate", new { id = Model.ReqNo }), new { @class = "k-button-warning k-duplicate", target = "_blank" })
+                                    }
+                                </div>
+                            </div>
+                                    @Html.KendoValidationSummary()
+                                    }
+</div>
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var validator;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('grid', ['.k-button']);
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('cancelRequest', [".k-button"]);
+
+            validator = $("form").kendoValidator({
+                rules: {
+                    requiredRejectReason: function (input) {
+                        if (input.hasClass("reject-reason"))
+                        {
+                            return input.val() !== "";
+                        }
+                        return true;
+                    }
+                },
+                messages: {
+                    requiredRejectReason: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    }
+                },
+                validateOnBlur: false
+            }).data("kendoValidator");
+
+           $("#cancelRequestButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function ()
+                {
+                    $(".k-validation-summary").hide();
+                    uiState.busy('cancelRequest', true);
+                    $.ajax({
+                        url: "@Url.Action("CancelRequest")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken({ requestNo: "@Model.ReqNo" }),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            window.location = "@Url.Action("Detail",new { id = Model.ReqNo })";
+                        },
+                        error: function (xhr,status,error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                            showMessage(message);
+                        },
+                        complete: function () {
+                            uiState.busy('cancelRequest', false);
+                        }
+                    });
+                };
+            });
+
+            $(".k-save-approval")
+                .on("validating", function (sender, args, elem) {
+                    validator.hideMessages();
+                    var input = $(elem).data("required-reason");
+                    if (input)
+                        args.isValid = validator.validateInput("#" + input);
+                })
+                .on("openDialog", function (sender, args,elem) {
+                    args.buttons.yes.action = function () {
+                    var data = {
+                        approvalID: $(elem).data("approval-id"),
+                        requestNo: "@Model.ReqNo",
+                        approvalCode: $(elem).data("approval-code"),
+                        rejectReason: $(elem).data("approval-code") =="@ApprovalCode.Reject"? $("#" + $(elem).data("required-reason")).val()||"" :""
+                    };
+                    $(".k-validation-summary").hide();
+                    uiState.busy("approval", true);
+                    $.ajax({
+                        url: "@Url.Action("Approval")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken(data),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                           window.location =  "@Url.Action("Detail",new { id = Model.ReqNo })";
+                        },
+                        error: function (xhr, status, error) {
+                            var message = app.ui.handleAjaxError(xhr, status, error);
+                            showMessage(message);
+                        },
+                        complete: function () {
+                            uiState.busy("approval", false);
+                        }
+                    });
+                };
+               });
+
+            // load all tab content
+            $("#visitorTabstrip .k-item").each(function (index, item) {
+                if (index == 0) { return; }
+                $("#visitorTabstrip").data("kendoTabStrip").reload(item);
+            });
+        });
+
+        function showMessage(message) {
+            $(".k-validation-summary").show().html(message);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("grid", true);
+        }
+
+        function visitorDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            $(".k-tab-visitor-list span.k-link").html(kendo.format("<i class=\"fa fa-users\"></i> @ViewResource.AcsVisitor_VisitorListSection_Title ({0})", e.response.Total));
+        }
+
+        function transactionDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            $(".k-tab-transaction span.k-link").html(kendo.format("<i class=\"fa fa-cogs\"></i> @ViewResource.AcsVisitor_TransactionListSection_Title ({0})", e.response.Total));
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+    </script>
+}

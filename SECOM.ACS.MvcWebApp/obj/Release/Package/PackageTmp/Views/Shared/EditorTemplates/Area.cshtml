@@ -1,0 +1,12 @@
+﻿@model object 
+
+@(Html.Kendo().DropDownListFor(model => model)
+    .DataSource(ds => ds.Read(r => r.Url("/api/area")))
+    .DataTextField("AreaDisplay")
+    .DataValueField("AreaID")
+    .OptionLabel(WidgetResource.SelectOptions)
+     .HtmlAttributes(new { style = "width:100%", required = "required", data_field = Html.DisplayName<AreaViewModel>("AreaName") }))
+    @*//.BindTo(new string[] { "QA", "F1" , "F2" })*@
+    
+
+    

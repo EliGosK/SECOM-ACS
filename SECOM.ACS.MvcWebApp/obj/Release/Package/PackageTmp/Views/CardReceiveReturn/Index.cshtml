@@ -1,0 +1,588 @@
+﻿@{
+    var defaultEntryDate = DateTime.Now;
+    var defaultDateString = defaultEntryDate.ToString();
+    var dataTempId = CSI.Text.TextGenerator.Generate(32);
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+    var gridDateTimeFormat = AcsModelHelper.GetGridDateTimeFormat();
+}
+
+<div style="margin-top:10px">
+    @Html.AntiForgeryToken()
+    @(Html.Kendo().TabStrip()
+        .Name("tabStrip")
+        .Animation(a =>
+            a.Open(ef => ef.Fade(FadeDirection.In))
+        )
+        .SelectedIndex(0)
+        .Items(ts =>
+            {
+                ts.Add()
+                .Text(ViewResource.ReceiveReturn_Visitor_Title)
+                .SpriteCssClasses("fa fa-id-card-o")
+                .HtmlAttributes(new { @data_view = "visitor" })
+                .Content(@<text>
+                    <div class="form-horizontal well well-sm">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_EntryDate</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().DatePicker()
+                    .Name("visitorEntryDate")
+                    .Value(defaultEntryDate)
+                    .HtmlAttributes(new { @data_default = defaultDateString })
+                    .Events(ev => ev.Change("datePickerChange"))
+                                )
+                            </div>
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_Factory</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().MultiSelect().Name("visitorFactory")
+                        .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/factory")))
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .AutoClose(false)
+                        .Placeholder(WidgetResource.AllOptions)
+                        .HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_VisitorName</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().TextBox().Name("vistorName").HtmlAttributes(new { maxlength = 50, style = "width:100%", })
+                                )
+                            </div>
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_Company</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().TextBox().Name("visitorCompany").HtmlAttributes(new { maxlength = 50, style = "width:100%", })
+                                )
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="button-container">
+                                    @Html.CommandButton("visitorSearchButton", "search", WidgetResource.Button_Retrieve_Text, new { @class = "k-primary" }).Events(ev => ev.Click("visitorSearchButtonClicked"))
+                                    @Html.ResetButton("visitorResetButton", new { @class = "k-button-warning" }).Events(ev => ev.Click("visitorResetButtonClicked"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-container">
+                        @(Html.Kendo().Grid<ReceiveReturnVisitorCardDataViewModel>()
+                 .Name("visitorGrid")
+                  .HtmlAttributes(new { @style = "min-height:300px" })
+                 .ToolBar(t => t.Template(
+                     "<label class=\"label-receive-card-type\">" + @WidgetResource.Grid_Status_Text + "</label>" +
+                    (Html.Kendo().DropDownList()
+                        .Name("visitorReceiveCardType")
+                        .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/list/receiveCardType")))
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .OptionLabel(WidgetResource.AllOptions)
+                        .Events(e => e.Change("visitorReceiveCardTypeChange"))).ToHtmlString()
+                     ))
+                 .Editable(editable => editable.Mode(GridEditMode.InLine)
+                    .TemplateName("ReturnReceiveVisitorCardEditor")
+                    .Window(w => w.Width(600)
+                    .Scrollable(false)
+                 ))
+                 .Columns(c =>
+                 {
+                     c.Template(t =>
+                     {
+                     })
+                       .Width(60)
+                       .HtmlAttributes(new { @class = "text-right" })
+                       .ClientTemplate("#=_rowNo#")
+                       .Title(WidgetResource.Grid_Column_No);
+                     c.Bound(t => t.VisitorName);
+                     c.Bound(t => t.Company);
+                     c.Bound(f => f.AreaName)
+                         .ClientTemplate("#=renderArea(data)#");
+                     c.Bound(f => f.TimeIn)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(60)
+                        .Format(gridDateTimeFormat);
+                     c.Bound(f => f.TimeOut)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(60)
+                        .Format(gridDateTimeFormat);
+                     c.Bound(f => f.VerifyTypeID)
+                        .Width(100)
+                        .ClientTemplate("#=VerifyTypeName#");
+                     c.Bound(f => f.VerifyNo)
+                        .Width(140);
+                     c.Bound(f => f.CardNo)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(100);
+                     c.Command(cmd => {
+                         cmd.Edit();
+                         cmd.Custom("Receive").HtmlAttributes(new { @class = "k-grid-visitor-receive k-button-success",@data_theme="dark", @data_content=MessageHelper.ConfirmReceiveCard() });
+                         cmd.Custom("Return").HtmlAttributes(new { @class = "k-grid-visitor-return k-button-warning", @data_theme = "dark", @data_content = MessageHelper.ConfirmReturnCard() });
+                     })
+                    .Width(200);
+                 })
+
+                  .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListVisitorCard", "CardReceiveReturn")
+                                    .Type(HttpVerbs.Post)
+                                    .DataType("json")
+                                    .Data("getVisitorSearchCriteria"));
+                        t.Update(r => r.Action("UpdateVisitorCard", "CardReceiveReturn")
+                                    .Type(HttpVerbs.Post));
+                    }
+                )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TranID);
+                        m.Field(f => f.VisitorName).Editable(false);
+                        m.Field(f => f.Company).Editable(false);
+                        m.Field(f => f.AreaName).Editable(false);
+                        m.Field(f => f.TimeIn).Editable(false);
+                        m.Field(f => f.TimeOut).Editable(false);
+                        m.Field(f => f.VerifyTypeID);
+                        m.Field(f => f.VerifyNo);
+                        m.Field(f => f.CardNo).Editable(false);
+                        m.Field(f => f.CardID).Editable(false);
+                    });
+                })
+                .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError"))
+                )
+
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridDataBinding");
+                    //ev.Edit("visitorGridEdit");
+                    //ev.Save("gridSave");
+                    ev.Cancel("visitorGridCancel");
+                    ev.DataBound("visitorGridDataBound");
+                })
+                .AutoBind(false)
+                        )
+
+                    </div>
+                </text>);
+
+                ts.Add()
+                .Text(ViewResource.ReceiveReturn_BusinessTrip_Title)
+                .SpriteCssClasses("fa fa-address-card-o")
+                .HtmlAttributes(new { @data_view = "visitor" })
+                .Content(@<text>
+                    <div class="form-horizontal well well-sm">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_EntryDate</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().DatePicker()
+                                    .Name("businessTripEntryDate")
+                                    .Value(defaultEntryDate)
+                                    .HtmlAttributes(new { @data_default = defaultDateString })
+                                    .Events(ev => ev.Change("datePickerChange"))
+                                )
+                            </div>
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_Factory</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().MultiSelect().Name("businessTripFactory")
+                                    .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/factory")))
+                                    .DataTextField("Name")
+                                    .DataValueField("Value")
+                                    .Placeholder(WidgetResource.AllOptions)
+                                    .AutoClose(false)
+                                    .HtmlAttributes(new { @style = "width:100%", })
+                                )
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_BusinessEmployeeName</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().TextBox().Name("businessTripBusinessEmployeeName").HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                            </div>
+                            <label class="control-label col-md-2">@ViewResource.ReceiveReturn_RequesterName</label>
+                            <div class="col-md-3">
+                                @(Html.Kendo().TextBox().Name("businessTripRequesterName").HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="button-container">
+                                    @Html.CommandButton("businessTripSearchButton", "search", WidgetResource.Button_Retrieve_Text, new { @class = "k-primary" }).Events(ev => ev.Click("businessTripSearchButtonClicked"))
+                                    @Html.ResetButton("businessTripResetButton", new { @class = "k-button-warning" }).Events(ev => ev.Click("businessTripResetButtonClicked"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-container">
+                        @(Html.Kendo().Grid<ReceiveReturnBusinessTripCardDataViewModel>()
+         .Name("businessTripGrid")
+         .HtmlAttributes(new { @style = "min-height:300px" })
+         .ToolBar(t => t.Template(
+            "<label class=\"label-receive-card-type\">" + @WidgetResource.Grid_Status_Text + "</label>" +
+                    (Html.Kendo().DropDownList()
+                        .Name("businessReceiveCardType")
+                        .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/list/ReceiveCardType")))
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .OptionLabel(WidgetResource.AllOptions)
+                        .Events(e => e.Change("businessReceiveCardTypeChange"))).ToHtmlString()
+                    ))
+                 .Columns(c =>
+                 {
+                     c.Template(t =>
+                     {
+                     })
+                        .Width(60)
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .ClientTemplate("#=_rowNo#")
+                        .Title(WidgetResource.Grid_Column_No);
+                     c.Bound(t => t.BusinessEmployeeName);
+                     c.Bound(t => t.EmployeeName);
+                     c.Bound(t => t.AreaName)
+                        .ClientTemplate("#=renderArea(data)#");
+                     c.Bound(t => t.EntryDateFrom)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(100)
+                        .Format(gridDateFormat);
+                     c.Bound(t => t.EntryDateTo)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(100)
+                        .Format(gridDateFormat);
+                     c.Bound(t => t.TimeIn)
+                        .Width(60)
+                         .HtmlAttributes(new { @class = "text-center" })
+                        .Format(gridDateTimeFormat);
+                     c.Bound(t => t.TimeOut)
+                        .Width(60)
+                        .HtmlAttributes(new { @class = "text-center"})
+                        .Format(gridDateTimeFormat);
+                     c.Bound(t => t.CardNo)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(120);
+                     c.Template(t => { }).ClientTemplate("#=renderActionButton(data)#").Width(120);
+                 })
+
+                  .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListBusinessTripCard", "CardReceiveReturn")
+                                    .Type(HttpVerbs.Post)
+                                    .Data("getBusinessTripSearchCriteria")
+                                    .DataType("json"));
+                    }
+                )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TranID);
+                        m.Field(f => f.BusinessEmployeeName);
+                        m.Field(f => f.EmployeeName);
+                        m.Field(f => f.AreaName);
+                        m.Field(f => f.EntryDateFrom);
+                        m.Field(f => f.EntryDateTo);
+                        m.Field(f => f.TimeIn);
+                        m.Field(f => f.TimeOut);
+                        m.Field(f => f.CardNo);
+                    });
+                })
+                .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError"))
+                )
+
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridDataBinding");
+                    //ev.Save("gridSave");
+                    ev.DataBound("gridDataBound");
+                })
+                .AutoBind(false)
+                        )
+                    </div>
+                </text>);
+            }
+        )
+    )
+</div>
+
+<script id="areaTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled list-inline">
+        # for (var i = 0; i < data.length; i++){ #
+        <li><label class="label label-primary label-md">#: data[i]#</label></li>
+        # } #
+    </ul>
+</script>
+@section styles{
+    <style type="text/css">
+        .cardType-tabstrip {
+            margin-top: 10px;
+            overflow-x: hidden;
+            display: block;
+        }
+
+        .label-receive-card-type {
+            padding-right: 10px;
+            font-weight: bold;
+        }
+
+        .k-tab-visitor,
+        .k-tab-business {
+            font-weight: bold;
+        }
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var visitorGrid,businessTripGrid;
+
+        $(document).ready(function () {
+            app.initPage();
+            visitorGrid = $("#visitorGrid").data("kendoGrid");
+            businessTripGrid = $("#businessTripGrid").data("kendoGrid");
+
+            uiState.register("grid", [".k-button"]);
+            uiState.register("ajax", [".k-button"]);
+
+        });
+
+
+        function getVisitorSearchCriteria() {
+            return {
+                criteria: {
+                    entryDate: app.data.toDateString($("#visitorEntryDate").data("kendoDatePicker").value()),
+                    factory: $("#visitorFactory").data("kendoMultiSelect").value(),
+                    visitorName: $("#vistorName").val(),
+                    company: $("#visitorCompany").val()
+                }
+            };
+        }
+
+        function getBusinessTripSearchCriteria() {
+            return {
+                criteria: {
+                    entryDate: app.data.toDateString($("#businessTripEntryDate").data("kendoDatePicker").value()),
+                    factory: $("#businessTripFactory").data("kendoMultiSelect").value(),
+                    businessEmployeeName: $("#businessTripBusinessEmployeeName").val(),
+                    requesterName: $("#businessTripRequesterName").val()
+
+                }
+            };
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("grid", false);
+        }
+
+        function dataSourceRequestEnd(e) {
+            app.ui.handleDataSourceRequestEnd(e);
+            if (e.type && e.type !== "read")
+            {
+                this.read();
+            }
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function renderActionButton(data) {
+            if (data.AllowReceive) {
+                return "<button data-role=\"confirm\" class=\"k-button k-button-success k-grid-receive\" data-theme=\"dark\" data-title=\"@ViewResource.Confirmtion_Title\" data-content=\"@MessageHelper.ConfirmReceiveCard()\" data-id=\"" + data.TranID + "\"><i class=\"fa fa-id-card-o\"></i> @WidgetResource.Button_Receive_Text</button>";
+            }
+
+            if (data.AllowReturn) {
+                return "<button  data-role=\"confirm\" class=\"k-button k-button-warning k-grid-return\" data-theme=\"dark\" data-title=\"@ViewResource.Confirmtion_Title\" data-content=\"@MessageHelper.ConfirmReturnCard()\" data-id=\"" + data.TranID + "\" ><i class=\"fa fa-repeat\"></i> @WidgetResource.Button_Return_Text</button>";
+            }
+            return "";
+        }
+
+        function renderArea(data) {
+            return kendo.template($("#areaTemplate").html())(data.AreaName.split(","));
+        }
+
+        function gridDataBound(e) {
+            app.ui.applyConfirmDialog();
+
+             setTimeout(function () {
+                $(".k-grid-receive").bind("openDialog", function (sender, settings, button) {
+                    settings.buttons.yes.action = function() {
+                        uiState.busy('ajax', true);
+                        var data = businessTripGrid.dataItem($(button).closest("tr[data-uid]")).toJSON();
+                        $.ajax({
+                            url: "@Url.Action("ReceiveBusinessTripCard", "CardReceiveReturn")",
+                            data: app.addAntiForgeryToken(data),
+                            type: "POST",
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                businessTripGrid.dataSource.read();
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            },
+                            complete: function () {
+                                uiState.busy('ajax', false);
+                            }
+                        });
+                    }
+                });
+
+                $(".k-grid-return").bind("openDialog", function (sender, settings, button) {
+                    settings.buttons.yes.action = function () {
+                        uiState.busy('ajax', true);
+                        var data = businessTripGrid.dataItem($(button).closest("tr[data-uid]")).toJSON();
+                        $.ajax({
+                            url: "@Url.Action("ReturnBusinessTripCard", "CardReceiveReturn")",
+                            data: app.addAntiForgeryToken(data),
+                            type: "POST",
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                businessTripGrid.dataSource.read();
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            },
+                            complete: function () {
+                                uiState.busy('ajax', false);
+                            }
+                        });
+                    }
+                });
+            }, 100);
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function visitorSearchButtonClicked(e) {
+            visitorGrid.dataSource.read();
+        }
+
+        function visitorResetButtonClicked(e) {
+            app.ui.clear(["#visitorGrid", "#visitorEntryDate", "#visitorfactory", "#vistorName", "#visitorCompany"]);
+        }
+
+        function visitorReceiveCardTypeChange(e) {
+            var value = this.value();
+            switch (value) {
+                case "@ReceiveCardTypes.Received":
+                    visitorGrid.dataSource.filter({ field: "AllowReceive", operator: "eq", value: true });
+                    break;
+                case "@ReceiveCardTypes.Returned":
+                    visitorGrid.dataSource.filter({ field: "AllowReturn", operator: "eq", value: true });
+                    break;
+                default:
+                    visitorGrid.dataSource.filter({});
+            }
+        }
+
+        function businessTripSearchButtonClicked(e) {
+            businessTripGrid.dataSource.read();
+        }
+
+        function businessTripResetButtonClicked(e) {
+            app.ui.clear(["#businessTripGrid", "#businessTripBusinessEmployeeName", "#businessTripEntryDate", "#businessTripFactory", "#businessTripRequesterName"]);
+        }
+
+        function businessReceiveCardTypeChange(e) {
+            var value = this.value();
+            switch (value) {
+                case "@ReceiveCardTypes.Received":
+                    businessTripGrid.dataSource.filter({ field: "AllowReceive", operator: "eq", value: true });
+                    break;
+                case "@ReceiveCardTypes.Returned":
+                    businessTripGrid.dataSource.filter({ field: "AllowReturn", operator: "eq", value: true });
+                    break;
+                default:
+                    businessTripGrid.dataSource.filter({});
+            }
+        }
+               
+        function visitorGridDataBound(e) {
+            var grid = this;
+            var dataItems = grid.dataSource.data();
+            $.each(dataItems, function (index, item) {
+                var row = grid.tbody.find("tr[data-uid='" + item.uid + "']");
+                if (!item.AllowReceive) {
+                    $(".k-grid-visitor-receive", row).remove();
+                } else {
+                    $(".k-grid-visitor-receive", row).html("<i class=\"fa fa-credit-card\"></i> Receive");
+                }
+
+                if (!item.AllowReturn) {
+                    $(".k-grid-visitor-return", row).remove();
+                } else {
+                    $(".k-grid-edit", row).remove();
+                    $(".k-grid-visitor-return", row).html("<i class=\"fa fa-repeat\"></i> Return");
+                }
+
+                if (!item.AllowReceive && !item.AllowReturn) {
+                    $(".k-grid-edit", row).remove();
+                }
+            });
+
+            app.ui.applyConfirmDialog(".k-grid-visitor-receive,.k-grid-visitor-return");
+            // Apply confirm event.
+            setTimeout(function () {
+                $(".k-grid-visitor-receive").bind("openDialog", function (sender, settings, button) {
+                    settings.buttons.yes.action = function() {
+                        uiState.busy('ajax', true);
+                        var data = visitorGrid.dataItem($(button).closest("tr[data-uid]")).toJSON();
+                        $.ajax({
+                            url: "@Url.Action("ReceiveVisitorCard", "CardReceiveReturn")",
+                            data: app.addAntiForgeryToken(data),
+                            type: "POST",
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                visitorGrid.dataSource.read();
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            },
+                            complete: function () {
+                                uiState.busy('ajax', false);
+                            }
+                        });
+                    }
+                });
+
+                $(".k-grid-visitor-return").bind("openDialog", function (sender, settings, button) {
+                    settings.buttons.yes.action = function () {
+                        uiState.busy('ajax', true);
+                        var data = visitorGrid.dataItem($(button).closest("tr[data-uid]")).toJSON();
+                        $.ajax({
+                            url: "@Url.Action("ReturnVisitorCard", "CardReceiveReturn")",
+                            data: app.addAntiForgeryToken(data),
+                            type: "POST",
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                visitorGrid.dataSource.read();
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            },
+                            complete: function () {
+                                uiState.busy('ajax', false);
+                            }
+                        });
+                    }
+                });
+            }, 100);
+        }
+
+        function visitorGridCancel(e) {
+            this.refresh();
+        }
+
+    </script>
+}

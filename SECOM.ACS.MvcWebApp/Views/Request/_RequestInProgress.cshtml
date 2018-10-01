@@ -1,0 +1,97 @@
+﻿@model RequestDH01DataViewModel
+@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+<div class="search-container">
+    <div class="well well-shadow form-horizontal">
+        <div class="row">
+            @Html.LabelFor(m=>m.DocumentType,new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList().Name("ds01DocType")
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/systemmiscs/list/doctype")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+            @Html.LabelFor(m => m.ReqStatus, new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @(Html.Kendo().DropDownList().Name("ds01ReqStatus")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/list/status")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { @style ="width:100%" })
+                )              
+            </div>
+            <div class="col-md-2">
+                @Html.SearchButton("ds01SearchButton", new { @class = "k-primary k-search", @data_grid_id = "ds01Grid" }).Events(ev=>ev.Click("searchButtonClicked"))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    @(Html.Kendo().Grid<RequestDH01DataViewModel>()
+            .Name("ds01Grid")
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=renderActionButton(data,'view')#");
+                c.Template(t => { })
+                    .Title(WidgetResource.Grid_Column_No)
+                    .Width(60)
+                    .ClientTemplate("#=_rowNo#")
+                    .HtmlAttributes(new { @class = "text-right" })
+                    ;
+                c.Bound(f => f.DocumentType)
+                    .Width(240);
+                c.Bound(f => f.ReqNo)
+                    .Width(140)
+                     .HtmlAttributes(new { @class = "text-center" }); 
+                c.Bound(f => f.EntryDateFrom)
+                    .Width(100)
+                    .Format(gridDateFormat)
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.EntryTimeFrom)
+                    .Width(100)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .ClientTemplate("#=data.EntryTimeFromString#");
+                c.Bound(f => f.EntryDateTo)
+                    .Width(100)
+                    .Format(gridDateFormat)
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.EntryTimeTo)
+                    .ClientTemplate("#=data.EntryTimeToString#")
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(100);
+                c.Bound(f => f.Area)
+                    .ClientTemplate("#=renderArea(data)#")
+                    .Width(200);
+                c.Bound(f => f.ReqStatus)
+                    .Width(100)
+                    .ClientTemplate("#=renderRequestStatus(data)#")
+                    .HtmlAttributes(new { @class = "text-center" })
+                    ;
+
+            })
+            .DataSource(ds => ds
+                .Ajax()
+                .Read(r => r.Action("DashboardReq01", "Request").Type(HttpVerbs.Post).Data("getDSH01SearchCriteria"))
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+                .PageSize(20)
+            )
+            .Events(ev => { ev.DataBinding("gridDataBinding"); })
+    )
+</div>

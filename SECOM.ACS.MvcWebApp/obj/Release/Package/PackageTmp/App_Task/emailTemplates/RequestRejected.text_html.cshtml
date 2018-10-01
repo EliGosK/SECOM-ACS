@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:90%">
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%" class="well">
+                <tr>
+                    <td class="mail-header">
+                        Dear ACS User
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mail-content">
+                        <p>Request No. <a href="@Model.LinkUrl">@Model.RequestNo</a></p>
+                        <p>Reject reason: @Model.RejectReason.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mail-footer">
+                        ACS Administrator
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%" class="well well-th">
+                <tr>
+                    <td class="mail-header">
+                        เรียนผู้ใช้งานระบบ ACS
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mail-content">
+                        <p>เอกสาร "@Model.DocumentTypeTH" เลขที่ @Model.RequestNo ของคุณไม่ผ่านการอุนมัติ</a></p>
+                        <p>เหตุผล: @Model.RejectReason.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mail-footer">
+                        ผู้ดูแลระบบ ACS
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

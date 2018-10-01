@@ -1,0 +1,18 @@
+﻿@model object
+
+@(Html.Kendo().DropDownListFor(model => model)
+    .DataTextField("PartNo")
+    .DataValueField("PartNo")
+    .DataSource(ds => ds
+        .Read(r=>r.Action("FindPart","Part")
+            .Type(HttpVerbs.Post)
+        )
+        .ServerFiltering(true)
+    )
+    .MinLength(2)
+    .AutoBind(true)
+    .Filter(FilterType.StartsWith)
+)
+
+
+    

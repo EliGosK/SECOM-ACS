@@ -1,0 +1,25 @@
+﻿@model BusinessTripCardRegistrationViewModel
+
+<div class="k-edit-form-container" id="user-group-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(f => f.CardNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.CardID)
+                    .DataSource(ds => ds.Read(r =>
+                          r.Action("FindCards", "CardRegistration", new { cardType = CardType.BusinessTrip, pageSize = 20 })
+                          .Type(HttpVerbs.Post))
+                        .ServerFiltering(true)
+                    )
+                    .DataTextField("CardNo")
+                    .DataValueField("CardID")
+                    .ValuePrimitive(true)
+                    .Filter(FilterType.Contains)
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .HtmlAttributes(new { @style = "width:100%" ,required="required", data_field=Html.DisplayNameFor(m=>m.CardNo) })
+                )
+            </div>
+        </div>
+    </div>
+    @Html.KendoValidationSummary()
+</div>

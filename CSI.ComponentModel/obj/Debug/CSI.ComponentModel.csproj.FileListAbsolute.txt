@@ -1,0 +1,8 @@
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\bin\Debug\CSI.ComponentModel.dll
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\bin\Debug\CSI.ComponentModel.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.ComponentModel.csprojResolveAssemblyReference.cache
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.Configuration.ConfigurationDesignResource.resources
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.Properties.Resources.resources
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.ComponentModel.csproj.GenerateResource.Cache
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.ComponentModel.dll
+D:\SECOM-ACS\Repos\Dev\CSI.ComponentModel\obj\Debug\CSI.ComponentModel.pdb

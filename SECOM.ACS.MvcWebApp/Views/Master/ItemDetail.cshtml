@@ -1,0 +1,138 @@
+﻿
+@{
+//ViewBag.Title = "Item";
+}
+
+<h2>Item Detail</h2>
+
+<div class="search-container">
+    <div class="form-horizontal well well-sm">
+
+        <div class="container">
+            @*<div class="row">*@
+                @*<label class="col-md-2"> Type </label>
+                <div class="col-md-2">
+                    <input type="checkbox" id="item_out" class="k-checkbox" />
+                    <label class="k-checkbox-label" for="item_out">Item-Out</label>
+                </div>
+                <div class="col-md-2 col-md-pull-1">
+                    <input type="checkbox" id="item_in" class="k-checkbox" />
+                    <label class="k-checkbox-label" for="item_in">Item-In</label>
+                </div>
+                <div class="col-md-2 col-md-pull-2">
+                    <input type="checkbox" id="photographing" class="k-checkbox" />
+                    <label class="k-checkbox-label" for="photographing">Photographing</label>
+                </div>*@
+                @*<div>
+                    <label class="checkbox-inline"><input type="checkbox" value="">Item-Out</label>
+                    <label class="checkbox-inline"><input type="checkbox" value="">Item-In</label>
+                    <label class="checkbox-inline"><input type="checkbox" value="">Photographing</label>
+                </div>*@
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Type</label>
+                <div class="col-md-10">
+                    <label class="checkbox-inline"><input type="checkbox" value="" id="itemout_chkbox">Item-Out</label>
+                    <label class="checkbox-inline"><input type="checkbox" value="" id="itemin_chkbox">Item-In</label>
+                    <label class="checkbox-inline"><input type="checkbox" value="" id="photograp_chkbox">Photographing</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Item Type</label>
+                <div class="col-md-3">
+                    @(Html.Kendo().DropDownList().Name("item_type")
+                          .HtmlAttributes(new { style = "width:100%" })
+                          .OptionLabel("- All -")
+                          .BindTo(new string[] { "Product", "Equipment", "Fixture", "Electronic", "Photographing", "Document", "Data" })
+                    )
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Item Name</label>
+                <div class="col-md-2">
+                    <input type="text" style="margin-left:0px" id="item_name"/>
+                </div>
+                <div class="col-md-2">
+                    <label class="checkbox-inline col-md-2"><input type="checkbox" value="" id="confident_chkbox">Confidential</label>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label" id="txtLending">Lending Code*</label>
+                </div>
+                <div class="col-md-0">
+                    <input type="text" style="margin-left:0px" id="lendingCode"/>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Description</label>
+                <div class="col-md-8">
+                    <input type="text" style="margin-left:0px;width:750px" id="descript" />
+                </div>
+            </div>
+
+
+            @*</div>*@
+        </div>
+
+            @*<div class="row">
+        <label class="col-md-2"> Item Type </label>
+        <div class="col-md-2">
+            @(Html.Kendo().DropDownList().Name("item_type")
+                  .HtmlAttributes(new { style = "width:100%" })
+                  .OptionLabel("- All -")
+                  .BindTo(new string[] { "Product", "Equipment", "Fixture", "Electronic", "Photographing", "Document", "Data" })
+            )
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2"> Item Name </label>
+        <input type="text" class="col-md-2" id="itemName"/>
+        <div class="col-md-2">
+            <input type="checkbox" id="confident" class="k-checkbox" onclick="document.getElementById('lendingCode').disabled = this.checked;"/>
+            <label class="k-checkbox-label" for="confident">Confidential</label>
+        </div>
+        <label class="col-md-2"> Lending Code * </label>
+        <input type="text" id="lendingCode"/>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2"> Description </label>
+        <input type="text" id="descript" class="col-md-8"/>
+    </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <div class="button-container">
+                        <butotn class="k-button">Save</butotn>
+                        <butotn class="k-button">Clear</butotn>
+                        <butotn class="k-button">Cancle</butotn>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+@*</div>*@
+
+@section scripts{
+    <script type="text/javascript">
+
+       //this function will check statement of confident checkbox then turn lending code txtbox enabled/disabled
+       var chkbox = document.getElementById('confident_chkbox');
+       var txtbox = document.getElementById('lendingCode');
+       chkbox.onchange = function () {
+           txtbox.disabled = !!this.checked;
+       };
+
+        
+
+
+    </script>
+
+}

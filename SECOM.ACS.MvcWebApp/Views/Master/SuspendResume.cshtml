@@ -1,0 +1,389 @@
+﻿@model SuspendResumeData
+@{
+    var timeFormat = ApplicationContext.Setting.KendoUI.DateTimePickerTimeFormat;
+
+    var systemStatus = Model.IsSystemSuspend ? "Suspend" : "Online";
+    var systemStatusCss = Model.IsSystemSuspend ? "k-color-warning" : "k-color-success";
+    var actionButtonText = Model.IsSystemSuspend ? "Reactivate Service Now" : "Suspend Service Now";
+    var actionButtonCss = Model.IsSystemSuspend ? "k-button-success k-setting" : "k-button-warning k-setting";
+    var actionButtonIcon = Model.IsSystemSuspend ? "play-circle" : "pause-circle";
+}
+
+@section styles{
+    <style type="text/css">
+        .k-dialog .k-content {
+            padding: 5px 10px!important;
+        }
+
+        #logging-container .logging-message {
+            width: 98%;
+            height: 400px;
+            overflow-y: auto;
+            margin-right: 10px;
+        }
+
+        ul.list-message li {
+            margin-bottom: 10px; 
+        }
+
+        .k-content-setting{
+            min-height: 130px;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-md-6">
+        <div class="system-status-container">
+            <h2><i class="fa fa-cog" aria-hidden="true"></i> Current Setting</h2>
+            <div class="well well-sm k-content-setting">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <label class="col-md-6 control-label">System Status</label>
+                        <label class="col-md-6 k-text-lg k-system-status @systemStatusCss">@systemStatus</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">Next suspend service time</label>
+                        <label class="col-md-6 control-text k-next-suspend">@Html.DisplayDate(Model.NextSuspendTime, "d MMM yyyy HH:mm")</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">Next reactivate service time</label>
+                        <label class="col-md-6 control-text k-next-reactivate">@Html.DisplayDate(Model.NextReactivateTime, "d MMM yyyy HH:mm")</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-6 col-md-6">
+                            @Html.KendoConfirmButton("actionButton", actionButtonIcon, actionButtonText, new { @class = actionButtonCss, @data_suspend = !Model.IsSystemSuspend })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="schedule-container">
+            <h2><i class="fa fa-clock-o" aria-hidden="true"></i> Change Suspend / Reactive Time Schedule</h2>
+            <div class="form-horizontal well well-sm k-content-setting">
+                <div class="form-group">
+                    <label class="col-md-6 control-label">Next suspend service time</label>
+                    <div class="col-md-6">
+                        @(Html.Kendo().TimePickerFor(m => m.SuspendTime)
+                    .Format(timeFormat)
+                    .HtmlAttributes(new { style = "width:120px" })
+                        )
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-6 control-label">Next reactivate service time</label>
+                    <div class="col-md-6">
+                        @(Html.Kendo().TimePickerFor(m => m.ReactivateTime)
+                    .Format(timeFormat)
+                    .HtmlAttributes(new { style = "width:120px" })
+                        )
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-offset-6 col-md-6">
+                        @Html.KendoConfirmButton("updateButton", "save", WidgetResource.Button_Update_Text, new { @class = "k-primary k-setting" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2><i class="fa fa-th-list"></i> Task List</h2>
+<div class="grid-cotnainer">
+    @(Html.Kendo().Grid<AcsTaskViewModel>()
+            .Name("grid")
+            .ToolBar(t=>t.Template(Html.KendoConfirmButton("runAllButton", "play-circle", "Run All Task", new { @class = "k-primary k-task" }).ToHtmlString()))
+                .Columns(c =>
+                {
+                    c.Template(t => { })
+                          .Width(90)
+                          .ClientTemplate("<button class=\"k-button k-primary k-button-cmd k-task k-run\" title=\"Run\" data-task-id=\"#=data.TaskID#\" data-theme = \"dark\" data-content=\"" + @MessageHelper.ConfirmRunTask() + "\"><i class=\"fa fa-play-circle\"></i></button><button class=\"k-button k-button-cmd k-task k-log\" title=\"View log file\" data-task-id=#=data.TaskID#><i class=\"fa fa-file-text-o\"></i></button>");
+                    c.Template(t => { })
+                        .Title("No.")
+                        .ClientTemplate("#=_rowNo#")
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .Width(50);
+                    c.Bound(f => f.TaskName)
+                       .ClientTemplate("#=data.TaskID#: #=data.TaskName#")
+                       .Width(240);
+                    c.Bound(f => f.LastResultMessage)
+                            .ClientTemplate("#=renderLastResultMessage(data)#")
+                          .HtmlAttributes(new { });
+                    c.Bound(f => f.LastRunDateTime)
+                            .Format("{0:d MMM yyyy HH:mm}")
+                            .HtmlAttributes(new { @class = "text-center" })
+                            .Width(140);
+                    c.Bound(f => f.Success)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(70);
+                    c.Bound(f => f.Fail)
+                        .HtmlAttributes(new { @class = "text-center" })
+                        .Width(70);
+                })
+                    .DataSource(ds => ds
+                        .Custom().Transport(t =>
+                        {
+                            t.Read(r => r.Action("List", "SuspendResume")
+                                .Type(HttpVerbs.Post)
+                                .DataType("json"));
+                        })
+            .Schema(s =>
+            {
+                s.Data("Data");
+                s.Total("Total");
+                s.Errors("Errors");
+                s.Model(m =>
+                {
+                    m.Id(f => f.TaskID);
+                });
+            })
+            .PageSize(20)
+            .ServerFiltering(true)
+            .ServerPaging(true)
+            .ServerSorting(true)
+            .Events(e =>
+            {
+                e.RequestStart("dataSourceRequestStart");
+                e.RequestEnd("dataSourceRequestEnd");
+                e.Error("dataSourceError");
+            })
+            )
+            .Events(ev => ev.DataBinding("gridDataBinding").DataBound("gridDataBound"))
+    )
+
+</div>
+@(Html.Kendo().Dialog()
+        .Name("loggingDialog")
+        .Width(800)
+        .Height(600)
+        .Title("Logging Information")
+        .Animation(a =>
+        {
+            a.Open(o => o.Fade(FadeDirection.In));
+            a.Close(c => c.Fade(FadeDirection.Out));
+        })
+        .Visible(false)
+        .Content("<div id=\"logging-container\" class=\"well well-sm\"></div>")
+        .Actions(act => act.Add().Text("<i class=\"fa fa-times-circle\"></i> Close"))
+)
+
+<script id="errorDetailTemplate" type="text/x-kendo-template">
+    <div id="logging-container">
+        <h3><i class="fa fa-cogs"></i> Task ID: #: data.TaskID #</h3>
+        <h3><i class="fa fa-file-text-o"></i> Log File: #: data.LogFile#</h3>
+        <div class="logging-message well well-sm">
+            <ul class="list-unstyled list-message">
+                # for (var i=0;i < data.LoggingMessages.length; i++){ #
+                <li>#: data.LoggingMessages[i] #</li>
+                # } #
+            </ul>
+        </div>
+    </div>
+</script>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('setting', ['.k-setting']);
+
+            $("#actionButton").on("openDialog", function (sender, args, elem) {
+                args.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "@Url.Action("Suspend","SuspendResume")",
+                        data: { suspend: $(elem).attr("data-suspend") },
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            updateUIState(data.data);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);
+                        }
+                    });
+                }
+            });
+
+            $("#updateButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    uiState.busy("setting", true);
+                    var data = {
+                        SuspendTime: app.data.toDateString($("#SuspendTime").data("kendoTimePicker").value()),
+                        ReactivateTime: app.data.toDateString($("#ReactivateTime").data("kendoTimePicker").value())
+                    };
+                    $.ajax({
+                        url: "@Url.Action("UpdateSchedule","SuspendResume")",
+                        data: data,
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            updateUIState(data.data);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("setting", false);
+                        }
+                    });
+                }
+            });
+
+            $("#runAllButton").on("openDialog", function (sender, e, elem) {
+                e.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "api/tasks/run",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);
+                        }
+                    });
+                }
+            });
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function gridDataBound(e)
+        {
+            uiState.register('task', ['.k-task']);
+
+            $(".k-log").on("click", function (e) {
+                e.preventDefault();
+                uiState.busy('task', true);
+                var taskId = $(this).data("task-id");
+                $.ajax({
+                    url: "/api/tasks/" + taskId + "/log",
+                    success: function (data, status, xhr) {
+                        app.ui.handleAjaxSuccess(data, status, xhr);
+                        // Show log in dialog
+                        showLogMessage(data);
+                    },
+                    error: function (xhr, status, error) {
+                        app.ui.handleAjaxError(xhr, status, error);
+                    },
+                    complete: function () {
+                        uiState.busy('task', false);
+                    }
+                });
+            });
+
+            app.ui.applyConfirmDialog(".k-run");
+            $(".k-run").on("openDialog", function (sender, e, elem) {
+                e.buttons.yes.action = function () {
+                    uiState.busy('task', true);
+                    var taskId = $(elem).data("task-id");
+                    $.ajax({
+                        url: "/api/tasks/" + taskId + "/run",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy('task', false);
+                            grid.dataSource.read();
+                        }
+                    });
+                }
+            });
+        }
+
+        function updateUIState(model) {
+            console.log(model);
+
+            $(".k-next-suspend").html(kendo.format("{0:d MMM yyyy HH:mm}", kendo.parseDate(model.NextSuspendTime)));
+            $(".k-next-reactivate").html(kendo.format("{0:d MMM yyyy HH:mm}", kendo.parseDate(model.NextReactivateTime)));
+            $(".k-system-status")
+                .html(model.IsSystemSuspend ? "Suspend" : "Online")
+                .removeClass(model.IsSystemSuspend ? "k-color-success" : "k-color-warning")
+                .addClass(model.IsSystemSuspend ? "k-color-warning" : "k-color-success");
+
+            $("#actionButton")
+                .removeClass(model.IsSystemSuspend ? "k-button-warning" : "k-button-success")
+                .addClass(model.IsSystemSuspend ? "k-button-success" : "k-button-warning")
+                .attr("data-suspend", !model.IsSystemSuspend)
+                .html(model.IsSystemSuspend ? "<i class=\"fa fa-play-circle\"></i> Reactivate Service Now" : "<i class=\"fa fa-pause-circle\"></i> Suspend Service Now");
+        }
+
+        function showLogMessage(data) {
+            $("#logging-container").empty();
+            var dialog = $("#loggingDialog").data("kendoDialog");
+            dialog.content(kendo.template($("#errorDetailTemplate").html())(data));
+            dialog.open();
+        }
+
+        function renderLastResultMessage(data) {
+            return data.IsLastResultSuccess ? "<span class=\"k-color-primary\">" + data.LastResultMessage + "</span>" : "<span class=\"k-color-danger\">" + data.LastResultMessage + "</span>";
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,323 @@
+﻿@model AcsVisitorViewModel
+@using Vereyon.Web
+@{
+    var currentUser = User.Identity.Name;
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("Edit", "AcsVisitor", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ReqNo)
+        <div class="well well-warning">
+            @MessageResource.MSG0035
+        </div>
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ReqNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.ReqNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployee.Department, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.EntryDateFrom, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4 control-text">
+                    @Html.DisplayDate(Model.EntryDateFrom.AddMinutes(Model.EntryTimeFrom), "d MMM yyyy HH:mm")
+                    <span>-</span>
+                    @Html.DisplayDate(Model.EntryDateTo.AddMinutes(Model.EntryTimeTo), "d MMM yyyy HH:mm")
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Areas, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 control-text">
+                    <ul class="list-unstyled list-inline">
+                        @{
+                            foreach (var areaApprover in Model.AreaApprovals.Where(t => t.AreaID.HasValue).ToList())
+                            {
+                                <li><label class="label label-primary label-md">@ModelLocalizeManager.GetValue(areaApprover.Area, "AreaDisplay")</label></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayLocalize(Model.Purpose, "MiscDisplay")</label>
+                @if (!String.IsNullOrEmpty(Model.OtherPurpose))
+                {
+                    @Html.LabelFor(m => m.OtherPurpose, new { @class = "col-md-2 control-label" })
+                    <label class="col-md-4 control-text">@Model.OtherPurpose</label>
+                }
+            </div>
+        </div>
+
+        <div class="">
+            @(Html.Kendo().TabStrip().Name("visitorTabStrip")
+      .Animation(a => a.Open(ef => ef.Fade(FadeDirection.In)))
+      .SelectedIndex(0)
+.HtmlAttributes(new { @class = "k-content-visitor k-content" })
+.Items(ts =>
+{
+ts.Add()
+    
+    .HtmlAttributes(new { @class = "k-tab-visitor-list" })
+    .Text(ViewResource.AcsVisitor_VisitorListSection_Title)
+    .Content(@<text>
+        <div class="grid-container">
+            @(Html.Kendo().Grid<AcsVisitorDetailViewModel>()
+                .Name("visitorGrid")
+                .Scrollable()
+                .Pageable(p => p.Refresh(true).PageSizes(true).ButtonCount(5))
+                .HtmlAttributes(new { @style = "height:300px" })
+                .Columns(c =>
+                {
+                    c.Template(t => { })
+                        .Width(60)
+                        .Title(WidgetResource.Grid_Column_No)
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .ClientTemplate("#=_rowNo#");
+                    c.Bound(f => f.VerifyType);
+                    c.Bound(f => f.VerifyNo);
+                    c.Bound(f => f.VisitorName);
+                    c.Bound(f => f.Company);
+                    c.Bound(f => f.DepartmentName);
+                    c.Bound(f => f.ItemInOut);
+                    c.Bound(f => f.Photographing);
+                    c.Bound(f => f.Description);
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r =>
+                            r.Action("ListVisitorDetail", "AcsVisitor", new { requestNo = Model.ReqNo })
+                            .Type(HttpVerbs.Post)
+                        );
+                    })
+                    .Schema(s =>
+                    {
+                        s.Model(m =>
+                        {
+                            m.Id(f => f.DetailID);
+                        });
+                        s.Data("Data").Total("Total").Errors("Errors");
+                    })
+                    .Events(ev =>
+                    {
+                        ev.RequestStart("dataSourceRequestStart");
+                        ev.RequestEnd("visitorDataSourceRequestEnd");
+                        ev.Error("dataSourceError");
+                    })
+                    .PageSize(20)
+                    .ServerFiltering(true)
+                    .ServerPaging(true)
+                    .ServerSorting(true)
+                )
+                .AutoBind(true)
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridDataBinding");
+                })
+            )
+        </div>
+    </text>);
+    ts.Add()
+    .Text(ViewResource.AcsVisitor_TransactionListSection_Title)
+    .HtmlAttributes(new { @class = "k-tab-transaction" })
+    .Content(@<text>
+        <div class="grid-container">
+            @(Html.Kendo().Grid<AcsVisitorTransactionDataViewModel>()
+                .Name("transactionGrid")
+                .HtmlAttributes(new { @style = "height:300px" })
+                .Pageable(p => p
+                    .PageSizes(true)
+                    .Refresh(true)
+                    .ButtonCount(5)
+                )
+                .Columns(c =>
+                {
+                    c.Template(t => { })
+                        .Width(60)
+                        .Title(WidgetResource.Grid_Column_No)
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .ClientTemplate("#=_rowNo#");
+                    c.Bound(f => f.EntryDateFrom)
+                        .Format(gridDateFormat)
+                        .Width(120);
+                    c.Bound(f => f.EntryTimeFrom)
+                        .Width(100)
+                        .Format("{0:HH:mm}");
+                    c.Bound(f => f.EntryTimeTo)
+                        .Width(100)
+                        .Format("{0:HH:mm}");
+                    c.Bound(f => f.Name)
+                      .Width(160);
+                    c.Bound(f => f.Company)
+                        .Width(200);
+                    c.Bound(f => f.DepartmentName)
+                        .Width(200);
+                    c.Bound(f => f.CardNo)
+                       .Width(160);
+                    c.Bound(f => f.VerifyTypeName)
+                        .Width(160);
+                    c.Bound(f => f.VerifyNo)
+                        .Width(160);
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListTransaction", "AcsVisitor", new { requestNo = Model.ReqNo })
+                            .Type(HttpVerbs.Post)
+                            .DataType("json"));
+                    }
+                )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TranID);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("transactionDataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+            )
+            .Events(ev => ev.DataBinding("gridDataBinding"))
+            )
+        </div>
+
+</text>);
+})
+
+            )
+        </div>
+
+        <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+        <div class="well well-sm form-horizontal">
+            @{
+                Model.ViewMode = RequestViewMode.View;
+                Html.RenderPartial("_DisplayApproverList", Model);
+            }
+        </div>
+        <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+        <div class="well well-sm">
+            @(Html.Kendo().EditorFor(m => m.Note)
+                .Tools(t => t.Clear()
+                        .Bold().Italic().Underline().Strikethrough()
+                        .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                        .InsertUnorderedList().InsertOrderedList()
+                        .Outdent().Indent()
+                        .Formatting()
+                        .CleanFormatting()
+                )
+                .Value(Html.DisplayHtmlFor(m => m.Note).ToString())
+                .HtmlAttributes(new { @class = "k-textbox", style = "width:100%", @maxlength = 4000 })
+            )
+        </div>
+
+        <div class="text-center">
+            <div class="button-container">
+                @(Html.KendoConfirmButton("saveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-primary", data_content = MessageHelper.ConfirmSave() }))
+                <a class="k-button k-button-warning" href="@Url.Action("Detail", new { id = Model.ReqNo })"><i class="fa fa-times-circle"></i> @WidgetResource.Button_Cancel_Text</a>
+            </div>
+        </div>
+        @Html.KendoValidationSummary()
+    }
+</div>
+
+
+@section styles{
+    <style type="text/css">
+        .k-content-visitor {
+            display: block;
+            min-height: 300px;
+        }
+
+        .k-tab-visitor-list,
+        .k-tab-transaction {
+            font-weight: bold;
+        }
+    </style>
+}
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register('grid', [".k-button"]);
+            uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text" }, ".k-button"]);
+
+            $("#saveButton")
+                .on("openDialog", function (sender, args) {
+                    args.buttons.yes.action = function () {
+                        uiState.busy("save", true);
+                        $("form").submit();
+                    };
+                });
+
+            // load all tab content
+            $("#visitorTabstrip .k-item").each(function (index, item) {
+                if (index == 0) { return; }
+                $("#visitorTabstrip").data("kendoTabStrip").reload(item);
+            });
+        });
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy('grid', true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy('grid', false);
+            var handled = app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function visitorDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            $(".k-tab-visitor-list span.k-link").html(kendo.format("<i class=\"fa fa-users\"></i> @ViewResource.AcsVisitor_VisitorListSection_Title ({0})", e.response.Total));
+        }
+
+        function transactionDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            $(".k-tab-transaction span.k-link").html(kendo.format("<i class=\"fa fa-cogs\"></i> @ViewResource.AcsVisitor_TransactionListSection_Title ({0})", e.response.Total));
+        }
+    </script>
+}

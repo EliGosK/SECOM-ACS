@@ -1,0 +1,268 @@
+﻿@{ 
+    ViewBag.PageTitle = "Import Employee";
+    ViewBag.PageIcon = "fa fa-upload";
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+<div class="import-container">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Attach Employee File</label>
+            <div class="col-md-10">
+                @(Html.Kendo().Upload()
+                .Name("files")
+                .Async(a => a
+                    .Save("Upload", "Employee")
+                    .AutoUpload(true)
+                )
+                .Validation(v => v
+                    .AllowedExtensions(new string[] { ".xls",".xlsx" })
+                    .MaxFileSize(ApplicationContext.Setting.AcsEmployee.AllowUploadFileMaxFileSize)
+                )
+                .Events(ev => ev.Upload("filesUpload").Success("filesSuccess").Complete("filesComplete").Error("filesError"))
+                .Multiple(false))
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.KendoValidationMessage("files")
+                @Html.DisplayUploadHint(new string[] { ".xls", ".xlsx" }, ApplicationContext.Setting.AcsEmployee.AllowUploadFileMaxFileSize)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="button-container">                   
+                    @Html.ResetButton("resetButton",new { @class = "k-button-warning" }).Events(ev=>ev.Click("clearButtonClicked"))
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="result-container"></div>
+</div>
+<div id="import-result-container" style="display:none; overflow-y:auto"></div>
+<div class="grid-container" style="display:none">
+    <h2><i class="fa fa-th-list"></i> Employee List (Total: <span class="k-total-records"></span>) </h2>
+    @(Html.Kendo().Grid<SECOM.ACS.Tasks.EmployeeImportData>()
+        .Name("grid")
+        .Scrollable(s=>s.Height("400px"))
+        .ToolBar(t=>t.Template(Html.KendoConfirmButton("importButton", "download", WidgetResource.Button_Import_Text, new { @class = "k-primary" }).ToHtmlString()))
+        .Columns(c=> {
+            c.Template(t=> { }).Title(WidgetResource.Grid_Column_No).ClientTemplate("#=_rowNo#").HtmlAttributes(new {  @class = "text-right"}).Width(60);
+            c.Bound(f => f.EmpID).Width(120);
+            c.Bound(f => f.CardID).Width(120);
+            c.Bound(f => f.Gender).Width(80);
+            c.Bound(f => f.EmpNameTH).Width(160);
+            c.Bound(f => f.EmpNameEN).Width(160);
+
+            c.Bound(f => f.Email).Width(160);
+            c.Bound(f => f.Department).Width(160);
+            c.Bound(f => f.Position).Width(120);
+
+            c.Bound(f => f.Level).Width(80);
+            c.Bound(f => f.SpecialPosition).Width(120);
+            c.Bound(f => f.StartWorkingDate).Width(120).Format(gridDateFormat).HtmlAttributes(new { @class = "text-center" }).ClientTemplate("#=renderDate(data.StartWorkingDate)#");
+            c.Bound(f => f.ResignDate).Width(120).Format(gridDateFormat).HtmlAttributes(new { @class = "text-center" }).ClientTemplate("#=renderDate(data.ResignDate)#");
+
+            c.Bound(f => f.Area1).Width(120);
+            c.Bound(f => f.Area2).Width(120);
+            c.Bound(f => f.Area3).Width(120);
+            c.Bound(f => f.Area4).Width(120);
+            c.Bound(f => f.Area5).Width(120);
+            c.Bound(f => f.Area6).Width(120);
+            c.Bound(f => f.Area7).Width(120);
+            c.Bound(f => f.Area8).Width(120);
+            c.Bound(f => f.Area9).Width(120);
+            c.Bound(f => f.Area10).Width(120);
+
+            c.Bound(f => f.Area11).Width(120);
+            c.Bound(f => f.Area12).Width(120);
+            c.Bound(f => f.Area13).Width(120);
+            c.Bound(f => f.Area14).Width(120);
+            c.Bound(f => f.Area15).Width(120);
+            c.Bound(f => f.Area16).Width(120);
+            c.Bound(f => f.Area17).Width(120);
+            c.Bound(f => f.Area18).Width(120);
+            c.Bound(f => f.Area19).Width(120);
+            c.Bound(f => f.Area20).Width(120);
+
+            c.Bound(f => f.Area21).Width(120);
+            c.Bound(f => f.Area22).Width(120);
+            c.Bound(f => f.Area23).Width(120);
+            c.Bound(f => f.Area24).Width(120);
+            c.Bound(f => f.Area25).Width(120);
+            c.Bound(f => f.Area26).Width(120);
+            c.Bound(f => f.Area27).Width(120);
+            c.Bound(f => f.Area28).Width(120);
+            c.Bound(f => f.Area29).Width(120);
+            c.Bound(f => f.Area30).Width(120);
+
+            c.Bound(f => f.Area41).Width(120);
+            c.Bound(f => f.Area42).Width(120);
+            c.Bound(f => f.Area43).Width(120);
+            c.Bound(f => f.Area44).Width(120);
+            c.Bound(f => f.Area45).Width(120);
+            c.Bound(f => f.Area46).Width(120);
+            c.Bound(f => f.Area47).Width(120);
+            c.Bound(f => f.Area48).Width(120);
+            c.Bound(f => f.Area49).Width(120);
+            c.Bound(f => f.Area50).Width(120);
+        })
+        .Events(ev=>ev.DataBinding("gridDataBinding"))
+
+    )
+    @Html.Hidden("employees","[]")
+</div>
+<div id="import-success-result-container" style="display:none;height:400px; overflow-y:auto"></div>
+
+<script id="errorTemplate" type="text/x-kendo-template">
+    <div class="alert alert-danger">
+        #=data.message#
+    </div>
+</script>
+<script id="importResultTemplate" type="text/x-kendo-template">
+    # if (data.Errors.length > 0){ #
+    <h2><i class="fa fa-exclamation-triangle"></i> Error List (#=data.Errors.length# Items)</h2>
+    <div class="well well-danger well-sm">
+        # for (var i=0; i < data.Errors.length; i++){ #
+        <div class="well well-light">
+            #=kendo.stringify(data.Errors[i].Data)#
+            <hr class="dashed" />
+            <div><span class="k-text-bold">Error Massages:</span></div>
+            <ul>
+                # for (var x=0; x < data.Errors[i].ErrorMessages.length; x++){ #
+                <li>#=data.Errors[i].ErrorMessages[x]#</li>
+                # } #
+            </ul>
+        </div>
+        # } #
+    </div>
+    # } #
+</script>
+
+<script id="importSuccessResultTemplate" type="text/x-kendo-template">
+    # if (data.Data.length > 0){ #
+    <h2><i class="fa fa-check-circle"></i> Success List (#=data.Data.length# Items)</h2>
+    <div class="well well-success well-sm">
+        # for (var i=0; i < data.Data.length; i++){ #
+        <div class="well well-light">
+            #=kendo.stringify(data.Data[i])#
+        </div>
+        # } #
+    </div>
+    # } #
+</script>
+    @section scripts{
+        <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid, validator;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('upload', ['.k-upload-button','#resetButton']);
+            uiState.register('import', ['#importButton']);
+
+            validator = $(".import-container").kendoValidator({
+                rules: {
+                    requiredFile: function (input) {
+                        if (input.is("[name = 'files']")) {
+                            return input.data("kendoUpload").getFiles().length > 0;
+                        }
+                        return true;
+                    }
+                },
+                messages: {
+                    requiredFile: function (input) { return "Employee import file is required."; }
+                }
+            }).data("kendoValidator");
+
+
+            $("#importButton")
+                .on("validating", function (sender, args, elem) {
+                    args.isValid = validator.validate();
+                })
+                .on("openDialog", function (e,settings,elem) {
+                    settings.buttons.yes.action = function () {
+                        uiState.busy('import', true);
+                        $("#import-result-container").empty().hide();
+                        var data = { "employees": JSON.parse($("#employees").val()) };
+                        $.ajax({
+                            url: "@Url.Action("ImportEmployee", "Employee")",
+                            type: "POST",
+                            dataType: "json",
+                            data: app.addAntiForgeryToken(data),
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                displayImportResult(data);
+                            },
+                            error: function (xhr, status, error) {
+                                app.ui.handleAjaxError(xhr, status, error);
+                            },
+                            complete: function () {
+                                uiState.busy('import', false);
+                            }
+                        });
+                    };
+                });
+        });
+
+        function displayImportResult(data) {
+            var content = kendo.template($("#importResultTemplate").html())(data);
+            $("#import-result-container").html(content).show();
+
+            var content2 = kendo.template($("#importSuccessResultTemplate").html())(data);
+            $("#import-success-result-container").html(content2).show();
+        }
+
+        function clearButtonClicked(e) {
+            app.ui.clear(["#grid", "#employeeID", "#employeeName", "#position", "#department"]);
+            $("#files").data("kendoUpload").clearAllFiles();
+            $(".result-container,.grid-container,#import-result-container").empty().hide();
+            app.ui.hideVaidationMessages(validator);
+        }
+
+        function filesUpload(e) {
+            uiState.busy("upload", true);
+        }
+
+        function filesError(e) {
+            $(".result-container").empty().hide();
+            if (e.operation == "upload") {
+                var data = JSON.parse(e.XMLHttpRequest.response);
+                var content = kendo.template($("#errorTemplate").html())(data);
+                $(".result-container").html(content).show();
+            }
+
+        }
+
+        function filesSuccess(e) {
+            $("#employees").val("[]");
+            if (e.operation == "upload") {
+                $(".grid-container").show();
+                var r = e.response;
+                if (r.length > 0) {
+                    var grid = $("#grid").data("kendoGrid");
+                    $(".k-total-records").html(r[0].Data.length);
+                    grid.dataSource.data(r[0].Data);
+                    grid.refresh();
+                    app.ui.uiEnable("#importButton", r[0].Data.length > 0);
+                    $("#employees").val(kendo.stringify(r[0].Data));
+                    $("#import-result-container").empty().hide();
+                }
+            }
+        }
+
+        function filesComplete(e) {
+            uiState.busy("upload", false);
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderDate(data)
+        {
+            if (!data){ return ""; }
+            var date = kendo.parseDate(data);
+            return kendo.toString(date, "d/M/yyyy");
+        }
+        </script>
+    }

@@ -1,0 +1,80 @@
+﻿@model MiscellaneousViewModel
+@Html.HiddenFor(m => m.MiscId)
+<label class="k-edit-label k-text-bold">Misc. ID </label>
+    <div class="k-edit-field">
+        @Html.Kendo().TextBoxFor(m => m.MiscId).HtmlAttributes(new { @style = "width:100%", required = "required" })
+    </div>
+<div class="k-edit-form-container">
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.Type) *</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().DropDownListFor(m => m.Type)
+            .BindTo(MiscellaneousType.GetList())
+            .DataTextField("Name")
+            .DataValueField("Value")
+            .OptionLabel(CommonResource.SelectOptions)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Type), @required = "required", @maxlength = 30 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Type)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.NameEn1) *</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.NameEn1)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.NameEn1),  @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.NameEn1)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.NameTh1) *</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.NameTh1)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.NameTh1), @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.NameTh1)
+    </div>
+
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.NameEn2) *</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.NameEn2)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.NameEn2),  @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.NameEn2)
+    </div>
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.NameTh2) *</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.NameTh2)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.NameTh2), @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.NameTh2)
+    </div>
+
+    <label class="k-edit-label k-text-bold">@Html.DisplayNameFor(m => m.Description)</label>
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.Description)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.Description), @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.Description)
+    </div>
+
+    <label class="k-edit-label k-text-bold">Status </label>
+    <div class="k-edit-field">
+        <ul class="list-unstyled list-inline control-text">
+            @foreach (var card in CardStatus.GetList())
+            {
+                <li>
+                    @(Html.Kendo().RadioButtonFor(m => m.Status).Label(card.Name).Value(card.Value)
+                        .HtmlAttributes(new { @class = "card-status" }))
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+
+
+<script>
+    var MiscID ;
+    $(document).ready(function () {
+        
+    })
+</script>
+
+

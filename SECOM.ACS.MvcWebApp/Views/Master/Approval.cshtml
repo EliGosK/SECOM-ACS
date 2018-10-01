@@ -1,0 +1,1609 @@
+﻿
+<div class="search-container well well-sm animated fadeIn">
+    <div class="form-horizontal ">
+        <div class="form-group">
+            @Html.Label("Area *", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                    .Name("area")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/area")))
+                    .DataTextField("AreaNameEN")
+                    .DataValueField("AreaId")
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .Filter(FilterType.Contains)
+                    .HtmlAttributes(new { @style = "width:300px", required="required", data_field="Area" })
+                )
+                
+                <button class="k-button k-search k-button-primary" id="btnSearch"><i class="fa fa-search"></i> Search</button>
+                <button class="k-button k-reset k-button-warning" id="btnClear"><i class="fa fa-times-circle"></i> Clear</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.KendoValidationMessage("area")
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-container animated fadeIn" style="display:none">
+    @* --------------------------------------------------Request Access For Employee----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-users"></i> Request Access For Employee</h2>
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            @Html.Label("Approver 1st", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("Approver1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px",@class="clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("Approver1")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("Approver2")
+                            .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("Approver3")
+                            .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("Approver4")
+                            .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+    </div>
+    @* --------------------------------------------------Request Access For Visitor----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-users"></i> Request Access For Visitor</h2>
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor1_1")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2Visitor1_1")
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor1_2")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor1_3")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor1_4")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 2nd ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor2_1")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2Visitor2_1")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor2_2")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor2_3")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor2_4")
+                          .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 3rd ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                    .Name("app2Visitor3_1")
+                    .DataSource(ds => ds.
+                        Read(r => r.Action("FindEmployee", "EmployeeApi")
+                            .Type(HttpVerbs.Post)
+                        )
+                        .ServerFiltering(true)
+                    )
+                    .DataTextField("FullName")
+                    .DataValueField("EmployeeNo")
+                    .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                    .Filter(FilterType.Contains)
+                    .TemplateId("employeeListTemplate")
+                    .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 3rd" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2Visitor3_1")
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                    .Name("app2Visitor3_2")
+                        .DataSource(ds => ds.
+                        Read(r => r.Action("FindEmployee", "EmployeeApi")
+                            .Type(HttpVerbs.Post)
+                        )
+                        .ServerFiltering(true)
+                    )
+                    .DataTextField("FullName")
+                    .DataValueField("EmployeeNo")
+                    .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                    .Filter(FilterType.Contains)
+                    .TemplateId("employeeListTemplate")
+                    .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                    .Name("app2Visitor3_3")
+                        .DataSource(ds => ds.
+                        Read(r => r.Action("FindEmployee", "EmployeeApi")
+                            .Type(HttpVerbs.Post)
+                        )
+                        .ServerFiltering(true)
+                    )
+                    .DataTextField("FullName")
+                    .DataValueField("EmployeeNo")
+                    .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                    .Filter(FilterType.Contains)
+                    .TemplateId("employeeListTemplate")
+                    .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2Visitor3_4")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+    </div>
+
+
+    @* --------------------------------------------------Request Item Out [Confidential]----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-desktop"></i> Request  Item Out [Confidential]</h2>
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut1_1")
+                       .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemOut1_1")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut1_2")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut1_3")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut1_4")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 2nd", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut2_1")
+                       .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemOut2_1")
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut2_2")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut2_3")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOut2_4")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+
+    </div>
+
+    @* --------------------------------------------------Request Item Out [Non-Confidential]----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-desktop"></i> Request  Item Out [Non-Confidential]</h2>
+    <div class="form-horizontal well well-sm ">
+        <div class="form-group">
+            @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon1_1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemOutnon1_1")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon1_2")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon1_3")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label(" ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon1_4")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 2nd", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon2_1")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemOutnon2_1")
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon2_2")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label(" ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon2_3")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label(" ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemOutnon2_4")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+
+    </div>
+
+    @* --------------------------------------------------Request Item In [Confidential]----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-desktop"></i> Request Item In [Confidential]</h2>
+    <div class="form-horizontal well well-sm ">
+        <div class="form-group">
+            @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn1_1")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemIn1_1")
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn1_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn1_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn1_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+
+            </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 2nd", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn2_1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemIn2_1")
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn2_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn2_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemIn2_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+    </div>
+
+    @* --------------------------------------------------Request Item In [Non-Confidential]----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-desktop"></i> Request  Item In [Non-Confidential]</h2>
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon1_1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemInnon1_1")
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon1_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon1_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10 ">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon1_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+
+        <div style="height:20px"></div>
+        <div class="form-group">
+            @Html.Label("Approver 2nd", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon2_1")
+                       .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+                <span>*</span>
+                @Html.KendoValidationMessage("app2ItemInnon2_1")
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon2_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon2_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @(Html.Kendo().DropDownList()
+                        .Name("app2ItemInnon2_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                )
+            </div>
+        </div>
+
+    </div>
+
+    @* --------------------------------------------------Request Photographing----------------------------------------------------------------------------------------------- *@
+    <h2><i class="fa fa-photo"></i> Request Photographing</h2>
+    <div class="form-horizontal well well-sm animated fadeIn">
+            <div class="form-group">
+                @Html.Label("Approver 1st ", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo1_1")
+                         .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 1st" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                    <span>*</span>
+                    @Html.KendoValidationMessage("app2Photo1_1")
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo1_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo1_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(" ", new { @class = "col-md-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownList()
+                        .Name("aapp2Photo1_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+
+
+
+            @* -------------------------------------------------------------------------------------- *@
+            <div style="height:20px"></div>
+
+            <div class="form-group">
+                @Html.Label("Approver 2nd ", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo2_1")
+                  .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 2nd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+
+                    <span>*</span>
+                    @Html.KendoValidationMessage("app2Photo2_1")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo2_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo2_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo2_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+
+
+
+            @* -------------------------------------------------------------------------------------- *@
+            <div style="height:20px"></div>
+
+
+            <div class="form-group">
+                @Html.Label("Approver 3rd ", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo3_1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 3rd" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                    <span>*</span>
+                    @Html.KendoValidationMessage("app2Photo3_1")
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo3_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo3_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo3_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+
+
+
+            @* -------------------------------------------------------------------------------------- *@
+            <div style="height:20px"></div>
+
+
+            <div class="form-group">
+                @Html.Label("Approver 4th ", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo4_1")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear", required = "required", data_field = "Approver 4th" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+
+                    <span>*</span>
+                    @Html.KendoValidationMessage("app2Photo4_1")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo4_2")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo4_3")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-offset-2 col-md-10">
+                    @(Html.Kendo().DropDownList()
+                        .Name("app2Photo4_4")
+                        .DataSource(ds => ds.
+                            Read(r => r.Action("FindEmployee", "EmployeeApi")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .DataTextField("FullName")
+                        .DataValueField("EmployeeNo")
+                        .MinLength(ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName)
+                        .Filter(FilterType.Contains)
+                        .TemplateId("employeeListTemplate")
+                        .HtmlAttributes(new { @style = "width:300px", @class = "clear" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .AutoBind(false)
+                    )
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    <div class="text-center">
+        <button class="k-button k-button-primary" id="btnSave"><i class="fa fa-save"></i> Save</button>
+    </div>
+</div>
+@(Html.Kendo().Notification()
+    .Name("comple")
+    .Position(p => p.Pinned(true).Top(30).Right(30))
+    .Stacking(NotificationStackingSettings.Down)
+    .AutoHideAfter(3000)
+)
+@Html.Partial("_Employee")
+
+@section scripts
+    {
+    <script type="text/javascript">
+        var v;
+        var formRequest;
+    $(document).ready(function () {
+        app.initPage();
+        v = $(".search-container").kendoValidator().data("kendoValidator");
+        formRequest = $(".form-container").kendoValidator().data("kendoValidator");
+        $('#btnSave').click(function (e) {
+            e.preventDefault();
+            var popup = $("#comple").data("kendoNotification");
+            if (formRequest.validate()) {
+                popup.show(" complete", "info");
+            }
+        });
+        $("#btnSearch").click(function (e) {
+            e.preventDefault();
+            if (v.validate()) {
+                $(".form-container").show('fast');
+            }
+            //var area = $("#area").data("kendoDropDownList");
+            //var popup = $("#error").data("kendoNotification");
+            //if (area.text() != "- Select -") {
+            //    console.log(area.text());
+            //    $(".form-container").show('fast').fadeIn();
+            //} else {
+            //    popup.show(" Please Select Area", "error");
+            //}
+        });
+
+        $("#btnClear").click(function () {
+            app.ui.clear(["#area", ".clear", "#Approver1", "#Approver2", "#Approver3", "#Approver4",
+                "#app2Visitor1_1", "#app2Visitor1_2", "#app2Visitor1_3", "#app2Visitor1_4",
+                "#app2Visitor2_1", "#app2Visitor2_2", "#app2Visitor2_3", "#app2Visitor2_4",
+                "#app2Visitor3_1", "#app2Visitor3_2", "#app2Visitor3_3", "#app2Visitor3_4",
+                "#app2ItemIn1_1", "#app2ItemIn1_2", "#app2ItemIn1_3", "#app2ItemIn1_4",
+                "#app2ItemIn2_1", "#app2ItemIn2_2", "#app2ItemIn2_3", "#app2ItemIn2_4",
+                "#app2ItemOut1_1", "#app2ItemOut1_2", "#app2ItemOut1_3", "#app2ItemOut1_4",
+                "#app2ItemOut2_1", "#app2ItemOut2_2", "#app2ItemOut2_3", "#app2ItemOut2_4",
+                "#app2ItemInnon1_1", "#app2ItemInnon1_2", "#app2ItemInnon1_3", "#app2ItemInnon1_4",
+                "#app2ItemInnon2_1", "#app2ItemInnon2_2", "#app2ItemInnon2_3", "#app2ItemInnon2_4",
+                "#app2ItemOutnon1_1", "#app2ItemOutnon1_2", "#app2ItemOutnon1_3", "#app2ItemOutnon1_4",
+                "#app2ItemOutnon2_1", "#app2ItemOutnon2_2", "#app2ItemOutnon2_3", "#app2ItemOutnon2_4",
+                "#app2Photo1_1", "#app2Photo1_2", "#app2Photo1_3", "#app2Photo1_4",
+                "#app2Photo2_1", "#app2Photo2_2", "#app2Photo2_3", "#app2Photo2_4",
+                "#app2Photo3_1", "#app2Photo3_2", "#app2Photo3_3", "#app2Photo3_4",
+                "#app2Photo4_1", "#app2Photo4_2", "#app2Photo4_3", "#app2Photo4_4"
+            ]);
+
+            $(".form-container").hide('fast').fadeOut();
+        });
+    });
+
+
+</script>
+    }

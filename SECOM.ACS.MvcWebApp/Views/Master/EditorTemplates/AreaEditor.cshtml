@@ -1,0 +1,168 @@
+﻿@model AreaViewModel
+
+@Html.HiddenFor(m => m.AreaID)
+<div class="k-edit-form-container">
+    @Html.HiddenFor(m => m.AreaID)
+    @Html.LabelRequiredHintFor(m => m.AreaName, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field control-text">
+        @(Html.Kendo().TextBoxFor(m => m.AreaName)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.AreaName), @maxlength = "50", required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.AreaName)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.FactoryCode, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().DropDownListFor(m => m.FactoryCode)
+               .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/factory")))
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .HtmlAttributes(new { style = "width:100%", required = "required", @data_field = Html.DisplayNameFor(m => m.FactoryCode) })
+                .OptionLabel(WidgetResource.SelectOptions)
+        )
+        @Html.KendoValidationMessageFor(m => m.FactoryCode)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.ConfdtLevel, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.ConfdtLevel)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.ConfdtLevel), required = "required", @maxlength = "50" }))
+        @Html.KendoValidationMessageFor(m => m.ConfdtLevel)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.AreaDisplayEN, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.AreaDisplayEN)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.AreaDisplayEN), @maxlength = "256", required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.AreaDisplayEN)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.AreaDisplayTH, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.AreaDisplayTH)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.AreaDisplayTH), @maxlength = "256", required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.AreaDisplayTH)
+    </div>
+    <!-------------------------------------------GateNo------------------------------------------------------->
+    @Html.LabelRequiredHintFor(m => m.Gates, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().MultiSelectFor(m => m.SelectedGates)
+            .BindTo(new AreaDataView[] { })
+            .DataTextField("Name")
+            .DataValueField("GateID")
+            .ValuePrimitive(true)
+            .HtmlAttributes(new { style = "width:100%", required = "required", @data_field = Html.DisplayNameFor(m => m.Gates) })
+            .Placeholder(WidgetResource.SelectOptions)
+            .AutoClose(false)
+        )
+        @Html.KendoValidationMessageFor(m => m.SelectedGates)
+    </div>
+    <!----------------------------------------------GateNo--------------------------------------------------------->
+    @Html.LabelRequiredHintFor(m => m.Status, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        <ul class="list-unstyled list-inline control-text">
+            @foreach (var item in AcsModelHelper.GetAreaStatus())
+            {
+                <li>
+                    @(Html.Kendo().RadioButtonFor(m => m.Status).Label(item.Name).Value(item.Value)
+                        .HtmlAttributes(new { @class = "item-status" }))
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div id="area-approvals" style="margin: 0px 10px">
+    <h2><i class="fa fa-users"></i> @ViewResource.Area_PopUpSection_AreaApprover_Title</h2>
+    <div class="form-horizontal well well-sm">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                @Html.Label(ViewResource.Area_PopUpSection_AreaApprover_Department_Title, new { @class = "k-text-bold" })
+            </div>
+            <div class="col-md-4">
+                @Html.Label(ViewResource.Area_PopUpSection_AreaApprover_Position_Title, new { @class = "k-text-bold" })
+            </div>           
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">@ViewResource.Area_AreaApprover_Approver_Title</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.ApproverDepartment)
+                 .Filter("startswith")
+               .DataSource(ds => ds.Read(r => r.Url("/api/departments/list")))
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .ValuePrimitive(true)
+                .HtmlAttributes(new { style = "width:100%", required = "required", @data_field = Html.DisplayNameFor(m => m.ApproverDepartment) })
+                .OptionLabel(WidgetResource.SelectOptions)
+                )
+                @Html.KendoValidationMessageFor(m => m.ApproverDepartment)
+            </div>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.ApproverPosition)
+                    .Filter("startswith")
+                     .DataSource(ds => ds.Read(r => r.Url("/api/positions/list")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .ValuePrimitive(true)
+                    .HtmlAttributes(new { style = "width:100%", required = "required", @data_field = Html.DisplayNameFor(m => m.ApproverPosition) })
+                    .OptionLabel(WidgetResource.SelectOptions)
+                  
+                )
+                @Html.KendoValidationMessageFor(m => m.ApproverPosition)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">@ViewResource.Area_AreaApprover_Substituter1_Title</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.Sub1Department)
+                    .Filter("startswith")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/departments/list")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .ValuePrimitive(true)
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+
+                )
+            </div>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.Sub1Position)
+                    .Filter("startswith")
+                     .DataSource(ds => ds.Read(r => r.Url("/api/positions/list")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .ValuePrimitive(true)
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">@ViewResource.Area_AreaApprover_Substituter2_Title</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.Sub2Department)
+                    .Filter("startswith")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/departments/list")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .ValuePrimitive(true)
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+
+                )
+            </div>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownListFor(m => m.Sub2Position)
+                    .Filter("startswith")
+                     .DataSource(ds => ds.Read(r => r.Url("/api/positions/list")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .ValuePrimitive(true)
+                   .HtmlAttributes(new { style = "width:100%" })
+                    .OptionLabel(WidgetResource.SelectOptions)
+
+                )
+            </div>
+        </div>
+    </div>
+    <div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+</div>

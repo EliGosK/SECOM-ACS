@@ -1,0 +1,244 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Presentation", "03 - Presentation", "{BDA17295-CA97-4D4A-918F-77437DA0F60A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - SECOM ACS Class Libraries", "02 - SECOM ACS Class Libraries", "{73D4822D-0EED-4625-855B-AF41CBB090B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Framework", "SECOM.ACS.Framework\SECOM.ACS.Framework.csproj", "{6BF4B642-B200-4707-8B5E-60CCBA403CA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSI.ComponentModel", "CSI.ComponentModel\CSI.ComponentModel.csproj", "{6244D808-BF55-4483-BD15-D938604E52C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - CSI Class Libraries", "01 - CSI Class Libraries", "{83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Core", "SECOM.ACS.Core\SECOM.ACS.Core.csproj", "{47FC5918-BC87-46B2-A585-6E60952F084E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.MvcWebApp", "SECOM.ACS.MvcWebApp\SECOM.ACS.MvcWebApp.csproj", "{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSI.Web.Mvc", "CSI.Web.Mvc\CSI.Web.Mvc.csproj", "{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSI.Data.EntityFramework", "CSI.Data.EntityFramework\CSI.Data.EntityFramework.csproj", "{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Services", "SECOM.ACS.Services\SECOM.ACS.Services.csproj", "{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Identity", "SECOM.ACS.Identity\SECOM.ACS.Identity.csproj", "{92C446A5-463C-472E-8C82-FA62D1B52ADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Tests", "SECOM.ACS.Tests\SECOM.ACS.Tests.csproj", "{3DB619A4-8436-487C-A056-1290A0208FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Reporting", "SECOM.ACS.Reporting\SECOM.ACS.Reporting.csproj", "{29305497-1341-4E4A-8333-A0806273806A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSI.EPPlus.Extensions", "CSI.EPPlus.Extensions\CSI.EPPlus.Extensions.csproj", "{17C36044-64A2-4539-9B4D-1C019935C2C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSI.Web.Mvc.KendoUI", "CSI.Web.Mvc.KendoUI\CSI.Web.Mvc.KendoUI.csproj", "{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Windows Service", "04 - Windows Service", "{B7EBCFB1-1C79-4DD7-A984-5716879F82F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.WindowsService", "SECOM.ACS.WindowService\SECOM.ACS.WindowsService.csproj", "{98031D42-84FD-4E59-85B0-D0A8E025A3CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Tasks", "SECOM.ACS.Tasks\SECOM.ACS.Tasks.csproj", "{2547D873-0B91-4B29-B527-549811AAD198}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Mail", "SECOM.ACS.Mail\SECOM.ACS.Mail.csproj", "{FCD58200-3E87-493F-8F8E-C23E68BB77AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SECOM.ACS.Workflow", "SECOM.ACS.Workflow\SECOM.ACS.Workflow.csproj", "{C760AE24-99B2-4389-B974-9C165134C669}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Tests", "05 - Tests", "{134C0CC9-0CE8-4886-8883-9B85A3427C98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release_Migrate|Any CPU = Release_Migrate|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Release_Migrate|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Release_Migrate|Any CPU.Build.0 = Release|Any CPU
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6244D808-BF55-4483-BD15-D938604E52C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FC5918-BC87-46B2-A585-6E60952F084E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB619A4-8436-487C-A056-1290A0208FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB619A4-8436-487C-A056-1290A0208FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB619A4-8436-487C-A056-1290A0208FAA}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{3DB619A4-8436-487C-A056-1290A0208FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29305497-1341-4E4A-8333-A0806273806A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C36044-64A2-4539-9B4D-1C019935C2C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Release_Migrate|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Release_Migrate|Any CPU.Build.0 = Release|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2547D873-0B91-4B29-B527-549811AAD198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Release_Migrate|Any CPU.ActiveCfg = Release_Migrate|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Release_Migrate|Any CPU.Build.0 = Release_Migrate|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C760AE24-99B2-4389-B974-9C165134C669}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6BF4B642-B200-4707-8B5E-60CCBA403CA5} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{6244D808-BF55-4483-BD15-D938604E52C7} = {83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}
+		{47FC5918-BC87-46B2-A585-6E60952F084E} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{73F5F3E4-A2AE-47F1-809B-CEBD7818F9FC} = {BDA17295-CA97-4D4A-918F-77437DA0F60A}
+		{CA6FF577-84CF-46FF-81EA-DD8E2A4BDDDF} = {83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}
+		{756BEC9F-35DC-4B2D-B995-943DCD8EAA4C} = {83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}
+		{49F326BE-5CA5-42B3-AF54-CE4BD6A62C65} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{92C446A5-463C-472E-8C82-FA62D1B52ADC} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{3DB619A4-8436-487C-A056-1290A0208FAA} = {134C0CC9-0CE8-4886-8883-9B85A3427C98}
+		{29305497-1341-4E4A-8333-A0806273806A} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{17C36044-64A2-4539-9B4D-1C019935C2C7} = {83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}
+		{9DE59E9E-8907-46F0-9E6C-7D954B1E38A1} = {83CF8BBA-97B5-4F4B-AEE7-869735D5D3FA}
+		{98031D42-84FD-4E59-85B0-D0A8E025A3CE} = {B7EBCFB1-1C79-4DD7-A984-5716879F82F2}
+		{2547D873-0B91-4B29-B527-549811AAD198} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{FCD58200-3E87-493F-8F8E-C23E68BB77AF} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+		{C760AE24-99B2-4389-B974-9C165134C669} = {73D4822D-0EED-4625-855B-AF41CBB090B6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E15B1E2-5553-41C8-8833-8BDC21E443B9}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 17
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://missitron.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CSI.ComponentModel\\CSI.ComponentModel.csproj
+		SccProjectTopLevelParentUniqueName1 = SECOM-ACS.sln
+		SccProjectName1 = CSI.ComponentModel
+		SccLocalPath1 = CSI.ComponentModel
+		SccProjectUniqueName2 = SECOM.ACS.Core\\SECOM.ACS.Core.csproj
+		SccProjectTopLevelParentUniqueName2 = SECOM-ACS.sln
+		SccProjectName2 = SECOM.ACS.Core
+		SccLocalPath2 = SECOM.ACS.Core
+		SccProjectUniqueName3 = SECOM.ACS.Framework\\SECOM.ACS.Framework.csproj
+		SccProjectTopLevelParentUniqueName3 = SECOM-ACS.sln
+		SccProjectName3 = SECOM.ACS.Framework
+		SccLocalPath3 = SECOM.ACS.Framework
+		SccProjectUniqueName4 = SECOM.ACS.MvcWebApp\\SECOM.ACS.MvcWebApp.csproj
+		SccProjectTopLevelParentUniqueName4 = SECOM-ACS.sln
+		SccProjectName4 = SECOM.ACS.MvcWebApp
+		SccLocalPath4 = SECOM.ACS.MvcWebApp
+		SccProjectUniqueName5 = CSI.Web.Mvc\\CSI.Web.Mvc.csproj
+		SccProjectTopLevelParentUniqueName5 = SECOM-ACS.sln
+		SccProjectName5 = CSI.Web.Mvc
+		SccLocalPath5 = CSI.Web.Mvc
+		SccProjectUniqueName6 = CSI.Data.EntityFramework\\CSI.Data.EntityFramework.csproj
+		SccProjectTopLevelParentUniqueName6 = SECOM-ACS.sln
+		SccProjectName6 = CSI.Data.EntityFramework
+		SccLocalPath6 = CSI.Data.EntityFramework
+		SccProjectUniqueName7 = SECOM.ACS.Services\\SECOM.ACS.Services.csproj
+		SccProjectTopLevelParentUniqueName7 = SECOM-ACS.sln
+		SccProjectName7 = SECOM.ACS.Services
+		SccLocalPath7 = SECOM.ACS.Services
+		SccProjectUniqueName8 = SECOM.ACS.Identity\\SECOM.ACS.Identity.csproj
+		SccProjectTopLevelParentUniqueName8 = SECOM-ACS.sln
+		SccProjectName8 = SECOM.ACS.Identity
+		SccLocalPath8 = SECOM.ACS.Identity
+		SccProjectUniqueName9 = SECOM.ACS.Tests\\SECOM.ACS.Tests.csproj
+		SccProjectTopLevelParentUniqueName9 = SECOM-ACS.sln
+		SccProjectName9 = SECOM.ACS.Tests
+		SccLocalPath9 = SECOM.ACS.Tests
+		SccProjectUniqueName10 = SECOM.ACS.Reporting\\SECOM.ACS.Reporting.csproj
+		SccProjectTopLevelParentUniqueName10 = SECOM-ACS.sln
+		SccProjectName10 = SECOM.ACS.Reporting
+		SccLocalPath10 = SECOM.ACS.Reporting
+		SccProjectUniqueName11 = CSI.EPPlus.Extensions\\CSI.EPPlus.Extensions.csproj
+		SccProjectTopLevelParentUniqueName11 = SECOM-ACS.sln
+		SccProjectName11 = CSI.EPPlus.Extensions
+		SccLocalPath11 = CSI.EPPlus.Extensions
+		SccProjectUniqueName12 = CSI.Web.Mvc.KendoUI\\CSI.Web.Mvc.KendoUI.csproj
+		SccProjectTopLevelParentUniqueName12 = SECOM-ACS.sln
+		SccProjectName12 = CSI.Web.Mvc.KendoUI
+		SccLocalPath12 = CSI.Web.Mvc.KendoUI
+		SccProjectUniqueName13 = SECOM.ACS.WindowService\\SECOM.ACS.WindowsService.csproj
+		SccProjectTopLevelParentUniqueName13 = SECOM-ACS.sln
+		SccProjectName13 = SECOM.ACS.WindowService
+		SccLocalPath13 = SECOM.ACS.WindowService
+		SccProjectUniqueName14 = SECOM.ACS.Tasks\\SECOM.ACS.Tasks.csproj
+		SccProjectTopLevelParentUniqueName14 = SECOM-ACS.sln
+		SccProjectName14 = SECOM.ACS.Tasks
+		SccLocalPath14 = SECOM.ACS.Tasks
+		SccProjectUniqueName15 = SECOM.ACS.Mail\\SECOM.ACS.Mail.csproj
+		SccProjectTopLevelParentUniqueName15 = SECOM-ACS.sln
+		SccProjectName15 = SECOM.ACS.Mail
+		SccLocalPath15 = SECOM.ACS.Mail
+		SccProjectUniqueName16 = SECOM.ACS.Workflow\\SECOM.ACS.Workflow.csproj
+		SccProjectTopLevelParentUniqueName16 = SECOM-ACS.sln
+		SccProjectName16 = SECOM.ACS.Workflow
+		SccLocalPath16 = SECOM.ACS.Workflow
+	EndGlobalSection
+EndGlobal

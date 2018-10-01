@@ -1,0 +1,189 @@
+﻿@model OfflineOnlineSystemData
+@{
+    var systemStatus = Model.IsOfflineSystem ? "Offline" : "Online";
+    var systemStatusCss = Model.IsOfflineSystem ? "k-color-danger" : "k-color-success";
+    var actionButtonText = Model.IsOfflineSystem ? "Online Service Now" : "Offline Service Now";
+    var actionButtonCss = Model.IsOfflineSystem ? "k-button-success k-setting" : "k-button-danger k-setting";
+    var actionButtonIcon = Model.IsOfflineSystem ? "play-circle" : "pause-circle";
+    var timeFormat = "H:mm";
+}
+
+@section styles{
+    <style type="text/css">
+        .k-content-setting{
+            min-height: 200px;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-md-6">
+        <div class="system-status-container">
+            <h2><i class="fa fa-cog" aria-hidden="true"></i> Current Setting</h2>
+            <div class="well well-sm k-content-setting">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <label class="col-md-6 control-label">System Status</label>
+                        <label class="col-md-6 k-text-lg k-system-status @systemStatusCss">@systemStatus</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">Next offline service time</label>
+                        <label class="col-md-6 control-text k-next-suspend">@Html.DisplayDate(Model.NextOfflineTime, "d MMM yyyy HH:mm")</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">Next online service time</label>
+                        <label class="col-md-6 control-text k-next-reactivate">@Html.DisplayDate(Model.NextOnlineTime, "d MMM yyyy HH:mm")</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-6 col-md-6">
+                            @Html.KendoConfirmButton("actionButton", actionButtonIcon, actionButtonText, new { @class = actionButtonCss, @data_offline = !Model.IsOfflineSystem })
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="schedule-container">
+            <h2><i class="fa fa-clock-o" aria-hidden="true"></i> Change Offline/Online Time Schedule</h2>
+            <div class="form-horizontal well well-sm k-content-setting">
+                <div class="form-group">
+                    <label class="col-md-6 control-label">Next offline service time</label>
+                    <div class="col-md-6">
+                        @(Html.Kendo().TimePickerFor(m => m.OfflineTime)
+                    .Format(timeFormat)
+                    .HtmlAttributes(new { style = "width:120px" })
+                        )
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-6 control-label">Next online service time</label>
+                    <div class="col-md-6">
+                        @(Html.Kendo().TimePickerFor(m => m.OnlineTime)
+                    .Format(timeFormat)
+                    .HtmlAttributes(new { style = "width:120px" })
+                        )
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-6 col-md-6">
+                        @Html.Kendo().CheckBoxFor(m=>m.EnabledOffline)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-6 col-md-6">
+                        @Html.KendoConfirmButton("updateButton", "save", WidgetResource.Button_Update_Text, new { @class = "k-primary k-setting" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('setting', ['.k-setting']);
+
+            $("#actionButton").on("openDialog", function (sender, args, elem) {
+                args.buttons.yes.action = function () {
+                    uiState.busy("task", true);
+                    $.ajax({
+                        url: "@Url.Action("UpdateSystemStatus", "SystemStatus")",
+                        data: { offline: $(elem).attr("data-offline") },
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            setTimeout(function () {
+                                updateUIState(data.data);
+                            }, 300);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("task", false);
+                        }
+                    });
+                }
+            });
+
+            $("#updateButton").on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    uiState.busy("setting", true);
+                    var data = {
+                        OfflineTime: app.data.toDateString($("#OfflineTime").data("kendoTimePicker").value()),
+                        OnlineTime: app.data.toDateString($("#OnlineTime").data("kendoTimePicker").value()),
+                        EnabledOffline: $("#@Html.IdFor(m=>m.EnabledOffline)").is(":checked")
+                    };
+                    $.ajax({
+                        url: "@Url.Action("UpdateSchedule", "SystemStatus")",
+                        data: data,
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);     
+                            setTimeout(function () {
+                                updateUIState(data.data);
+                            }, 300);
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                            
+                        },
+                        complete: function () {
+                            uiState.busy("setting", false);           
+                        }
+                    });
+                }
+            });
+
+            updateUIState(@Html.Raw(Json.Encode(Model)));
+        });
+
+        function updateUIState(model) {
+            console.log(model);
+            $(".k-next-suspend").html(kendo.format("{0:d MMM yyyy HH:mm}", kendo.parseDate(model.NextOfflineTime)));
+            $(".k-next-reactivate").html(kendo.format("{0:d MMM yyyy HH:mm}", kendo.parseDate(model.NextOnlineTime)));
+            $(".k-system-status")
+                .html(model.IsOfflineSystem ? "Offline" : "Online")
+                .removeClass(model.IsOfflineSystem ? "k-color-success" : "k-color-danger")
+                .addClass(model.IsOfflineSystem ? "k-color-danger" : "k-color-success");
+            
+            $("#actionButton")
+                .removeClass(model.IsOfflineSystem ? "k-button-danger" : "k-button-success")
+                .addClass(model.IsOfflineSystem ? "k-button-success" : "k-button-danger")
+                .attr("data-offline", !model.IsOfflineSystem)
+                .html(model.IsOfflineSystem ? "<i class=\"fa fa-play-circle\"></i> Online Service Now" : "<i class=\"fa fa-pause-circle\"></i> Offline Service Now");
+
+            if (!model.IsOfflineSystem)
+            {
+                if (model.EnabledOffline)
+                    $("#actionButton").removeClass("k-state-disabled").removeAttr("disabled");
+                else
+                    $("#actionButton").addClass("k-state-disabled").attr("disabled", "disabled");
+            }                
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

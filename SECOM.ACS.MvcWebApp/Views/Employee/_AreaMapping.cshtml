@@ -1,0 +1,84 @@
+﻿@model EmployeeInformationViewModel
+<h2><i class="fa fa-map-marker"></i> @ViewResource.AreaMapping_Title</h2>
+<div class="grid-container">
+    @(Html.Kendo().Grid<AreaMappingViewModel>()
+    .Name("areaGrid")       
+        .ToolBar(t => t.Template(@<text>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m=>m.Areas, new { @class = "control-label col-md-1" })
+            <div class="col-md-5">
+                @(Html.Kendo().MultiSelect()
+                .Name("areaMappings")
+                .DataSource(ds => ds.Read(r =>
+                    r.Action("GetTempAreaMappingForCreate", "Employee", new { tempDataId = Model.AreaMappingDataTempId })
+                    .Data("getSelectedAreas")
+                    .Type(HttpVerbs.Post))
+                )
+                .DataTextField("Name")
+                .DataValueField("AreaID")
+                .AutoClose(false)
+                .AutoBind(false)
+                .Events(ev => ev.Change("areaMappingsChange").DataBound("areaMappingsDataBound"))
+                .HtmlAttributes(new { }))
+
+            </div>
+            <div class="col-md-2">
+                @Html.CommandButton("addAreaButton", "plus-circle", WidgetResource.Button_Add_Text, new { @class = "k-primary k-area-add k-state-disabled", @disabled = "disabled" })
+            </div>
+        </div>
+    </div></text>))
+        .Editable(dt=>dt.Mode(GridEditMode.PopUp))
+        .Columns(c =>
+        {
+            c.Template(t => { }).ClientTemplate(Html.GridDeleteButton().ToHtmlString()).Width(50);
+            c.Template(t => { }).ClientTemplate("#=_rowNo#")
+                .Width(60)
+                .HtmlAttributes(new { @class = "text-right" })
+                .Title(WidgetResource.Grid_Column_No);
+            c.Bound(f => f.Name);
+            //c.Bound(f => f.IsMainArea)
+            //    .ClientTemplate("#=renderMainArea(data) #")
+            //    .HtmlAttributes(new { @class = "main-area-cell" })
+            //    .Width(200);
+        })
+        .DataSource(ds => ds
+            .Custom().Transport(t =>
+            {
+                t.Read(r =>
+                    r.Action("ListTempAreaMapping", "Employee", new { tempDataId = Model.AreaMappingDataTempId, employeeId = Model.EmployeeID })
+                    .Type(HttpVerbs.Post)
+                );
+                t.Destroy(r =>
+                    r.Action("DeleteTempAreaMapping", "Employee", new { tempDataId = Model.AreaMappingDataTempId })
+                    .Type(HttpVerbs.Post)
+                );
+            })
+            .Schema(s =>
+            {
+                s.Model(m =>
+                {
+                    m.Id(f => f.AreaID);
+                    m.Field(f => f.AreaName).Editable(false);
+                    m.Field(f => f.IsMainArea).Editable(false);
+                });
+            })
+            .Events(ev =>
+            {
+                ev.RequestStart("dataSourceRequestStart");
+                ev.RequestEnd("dataSourceRequestEnd");
+                ev.Error("dataSourceError");
+            })
+            .PageSize(20)
+            .ServerFiltering(true)
+            .ServerPaging(true)
+            .ServerSorting(true)
+        )
+        .AutoBind(false)
+        .Events(ev =>
+        {
+            ev.DataBinding("gridDataBinding");
+            ev.DataBound("areaGridDataBound");
+        })
+)
+</div>

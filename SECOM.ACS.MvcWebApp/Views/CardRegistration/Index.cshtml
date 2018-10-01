@@ -1,0 +1,647 @@
+﻿@using SECOM.ACS.Models
+@{
+    var tempVisitorDataId = CSI.Text.TextGenerator.Generate(32);
+    var tempBusinessDataId = CSI.Text.TextGenerator.Generate(32);
+    var defaultDate = DateTime.Now.Date;
+    var defaultDateString = defaultDate.ToString();
+}
+@section styles{
+    <style type="text/css">
+        .k-status-label {
+            font-weight: 700;
+            margin: 5px;
+        }
+    </style>
+}
+<div style="margin-top:10px">
+    @Html.AntiForgeryToken()
+    @(Html.Kendo().TabStrip()
+        .Name("cardRegistrationTabStrip")
+        .Animation(a =>
+            a.Open(ef => ef.Fade(FadeDirection.In))
+        )
+        .SelectedIndex(0)
+        .Items(ts =>
+        {
+        ts.Add()
+        .Text(ViewResource.CardRegistration_Visitor_Title)
+        .SpriteCssClasses("fa fa-id-card-o")
+        .HtmlAttributes(new { @data_view = "visitor" })
+        .Content(@<text>
+
+            <div class="form-horizontal well well-sm">
+                <div class="form-group">
+                    <label class="control-label col-md-2">@ViewResource.CardRegistration_EntryDate</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().DatePicker()
+                    .Name("visitorEntryDate")
+                    .Value(defaultDate)
+                    .HtmlAttributes(new
+                    {
+                        style = "width:140px",
+                        data_default = defaultDateString
+                    })
+                    .Events(ev => ev.Change("datePickerChange"))
+                        )
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 ">@ViewResource.CardRegistration_VisitorName</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().TextBox().Name("visitorName").HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                    </div>
+                    <label class="control-label col-md-2">@ViewResource.CardRegistration_Company</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().TextBox().Name("visitorCompany").HtmlAttributes(new { maxlength = 50, style = "width:100%", })
+                        )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="button-container">
+                            @Html.CommandButton("visitorSearchButton", "search", WidgetResource.Button_Retrieve_Text).HtmlAttributes(new { @class = "k-primary" }).Events(ev => ev.Click("visitorSearchButtonClicked"))
+                            @Html.ResetButton("visitorClearButton", "times-circle").HtmlAttributes(new { @class = "k-button-warning" }).Events(ev => ev.Click("visitorClearButtonClicked"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-container">
+                @(Html.Kendo().Grid<VisitorCardRegistrationViewModel>()
+            .Name("visitorGrid")
+            .Pageable(p => p.Refresh(true).ButtonCount(5))
+            .ToolBar(t => t.Template(
+                "<label class=\"k-status-label\">" + WidgetResource.Grid_Status_Text + "</label>" +
+                (Html.Kendo().DropDownList().Name("visitorCardStatus")
+                .DataSource(ds =>
+                    ds.Read(r => r.Url("/api/systemmiscs/list/InputCardStatus"))
+                )
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .OptionLabel(WidgetResource.AllOptions)
+                .Events(ev => ev.Change("visitorCardStatusChange"))
+                ).ToHtmlString()))
+            .Editable(editable => editable.Mode(GridEditMode.PopUp)
+            .TemplateName("VisitorCardRegistrationEditor")
+            .Window(w => w.Width(600)
+            .Scrollable(false)
+            ))
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(60)
+                    .ClientTemplate("#=_rowNo#")
+                    .Title(WidgetResource.Grid_Column_No);
+                c.Bound(t => t.VisitorName);
+                c.Bound(t => t.Company);
+                c.Bound(f => f.AreaName);
+                c.Bound(f => f.VerifyTypeID).ClientTemplate("#=VerifyTypeName#");
+                c.Bound(f => f.VerifyNo);
+                c.Bound(f => f.CardNo)
+                .Width(140)
+                .ClientTemplate("#=CardNo#");
+                c.Template(t => { }).ClientTemplate("#=renderActionButton(data)#").HtmlAttributes(new { @class = "text-center" }).Width(60);
+                //c.Template(t => { })
+                //.HtmlAttributes(new { @class = "text-center" })
+                //.ClientTemplate(Html.GridEditButton().ToHtmlString())
+                //.Width(60);
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListTempVisitorCardRegistration", "CardRegistration", new { tempDataId = tempVisitorDataId })
+                                .Type(HttpVerbs.Post)
+                                .Data("getVisitorSearchCriteria")
+                                .DataType("json"));
+                    t.Update(r => r.Action("UpdateTempVisitorCardRegistration", "CardRegistration", new { tempDataId = tempVisitorDataId })
+                                    .DataType("json")
+                                    .Type(HttpVerbs.Post));
+                })
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TranID);
+                        m.Field(f => f.VisitorName);
+                        m.Field(f => f.Company);
+                        m.Field(f => f.AreaName);
+                        m.Field(f => f.VerifyTypeID);
+                        m.Field(f => f.VerifyNo);
+                        m.Field(f => f.CardID);
+                    });
+                })
+                .PageSize(20)
+                .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError"))
+            )
+            .Events(ev =>
+            {
+                ev.DataBinding("gridBinding");
+                ev.Edit("visitorGridEdit");
+                ev.DataBound("gridDataBound");
+            })
+            .AutoBind(false)
+                )
+
+            </div>
+            <div class="button-container text-center">
+                @Html.KendoConfirmButton("visitorSaveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-button k-primary", @data_content = MessageHelper.ConfirmSave() })
+                @Html.KendoConfirmButton("visitorResetButton", "times-circle", WidgetResource.Button_Reset_Text, new { @class = "k-button k-button-warning", @data_content = MessageHelper.ConfirmReset() })
+            </div>
+            <div id="visitor-result-container"></div>
+        </text>);
+ts.Add()
+.Text(ViewResource.CardRegistration_BusinessTrip_Title)
+.SpriteCssClasses("fa fa-address-card-o")
+.HtmlAttributes(new { @data_view = "businessTrip" })
+.Content(@<text>
+
+            <div class="form-horizontal well well-sm">
+                <div class="form-group">
+                    <label class="control-label col-md-2">@ViewResource.CardRegistration_EntryDate</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().DatePicker()
+                    .Name("businessTripEntryDate")
+                    .Value(defaultDate)
+                    .HtmlAttributes(new { style = "width:140px", data_default = defaultDateString })
+                    .Events(ev => ev.Change("datePickerChange"))
+                        )
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 ">@ViewResource.CardRegistration_BusinessEmployeeName</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().TextBox().Name("businessTripEmployeeName").HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                    </div>
+                    <label class="control-label col-md-2">@ViewResource.CardRegistration_RequesterName</label>
+                    <div class="col-md-3">
+                        @(Html.Kendo().TextBox().Name("businessTripRequestName").HtmlAttributes(new { maxlength = 50, style = "width:100%", }))
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="button-container">
+                            @Html.CommandButton("businessTripSearchButton", "search", WidgetResource.Button_Retrieve_Text).HtmlAttributes(new { @class = "k-primary" }).Events(ev => ev.Click("businessTripSearchButtonClicked"))
+                            @Html.ResetButton("businessTripClearButton", "times-circle").HtmlAttributes(new { @class = "k-button-warning" }).Events(ev => ev.Click("businessTripClearButtonClicked"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-container">
+                @(Html.Kendo().Grid<BusinessTripCardRegistrationViewModel>()
+                 .Name("businessTripGrid")
+                 .Pageable(p => p.Refresh(true).ButtonCount(5))
+                 .ToolBar(t => t.Template(
+                    "<label class=\"k-status-label\">" + WidgetResource.Grid_Status_Text + "</label>" +
+                    (Html.Kendo().DropDownList().Name("businessTripStatus")
+                        .DataSource(ds =>
+                            ds.Read(r => r.Url("/api/systemmiscs/list/InputCardStatus"))
+                        )
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .OptionLabel(WidgetResource.AllOptions)
+                        .Events(ev => ev.Change("businessCardStatusChange"))
+                    ).ToHtmlString()
+                ))
+                .Editable(editable => editable.Mode(GridEditMode.InLine))
+                .Columns(c =>
+                {
+                    c.Template(t => { })
+                        .Width(60)
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .ClientTemplate("#=_rowNo#")
+                        .Title(WidgetResource.Grid_Column_No);
+                    c.Bound(t => t.BusinessEmployeeName);
+                    c.Bound(t => t.EmployeeName);
+                    c.Bound(t => t.AreaName);
+                    c.Bound(t => t.EntryDateFrom)
+                         .Width(180)
+                        .ClientTemplate("#=kendo.format(\"{0:d/M/yyyy}-{1:d/M/yyyy}\",data.EntryDateFrom,data.EntryDateTo)#");
+                    c.Bound(t => t.CardID)
+                          .Width(160)
+                          .ClientTemplate("#=CardNo#");
+                    c.Command(cmd => cmd.Edit()
+                          .Text(WidgetResource.Button_Edit_Text)
+                          .UpdateText(WidgetResource.Button_Save_Text)
+                          .CancelText(WidgetResource.Button_Cancel_Text))
+                          .Width(240);
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListTempBusinessTripCardRegistration", "CardRegistration", new { tempDataId = tempBusinessDataId })
+                                    .Type(HttpVerbs.Post)
+                                    .Data("getBusinessTripSearchCriteria")
+                                    .DataType("json"));
+                        t.Update(r => r.Action("UpdateTempBusinessTripCardRegistration", "CardRegistration", new { tempDataId = tempBusinessDataId })
+                                    .DataType("json")
+                                    .Type(HttpVerbs.Post));
+                    }
+                    )
+                    .Schema(s =>
+                    {
+                        s.Data("Data");
+                        s.Total("Total");
+                        s.Errors("Errors");
+                        s.Model(m =>
+                        {
+                            m.Id(f => f.TranID);
+                            m.Field(f => f.BusinessEmployeeName).Editable(false);
+                            m.Field(f => f.EmployeeName).Editable(false);
+                            m.Field(f => f.AreaName).Editable(false);
+                            m.Field(f => f.EntryDateFrom).Editable(false);
+                            m.Field(f => f.CardID);
+                            m.Field(f => f.EntryDateFrom).Editable(false);
+                            m.Field(f => f.EntryDateTo).Editable(false);
+                        });
+                    })
+                    .PageSize(20)
+                    .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError"))
+                )
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridBinding");
+                    ev.DataBound("businessTripGridDataBound");
+                    ev.Save("businessTripGridSave");
+                })
+                .AutoBind(false)
+                )
+            </div>
+            <div class="button-container text-center">
+                @Html.KendoConfirmButton("businessTripSaveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-primary", @data_content = MessageHelper.ConfirmSave() })
+                @Html.KendoConfirmButton("businessTripResetButton", "times-circle", WidgetResource.Button_Reset_Text, new { @class = "k-button-warning", @data_content = MessageHelper.ConfirmReset() })
+            </div>
+            <div id="businessTrip-result-container"></div>
+</text>);
+        })
+    )
+</div>
+
+@Html.Hidden("clearCache")
+
+<script id="saveResultTemplate" type="text/x-kendo-template">
+    <div class="well well-danger">
+        <h3><i class="fa fa-exclamation-circle"></i> Error List</h3>
+        <ul class="list-unstyled">
+            # for (var i=0; i< data.length; i++){ #
+            <li><i class="fa fa-times-circle"></i> #: data[i].Data?data[i].Data.CardNo:'' # #: data[i].Error #</li>
+            # } #
+        </ul>
+    </div>
+</script>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var visitorGrid,businessTripGrid;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register("grid", [".k-button"]);
+            uiState.register("ajax", [".k-button"]);
+
+            visitorGrid = $("#visitorGrid").data("kendoGrid");
+            businessTripGrid = $("#businessTripGrid").data("kendoGrid");
+
+            $("#visitorSaveButton").on("openDialog", function (sender, setting) {
+                setting.buttons.yes.action = function () {
+                    uiState.busy("ajax", true);
+                    var data = {
+                        models: visitorGrid.dataSource.data().toJSON(),
+                        entryDate: $("#visitorSaveButton").attr("data-entry-date"),
+                    };
+                    $("#visitor-result-container").empty();
+                    $.ajax({
+                        url: "@Url.Action("SaveVisitorCardRegistration", "CardRegistration")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken(data),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            if (!data.IsSucceed) {
+                                showSaveVisitorResult(data.Errors);
+                            }
+                            $("#clearCache").val(true);
+                            visitorGrid.dataSource.read();
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("ajax", false);
+                        }
+                    });
+                }
+            });
+
+            $("#visitorResetButton").on("openDialog", function (sender, setting) {
+                setting.buttons.yes.action = function () {
+                     $.ajax({
+                        url: "@Url.Action("ResetVisitorCardRegistration", "CardRegistration",new { tempDataId = tempVisitorDataId })",
+                        type: "POST",
+                        data: app.addAntiForgeryToken({}),
+                        success: function (data, status, xhr) {
+                            //app.ui.handleAjaxSuccess(data, status, xhr);
+                            visitorGrid.dataSource.read();
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("ajax", false);
+                        }
+                    });
+                }
+            });
+
+            $("#businessTripSaveButton").on("openDialog", function (sender, setting) {
+                setting.buttons.yes.action = function () {
+                    uiState.busy("ajax", true);
+                    $("#businessTrip-result-container").empty();
+                    var data = {
+                        entryDate: $("#businessTripSaveButton").attr("data-entry-date"),
+                        models: businessTripGrid.dataSource.data().toJSON()
+                    };
+                    $.ajax({
+                        url: "@Url.Action("SaveBusinessTripCardRegistration", "CardRegistration",new { tempDataId = tempBusinessDataId })",
+                        type: "POST",
+                        data: app.addAntiForgeryToken(data),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            if (!data.IsSucceed) {
+                                showSaveBusinessTripResult(data.Errors);
+                            }
+                            $("#clearCache").val(true);
+                            businessTripGrid.dataSource.read();
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("ajax", false);
+                        }
+                    });
+                }
+            });
+
+            $("#businessTripResetButton").on("openDialog", function (sender, setting) {
+                setting.buttons.yes.action = function () {
+                     $.ajax({
+                        url: "@Url.Action("ResetBusinessTripCardRegistration", "CardRegistration",new { tempDataId = tempBusinessDataId })",
+                        type: "POST",
+                        data: app.addAntiForgeryToken({}),
+                        success: function (data, status, xhr) {
+                            //app.ui.handleAjaxSuccess(data, status, xhr);
+                            businessTripGrid.dataSource.read();
+                        },
+                        error: function (xhr, status, error) {
+                            app.ui.handleAjaxError(xhr, status, error);
+                        },
+                        complete: function () {
+                            uiState.busy("ajax", false);
+                        }
+                    });
+                }
+            });
+
+            setTimeout(function () { updateUIState(); }, 100);
+        });
+
+        function visitorGridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.CardRegistration_Visitor_PopupSection_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            var container = e.container;
+            var combo = $("#VerifyTypeID", e.container).data("kendoDropDownList");
+            combo.bind("change", function (args) {
+                if (this.value() == 0)
+                    $(".k-verifyno-field").hide();
+                else
+                    $(".k-verifyno-field").show();
+            });
+
+            if (e.model.VerifyTypeID == 0)
+                $(".k-verifyno-field").hide();
+            else
+                $(".k-verifyno-field").show();
+
+            //var cardIDDropDowList = $("#CardID").data("kendoDropDownList");
+            //cardIDDropDowList.bind("change", function (e) {
+            //    var dataItem = this.dataItem();
+            //    container.find("#Name").val('');
+            //    if (dataItem) {
+            //        container.find("#Name").val(dataItem.Name);
+            //    }
+            //});
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function visitorGridSave(e) {
+            console.log(e.model.dirty);
+            //e.model.dirty = true;
+        }
+
+        function visitorGridDataBound(e) {
+
+        }
+
+        function businessTripGridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.UserGroup_PopUpSection_Add_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            var container = e.container;
+            var model = e.model;
+            var cardDropDownList = $("#CardID").data("kendoDropDownList");
+            cardDropDownList.bind("change", function (e) {
+                model.CardNo = this.text();
+            });
+
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function businessTripGridSave(e) {
+            console.log(e.model.dirty);
+        }
+
+        function getVisitorSearchCriteria() {
+            return {
+                criteria: {
+                    EntryDate: app.data.toDateString($("#visitorEntryDate").data("kendoDatePicker").value()),
+                    VisitorName: $("#visitorName").val(),
+                    Company: $("#visitorCompany").val(),
+                    ClearCache: $("#clearCache").val()
+                }
+            };
+        }
+
+        function getBusinessTripSearchCriteria() {
+            return {
+                criteria: {
+                    EntryDate: app.data.toDateString( $("#businessTripEntryDate").data("kendoDatePicker").value()),
+                    BusinessTripEmployeeName: $("#businessTripEmployeeName").val(),
+                    RequestName: $("#businessTripRequestName").val(),
+                    ClearCache: $("#clearCache").val()
+                }
+            };
+        }
+
+        function renderActionButton(data) {
+            if (data.AllowEditCardRegis) {
+                return "<a class=\"k-button k-button-sm k-primary k-grid-edit\"><span class=\"k-icon k-i-edit\"></span></a>";
+            }
+            return "";
+        }
+
+        function renderAction(data) {
+
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("grid", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            //app.ui.handleDataSourceRequestEnd(e);
+            if (e.type && e.type !== "read")
+            {
+                this.read();
+                //console.log(e.type);
+            }
+            $("#clearCache").val(false);
+            setTimeout(function () { updateUIState(); }, 100);
+
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+
+        function updateUIState() {
+            var hasData = $("#visitorGrid").data("kendoGrid").dataSource.data().length > 0;
+            if (hasData) {
+                $("#visitorSaveButton").removeAttr("disabled");
+                $("#visitorResetButton").removeAttr("disabled");
+            }
+            else {
+                $("#visitorSaveButton").prop("disabled", "disabled");
+                $("#visitorResetButton").prop("disabled", "disabled");
+            }
+
+            hasData = $("#businessTripGrid").data("kendoGrid").dataSource.data().length > 0;
+            if (hasData) {
+                $("#businessTripSaveButton").removeAttr("disabled");
+                $("#businessTripResetButton").removeAttr("disabled");
+            }
+            else {
+                $("#businessTripSaveButton").prop("disabled", "disabled");
+                $("#businessTripResetButton").prop("disabled", "disabled");
+            }
+        }
+
+        function visitorCardStatusChange(e) {
+            var value = this.value();
+            switch (value) {
+                case "NotInputted":
+                    visitorGrid.dataSource.filter({ field: "IsAvailable", operator: "eq", value: true });
+                    break;
+                case "Inputted":
+                    visitorGrid.dataSource.filter({ field: "IsAvailable", operator: "eq", value: false });
+                    break;
+                default:
+                    visitorGrid.dataSource.filter({});
+            }
+        }
+
+        function visitorSearchButtonClicked(e) {
+            $("#clearCache").val(true)
+            visitorGrid.dataSource.read();
+
+            var entryDate = $("#visitorEntryDate").data("kendoDatePicker").value();
+            $("#visitorSaveButton").attr("data-entry-date", app.data.toDateString(entryDate));
+        }
+
+        function visitorClearButtonClicked(e) {
+            $("#clearCache").val(true)
+            app.ui.clear(["#visitorGrid", "#visitorEntryDate", "#visitorName", "#visitorCompany"]);
+            updateUIState();
+        }
+
+        function businessTripSearchButtonClicked(e) {
+            $("#clearCache").val(true)
+            businessTripGrid.dataSource.read();
+
+            var entryDate = $("#businessTripEntryDate").data("kendoDatePicker").value();
+            $("#businessTripSaveButton").attr("data-entry-date", app.data.toDateString(entryDate));
+        }
+
+        function businessTripClearButtonClicked(e) {
+            $("#clearCache").val(true)
+            app.ui.clear(["#businessTripGrid", "#businessTripEntryDate", "#businessTripEmployeeName", "#businessTripRequestName"]);
+            updateUIState();
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function showSaveVisitorResult(data) {
+            var content = kendo.template($("#saveResultTemplate").html())(data);
+            $("#visitor-result-container").html(content);
+        }
+
+        function showSaveBusinessTripResult(data) {
+            var content = kendo.template($("#saveResultTemplate").html())(data);
+            $("#businessTrip-result-container").html(content);
+        }
+
+        function businessCardStatusChange(e) {
+            var value = this.value();
+            switch (value) {
+                case "NotInputted":
+                    businessTripGrid.dataSource.filter({ field: "FlagFilter", operator: "eq", value: true });
+                    break;
+                case "Inputted":
+                    businessTripGrid.dataSource.filter({ field: "FlagFilter", operator: "eq", value: false });
+                    break;
+                default:
+                    businessTripGrid.dataSource.filter({});
+            }
+        }
+
+        function gridDataBound(e) {
+            var grid = this;
+            var dataItems = grid.dataSource.data();
+            $.each(dataItems, function (index, item) {
+                var row = grid.tbody.find("tr[data-uid='" + item.uid + "']");
+                if (!item.AllowEdit) {
+                    $(".k-grid-edit", row).remove();
+                }
+            });
+        }
+
+        function businessTripGridDataBound(e) {
+            var grid = this;
+            var dataItems = grid.dataSource.data();
+            $.each(dataItems, function (index, item) {
+                var row = grid.tbody.find("tr[data-uid='" + item.uid + "']");
+                console.log(item);
+                if (!item.AllowEdit || !item.AllowEditCardRegis) {
+                    $(".k-grid-edit", row).remove();
+                }
+            });
+        }
+        
+
+    </script>
+}

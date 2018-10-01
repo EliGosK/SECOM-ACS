@@ -1,0 +1,52 @@
+{
+  "exportFileOptions": {
+    "templateFile": "D:\\Projects\\SECOM\\ACS\\Shared\\acs-import-template.xlsx",
+    "targetFileName": "acs-{0:yyyyMMdd_HHmmss}.xlsx",
+    "targetFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\acs-export"
+  },
+  "importEmployeeOptions": {
+    "importFile": "D:\\Projects\\SECOM\\ACS\\Shared\\employee-import\\employee.xls",
+    "useHeaderRow": false,
+    "user": "ACS010",
+    "enabledBackUp": true,
+    "backupFileName": "acs-backup-{0:yyyyMMdd_HHmm}.xls",
+    "backupFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\employee-backup",
+    "cronExpressions": [ "5/30 * * * * ?" ],
+    "enabled": false,
+
+    "enabledCreateErrorFile": false,
+    "errorFileName": "employee-{0:yyyyMMdd_HHmm}.xls",
+    "errorFolder": "employee-import-error",
+
+    "enabledSendResultMail": false,
+    "mailTo": []
+  },
+  "updateDocumentStatusOptions": {
+    "enabledNotification": true,
+    "user": "ACS020",
+    "cronExpressions": [ "5/30 * * * * ?" ],
+    "enabled": false
+  },
+  "exportInterfaceFileToAccessControlOptions": {
+    "cronExpressions": [ "10 * * * * ?" ],
+    "enabled": false,
+    "exportModes": "Schedule",
+    "effectiveDate": "2017-10-31"
+  },
+  "transferInterfaceFileToAccessControlOptions": {
+    "cronExpressions": [ "0/30 * * * * ?" ],
+    "enabled": true,
+    "sourceFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\acs-export",
+    "targetFileName": "acs.xlsx",
+    "targetFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\acs-shared",
+
+    "enabledArchive": true,
+    "archiveFileName": "acs-archive-{0:yyyyMMdd_HHmm}.xlsx",
+    "archiveFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\acs-archive",
+    "enabledNetworkShareAuthenticate": false,
+    "remoteComputerName": "kawasaki01svr",
+    "userName": "{user}",
+    "password": "{password}"
+  },
+  "emailTemplateFolder": "D:\\Projects\\SECOM\\ACS\\Shared\\mail-templates"
+}

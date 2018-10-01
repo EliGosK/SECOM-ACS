@@ -1,0 +1,334 @@
+﻿@{ 
+
+    
+
+}
+
+@using (Html.BeginForm("Authorize", "Security", FormMethod.Post, new { @class = "form-horizontal", @novalidate = "novalidate" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="well well-sm animated fadeIn">
+        <div class="form-horizontal">
+            <div class="row">
+                <label class="col-md-1 control-label required-hint">Role</label>
+                <div class="col-md-3">
+                    @(Html.Kendo().DropDownList()
+                        .Name("role")
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .DataSource(ds => ds
+                            .Read(r => r.Url("/api/roles"))
+                            .ServerFiltering(false)
+                        )
+           
+                        .HtmlAttributes(new { @style = "width:100%", @required = "required", data_field = "Role" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                    )
+                    @Html.KendoValidationMessage("role")
+                </div>
+                <div class="col-md-8">
+                    <div class="pull-right">
+                        @(Html.Kendo().Button()
+                        .Name("refreshButton")
+                        .Content("<i class=\"fa fa-refresh\"></i> Refersh Security Cache")
+                        .HtmlAttributes(new { @class = "k-button-primary" })
+                        .Events(ev => ev.Click("refreshButtonClicked"))
+                        )
+                    </div>
+                    @(Html.Kendo().Button()
+                        .Name("searchButton")
+                        .Content("<i class=\"fa fa-search\"></i> Search")
+                        .HtmlAttributes(new { @class = "k-button-primary k-button-search" })
+                        .Events(ev => ev.Click("searchButtonClicked"))
+                    )
+                    @(Html.Kendo().Button()
+                        .Name("clearButton")
+                        .Content("<i class=\"fa fa-times-circle\"></i> Clear")
+                        .HtmlAttributes(new { @class = "k-button-warning k-button-clear" })
+                        .Events(ev => ev.Click("clearButtonClicked"))
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="authorize-container" class="animated fadeIn" style="display:none">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="authorize-object-container">
+                <h2><i class="fa fa-fw fa-th-list"></i> Authorization List <span id="roleName"></span></h2>
+                <div class="button-container">
+                    @Html.Kendo().Button().Name("checkedAllButton").Content("<i class=\"fa fa-check-square-o\"></i> Checked All").HtmlAttributes(new { @class = "k-button-primary k-button-checkall" })
+                    @Html.Kendo().Button().Name("uncheckedAllButton").Content("<i class=\"fa fa-square-o\"></i> Unchecked All").HtmlAttributes(new { @class = "k-button-primary k-button-uncheckall" })
+
+                    @Html.Kendo().Button().Name("expandAllButton").Content("<i class=\"fa fa-check-square-o\"></i> Expand All").HtmlAttributes(new { @class = "k-button-expandall" })
+                    @Html.Kendo().Button().Name("collaspeAllButton").Content("<i class=\"fa fa-square-o\"></i> Collapse All").HtmlAttributes(new { @class = "k-button-collaspeall" })
+                </div>
+                <div class="well well-sm">
+                    @Html.MvcSiteMap().Menu("KendoTreeViewMenuHelperModel")
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="authorize-dashboard-container">
+                <h2><i class="fa fa-fw fa-th-list"></i> Dashboard</h2>
+                <div class="button-container">
+                    @Html.Kendo().Button().Name("dashboardCheckedAllButton").Content("<i class=\"fa fa-check-square-o\"></i> Checked All").HtmlAttributes(new { @class = "k-button-primary k-dashboard-checkall" })
+                    @Html.Kendo().Button().Name("dashboardUncheckedAllButton").Content("<i class=\"fa fa-square-o\"></i> Unchecked All").HtmlAttributes(new { @class = "k-button-primary k-dashboard-uncheckall" })
+                </div>
+                <div class="form-horizontal well well-sm">                    
+                    <div class="row">
+                        <ul class="list-unstyled col-md-12">
+                            @foreach (var miscs in ApplicationContext.DataContext.SystemMiscs.Where(t=>t.SysMiscType == SystemMiscTypes.Dashboard && t.IsActive).ToList())
+                            {
+                                <li>
+                                    @Html.Kendo().CheckBox().Name(miscs.SysMiscCode).Label(miscs.SysMiscValue1).HtmlAttributes(new { @value = miscs.SysMiscCode, @class  ="k-checkbox-dashboard" })
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="button-container text-center">
+            @Html.KendoConfirmButton("saveButton2", "save",WidgetResource.Button_Save_Text, new { @data_content=MessageHelper.ConfirmSave(), @class = "k-button-primary k-button-save" })
+            @Html.CommandButton("resetAuthorizeButton", "times-circle", WidgetResource.Button_Reset_Text).HtmlAttributes(new { @class = "k-button-warning k-button-clear-authorize" })
+        </div>
+    </div>
+    </div>
+}
+@section styles{
+    <style type="text/css">
+        .fa.k-sprite,
+        .fa.k-sprite::before {
+            font-size: 12px;
+            line-height: 12px;
+            vertical-align: middle;
+        }
+
+        .k-widget.k-treeview {
+            color: #000;
+        }
+
+        .k-treeview .k-in.k-state-hover {
+            color: #000;
+        }
+
+        .k-state-selected {
+            background-color: rgb(83, 176, 0);
+        }
+    </style>
+
+}
+@section scripts
+    {
+    <script type="text/javascript">
+
+        
+        //check("")
+        //---------------------------------------------------------------------------------//
+        var uiState = new AppUIState();
+        var dataSource,treeView;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('search', [{ elem: '#searchButton', busyContent: '<i class=\"fa fa-spinner fa-spin\"></i> Searching' },'.k-button']);
+            uiState.register('refresh', [{ elem: '#refreshButton', busyContent: '<i class=\"fa fa-refresh fa-spin\"></i> Refreshing' }, '.k-button']);
+
+            $("form").kendoValidator();
+            $("#authorize-container").hide();
+            treeview = $("#permissions").data("kendoTreeView");
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: "/api/authorizes/role",
+                        dataType: "json",
+                        type: "POST"
+                    }
+                },
+                schema:{
+                    data: "AuthorizeRules"
+                },
+                requestStart: function () {
+                    $("input[type=checkbox]").prop("checked", false);
+                    uiState.busy('search', true);
+                },
+                requestEnd: function (e) {
+                    app.ui.handleDataSourceRequestEnd(e);
+                    renderDashboardAttributes(e.response);
+                    uiState.busy('search', false);
+                },
+                error: function (e) {
+                    app.ui.handleDataSourceError(e);
+                }
+            });
+
+            treeview.bind("check", function (e) {
+                treeview.updateIndeterminate();
+            });
+
+            $(".k-button-clear-authorize").bind("click", function (e) {
+                e.preventDefault();
+                loadData();
+            });
+
+            $(".k-button-checkall").bind("click", function (e) {
+                e.preventDefault();
+                $("#permissions input[type=\"checkbox\"]").prop("checked", true);
+                $.each($("#permissions .k-item input[type=checkbox]").closest(".k-item"), function (i, item) {
+                    treeview.dataSource.getByUid($(item).attr("data-uid")).checked = true;
+                });
+
+            });
+
+            $(".k-button-uncheckall").bind("click", function (e) {
+                e.preventDefault();
+                $("#permissions input[type=\"checkbox\"]").prop("checked", false);
+                $.each($("#permissions .k-item input[type=checkbox]").closest(".k-item"), function (i, item) {
+                    treeview.dataSource.getByUid($(item).attr("data-uid")).checked = false;
+                });
+            });
+
+            $(".k-button-expandall").bind("click", function (e) {
+                e.preventDefault();
+                treeview.expand(".k-item");
+            });
+
+            $(".k-button-collaspeall").bind("click", function (e) {
+                e.preventDefault();
+                treeview.collapse(".k-item");
+            });
+
+            $(".k-dashboard-checkall").bind("click", function (e) {
+                e.preventDefault();
+                $("input.k-checkbox-dashboard[type=\"checkbox\"]").prop("checked", true);
+            });
+
+            $(".k-dashboard-uncheckall").bind("click", function (e) {
+                e.preventDefault();
+                $("input.k-checkbox-dashboard[type=\"checkbox\"]").prop("checked", false);
+            });
+
+            $(".k-button-save").bind("openDialog", function (sender, e) {
+                // Get selected permission
+                e.buttons.yes.action = function () {
+                    var auth = [];
+                    var dashboardAttributes = [];
+                    kendo.ui.progress($("#authorize-container"), true);
+                    $("input[name=permission][type=checkbox]:checked").each(function (i, item) {
+                        var p = $(item).val();
+                        if (p.indexOf('_') >= 0) {
+                            auth.push(p);
+                        }
+                    });
+
+                    $("input[name^=DSH][type=checkbox]:checked").each(function (i, item) {
+                        var p = $(item).val();
+                        dashboardAttributes.push(p);
+                    });
+
+                    var data = {
+                        roleId: $("#authorize-container").attr("data-role"),
+                        authorizeRules: auth,
+                        dashboardAttributes: dashboardAttributes
+                    };
+
+                    $.ajax({
+                        url: "/api/authorizes/save",
+                        data: app.addAntiForgeryToken(data),
+                        dataType: "json",
+                        type: "POST",
+                        async: false,
+                        success: function (data) {
+                            $.notify({
+                                icon: 'glyphicon glyphicon-info-sign',
+                                message: data.message
+                            }, {
+                                // settings
+                                delay: 3000,
+                                type: 'success'
+                            });
+                            loadData();
+                        },
+                        error: function (data) {
+                            $.notify({
+                                icon: 'glyphicon glyphicon-info-sign',
+                                message: "Error occured while saving data."
+                            }, {
+                                // settings
+                                delay: 3000,
+                                type: 'danger'
+                            });
+                        }
+                    });
+                    kendo.ui.progress($("#authorize-container"), false);
+                }
+            });
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            var v = $("form").data("kendoValidator");
+            if (v.validate()) {
+                loadData();
+            }
+        }
+
+        function clearButtonClicked(e) {
+            e.preventDefault();
+            app.ui.clear(["#role"]);
+            $("#authorize-container").hide();
+        }
+
+        function refreshButtonClicked(e) {
+            e.preventDefault();
+            uiState.busy('refresh', true);
+            $.ajax({
+                url: "/api/authorizes/refresh",
+                data: app.addAntiForgeryToken({}),
+                dataType: "json",
+                type: "POST",
+                async: false,
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data,status,xhr);
+                },
+                error: function (xhr, status) {
+                    app.ui.handleAjaxError(xhr, status);
+                }
+            });
+            uiState.busy('refresh', false);
+        }
+
+        function loadData() {
+
+            dataSource.read({ role: $("#role").data("kendoDropDownList").value() })
+                .then(function () {
+
+                    $.each($("#permissions .k-item input[type=checkbox]").closest(".k-item"), function (i, item) {
+                        treeview.dataSource.getByUid($(item).attr("data-uid")).checked = false;
+                    });
+                    var view = dataSource.view();
+                    $("#authorize-container").show();
+                    $("#authorize-container").attr("data-role", $("#role").data("kendoDropDownList").value());
+
+                    $.each(view, function (i, item) {
+                        $("input[type=checkbox][value=" + item.replace(' ', '_') + "]").prop("checked", true);
+                        var chk = treeview.dataSource.get(item);
+                        if (chk != null) {
+                            chk.checked = true;
+                        }
+                    });
+                    $("#roleName").html(" For " + $("#role").data("kendoDropDownList").text());
+                    treeview.updateIndeterminate();
+                });
+        }
+
+        function renderDashboardAttributes(data) {
+            $.each(data.DashboardAttributes, function (i, item) {
+                $("input[name="+ item +"][type=checkbox][value=" + item + "]").prop("checked", true);
+            });
+        }
+    </script>
+}
+

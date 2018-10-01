@@ -1,0 +1,68 @@
+﻿@model MiscViewModel
+@Html.HiddenFor(m => m.MiscID)
+<div class="k-edit-form-container">
+    @Html.LabelRequiredHintFor(m => m.MiscType, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field k-add-visible">
+        @(Html.Kendo().DropDownListFor(m => m.MiscType)
+            .DataSource(ds=>ds.Read(r=>r.Url("/api/systemmiscs/list/misctype")))
+            .DataTextField("Name")
+            .DataValueField("Value")
+            .OptionLabel(WidgetResource.SelectOptions)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.MiscType), @required = "required" })
+        )        
+        @Html.KendoValidationMessageFor(m => m.MiscType)
+    </div>
+    <div class="k-edit-field k-edit-visible">
+        @Html.Kendo().TextBox().Name("MiscTypeName").HtmlAttributes(new { @disabled="disabled", @readonly="readonly" })
+    </div>
+    @Html.LabelRequiredHintFor(m => m.MiscName, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.MiscName)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.MiscName), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.MiscDisplayEN)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.MiscDisplayEN, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.MiscDisplayEN)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.MiscDisplayEN), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.MiscDisplayEN)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.MiscDisplayTH, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.MiscDisplayTH)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.MiscDisplayTH), @maxlength = 256 })
+        )
+        @Html.KendoValidationMessageFor(m => m.MiscDisplayTH)
+    </div>
+
+    @Html.LabelRequiredHintFor(m => m.MiscRemark, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.MiscRemark)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.MiscRemark), @maxlength = 100 })
+        )
+        @Html.KendoValidationMessageFor(m => m.MiscRemark)
+    </div>
+
+    @*<div class="k-edit-field">
+        @Html.Kendo().CheckBoxFor(m => m.IsActive)
+    </div>*@
+
+    @Html.LabelRequiredHintFor(m => m.Status, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        <ul class="list-unstyled list-inline control-text">
+            @foreach (var status in AcsModelHelper.GetMiscStatus())
+            {
+                <li>
+                    @(Html.Kendo().RadioButtonFor(m => m.Status).Label(status.Name).Value(status.Value)
+                        .HtmlAttributes(new { @class = "misc-status" }))
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+<div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>
+
+

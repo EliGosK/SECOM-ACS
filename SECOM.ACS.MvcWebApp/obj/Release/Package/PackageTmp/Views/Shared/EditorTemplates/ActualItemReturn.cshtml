@@ -1,0 +1,8 @@
+﻿@model DateTime?
+@using Vereyon.Web
+@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+
+@(Html.Kendo().DatePickerFor(m => m)
+    .Format(gridDateFormat))

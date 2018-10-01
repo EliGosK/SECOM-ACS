@@ -1,0 +1,235 @@
+﻿@model  PrivilegeViewDSHData
+@{
+    var itemMappings = new[]
+    {
+        new { name = "ds01", title = ViewResource.Dashboard_RequestInProgress_Title, icon = "refresh" },
+        new { name = "ds02", title = ViewResource.Dashboard_RequestWaitingToApprover_Title, icon = "check-circle" },
+        new { name = "ds03", title = ViewResource.Dashboard_RequestWaitToAcknowledge_Title, icon = "th-list" },
+        new { name = "ds04", title = ViewResource.Dashboard_SecurityRoom_Title, icon = "lock" },
+        new { name = "ds05", title = ViewResource.Dashboard_ItemOut_Title, icon = "upload" },
+        new { name = "ds06", title = ViewResource.Dashboard_ItemIn_Title, icon = "download" },
+        new { name = "ds07", title = ViewResource.Dashboard_RequestWaitToInputLending_Title, icon = "clock-o" },
+        new { name = "ds08", title = ViewResource.Dashboard_WitnessRequest_Title, icon = "th-list" }
+    };
+}
+<div style="margin-top:10px">
+    @(Html.Kendo().TabStrip()
+    .Name("DashboardTabStrip")
+     .Animation(a =>
+              a.Open(ef => ef.Fade(FadeDirection.In))
+    )
+    .SelectedIndex(0)
+    .Items(t =>
+    {
+        if (Model.ViewDSH01)
+        {
+            t.Add().Text(ViewResource.Dashboard_RequestInProgress_Title).HtmlAttributes(new { @data_view = "ds01" }).LoadContentFrom("LoadPartial", "Request", new { name = "_RequestInProgress" });
+        }
+
+        if (Model.ViewDSH02)
+        {
+            t.Add().Text(ViewResource.Dashboard_RequestWaitingToApprover_Title).HtmlAttributes(new { @data_view = "ds02" }).LoadContentFrom("LoadPartial", "Request", new { name = "_RequestWaitingToApprover" });
+        }
+
+        if (Model.ViewDSH03)
+        {
+            t.Add().Text(ViewResource.Dashboard_RequestWaitToAcknowledge_Title).HtmlAttributes(new { @data_view = "ds03" }).LoadContentFrom("LoadPartial", "Request", new { name = "_RequestWaitToAcknowledge" });
+        }
+
+        if (Model.ViewDSH04)
+        {
+            t.Add().Text(ViewResource.Dashboard_SecurityRoom_Title).HtmlAttributes(new { @data_view = "ds04" }).LoadContentFrom("LoadPartial", "Request", new { name = "_SecurityRoom" });
+        }
+
+        if (Model.ViewDSH05)
+        {
+            t.Add().Text(ViewResource.Dashboard_ItemOut_Title).HtmlAttributes(new { @data_view = "ds05" }).LoadContentFrom("LoadPartial", "Request", new { name = "_ItemOut" });
+        }
+
+        if (Model.ViewDSH06)
+        {
+            t.Add().Text(ViewResource.Dashboard_ItemIn_Title).HtmlAttributes(new { @data_view = "ds06" }).LoadContentFrom("LoadPartial", "Request", new { name = "_ItemIn" });
+        }
+
+        if (Model.ViewDSH07)
+        {
+            t.Add().Text(ViewResource.Dashboard_RequestWaitToInputLending_Title).HtmlAttributes(new { @data_view = "ds07" }).LoadContentFrom("LoadPartial", "Request", new { name = "_RequestWaitToInputLending" });
+        }
+
+        if (Model.ViewDSH08)
+        {
+            t.Add().Text(ViewResource.Dashboard_WitnessRequest_Title).HtmlAttributes(new { @data_view = "ds08" }).LoadContentFrom("LoadPartial", "Request", new { name = "_WitnessRequest" });
+        }
+    })
+    
+    )
+</div>
+<script id="areaTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled">
+        # for (var i=0;i < data.length ; i++ ){ #
+        <li><i class="fa fa-map-marker"></i> #=data[i]#</li>
+        # } #
+    </ul>
+</script>
+@section styles{
+    <style type="text/css">
+        .k-grid .k-grid-content {
+            min-height: 250px;
+            height: 100%;
+        }
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var itemMappings = @Html.Raw(Json.Encode(itemMappings));
+
+        $(document).ready(function (e) {
+            uiState.register('ajax', [{ elem: ".k-refresh", busyContent: "<i class=\"fa fa-refresh fa-spin\"></i> Refreshing" },".k-button"])
+
+            $.each(itemMappings, function (index, item) {
+                $("li[data-view='" + item.name + "'] span.k-link").html(kendo.format("<i class=\"fa fa-" + item.icon + "\"></i> " + item.title ));
+            });
+
+            // load all tab content
+            $("#DashboardTabStrip .k-item").each(function (index, item) {
+                if (index == 0) { return; }
+                $("#DashboardTabStrip").data("kendoTabStrip").reload(item);
+            });
+        });
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            var viewId = e.response.ViewName;
+            var dataItem = $.grep(itemMappings, function (item, index) { return item.name === viewId; });
+            $("li[data-view='" + dataItem[0].name + "'] span.k-link").html(kendo.format("<i class=\"fa fa-" + dataItem[0].icon + "\"></i> " + dataItem[0].title + " ({0})", e.response.Total));
+
+            if (e.response.Data.length == 0) {
+                console.log(viewId);
+                console.log($(".k-grid-content").length);
+                if ($("#" + viewId + "Grid .k-grid-content").length==0) {
+                    $("<div class=\"k-grid-content\" style=\"height:250px\"></div>").insertBefore("#" + viewId + "Grid .k-grid-pager");
+                }
+            }
+        }
+
+        function searchButtonClicked(e) {
+            var sender = e.event.target;
+            var gridID = $(sender).data("grid-id");
+            var grid = $("#" + gridID).data("kendoGrid");
+            grid.dataSource.read();
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderActionButton(data,name) {
+            var url = "";
+            switch (data.ObjectID)
+            {
+                case "@AcsRequestTypeCodes.Employee":
+                    url = "@Url.Action("Detail", "AcsEmployee")";
+                    break;
+                case "@AcsRequestTypeCodes.Visitor":
+                    url = "@Url.Action("Detail", "AcsVisitor")";
+                    break;
+                case "@AcsRequestTypeCodes.ItemIn":
+                    url = "@Url.Action("Detail", "AcsItemIn")";
+                    break;
+                case "@AcsRequestTypeCodes.ItemOut":
+                    url = "@Url.Action("Detail", "AcsItemOut")";
+                    break;
+                case "@AcsRequestTypeCodes.Photographing":
+                    url = "@Url.Action("Detail", "AcsPhoto")";
+                    break;
+            }
+            url = url + "/" + data.ReqNo ;
+            return "<a href = \""+ url + "\"target=\"_blank\" class=\"k-button k-button-primary k-button-cmd k-grid-view\"><i class=\"fa fa-search\"></a>";
+        }
+
+        function renderArea(data) {
+            if (!data.Area) { return ""; }
+            var dataItems = data.Area.split(",");
+            return kendo.template($("#areaTemplate").html())(dataItems);
+        }
+
+        function renderRequestStatus(data) {
+            switch (data.ReqStatus)
+            {
+                 case "@RequestStatus.Requesting":
+                    return "<label class='label label-md label-primary'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Approving":
+                    return "<label class='label label-md label-info'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Approved":
+                    return "<label class='label label-md label-success'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Done":
+                    return "<label class='label label-md label-default'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Cancel":
+                    return "<label class='label label-md label-warning'>" + data.ReqStatusName + "</label>";
+                case "@RequestStatus.Rejected":
+                case "@RequestStatus.Expired":
+                    return "<label class='label label-md label-danger'>" + data.ReqStatusName + "</label>";
+                default:
+                    return "<label class='label label-md'>" + data.ReqStatus + "</label>";
+            }
+        }
+
+        function getDSH01SearchCriteria() {
+            return getDataSearchCriteria("ds01");
+        }
+
+        function getDSH02SearchCriteria() {
+            return getDataSearchCriteria("ds02");
+        }
+
+        function getDSH03SearchCriteria() {
+            return { criteria: {}};
+        }
+
+        function getDSH04SearchCriteria() {
+            return {
+                criteria: {
+                    documentType: $("#ds04DocType").data("kendoDropDownList").value()
+                }
+            }
+        }
+
+        function getDSH05SearchCriteria() {
+            return { criteria: {} };
+        }
+
+        function getDSH06SearchCriteria() {
+            return { criteria: {} };
+        }
+
+        function getDSH07SearchCriteria() {
+            return { criteria: {} };
+        }
+
+        function getDSH08SearchCriteria() {
+            return { criteria: {} };
+        }
+
+        function getDataSearchCriteria(name) {
+            return {
+                criteria: {
+                    documentType: $("#" + name+"DocType").data("kendoDropDownList").value(),
+                    status: $("#" + name+"ReqStatus").data("kendoDropDownList").value()
+                }
+            }
+        }
+    </script>
+}
+

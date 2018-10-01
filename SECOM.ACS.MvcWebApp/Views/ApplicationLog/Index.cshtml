@@ -1,0 +1,288 @@
+﻿@{ 
+    var defaultDateTo = DateTime.Now.AddMonths(-1).ToString();
+    var defaultDateFrom = DateTime.Now.ToString();
+    var gridDateTimeFormat = AcsModelHelper.GetGridDateTimeFormat();
+    var keepDaysOptions = new[]{
+        new { text = "Clear All", value = 0  },
+        new { text = "7 Day", value = 7  },
+        new { text = "15 Day", value =15  },
+        new { text = "30 Day", value = 30 },
+        new { text = "60 Day", value = 60 } };
+
+    var loggers = new[] {
+        new { text= ApplicationLogType.Applicaiton,value="log" },
+        new { text= ApplicationLogType.Workflow , value = "wf" },
+        new { text= "ACP010" , value = "acp010" },
+        new { text= "ACP020" , value = "acp020" },
+        new { text= "ACP030" , value = "acp030" },
+         new { text= "ACP040" , value = "acp040" }
+    };
+}
+<div class="well well-sm animated fadeIn">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Logger</label>
+            <div class="col-sm-3">
+                @(Html.Kendo().DropDownList()
+                    .Name("logger")
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .BindTo(loggers)
+                    .DataTextField("text")
+                    .DataValueField("value")
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Logging Date</label>
+            <div class="col-sm-2">
+                @(Html.Kendo().DatePicker()
+                        .Name("dateFrom")
+                        .Value(DateTime.Now.AddMonths(-1))
+                        .HtmlAttributes(new { style = "width:100%", data_default=defaultDateFrom })
+                        .Events(ev=>ev.Change("datePickerChange"))
+                )
+            </div>
+            <label class="col-sm-1 control-label">To</label>
+            <div class="col-sm-2">
+                @(Html.Kendo().DatePicker()
+                        .Name("dateTo")
+                        .Value(DateTime.Now)
+                        .HtmlAttributes(new { style = "width:100%" , data_default=defaultDateTo})
+                        .Events(ev => ev.Change("datePickerChange"))
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.SearchButton("searchButton",new { @class = "k-primary" })
+                @Html.ClearButton("clearButton",new { @class = "k-button-warning" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container animated fadeIn">
+    <h2><i class="fa fa-fw fa-th-list"></i> Logging Message List</h2>
+    @(Html.Kendo().Grid<LoggingViewModel>()
+        .Name("grid")
+        .Scrollable()
+        .AutoBind(false)
+        .HtmlAttributes(new { style = "height:100%;min-height:550px" })
+        .Pageable(p => p
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5)
+        )
+        .ToolBar(t=> {
+            t.Template(
+            @<text>
+            <div>
+                <span class="k-text-bold">Keep Logging Message</span>
+                @Html.Kendo().DropDownList().Name("keepDays").BindTo(keepDaysOptions).DataTextField("text").DataValueField("value")
+                @Html.KendoConfirmButton("purgeLogButton", "trash", "Purge Log", new { @class = "k-button-danger" })               
+            </div>
+            </text>);
+        })
+        .Columns(c =>
+        {
+            c.Template(t => { })
+                .Title(WidgetResource.Grid_Column_No)
+                .ClientTemplate("#=_rowNo#")
+                .HtmlAttributes(new { @class = "text-right" })
+                .Width(40);
+            c.Template(t => { })
+                .ClientTemplate("<button class=\"k-button k-button-warning k-button-cmd k-log\" title=\"View log file\" data-uid=#=data.uid#><i class=\"fa fa-file-text-o\"></i></button>")
+                .Width(50);
+            c.Bound(p => p.LoggingFileName);
+            c.Bound(p => p.FileSize)
+                .ClientTemplate("#=renderFileSize(data)#");
+            c.Bound(p => p.LoggingDateTime)
+                .Format(gridDateTimeFormat)
+                .Width(160);
+        })
+        .DataSource(ds => ds
+            .Custom().Transport(t =>
+            {
+                t.Read(r => r.Action("ListLogging", "ApplicationLog")
+                    .Type(HttpVerbs.Post)
+                    .Data("getSearchCriteria")
+                    .DataType("json"));
+            })
+            .Schema(s => s
+                .Data("Data")
+                .Total("Total")
+                .Errors("Errors")
+            )
+            .PageSize(20)
+            .ServerFiltering(true)
+            .ServerPaging(true)
+            .ServerSorting(true)
+            .Events(e =>
+            {
+                e.RequestStart("dataSourceRequestStart");
+                e.RequestEnd("dataSourceRequestEnd");
+                e.Error("dataSourceError");
+            })
+        )
+        .Events(e => e.DataBound("gridDataBound").DataBinding("gridDataBinding"))
+    )
+</div>
+@(Html.Kendo().Dialog()
+        .Name("loggingDialog")
+        .Width(800)
+        .Height(600)        
+        .Title("Logging Information")
+        .Animation(a=> {
+            a.Open(o => o.Fade(FadeDirection.In));
+            a.Close(c => c.Fade(FadeDirection.Out));
+        })
+        .Visible(false)
+        .Content("<div id=\"logging-container\" class=\"well well-sm\"></div>")
+        .Actions(act=>act.Add().Text("<i class=\"fa fa-times-circle\"></i> Close"))
+ )
+
+<script id="errorDetailTemplate" type="text/x-kendo-template">
+    <div id="logging-container">
+        <h3><i class="fa fa-file-text-o"></i> Log File: #: data.LoggingFileName#</h3>
+        <div class="logging-message well well-sm">
+            <ul class="list-unstyled list-message">
+                # for (var i=0;i < data.Messages.length; i++){ #
+                <li>#: data.Messages[i] #</li>
+                # } #
+            </ul>
+        </div>
+    </div>
+</script>
+
+@section styles{
+    <style type="text/css">
+        .k-dialog .k-content {
+            padding: 5px 10px !important;
+        }
+
+        #logging-container .logging-message {
+            width: 98%;
+            height: 400px;
+            overflow-y: auto;
+            margin-right: 10px;
+        }
+
+        ul.list-message li {
+            margin-bottom: 10px;
+        }
+
+        .k-content-setting {
+            min-height: 160px;
+        }
+    </style>
+}
+@section scripts{
+
+    <script type="text/javascript">
+        var grid;
+        var uiState = new AppUIState();
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            uiState.register('search', ['.k-button']);
+            uiState.register('purge', ['.k-button']);
+
+            $("#searchButton").click(function (e) {
+                grid.dataSource.page(1);
+                e.preventDefault();
+            });
+
+            $("#clearButton").click(function (e) {
+                e.preventDefault();
+                app.ui.clear(["#grid", "#levels", "#dateFrom", "#dateTo", "#keepDays"])
+            });
+
+            var dateFrom = $("#dateFrom").data("kendoDatePicker");
+            var dateTo = $("#dateTo").data("kendoDatePicker");
+            app.ui.datePickerRelate(dateFrom, dateTo);
+
+            $("#purgeLogButton").bind("openDialog", function (sender, e) {
+                e.buttons.yes.action = function () { purgeLogging(); };
+            })
+        });
+
+        function getSearchCriteria() {
+            var data = {
+                criteria: {
+                    Logger: $("#logger").data("kendoDropDownList").value(),
+                    DateFrom: $("#dateFrom").data("kendoDatePicker").value().toISOString(),
+                    DateTo: $("#dateTo").data("kendoDatePicker").value().toISOString(),
+                }
+            };
+            return data;
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy('search', true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy('search', false);
+            app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function gridDataBound(e) {
+            $(".k-log").bind("click", function (e) {
+                e.preventDefault();
+                var id = $(this).data("uid");
+                var data = $("#grid").data("kendoGrid").dataSource.getByUid(id);
+                showLogMessage(data);
+            });
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function showLogMessage(data) {
+            $("#logging-container").empty();
+            var dialog = $("#loggingDialog").data("kendoDialog");
+            dialog.content(kendo.template($("#errorDetailTemplate").html())(data));
+            dialog.open();
+        }
+
+        function purgeLogging() {
+            uiState.busy('purge', true);
+            $.ajax({
+                url: "@Url.Action("PurgeLogging", "ApplicationLog")",
+                data: { "days": $("#keepDays").data("kendoDropDownList").value() },
+                type: "POST",
+                async: true,
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    uiState.busy('purge', false);
+                    grid.dataSource.read();
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+                    uiState.busy('purge', false);
+                }
+            });
+        }
+        
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderFileSize(data) {
+            var units = ["Bytes", "KB", "MB"];
+            var size = data.FileSize;
+            for (var i = 0; i < units.length; i++)
+            {
+                if (size < 1024) { return kendo.format("{0:n2} {1}", size, units[i]); }
+                size = size / 1024;
+            }
+            return kendo.format("{0:n2}", size);
+        }
+    </script>
+}

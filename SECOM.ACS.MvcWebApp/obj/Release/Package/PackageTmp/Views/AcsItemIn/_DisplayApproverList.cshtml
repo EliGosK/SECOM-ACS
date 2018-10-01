@@ -1,0 +1,220 @@
+﻿@model  AcsItemInViewModel
+@{
+    var currentUser = User.Identity.Name;
+    var areaApprovalFormat = ViewResource.Area + " ({0}: {1})";
+    //var rejectReasonText = ModelMetadataUtility.GetModelDisplayName<ReqApproverListViewModel>("RejectReason");
+    var displayArea = String.Format(areaApprovalFormat, AcsModelHelper.GetFactory(Model.Area.FactoryCode), ModelLocalizeManager.GetValue(Model.Area, "AreaDisplay"));
+
+}
+
+@if (!string.IsNullOrEmpty(Model.SuperiorApproveUserName))
+{
+    if (Model.SuperiorApproveUserName == currentUser && String.IsNullOrEmpty(Model.SuperiorApprovalCode) && Model.ViewMode == RequestViewMode.Approval)
+    {
+        <div class="well well-info well-sm">
+            <div class="form-group">
+                @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.SuperiorApprovalEmployee.EmployeeName, new { @class = "col-md-3 control-label" })
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-3 col-lg-2" ></div>
+                <div class="col-md-9">
+                    @Html.KendoConfirmButton("superiorApproveButton", "check-circle", WidgetResource.Button_Approve_Text, new { @class = "k-button k-button-success k-save-approval", @data_content = MessageHelper.ConfirmApprove(), @data_approval_id = Model.SuperiorApprovalID, @data_approval_code = ApprovalCode.Approve })
+                    @Html.KendoConfirmButton("superiorRejectButton", "times-circle", WidgetResource.Button_Reject_Text, new { @class = "k-button k-button-danger k-save-approval", @data_content = MessageHelper.ConfirmReject(), @data_approval_id = Model.SuperiorApprovalID, @data_approval_code = ApprovalCode.Reject, data_required_reason = Html.IdFor(m => m.SuperiorRejectReason) })
+                    @Html.LabelFor(m => m.SuperiorRejectReason, new { @class = "control-label" })
+                    @Html.Kendo().TextBoxFor(m => m.SuperiorRejectReason).HtmlAttributes(new { @style = "width:60%", data_field = Html.DisplayNameFor(m => m.SuperiorRejectReason) })
+                </div>
+     
+
+            </div>
+        </div>
+    }
+    else
+    {
+
+        if (!String.IsNullOrEmpty(Model.SuperiorApprovalCode))
+        {
+            var css = Model.SuperiorApprovalCode == ApprovalCode.Approve ? "well well-success" : "well well-danger";
+            var textCss = Model.SuperiorApprovalCode == ApprovalCode.Approve ? "k-color-success" : "k-color-danger";
+            <div class="@css">
+                <div class="row">
+                    @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayLocalize(Model.SuperiorApprovalEmployee, "EmpName")
+                    </div>
+                    @* @(Html.LabelDisplayName<ReqApproverListViewModel>("ApprovalCode", new { @class = "col-md-1 control-label" }))*@
+                    @(Html.LabelFor(m => m.SuperiorApprovalCode, new { @class = "col-md-1 control-label" }))
+                    <div class="col-md-2 control-text">
+                        <span class="@textCss">@Html.DisplayApprovalCode(Model.SuperiorApprovalCode)</span>
+                    </div>
+                    @Html.LabelFor(m => m.SuperiorApprovalDate, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayDate(Model.SuperiorApprovalDate)
+                    </div>
+                </div>
+                @if (!String.IsNullOrEmpty(Model.SuperiorRejectReason))
+                {
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        @Html.LabelFor(m => m.SuperiorRejectReason, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-7 control-text">
+                            @Html.DisplayFor(m => m.SuperiorRejectReason)
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayLocalize(Model.SuperiorApprovalEmployee, "EmpName")
+                </div>
+                @(Html.LabelFor(m => m.SuperiorApprovalCode, new { @class = "col-md-1 control-label" }))
+                <div class="col-md-2 control-text">
+                    <span class="k-color-primary">@Html.DisplayApprovalCode(Model.SuperiorApprovalCode)</span>
+                </div>
+            </div>
+        }
+    }
+
+
+    if (Model.AreaApproveUserName == currentUser && String.IsNullOrEmpty(Model.AreaApprovalCode) && Model.SuperiorApprovalCode == ApprovalCode.Approve && Model.ViewMode == RequestViewMode.Approval)
+    {
+        <div class="form-group">
+            @Html.Label(displayArea, new { @class = "col-md-3 col-lg-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayLocalize(Model.AreaApprovalEmployee, "EmpName")
+            </div>
+        </div>
+            <div class="row">
+
+                <div class="col-md-3 col-lg-2"></div>
+                <div class="col-md-9">
+                    @Html.KendoConfirmButton("areaAproveButton", "save", WidgetResource.Button_Approve_Text, new { @class = "k-button k-button-success k-save-approval", @data_content = MessageHelper.ConfirmSave(), @data_approval_id = Model.AreaApprovalID, @data_approval_code = ApprovalCode.Approve })
+                    @Html.KendoConfirmButton("areaRejectButton", "times-circle", WidgetResource.Button_Reject_Text, new { @class = "k-button k-button-danger k-save-approval", @data_content = MessageHelper.ConfirmSave(), @data_approval_id = Model.AreaApprovalID, @data_approval_code = ApprovalCode.Reject, @data_required_reason = Html.IdFor(m => m.AreaRejectReason) })
+                    @Html.LabelFor(m => m.AreaRejectReason, new { @class = "control-label" })
+                    @Html.Kendo().TextBoxFor(m => m.AreaRejectReason).HtmlAttributes(new { @style = "width:60%", @required = "required", data_field = Html.DisplayNameFor(m => m.AreaRejectReason) })
+                </div>
+
+            </div>
+    }
+    else
+    {
+        if (!String.IsNullOrEmpty(Model.AreaApprovalCode))
+        {
+            var css = Model.AreaApprovalCode == ApprovalCode.Approve ? "well well-success" : "well well-danger";
+            var textCss = Model.AreaApprovalCode == ApprovalCode.Approve ? "k-color-success" : "k-color-danger";
+            <div class="@css">
+                <div class="row">
+                    @Html.Label(displayArea, new { @class = "col-md-3 col-lg-2 control-label" })
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayLocalize(Model.AreaApprovalEmployee, "EmpName")
+                    </div>
+                    @(Html.LabelFor(m => m.AreaApprovalCode, new { @class = "col-md-1 control-label" }))
+                    <div class="col-md-2 control-text">
+                        <span class="@textCss">@Html.DisplayApprovalCode(Model.AreaApprovalCode)</span>
+                    </div>
+                    @(Html.LabelFor(m => m.AreaApprovalDate, new { @class = "col-md-2 control-label" }))
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayDate(Model.AreaApprovalDate)
+
+                    </div>
+                 
+                </div>
+                @if (!String.IsNullOrEmpty(Model.AreaRejectReason))
+                {
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        @(Html.LabelFor(m => m.AreaRejectReason, new { @class = "col-md-2 control-label" }))
+                        <div class="col-md-7 control-text">
+                            @Html.DisplayFor(m => m.AreaRejectReason)
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.Label(displayArea, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayLocalize(Model.AreaApprovalEmployee, "EmpName")
+                </div>
+                @(Html.LabelFor(m => m.AreaApprovalCode, new { @class = "col-md-1 control-label" }))
+                <div class="col-md-2 control-text">
+                    <span class="k-color-primary">@Html.DisplayApprovalCode(Model.AreaApprovalCode)</span>
+                </div>
+            </div>
+        }
+    }
+
+    if (Model.AcknowledgeUserName == currentUser && !Model.AcknowledgeDate.HasValue && Model.AreaApprovalCode == ApprovalCode.Approve && Model.ViewMode == RequestViewMode.Approval)
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.AcknowledgeUserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-text">
+                @Html.DisplayLocalize(Model.AcknowledgeEmployee, "EmpName")
+            </div>
+            <div class="col-md-2">
+                @Html.KendoConfirmButton("ackButton", "check-square-o", WidgetResource.Button_Acknowlege_Text, new { @class = "k-button k-primary k-ack", @data_content = MessageHelper.ConfirmAcknowledge() })
+            </div>
+        </div>
+    }
+    else
+    {
+        if (Model.AcknowledgeDate.HasValue)
+        {
+            <div class="well well-info well-sm">
+                <div class="row">
+                    @Html.LabelFor(m => m.AcknowledgeUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayFor(m => m.AcknowledgeEmployee.EmployeeName)
+                    </div>
+                    <label class="col-md-1 control-label">@ViewResource.Acknowledge_Status_Title</label>
+                    <div class="col-md-2 control-text">
+                        <span class="k-color-primary">@ModelMetadataResource.Acknowledged_Status</span>
+                    </div>
+                    @Html.LabelFor(m => m.AcknowledgeDate, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-2 control-text">
+                        @Html.DisplayDate(Model.AcknowledgeDate)
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @Html.LabelFor(m => m.AcknowledgeUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-2 control-text" >
+                    @Html.DisplayFor(m => m.AcknowledgeEmployee.EmployeeName)
+                </div>
+                <label class="col-md-1 control-label">@ViewResource.Acknowledge_Status_Title</label>
+                <div class="col-md-5 control-text">
+                    <span class="k-color-primary">@ModelMetadataResource.WaitToAcknowledge_Status</span>
+                </div>
+            </div>
+        }
+ 
+    }
+
+    if (!String.IsNullOrEmpty(Model.ForceDoneBy))
+    {
+        <div class="well well-warning well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ForceDoneBy, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-1 control-text">
+                    @(Model.ForceDoneEmployee == null ? Html.DisplayFor(m => m.ForceDoneBy) : Html.DisplayLocalize(Model.ForceDoneEmployee, "EmpName"))
+                </div>
+                @Html.LabelFor(m => m.ForceDoneDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.ForceDoneDate)
+                </div>
+            </div>
+        </div>
+    }
+}

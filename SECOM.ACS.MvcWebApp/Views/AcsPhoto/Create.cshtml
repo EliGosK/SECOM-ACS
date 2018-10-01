@@ -1,0 +1,482 @@
+﻿@model AcsPhotoViewModel
+@using Vereyon.Web;
+@using SECOM.ACS.Infrastructure;
+@{
+    var startTime = ApplicationContext.Setting.KendoUI.TimePickerMinTime;
+    var endTime = ApplicationContext.Setting.KendoUI.TimePickerMaxTime;
+    var photoTypes = AcsModelHelper.GetPhotoByTypes();
+    var internval = ApplicationContext.Setting.KendoUI.TimePickerInterval;
+    var findEmployeeMinLength = ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName;
+    var pageSize = 20;
+    var minDate = DateTime.Now;
+    var maxDate = AcsModelHelper.GetLastDateOfMonth(1);
+
+    var minEntryDateFrom = DateTime.Now;
+    var maxEntryDateFrom = AcsModelHelper.GetLastDateOfMonth(1);
+    var minEntryDateTo = minEntryDateFrom;
+    var maxEntryDateTo = AcsModelHelper.GetLastDateOfMonth(1);
+    var isRequiredSuperior = AcsModelHelper.IsRequiredSuperiorApproval(Model.RequestEmployee.PositionID);
+}
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("Create", "AcsPhoto", FormMethod.Post, new { @id = "create-form", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="well well-warning">
+            @MessageResource.MSG0038
+        </div>
+        <div class="well well-sm">            
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m=>m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployee.Department, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m=>m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.TakePhotoDateFrom, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DatePickerFor(m => m.TakePhotoDateFrom)
+                        .Min(minEntryDateFrom)
+                        .Max(maxEntryDateFrom)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m=>m.TakePhotoTimeFrom,startTime, endTime, internval)                                                                    
+                        .HtmlAttributes(new { style = "width:100px" })                        
+                    )
+                    <span>-</span>
+                    @(Html.Kendo().DatePickerFor(m => m.TakePhotoDateTo)
+                        .Min(minEntryDateTo)
+                        .Max(maxEntryDateTo)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m => m.TakePhotoTimeTo, startTime, endTime, internval)
+                        .HtmlAttributes(new { style = "width:100px" }))
+                    
+                </div>    
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.PhotoByType, new { @class = "col-md-2 control-label" })
+               <div class="col-md-4">
+                   <ul class="list-unstyled list-inline">
+                       @foreach (var photoType in photoTypes)
+                       {
+                           <li>
+                               @Html.Kendo().RadioButtonFor(m => m.PhotoByType).Label(photoType.Name).Value(photoType.Value)
+                           </li>
+                       }
+                   </ul>
+               </div>
+                @Html.LabelRequiredHintFor(m => m.AreaID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.AreaID)
+                        .DataSource(ds => ds
+                            .Read(r => r.Url("/api/area/list"))
+                        )
+                        .DataTextField("Name")
+                        .DataValueField("AreaID")
+                        .Filter(FilterType.Contains)
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .HtmlAttributes(new { style = "width:100%", @data_field=Html.DisplayNameFor(m=>m.AreaID) })
+                        .Events(ev=>ev.Change("areaChange"))
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.PhotoEmpID, new { @class = "col-md-2 control-label photo-type-employee" })
+                <div class="col-md-4 photo-type-employee">
+                    @(Html.Kendo().DropDownListFor(m => m.PhotoEmpID)
+                        .DataSource(ds =>
+                            ds.Read(r =>
+                                r.Action("Find", "Employee",new { employeeId = Model.PhotoEmpID, pageSize= pageSize })
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .MinLength(findEmployeeMinLength)
+                        .DataTextField("EmployeeName")
+                        .DataValueField("EmployeeID")
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .Filter(FilterType.Contains)
+                        .HtmlAttributes(new { style = "width:100%",data_compare_field=Html.IdFor(m=>m.WitnessEmpID), @data_field = Html.DisplayNameFor(m => m.PhotoEmpID) })
+                    )
+                </div>  
+                @Html.LabelRequiredHintFor(m => m.TakePhotoName, new { @class = "col-md-2 control-label photo-type-outsource" })
+                <div class="col-md-4 photo-type-outsource">
+                    @Html.Kendo().TextBoxFor(m => m.TakePhotoName).HtmlAttributes(new { @style = "width:100%", @maxlength = 256, data_field = Html.DisplayNameFor(m => m.TakePhotoName) })
+                </div>
+                @Html.LabelRequiredHintFor(m => m.WitnessEmpID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.WitnessEmpID)
+                        .DataSource(ds=>
+                            ds.Read(r=>
+                                r.Action("Find", "Employee", new { pageSize = pageSize })
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                        )
+                        .MinLength(findEmployeeMinLength)
+                        .DataTextField("EmployeeName")
+                        .DataValueField("EmployeeID")
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .Filter(FilterType.Contains)
+                        .HtmlAttributes(new { style = "width:100%", data_compare_field = Html.IdFor(m => m.PhotoEmpID), @data_field = Html.DisplayNameFor(m => m.WitnessEmpID) })
+                    )
+                </div>
+            </div>
+           
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.TargetItem, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.TextAreaFor(m => m.TargetItem, new { row = 4, style = "width:100%", @class = "k-textbox", @required="required" ,@data_field = Html.DisplayNameFor(m => m.TargetItem) })
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.PurposeCodeID)
+                        .DataSource(ds => ds.Read(r => r
+                              .Url("/api/miscs/list/" + PurposeRequestTypes.Photo)
+                              .Type(HttpVerbs.Get)
+                            )
+                        )
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .Filter(FilterType.Contains)
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .HtmlAttributes(new { style = "width:100%", @data_field = Html.DisplayNameFor(m => m.PurposeCodeID) })
+                        .Events(ev=>ev.Change("purposeCodeChange").DataBound("purposeCodeDataBound"))
+                    )
+                </div>
+                @Html.LabelRequiredHintFor(m => m.OtherPurpose, new { @class = "col-md-2 control-label other-purpose" })
+                <div class="col-md-4">
+                    @(Html.Kendo().TextBoxFor(m => m.OtherPurpose).HtmlAttributes(new { style = "width:100%",@class= "other-purpose", @data_field = Html.DisplayNameFor(m => m.OtherPurpose) })
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.EquipItemID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.EquipItemID)
+                        .DataSource(ds => ds.Read(r => r.Url("/api/items/list")))
+                        .DataTextField("ItemDisplay")
+                        .DataValueField("ItemID")
+                        .Filter(FilterType.Contains)
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .HtmlAttributes(new { style = "width:100%", @data_field = Html.DisplayNameFor(m => m.EquipItemID) })
+                        .Events(ev => ev.Change("equipItemChange").DataBound("equipItemDataBound"))
+                    )
+                </div>                
+                @Html.LabelRequiredHintFor(m => m.OtherEquip, new { @class = "col-md-2 control-label other-equipment" })
+                <div class="col-md-4">
+                    @(Html.Kendo().TextBoxFor(m => m.OtherEquip).HtmlAttributes(new { style = "width:100%",@class = "other-equipment", @data_field = Html.DisplayNameFor(m => m.OtherEquip) })
+                    )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-10 ">
+                    @(Html.Kendo().CheckBoxFor(m => m.IsLending))
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(Model.AssetCode))
+            {
+                <h2><i class="fa fa-retweet"></i>@ViewResource.AcsPhoto_GASection_Title</h2>
+                <div class="well well-sm form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AssetCode, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @(Html.Kendo().TextBoxFor(m => m.AssetCode).HtmlAttributes(new { style = "width:100%", maxlength = 100 }))
+                        </div>
+                        @Html.LabelFor(m => m.ActReturnDate, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @(Html.Kendo().DatePickerFor(m => m.ActReturnDate)
+                            .Events(ev => ev.Change("datePickerChange"))
+                            .HtmlAttributes(new { })
+                            )
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+        <div class="well well-sm">
+            @if (isRequiredSuperior)
+            {
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.SuperiorApproveUserName, new { @class = "col-md-3 col-lg-2 control-label required-hint" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.SuperiorApproveUserName)
+                        .DataSource(ds => ds.Read(r => r.Url("/api/approvals/superior")))
+                        .DataTextField("EmployeeName")
+                        .DataValueField("UserName")
+                        .Filter(FilterType.Contains)
+                        .HtmlAttributes(new { style = "width: 100%", required="required", data_field=Html.DisplayNameFor(m=>m.SuperiorApproveUserName) })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                    )
+                </div>
+            </div>
+            }
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.AreaApproveUserName, new { @class = "col-md-3 col-lg-2 control-label label-area" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.AreaApproveUserName)
+                        .DataSource(ds =>
+                            ds.Read(r =>
+                                r.Url("/api/approvals/area")
+                            )
+                        )
+                        .CascadeFrom("AreaID")
+                        .CascadeFromField("AreaID")
+                        .DataTextField("EmployeeName")
+                        .DataValueField("UserName")
+                        .Filter(FilterType.Contains)
+                        .HtmlAttributes(new { style = "width: 100%" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                    )
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.AcknowledgeUserName, new { @class = "col-md-3 col-lg-2 control-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.AcknowledgeUserName)
+                        .DataSource(ds => ds.Read(r =>
+                            r.Url("/api/approvals/acknowledge"))
+                        )
+                        .DataTextField("EmployeeName")
+                        .DataValueField("UserName")
+                        .Filter(FilterType.Contains)
+                        .HtmlAttributes(new { style= "width: 100%" })
+                        .OptionLabel(WidgetResource.SelectOptions)
+                    )
+                </div>
+            </div>            
+        </div>
+        <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+        <div class="well well-sm">
+            @(Html.Kendo().EditorFor(m => m.Note)
+                .Tools(t => t.Clear()
+                      .Bold().Italic().Underline().Strikethrough()
+                      .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                      .InsertUnorderedList().InsertOrderedList()
+                      .Outdent().Indent()
+                      .Formatting()
+                      .CleanFormatting()
+                )
+                .Value(Html.DisplayHtmlFor(m => m.Note).ToString())
+                .HtmlAttributes(new { @class = "k-textbox", style = "width:100%", @maxlength = 4000 })
+            )
+        </div>
+        <div class="text-center">
+            <div class="button-container">
+                @(Html.KendoConfirmButton("saveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-primary" }))
+            </div>
+            
+        </div>
+        <div class="k-validation-summary alert alert-danger" style="display:none"></div>
+    }
+</div>
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var validator;
+        var uiState = new AppUIState();
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text" }, ".k-button"]);
+
+            validator = $("form").kendoValidator({
+                rules: {
+                    otherPurpose: function (input) {
+                        if (input.is("[name=@Html.NameFor(m => m.OtherPurpose)]") && input.val() == "") {
+                            var d = $("#@Html.IdFor(m=>m.PurposeCodeID)").data("kendoDropDownList");
+                            var dataItem = d.dataItem();
+                            if (dataItem && dataItem.Key !== undefined) {
+                                return !(dataItem.Key.toUpperCase() == "OTHER");
+                            }
+                        }
+                        return true;
+                    },
+                    otherEquipment: function (input) {
+                        if (input.is("[name=@Html.NameFor(m => m.OtherEquip)]") && input.val() == "") {
+                            var d = $("#@Html.NameFor(m => m.EquipItemID)").data("kendoDropDownList");
+                            var dataItem = d.dataItem();
+                            if (dataItem && dataItem.Key !== undefined) {
+                                return !(dataItem.Key.toUpperCase() == "OTHER");
+                            }
+                        }
+                        return true;
+                    },
+                    requiredPhotoEmployee: function (input) {
+                        if (input.is("[name=@Html.IdFor(m => m.PhotoEmpID)]"))
+                        {
+                            return !($(input).data("kendoDropDownList").value() == "" && getAccessType() == "@PhotoByTypes.Employee");
+                        }
+                        return true;
+                    },
+                    requiredWitnessEmployee: function (input) {
+                        if (input.is("[name=@Html.IdFor(m => m.WitnessEmpID)]"))
+                        {
+                            return !($(input).data("kendoDropDownList").value() == "" && getAccessType() == "@PhotoByTypes.OutSource");
+                        }
+                        return true;
+                    },
+                    requiredTakePhotoName: function (input) {
+                        if (input.is("[name=@Html.NameFor(m => m.TakePhotoName)]") && input.val() == "")
+                        {
+                            return  getAccessType() !== "@PhotoByTypes.OutSource";
+                        }
+                        return true;
+
+                    },
+                    compareEmployee: function (input) {
+                        if (input.is("[data-compare-field]"))
+                        {
+                            var name = input.data("compare-field");
+                            return $('#'+name).val() !== input.val();
+                        }
+                        return true;
+                    }
+                },
+                messages: {
+                    otherPurpose: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    otherEquipment: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    requiredTakePhotoName: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    requiredPhotoEmployee: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    requiredWitnessEmployee: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    compareEmployee: function (input)
+                    {
+                        return "@ViewResource.AcsPhoto_PhotoEmplyeeMustNotEqualWitnessEmployee";
+                    }
+                },
+                validate: function () {
+                    app.ui.showValidateSummary(this.errors());
+                }
+            }).data("kendoValidator");
+
+            $("input[type=radio][name=@Html.NameFor(m => m.PhotoByType)]").on("change", function (e) {
+                updateUIState();
+            });
+
+            $("#saveButton")
+                .on("validating", function (sender, args) {
+                    args.isValid = validator.validate();
+                })
+                .on("openDialog", function (sender, args) {
+                    args.buttons.yes.action = function () {
+                        uiState.busy("save", true);
+                        $("form").submit();
+                    };
+                });
+
+            app.ui.datePickerRelate($("#@Html.IdFor(m=>m.TakePhotoDateFrom)").data("kendoDatePicker"), $("#@Html.IdFor(m=>m.TakePhotoDateTo)").data("kendoDatePicker"));
+
+            updateUIState();
+            //updatePurposeUIState();
+            //updateEquipmentUIState();
+            updateAreaApprovalUIState();
+        });
+
+        function getAccessType() {
+            return $("input[type=radio][name=@Html.NameFor(m => m.PhotoByType)]:checked").val();
+        }
+
+        function updateUIState() {
+
+            var type = getAccessType();
+            if (type == "@PhotoByTypes.OutSource") {
+                $(".photo-type-employee").hide('fast');
+                $(".photo-type-outsource").show('fast');
+            } else {
+                $(".photo-type-employee").show('fast');
+                $(".photo-type-outsource").hide('fast');
+            }
+        }
+
+        function purposeCodeChange(e) {
+            updatePurposeUIState();
+        }
+
+        function purposeCodeDataBound() {
+            updatePurposeUIState();
+        }
+
+        function equipItemChange(e) {
+            updateEquipmentUIState();
+        }
+
+        function equipItemDataBound() {
+            updateEquipmentUIState();
+        }
+
+        function updatePurposeUIState() {
+            var purpose = $("#@Html.NameFor(m => m.PurposeCodeID)").data("kendoDropDownList");
+            $(".other-purpose").hide('fast');
+            $("[data-for=@Html.NameFor(m => m.OtherPurpose)]").hide('fast');
+            var dataItem = purpose.dataItem();
+            if (dataItem && dataItem.Key !== undefined) {
+                if (dataItem.Key.toLowerCase() == "other") {
+                    setTimeout(function () {
+                        $(".other-purpose").show('fast');
+                    }, 100);
+                }
+            }
+        }
+
+        function updateEquipmentUIState() {
+            var equipment = $("#@Html.IdFor(m => m.EquipItemID)").data("kendoDropDownList");
+            $(".other-equipment").hide('fast');
+            $("[data-for=@Html.NameFor(m => m.OtherEquip)]").hide('fast');
+            var dataItem = equipment.dataItem();
+            if (dataItem && dataItem.Key !== undefined) {
+                if (dataItem.Key.toLowerCase() == "other") {
+                    setTimeout(function () {
+                        $(".other-equipment").show('fast');
+                    }, 100);
+                }
+            }
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function areaChange(e) {
+            displayAreaApproval(this.dataItem());
+        }
+
+        function updateAreaApprovalUIState() {
+            var dropDownList = $("#AreaID").data("kendoDropDownList");
+            displayAreaApproval(dropDownList.dataItem());
+        }
+
+        function displayAreaApproval(dataItem) {
+             if (dataItem.AreaID)
+                $(".label-area").html("@Html.DisplayNameFor(m=>m.AreaApproveUserName) (" + dataItem.Name + ")");
+            else
+                $(".label-area").html("@Html.DisplayNameFor(m => m.AreaApproveUserName)");
+        }
+
+        
+    </script>
+}

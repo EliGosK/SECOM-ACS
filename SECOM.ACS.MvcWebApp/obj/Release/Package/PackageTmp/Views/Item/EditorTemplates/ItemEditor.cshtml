@@ -1,0 +1,62 @@
+﻿@model ItemDataViewModel
+
+<div class="k-edit-form-container">
+    @Html.HiddenFor(m => m.ItemID)
+    @Html.LabelRequiredHintFor(m => m.ItemName, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @Html.Kendo().TextBoxFor(m => m.ItemName).HtmlAttributes(new { @style = "width:100%", @maxlength = "256", @data_field = Html.DisplayNameFor(m => m.ItemName), required = "required" })
+    </div>
+   @Html.LabelRequiredHintFor(m => m.ItemTypeID, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().DropDownListFor(m => m.ItemTypeID)
+            .DataSource(ds => ds.Read(r => r.Url("/api/miscs/list/itm")))
+            .DataTextField("Name")
+            .DataValueField("Value")
+            .OptionLabel(WidgetResource.SelectOptions)
+            .HtmlAttributes(new { @style = "width:100%", @data_field = Html.DisplayNameFor(m => m.ItemTypeID), required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.ItemTypeID)
+    </div>
+
+    @Html.LabelRequiredHintFor(m => m.ItemDisplayEN, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.ItemDisplayEN)
+        .HtmlAttributes(new { @style = "width:100%", @maxlength = "256", @data_field = Html.DisplayNameFor(m => m.ItemDisplayEN), required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.ItemDisplayEN)
+    </div>
+
+    @Html.LabelRequiredHintFor(m => m.ItemDisplayTH, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().TextBoxFor(m => m.ItemDisplayTH)
+            .HtmlAttributes(new { @style = "width:100%", @maxlength ="256", @data_field = Html.DisplayNameFor(m => m.ItemDisplayTH), required = "required" })
+        )
+        @Html.KendoValidationMessageFor(m => m.ItemDisplayTH)
+        @(Html.Kendo().CheckBoxFor(m => m.IsConfdt))
+    </div>
+    @Html.LabelRequiredHintFor(m => m.RequestType, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.Kendo().CheckBoxFor(m => m.IsItemIn).HtmlAttributes(new { @value = 2 }))
+        @(Html.Kendo().CheckBoxFor(m => m.IsItemOut).HtmlAttributes(new { @value = 1 }))
+        @(Html.Kendo().CheckBoxFor(m => m.IsPhoto).HtmlAttributes(new { @value = 3 }))
+    </div>
+    @Html.LabelRequiredHintFor(m => m.Description, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        @(Html.TextAreaFor(m => m.Description, new { @maxlength = "256", @class = "k-textbox", style = "width: 100%;resize: none;", row = "2" }))
+        @Html.KendoValidationMessageFor(m => m.Description)
+    </div>
+    @Html.LabelRequiredHintFor(m => m.Status, new { @class = "k-edit-label k-text-bold" })
+    <div class="k-edit-field">
+        <ul class="list-unstyled list-inline control-text">
+            @foreach (var item in AcsModelHelper.GetItemStatus())
+            {
+                <li>
+                    @(Html.Kendo().RadioButtonFor(m => m.Status).Label(item.Name).Value(item.Value)
+                        .HtmlAttributes(new { @class = "item-status" }))
+                </li>
+            }
+        </ul>
+    </div>
+    
+</div>
+<div class="k-edit-form-error-message alert alert-danger" style="display:none;margin: 0px 5px"></div>

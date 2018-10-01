@@ -1,0 +1,31 @@
+﻿@using System.Web.Hosting
+@{
+    var assemblyFile = HostingEnvironment.MapPath("~/bin/SECOM.ACS.MvcWebApp.dll");
+    var appName = ApplicationContext.Setting.ApplicationName ?? "Access Control System";
+    var companyName = ApplicationContext.Setting.CompanyName ?? "AISIN AI Co.,Ltd";
+    var appVersion = ApplicationContext.Setting.Version ?? "1.0.0";    
+}
+<footer>
+    @*<div class="resources">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <ul class="list-unstyled list-resource list-inline">
+                        <li><a href="#" target="_blank">About Us</a></li>
+                        <li><a href="#" target="_blank">Contact Us</a></li>
+                        <li><a href="#" target="_blank">Sitemap</a></li>
+                        <li><a href="#" target="_blank">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="app-info">
+        <div class="pull-right">
+            @Html.FileLastWriteTime(assemblyFile, "<i class=\"fa fa-cubes\"></i> Application Version: {0:yyyy.MM.dd.HHmm}", "en-US")
+        </div>
+        <div class="col-md-6 col-sm-12 copyright">
+            Copyright © 2017 @companyName ALL RIGHTS RESERVED.
+        </div>
+    </div>
+</footer>   

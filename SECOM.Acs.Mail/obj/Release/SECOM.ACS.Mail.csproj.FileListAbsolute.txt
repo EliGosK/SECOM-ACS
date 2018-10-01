@@ -1,0 +1,14 @@
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\SECOM.ACS.Mail.dll.config
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\SECOM.ACS.Mail.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\SECOM.ACS.Mail.pdb
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\CSI.ComponentModel.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\RazorEmail.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\RazorEngine.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\System.Web.Razor.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\CSI.ComponentModel.pdb
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\RazorEngine.pdb
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\RazorEngine.xml
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\bin\Release\System.Web.Razor.xml
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\obj\Release\SECOM.ACS.Mail.csprojResolveAssemblyReference.cache
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\obj\Release\SECOM.ACS.Mail.dll
+D:\SECOM-ACS\Repos\Dev\SECOM.ACS.Mail\obj\Release\SECOM.ACS.Mail.pdb

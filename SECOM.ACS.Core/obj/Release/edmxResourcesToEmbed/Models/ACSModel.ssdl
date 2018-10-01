@@ -1,0 +1,1202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SECOM.ACS.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbm_Area">
+    <Key>
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="AreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FactoryCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AreaName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="AreaDisplayEN" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="AreaDisplayTH" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ConfdtLevel" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_AreaApprover">
+    <Key>
+      <PropertyRef Name="AreaID" />
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="Seq" Type="tinyint" Nullable="false" />
+    <Property Name="DepartmentID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PositionID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_AreaCardMapping">
+    <Key>
+      <PropertyRef Name="CardID" />
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="CardID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="IsMainArea" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_AreaGateMapping">
+    <Key>
+      <PropertyRef Name="AreaID" />
+      <PropertyRef Name="GateID" />
+    </Key>
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="GateID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_AreaOrganizeMapping">
+    <Key>
+      <PropertyRef Name="MappingID" />
+    </Key>
+    <Property Name="MappingID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PositionID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DepartmentID" Type="varchar" MaxLength="50" />
+    <Property Name="Level" Type="varchar" MaxLength="50" />
+    <Property Name="SpecialPositionID" Type="varchar" MaxLength="50" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Card">
+    <Key>
+      <PropertyRef Name="CardID" />
+    </Key>
+    <Property Name="CardID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CardType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CardNo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="256" />
+    <Property Name="EditAble" Type="bit" Nullable="false" />
+    <Property Name="DeleteAble" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameEN" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="NameTH" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'SECOM_ACS.dbo.tbm_DepartmentGroup' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="tbm_DepartmentGroup">
+          <Property Name="DeptGroup" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentID" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+  <EntityType Name="tbm_Employee">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CardID" Type="varchar" MaxLength="50" />
+    <Property Name="EmpNameTH" Type="nvarchar" MaxLength="400" />
+    <Property Name="EmpNameEN" Type="nvarchar" MaxLength="400" />
+    <Property Name="Email" Type="varchar" MaxLength="256" />
+    <Property Name="DepartmentID" Type="varchar" MaxLength="50" />
+    <Property Name="PositionID" Type="varchar" MaxLength="50" />
+    <Property Name="Level" Type="varchar" MaxLength="50" />
+    <Property Name="SpecialPositionID" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsHRLink" Type="bit" Nullable="false" />
+    <Property Name="IsShow" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="StartWorkingDate" Type="date" />
+    <Property Name="ResignDate" Type="date" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Gate">
+    <Key>
+      <PropertyRef Name="GateID" />
+    </Key>
+    <Property Name="GateID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FactoryCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Item">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemTypeID" Type="int" Nullable="false" />
+    <Property Name="ItemName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="ItemDisplayEN" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ItemDisplayTH" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsConfdt" Type="bit" Nullable="false" />
+    <Property Name="IsItemOut" Type="bit" Nullable="false" />
+    <Property Name="IsItemIn" Type="bit" Nullable="false" />
+    <Property Name="IsPhoto" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Misc">
+    <Key>
+      <PropertyRef Name="MiscID" />
+    </Key>
+    <Property Name="MiscID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MiscType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiscName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="MiscDisplayEN" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="MiscDisplayTH" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="MiscRemark" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DeleteAble" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbm_Position">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NameEN" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="NameTH" Type="varchar" MaxLength="256" />
+    <Property Name="PositionLevel" Type="tinyint" />
+    <Property Name="PositionRank" Type="varchar" MaxLength="50" />
+    <Property Name="Detail" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="tbr_AcsEmployee">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="RequestFor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EntryDateFrom" Type="date" Nullable="false" />
+    <Property Name="EntryTimeFrom" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EntryDateTo" Type="date" Nullable="false" />
+    <Property Name="EntryTimeTo" Type="time" Precision="7" Nullable="false" />
+    <Property Name="PurposeCodeID" Type="int" Nullable="false" />
+    <Property Name="OtherPurpose" Type="nvarchar(max)" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsEmployeeDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Seq" Type="smallint" Nullable="false" />
+    <Property Name="EmpID" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="tbr_AcsItemIn">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="TakeInDate" Type="date" Nullable="false" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="Company" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="TakeInName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="PurposeCodeID" Type="int" Nullable="false" />
+    <Property Name="OtherPurpose" Type="nvarchar(max)" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="AckBy" Type="varchar" MaxLength="20" />
+    <Property Name="AckDate" Type="datetime" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+    <Property Name="ForceDoneBy" Type="varchar" MaxLength="20" />
+    <Property Name="ForceDoneDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbr_AcsItemInDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Seq" Type="smallint" Nullable="false" />
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="ConfdtFlag" Type="bit" Nullable="false" />
+    <Property Name="ReqQty" Type="int" Nullable="false" />
+    <Property Name="PlanReturnDate" Type="datetime" />
+    <Property Name="ActInQty" Type="int" />
+    <Property Name="ActReturnQty" Type="int" />
+    <Property Name="ActReturnDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsItemOut">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="TakeOutDate" Type="date" Nullable="false" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="Company" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="TakeOutName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="PurposeCodeID" Type="int" Nullable="false" />
+    <Property Name="OtherPurpose" Type="nvarchar(max)" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+    <Property Name="ForceDoneBy" Type="varchar" MaxLength="20" />
+    <Property Name="ForceDoneDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbr_AcsItemOutDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Seq" Type="smallint" Nullable="false" />
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+    <Property Name="ConfdtFlag" Type="bit" Nullable="false" />
+    <Property Name="ReqQty" Type="int" Nullable="false" />
+    <Property Name="PlanReturnDate" Type="datetime" />
+    <Property Name="ActOutQty" Type="int" />
+    <Property Name="ActReturnQty" Type="int" />
+    <Property Name="ActReturnDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsPhoto">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="TakePhotoDateFrom" Type="date" Nullable="false" />
+    <Property Name="TakePhotoTimeFrom" Type="time" Precision="7" Nullable="false" />
+    <Property Name="TakePhotoDateTo" Type="date" Nullable="false" />
+    <Property Name="TakePhotoTimeTo" Type="time" Precision="7" Nullable="false" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="PhotoByType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhotoEmpID" Type="varchar" MaxLength="50" />
+    <Property Name="TakePhotoName" Type="nvarchar" MaxLength="256" />
+    <Property Name="WitnessEmpID" Type="varchar" MaxLength="50" />
+    <Property Name="TargetItem" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EquipItemID" Type="int" Nullable="false" />
+    <Property Name="OtherEquip" Type="nvarchar" MaxLength="256" />
+    <Property Name="PurposeCodeID" Type="int" Nullable="false" />
+    <Property Name="OtherPurpose" Type="nvarchar(max)" />
+    <Property Name="IsLending" Type="bit" Nullable="false" />
+    <Property Name="AssetCode" Type="varchar" MaxLength="50" />
+    <Property Name="ActReturnDate" Type="datetime" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="AckBy" Type="varchar" MaxLength="20" />
+    <Property Name="AckDate" Type="datetime" />
+    <Property Name="ForceDoneBy" Type="varchar" MaxLength="20" />
+    <Property Name="ForceDoneDate" Type="datetime" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsVIP">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="PositionMiscID" Type="int" Nullable="false" />
+    <Property Name="Company" Type="nvarchar" MaxLength="256" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsVisitor">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="EntryDateFrom" Type="date" Nullable="false" />
+    <Property Name="EntryTimeFrom" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EntryDateTo" Type="date" Nullable="false" />
+    <Property Name="EntryTimeTo" Type="time" Precision="7" Nullable="false" />
+    <Property Name="PurposeCodeID" Type="int" Nullable="false" />
+    <Property Name="OtherPurpose" Type="nvarchar(max)" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbr_AcsVisitorDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Seq" Type="smallint" Nullable="false" />
+    <Property Name="VerifyTypeID" Type="int" />
+    <Property Name="VerifyNo" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Company" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="256" />
+    <Property Name="ItemInOut" Type="nvarchar" MaxLength="256" />
+    <Property Name="Photographing" Type="nvarchar" MaxLength="256" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="tbr_ReqApproverList">
+    <Key>
+      <PropertyRef Name="ApprovalID" />
+    </Key>
+    <Property Name="ApprovalID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ReqType" Type="varchar" MaxLength="1" StoreGeneratedPattern="Computed" />
+    <Property Name="Step" Type="tinyint" Nullable="false" />
+    <Property Name="ApproveUserName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AreaID" Type="int" />
+    <Property Name="ApprovalCode" Type="varchar" MaxLength="50" />
+    <Property Name="ApprovalDate" Type="datetime" />
+    <Property Name="RejectReason" Type="nvarchar" MaxLength="256" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+    <Property Name="ReferenceApprovalID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="tbr_ReqAreaMapping">
+    <Key>
+      <PropertyRef Name="ReqNo" />
+      <PropertyRef Name="AreaID" />
+    </Key>
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ReqType" Type="varchar" MaxLength="1" StoreGeneratedPattern="Computed" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbs_AcsTask">
+    <Key>
+      <PropertyRef Name="TaskID" />
+    </Key>
+    <Property Name="TaskID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TaskName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsLastResultSuccess" Type="bit" Nullable="false" />
+    <Property Name="LastResultMessage" Type="varchar" MaxLength="256" />
+    <Property Name="LastRunDateTime" Type="datetime" />
+    <Property Name="Success" Type="int" Nullable="false" />
+    <Property Name="Fail" Type="int" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbs_PermissionMapping">
+    <Key>
+      <PropertyRef Name="ObjectID" />
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="PermissionName" />
+    </Key>
+    <Property Name="ObjectID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="PermissionName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbs_SystemMisc">
+    <Key>
+      <PropertyRef Name="SysMiscType" />
+      <PropertyRef Name="SysMiscCode" />
+    </Key>
+    <Property Name="SysMiscType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SysMiscCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SysMiscValue1" Type="nvarchar" MaxLength="256" />
+    <Property Name="SysMiscValue2" Type="nvarchar" MaxLength="256" />
+    <Property Name="SysMiscValue3" Type="nvarchar" MaxLength="256" />
+    <Property Name="SysMiscSortNo" Type="int" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbt_TransactionAcs">
+    <Key>
+      <PropertyRef Name="TranID" />
+    </Key>
+    <Property Name="TranID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReqNo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ReqType" Type="varchar" MaxLength="1" StoreGeneratedPattern="Computed" />
+    <Property Name="DetailID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EntryDateFrom" Type="date" Nullable="false" />
+    <Property Name="EntryTimeFrom" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EntryDateTo" Type="date" Nullable="false" />
+    <Property Name="EntryTimeTo" Type="time" Precision="7" Nullable="false" />
+    <Property Name="CardID" Type="varchar" MaxLength="50" />
+    <Property Name="CardReceiveTime" Type="datetime" />
+    <Property Name="CardReturnTime" Type="datetime" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="SendAcsDate" Type="datetime" />
+    <Property Name="CancelAcsDate" Type="datetime" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Function Name="acs_A010_GetDHS01RequestInProgress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS02ReqWaitToApprove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS03ReqWaitToAcknowledge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS04SecurityRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS05ItemOutRequestToConfirmQTY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS06ItemInRequestToConfirmQTY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS07ReqWaitToInputLending" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetDHS08WitnessRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A010_GetPrivilegeViewDHS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUserName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A020_DeleteAcsEmployeeDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A020_GetAcsEmployeeDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A020_InsertAcsEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="RequestFor" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="EntryTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="datetime" Mode="In" />
+    <Parameter Name="EntryTimeTo" Type="time" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A020_InsertAcsEmployeeDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+    <Parameter Name="Seq" Type="int" Mode="In" />
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="DeptName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A020_UpdateAcsEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDateFrom" Type="date" Mode="In" />
+    <Parameter Name="EntryTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="date" Mode="In" />
+    <Parameter Name="EntryTimeTo" Type="time" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_DeleteAcsVisitorDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_GetAcsVisitorDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_GetAcsVisitorTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_InsertAcsVisitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDateFrom" Type="datetime" Mode="In" />
+    <Parameter Name="EntryTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="datetime" Mode="In" />
+    <Parameter Name="EntryTimeTo" Type="time" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_InsertAcsVisitorDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+    <Parameter Name="Seq" Type="int" Mode="In" />
+    <Parameter Name="VerifyTypeID" Type="int" Mode="In" />
+    <Parameter Name="VerifyNo" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Company" Type="varchar" Mode="In" />
+    <Parameter Name="DeptName" Type="varchar" Mode="In" />
+    <Parameter Name="ItemInOut" Type="varchar" Mode="In" />
+    <Parameter Name="Photographing" Type="varchar" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A030_UpdateAcsVisitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDateFrom" Type="date" Mode="In" />
+    <Parameter Name="EntryTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="date" Mode="In" />
+    <Parameter Name="EntryTimeTo" Type="time" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_DeleteAcsItemOutDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_GetAcsItemOutDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_InsertAcsItemOut" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="TakeOutDate" Type="date" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar" Mode="In" />
+    <Parameter Name="TakeOutName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_InsertAcsItemOutDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Seq" Type="smallint" Mode="In" />
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="ConfdtFlag" Type="bit" Mode="In" />
+    <Parameter Name="ReqQty" Type="int" Mode="In" />
+    <Parameter Name="PlanReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="ActOutQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_UpdateAcsItemOut" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="TakeOutDate" Type="date" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar" Mode="In" />
+    <Parameter Name="TakeOutName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A040_UpdateAcsItemOutDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DetailID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="Seq" Type="smallint" Mode="In" />
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="ConfdtFlag" Type="bit" Mode="In" />
+    <Parameter Name="ReqQty" Type="int" Mode="In" />
+    <Parameter Name="PlanReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="ActOutQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_DeleteAcsItemInDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_GetAcsItemInDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_InsertAcsItemIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="TakeInDate" Type="date" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar" Mode="In" />
+    <Parameter Name="TakeInName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="AckBy" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_InsertAcsItemInDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Seq" Type="smallint" Mode="In" />
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="ConfdtFlag" Type="bit" Mode="In" />
+    <Parameter Name="ReqQty" Type="int" Mode="In" />
+    <Parameter Name="PlanReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="ActInQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_UpdateAcsItemIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="TakeInDate" Type="date" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="DeptName" Type="nvarchar" Mode="In" />
+    <Parameter Name="TakeInName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_UpdateAcsItemInDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DetailID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="Seq" Type="smallint" Mode="In" />
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="ConfdtFlag" Type="bit" Mode="In" />
+    <Parameter Name="ReqQty" Type="int" Mode="In" />
+    <Parameter Name="PlanReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="ActInQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnQty" Type="int" Mode="In" />
+    <Parameter Name="ActReturnDate" Type="datetime" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A050_UpdateAcsItemInForAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A060_InsertAcsPhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="TakePhotoDateFrom" Type="date" Mode="In" />
+    <Parameter Name="TakePhotoTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="TakePhotoDateTo" Type="date" Mode="In" />
+    <Parameter Name="TakePhotoTimeTo" Type="time" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="PhotoByType" Type="varchar" Mode="In" />
+    <Parameter Name="PhotoEmpID" Type="varchar" Mode="In" />
+    <Parameter Name="TakePhotoName" Type="varchar" Mode="In" />
+    <Parameter Name="WitnessEmpID" Type="varchar" Mode="In" />
+    <Parameter Name="TargetItem" Type="varchar" Mode="In" />
+    <Parameter Name="EquipItemID" Type="int" Mode="In" />
+    <Parameter Name="OtherEquip" Type="varchar" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="IsLending" Type="bit" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+    <Parameter Name="AckBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A060_UpdateAcsPhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="TakePhotoDateFrom" Type="date" Mode="In" />
+    <Parameter Name="TakePhotoTimeFrom" Type="time" Mode="In" />
+    <Parameter Name="TakePhotoDateTo" Type="date" Mode="In" />
+    <Parameter Name="TakePhotoTimeTo" Type="time" Mode="In" />
+    <Parameter Name="IsLending" Type="bit" Mode="In" />
+    <Parameter Name="AssetCode" Type="varchar" Mode="In" />
+    <Parameter Name="ActReturnDate" Type="date" Mode="In" />
+    <Parameter Name="PurposeCodeID" Type="int" Mode="In" />
+    <Parameter Name="OtherPurpose" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="ForceDoneBy" Type="varchar" Mode="In" />
+    <Parameter Name="ForceDoneDate" Type="date" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A060_UpdateAcsPhotoStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A070_SearchRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="Areas" Type="varchar" Mode="In" />
+    <Parameter Name="EntryDateFrom" Type="date" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="date" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="AssetCode" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_CheckOverlapCardNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_CheckOverlapPeriodCardNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDateFrom" Type="date" Mode="In" />
+    <Parameter Name="EntryDateTo" Type="date" Mode="In" />
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_GetCardNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_RetrieveBusinessTripCardRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="BusinessName" Type="nvarchar" Mode="In" />
+    <Parameter Name="RequesterName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_RetrieveVisitorCardRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="VisitorName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_UpdateBusinessTripCardRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A080_UpdateVisitorCardRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="DetailID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+    <Parameter Name="VerifyType" Type="int" Mode="In" />
+    <Parameter Name="VerifyNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A081_RetrieveBusinessTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="BusinessName" Type="nvarchar" Mode="In" />
+    <Parameter Name="RequesterName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Factory" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A081_RetrieveVisitor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="VisitorName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="Factory" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A081_UpdateReceiveVisitorCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A081_UpdateReturnVisitorCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A090_InsertAcsVIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+    <Parameter Name="PositionMiscID" Type="int" Mode="In" />
+    <Parameter Name="Company" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A090_InsertVIPTransactionAcs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A090_RetrieveVIPCardList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EntryDate" Type="date" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+    <Parameter Name="CardStatus" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A090_UpdateAcsVIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_A090_UpdateVIPTransactionAcs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_CreateEmployeeRoleMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeID" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_DeleteReqApproverList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_DeleteReqAreaMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_FindArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_FindDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DepartmentID" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_FindEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeID" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeName" Type="varchar" Mode="In" />
+    <Parameter Name="Position" Type="varchar" Mode="In" />
+    <Parameter Name="Department" Type="varchar" Mode="In" />
+    <Parameter Name="FilterType" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_FindPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PositionID" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="AreaMapping" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetAreaApprover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetAreaDataView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetAreaOrganizeMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PositionID" Type="varchar" Mode="In" />
+    <Parameter Name="DepartmentID" Type="varchar" Mode="In" />
+    <Parameter Name="SpecialPositionID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetAreaUserMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetDefaultArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetDefaultEntryTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetDocumentType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginUser" Type="varchar" Mode="In" />
+    <Parameter Name="RequestFor" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetEmployeeByUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetFactory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetGAApprover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetGate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FactoryCode" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetImportACS_Add" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="varchar" Mode="In" />
+    <Parameter Name="SendDate" Type="date" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetImportACS_Batch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SendDate" Type="date" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetImportACS_Cancel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TranID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetImportACS_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ObjectID" Type="varchar" Mode="In" />
+    <Parameter Name="ItemTypeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetLatestReqApproverList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetMisc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetPurposeCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_GetRequestType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_COM_GetSuperiorApprover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_InsertReqApproverList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="Step" Type="int" Mode="In" />
+    <Parameter Name="ApproveUserName" Type="varchar" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="ReferenceApprovalID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_COM_InsertReqAreaMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReqNo" Type="varchar" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M010_CheckMiscInUse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M010_DeleteMisc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M010_GetByCriteria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscType" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M010_GetMiscType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_M011_CheckDuplicateMisc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscType" Type="varchar" Mode="In" />
+    <Parameter Name="MiscName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M011_InsertMisc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscType" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscName" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscDisplayEN" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscDisplayTH" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscRemark" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="DeleteAble" Type="bit" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M011_UpdateMisc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MiscID" Type="int" Mode="In" />
+    <Parameter Name="MiscType" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscName" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscDisplayEN" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscDisplayTH" Type="nvarchar" Mode="In" />
+    <Parameter Name="MiscRemark" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="DeleteAble" Type="bit" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M020_CheckItemInUse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M020_DeleteItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M020_SearchItemsByCriteria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemName" Type="varchar" Mode="In" />
+    <Parameter Name="ItemType" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="IsItemIn" Type="bit" Mode="In" />
+    <Parameter Name="IsItemOut" Type="bit" Mode="In" />
+    <Parameter Name="IsPhoto" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="acs_M021_CheckDuplicateItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemTypeID" Type="int" Mode="In" />
+    <Parameter Name="ItemName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M021_InsertItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemsTypeID" Type="int" Mode="In" />
+    <Parameter Name="ItemsName" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemsDisplayEN" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemsDisplayTH" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsConfdt" Type="bit" Mode="In" />
+    <Parameter Name="IsItemIn" Type="bit" Mode="In" />
+    <Parameter Name="IsItemOut" Type="bit" Mode="In" />
+    <Parameter Name="IsPhoto" Type="bit" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreateBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M021_UpdateItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="ItemsTypeID" Type="int" Mode="In" />
+    <Parameter Name="ItemsName" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemsDisplayEN" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemsDisplayTH" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsConfdt" Type="bit" Mode="In" />
+    <Parameter Name="IsItemIn" Type="bit" Mode="In" />
+    <Parameter Name="IsItemOut" Type="bit" Mode="In" />
+    <Parameter Name="IsPhoto" Type="bit" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreateBy" Type="nvarchar" Mode="In" />
+    <Parameter Name="UpdateBy" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M030_CheckAreaInUse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M030_DeleteArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M030_SearchArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FactoryCode" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_CheckDuplicateArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaName" Type="varchar" Mode="In" />
+    <Parameter Name="FactoryCode" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_DeleteAreaApprover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_DeleteAreaGateMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_GetPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_M031_InsertArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FactoryCode" Type="varchar" Mode="In" />
+    <Parameter Name="AreaName" Type="varchar" Mode="In" />
+    <Parameter Name="AreaDisplayEN" Type="varchar" Mode="In" />
+    <Parameter Name="AreaDisplayTH" Type="varchar" Mode="In" />
+    <Parameter Name="ConfdtLevel" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_InsertAreaApprover" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="Seq" Type="tinyint" Mode="In" />
+    <Parameter Name="Department" Type="varchar" Mode="In" />
+    <Parameter Name="PositionID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_InsertAreaGateMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="GateID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M031_UpdateArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="FactoryCode" Type="varchar" Mode="In" />
+    <Parameter Name="AreaName" Type="varchar" Mode="In" />
+    <Parameter Name="AreaDisplayEN" Type="varchar" Mode="In" />
+    <Parameter Name="AreaDisplayTH" Type="varchar" Mode="In" />
+    <Parameter Name="ConfdtLevel" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M050_SearchEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+    <Parameter Name="EmpName" Type="nvarchar" Mode="In" />
+    <Parameter Name="DepartmentID" Type="varchar" Mode="In" />
+    <Parameter Name="PositionID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_DeleteAreaMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_DeleteRoleUserMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_GetAreaByEmployeeID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_GetEmployeeInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_GetRoleUserByEmployeeID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_InsertAreaMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+    <Parameter Name="AreaId" Type="int" Mode="In" />
+    <Parameter Name="IsMainArea" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_InsertRoleUserMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_M051_UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="varchar" Mode="In" />
+    <Parameter Name="IsLending" Type="bit" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M060_CheckCardInUse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M060_DeleteCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M060_GetCardTypeSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_M060_InsertOrUpdateCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M060_SearchCardsByCriteria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M061_CheckDuplicateCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M061_DeleteAreaCardMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M061_GetCardTypeAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="acs_M061_InsertAreaCardMapping" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="AreaID" Type="int" Mode="In" />
+    <Parameter Name="IsMainArea" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="acs_M061_InsertCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_M061_UpdateCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardID" Type="varchar" Mode="In" />
+    <Parameter Name="CardType" Type="varchar" Mode="In" />
+    <Parameter Name="CardNo" Type="varchar" Mode="In" />
+    <Parameter Name="Note" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="acs_P020_UpdateDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestType" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_S030_DeletePermissionMappingByRoleId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_S030_GetPermissionDashboard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="acs_S030_UpdatePermissionDashboard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleID" Type="int" Mode="In" />
+    <Parameter Name="ViewDSH01" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH02" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH03" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH04" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH05" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH06" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH07" Type="bit" Mode="In" />
+    <Parameter Name="ViewDSH08" Type="bit" Mode="In" />
+    <Parameter Name="UpdateBy" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="SECOMACSModelsStoreContainer">
+    <EntitySet Name="tbm_Area" EntityType="Self.tbm_Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_AreaApprover" EntityType="Self.tbm_AreaApprover" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_AreaCardMapping" EntityType="Self.tbm_AreaCardMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_AreaGateMapping" EntityType="Self.tbm_AreaGateMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_AreaOrganizeMapping" EntityType="Self.tbm_AreaOrganizeMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Card" EntityType="Self.tbm_Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Department" EntityType="Self.tbm_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Employee" EntityType="Self.tbm_Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Gate" EntityType="Self.tbm_Gate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Item" EntityType="Self.tbm_Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Misc" EntityType="Self.tbm_Misc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbm_Position" EntityType="Self.tbm_Position" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsEmployee" EntityType="Self.tbr_AcsEmployee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsEmployeeDetail" EntityType="Self.tbr_AcsEmployeeDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsItemIn" EntityType="Self.tbr_AcsItemIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsItemInDetail" EntityType="Self.tbr_AcsItemInDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsItemOut" EntityType="Self.tbr_AcsItemOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsItemOutDetail" EntityType="Self.tbr_AcsItemOutDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsPhoto" EntityType="Self.tbr_AcsPhoto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsVIP" EntityType="Self.tbr_AcsVIP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsVisitor" EntityType="Self.tbr_AcsVisitor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_AcsVisitorDetail" EntityType="Self.tbr_AcsVisitorDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_ReqApproverList" EntityType="Self.tbr_ReqApproverList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbr_ReqAreaMapping" EntityType="Self.tbr_ReqAreaMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbs_AcsTask" EntityType="Self.tbs_AcsTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbs_PermissionMapping" EntityType="Self.tbs_PermissionMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbs_SystemMisc" EntityType="Self.tbs_SystemMisc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbt_TransactionAcs" EntityType="Self.tbt_TransactionAcs" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

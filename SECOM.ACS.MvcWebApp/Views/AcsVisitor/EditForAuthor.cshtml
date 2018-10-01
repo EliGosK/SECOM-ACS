@@ -1,0 +1,779 @@
+﻿@model AcsVisitorViewModel
+@using Vereyon.Web
+@{
+    var startTime = ApplicationContext.Setting.KendoUI.TimePickerMinTime;
+    var endTime = ApplicationContext.Setting.KendoUI.TimePickerMaxTime;
+    var photoTypes = AcsModelHelper.GetPhotoByTypes();
+    var internval = ApplicationContext.Setting.KendoUI.TimePickerInterval;
+    var findEmployeeMinLength = ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName;
+    var currentUser = User.Identity.Name;
+    var mapImageFolder = ApplicationContext.Setting.MapImageFolder;
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+    var minEntryDateFrom = DateTime.Now;
+    var maxEntryDateFrom = AcsModelHelper.GetLastDateOfMonth(1);
+    var minEntryDateTo = minEntryDateFrom;
+    var maxEntryDateTo = AcsModelHelper.GetLastDateOfMonth(1);
+}
+
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("EditForAuthor", "AcsVisitor", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ReqNo)
+        <div class="well well-warning">
+            @MessageResource.MSG0035
+        </div>
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ReqNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.ReqNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-3 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployee.Department, new { @class = "col-md-1 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.EntryDateFrom, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DatePickerFor(m => m.EntryDateFrom)
+                        .Min(minEntryDateFrom)
+                        .Max(maxEntryDateFrom)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m => m.EntryTimeFrom, startTime, endTime, internval)                        
+                        .HtmlAttributes(new { style = "width:100px" })
+                    )
+                    <span>-</span>
+                    @(Html.Kendo().DatePickerFor(m => m.EntryDateTo)
+                        .Min(minEntryDateTo)
+                        .Max(maxEntryDateTo)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m => m.EntryTimeTo, startTime, endTime, internval)
+                        .HtmlAttributes(new { style = "width:100px" }))
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Areas, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 control-text">
+                    <ul class="list-unstyled list-inline">
+                        @{
+                            foreach (var areaApprover in Model.AreaApprovals.Where(t => t.AreaID.HasValue).ToList())
+                            {
+                                <li><label class="label label-primary label-md">@Html.DisplayFactory(areaApprover.Area.FactoryCode): @ModelLocalizeManager.GetValue(areaApprover.Area, "AreaDisplay")</label></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    @Html.CommandButton("viewMapButton", "map", WidgetResource.Button_ViewMap_Text, new { @class = "k-button-info" }).Events(ev => ev.Click("viewMapClicked"))
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2">
+                    @(Html.Kendo().DropDownListFor(m => m.PurposeCodeID)
+                        .DataSource(ds => ds.Read(r => r
+                              .Url("/api/miscs/list/"+ PurposeRequestTypes.Visitor)
+                              .Type(HttpVerbs.Get)
+                            )
+                        )
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .Filter(FilterType.Contains)
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .HtmlAttributes(new { style = "width:100%", @data_field = Html.DisplayNameFor(m => m.PurposeCodeID) })
+                        .Events(ev => ev.Change("purposeCodeChange").DataBound("purposeCodeDataBound"))
+                    )
+                </div>
+                @Html.LabelRequiredHintFor(m => m.OtherPurpose, new { @class = "col-md-1 control-label other-purpose" })
+                <div class="col-md-6">
+                    @(Html.Kendo().TextBoxFor(m => m.OtherPurpose).HtmlAttributes(new { style = "width:100%", @class = "other-purpose", @data_field = Html.DisplayNameFor(m => m.OtherPurpose) })
+                    )
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            @(Html.Kendo().TabStrip().Name("visitorTabStrip")
+              .Animation(a => a.Open(ef => ef.Fade(FadeDirection.In)))
+        .HtmlAttributes(new { @class = "k-content-visitor k-content" })
+        .Items(ts =>
+        {
+            ts.Add()
+                .Selected(true)
+                .HtmlAttributes(new { @class = "k-tab-visitor-list" })
+                .Text(ViewResource.AcsVisitor_VisitorListSection_Title)
+                .Content(@<text>
+                    <div class="grid-container">
+                        @(Html.Kendo().Grid<AcsVisitorDetailViewModel>()
+                        .Name("visitorGrid")
+                        .Scrollable()
+                        .Pageable(p => p.Refresh(true).PageSizes(true).ButtonCount(5))
+                        .HtmlAttributes(new { @style = "height:400px" })
+                        .ToolBar(t => t.Template(
+                            Html.GridAddButton().ToHtmlString() +
+                            Html.CommandButton("uploadButton", "download", WidgetResource.Button_Import_Text, new { @type = "button", @class = "k-button-info k-grid-import", @data_temp_id = Model.TempDataId }).ToHtmlString() +
+                            Html.KendoConfirmButton("clearButton", "times-circle", WidgetResource.Button_Clear_Text, new { @type = "button", @class = "k-button-warning k-grid-clear", @data_content = MessageHelper.ConfirmClearVisitorList(), @data_temp_id = Model.TempDataId }).ToHtmlString())
+                        )
+                         .Editable(e => e.Mode(GridEditMode.PopUp)
+                        .TemplateName("VisitorEditor")
+                        .Window(w => w.Width(800)
+                                .Scrollable(false)
+                                .Events(ev => ev.Activate("popupEditActivate"))
+                        )
+                        .CreateAt(GridInsertRowPosition.Bottom)
+                    )
+                        .Columns(c =>
+                        {
+                            c.Template(f => { }).ClientTemplate("#=_rowNo#")
+                            .Title(WidgetResource.Grid_Column_No)
+                            .HtmlAttributes(new { @class = "text-right" })
+                            .Width(60);
+                            c.Bound(f => f.VerifyTypeID)
+                                .ClientTemplate("#=VerifyType#");
+                            c.Bound(f => f.VerifyNo);
+                            c.Bound(f => f.VisitorName);
+                            c.Bound(f => f.Company);
+                            c.Bound(f => f.DepartmentName);
+                            c.Bound(f => f.ItemInOut);
+                            c.Bound(f => f.Photographing);
+                            c.Bound(f => f.Description);
+                            c.Template(t => { }).ClientTemplate(Html.GridEditDeleteButtons().ToHtmlString()).Width(90);
+                        })
+                        .DataSource(ds => ds
+                            .Custom().Transport(t =>
+                            {
+                                t.Read(r =>
+                                 r.Action("ListTempVisitor", "AcsVisitor", new { tempDataId = Model.TempDataId })
+                                 .Type(HttpVerbs.Post)
+                             );
+                                t.Create(r =>
+                                    r.Action("CreateTempVisitor", "AcsVisitor", new { tempDataId = Model.TempDataId })
+                                    .Type(HttpVerbs.Post)
+                                );
+                                t.Update(r =>
+                                    r.Action("UpdateTempVisitor", "AcsVisitor", new { tempDataId = Model.TempDataId })
+                                    .Type(HttpVerbs.Post)
+                                );
+                                t.Destroy(r =>
+                                    r.Action("DeleteTempVisitor", "AcsVisitor", new { tempDataId = Model.TempDataId })
+                                    .Type(HttpVerbs.Post)
+                                );
+                            })
+                            .Schema(s =>
+                            {
+                                s.Model(m =>
+                                {
+                                    m.Id(f => f.DetailID);
+                                });
+                                s.Data("Data").Total("Total").Errors("Errors");
+                            })
+                            .Events(ev =>
+                            {
+                                ev.RequestStart("dataSourceRequestStart");
+                                ev.RequestEnd("visitorDataSourceRequestEnd");
+                                ev.Error("dataSourceError");
+                            })
+                            .PageSize(20)
+                            .ServerFiltering(true)
+                            .ServerPaging(true)
+                            .ServerSorting(true)
+                        )
+                        .AutoBind(true)
+                        .Events(ev =>
+                        {
+                            ev.DataBinding("gridDataBinding");
+                            ev.Edit("gridEdit");
+                            ev.Save("gridSave");
+                            ev.Cancel("gridCancel");
+                        })
+                        )
+                    </div>
+                </text>);
+
+            ts.Add()
+                .Text(ViewResource.AcsVisitor_TransactionListSection_Title)
+                .HtmlAttributes(new { @class = "k-tab-transaction" })
+                .Content(@<text>
+                    <div class="grid-container">
+                        @(Html.Kendo().Grid<AcsVisitorTransactionDataViewModel>()
+                        .Name("transactionGrid")
+                        .HtmlAttributes(new { @style = "height:300px" })
+                .Pageable(p => p
+                    .PageSizes(true)
+                    .Refresh(true)
+                    .ButtonCount(5)
+                )
+                .Columns(c =>
+                {
+                    c.Template(t => { })
+                            .Width(60)
+                            .Title(WidgetResource.Grid_Column_No)
+                            .HtmlAttributes(new { @class = "text-right" })
+                            .ClientTemplate("#=_rowNo#");
+                    c.Bound(f => f.EntryDateFrom)
+                        .Format(gridDateFormat)
+                        .Width(120);
+                    c.Bound(f => f.EntryTimeFrom)
+                        .Width(100)
+                        .Format("{0:HH:mm}");
+                    c.Bound(f => f.EntryTimeTo)
+                        .Width(100)
+                        .Format("{0:HH:mm}");
+                    c.Bound(f => f.Name)
+                      .Width(160);
+                    c.Bound(f => f.Company)
+                        .Width(200);
+                    c.Bound(f => f.DepartmentName)
+                        .Width(200);
+                    c.Bound(f => f.CardNo)
+                       .Width(160);
+                    c.Bound(f => f.VerifyTypeName)
+                        .Width(160);
+                    c.Bound(f => f.VerifyNo)
+                        .Width(160);
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r => r.Action("ListTransaction", "AcsVisitor", new { requestNo = Model.ReqNo })
+                            .Type(HttpVerbs.Post)
+                            .DataType("json"));
+                    }
+                )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.TranID);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("transactionDataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+                )
+                .Events(ev => { ev.DataBinding("gridDataBinding"); })
+                        )
+                    </div>
+
+                </text>);
+        })
+
+            )
+        </div>
+        @Html.Hidden("AcsVisitorDetails", "[]", new { data_field = Html.DisplayNameFor(m => m.AcsVisitorDetails) })
+        <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+        <div class="well well-sm form-horizontal">
+            @{
+                Model.ViewMode = RequestViewMode.View;
+                Html.RenderPartial("_DisplayApproverList", Model);
+            }
+        </div>
+        <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+        <div class="well well-sm">
+            @(Html.Kendo().EditorFor(m => m.Note)
+                .Tools(t => t.Clear()
+                        .Bold().Italic().Underline().Strikethrough()
+                        .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                        .InsertUnorderedList().InsertOrderedList()
+                        .Outdent().Indent()
+                        .Formatting()
+                        .CleanFormatting()
+                )
+                .Value(Html.DisplayHtmlFor(m => m.Note).ToString())
+                .HtmlAttributes(new { @class = "k-textbox", style = "width:100%", @maxlength = 4000 })
+            )
+        </div>
+        <div class="text-center">
+            <div class="button-container">
+                @(Html.KendoConfirmButton("saveButton", "save", WidgetResource.Button_Save_Text, new { @class = "k-primary", data_content = MessageHelper.ConfirmSave() }))
+                <a class="k-button k-button-warning" href="@Url.Action("Detail",new { id = Model.ReqNo })"><i class="fa fa-times-circle"></i> @WidgetResource.Button_Cancel_Text</a>
+                @if (Model.AllowCancelRequest(User))
+                {
+                    @Html.KendoConfirmButton("cancelRequestButton", "times-circle", WidgetResource.Button_CancelRequest_Text, new { @class = "k-button-danger k-cancel-request", data_content = MessageHelper.ConfirmCancelRequest() })
+                }
+            </div>
+        </div>
+    }
+</div>
+<div id="mapWindow">
+    @Html.UniteGallery("gallery", mapImageFolder)
+</div>
+@(Html.Kendo().Window()
+        .Modal(true)
+        .Draggable(true)
+        .Name("importDialog")
+        .Title(ViewResource.AcsVisitor_PopUpSection_Import_Title)
+        .Visible(false)
+        .HtmlAttributes(new { @class = "k-content" })
+        .Width(800)
+        .Content(
+            "<div class='upload-container'>" +
+            Html.Kendo().Upload()
+                    .Name("files")
+                    .Async(a => a
+                    .Save("Upload", "AcsVisitor")
+                    .AutoUpload(true)
+                    )
+                    .Validation(v => v
+                        .AllowedExtensions(ApplicationContext.Setting.AcsVisitor.AllowedFileExtensions)
+                        .MaxFileSize(ApplicationContext.Setting.AcsVisitor.AllowUploadFileMaxFileSize)
+                    )
+                    .Events(ev => ev.Success("filesSuccess"))
+                    .Multiple(false).ToHtmlString() +
+            Html.DisplayUploadHint(ApplicationContext.Setting.AcsVisitor.AllowedFileExtensions, ApplicationContext.Setting.AcsVisitor.AllowUploadFileMaxFileSize) +
+            "<div class='import-container'></div>" +
+            "<div class='import-action-container button-container' style='display:none'><div style='text-align:center'>" +
+            Html.CommandButton("importButton", "save", WidgetResource.Button_Save_Text, new { @type = "button", @class = "k-button-primary" }).Events(ev => ev.Click("importButtonClicked")) +
+            "&nbsp;" +
+            Html.CommandButton("closeButton", "times-circle", WidgetResource.Button_Close_Text, new { @type = "button", @class = "k-button-warning" }).Events(ev => ev.Click("closeButtonClicked")) +
+            "</div></div></div>"
+    )
+    .Events(ev => ev.Open("dialogOpen"))
+)
+@Html.Hidden("importData", "[]")
+<script id="resultTemplate" type="text/x-kendo-template">
+    <div class="import-list">
+        <div class="row">
+            # if (data.IsSucceed){ #
+            <div class="alert alert-success">@ViewResource.AcsVisitor_PopUpSection_ImportSuccess</div>
+            # } else { #
+            # for (var i=0;i< data.Results.length;i++) {  #
+            # var result = data.Results[i]; #
+            # if (!result.Error) { continue; } #
+            <div class="col-md-10">
+                <div class="alert alert-danger">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel, int>(t => t.VerifyTypeID)):</strong> #=result.Data.VerifyTypeID# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.VerifyNo)):</strong> #=result.Data.VerifyNo#</div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.VisitorName)):</strong> #=result.Data.VisitorName# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Company)):</strong> #=result.Data.Company# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.DepartmentName)):</strong> #=result.Data.DepartmentName# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.ItemInOut)):</strong> #=result.Data.ItemInOut# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Photographing)):</strong> #=result.Data.Photographing# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Description)):</strong> #=result.Data.Description# </div>
+                        <div><strong>Error:</strong> #=result.Error# </div>
+                    </div>
+                </div>
+            </div>
+            #  } } #
+        </div>
+    </div>
+</script>
+<script id="employeeTemplate" type="text/x-kendo-template">
+    # if (data.Data.length>0) { #
+    <h3><i class="fa fa-id-user"></i> #= kendo.format("@ViewResource.ImportData_Success_Title",data.Data.length) #</h3>
+    <div class="import-list">
+        <div class="row">
+            # for (var i=0;i< data.Data.length;i++){ #
+            <div class="col-md-10">
+                <div class="well well-sm">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        # if (data.Data[i].VerifyTypeID !== 0){#
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel, int>(t => t.VerifyTypeID)):</strong> #=data.Data[i].VerifyType# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.VerifyNo)):</strong> #=data.Data[i].VerifyNo#</div>
+                        # } #
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.VisitorName)):</strong> #=data.Data[i].VisitorName# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Company)):</strong> #=data.Data[i].Company# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.DepartmentName)):</strong> #=data.Data[i].Department# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.ItemInOut)):</strong> #=data.Data[i].ItemInOut# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Photographing)):</strong> #=data.Data[i].Photographing# </div>
+                        <div><strong>@(Html.DisplayName<AcsVisitorDetailViewModel>(t => t.Description)):</strong> #=data.Data[i].Description# </div>
+                    </div>
+                </div>
+            </div>
+            # } #
+        </div>
+    </div>
+    # } #
+    # if (data.Errors.length>0) { #
+    <h3><i class="fa fa-id-user"></i> #= kendo.format("@ViewResource.ImportData_Error_Title",data.Errors.length) #</h3>
+    <div class="import-list">
+        <ul class="list-unstyled">
+            # for (var i = 0;i< data.Errors.length; i++) { #
+            <li>
+                <label class="badge">#=i+1#</label> <i class="fa fa-file-text-o"></i> #=data.Errors[i].Data.join('|')#
+                <div class="alert alert-danger">
+                    #=data.Errors[i].Error #
+                </div>
+            </li>
+            # } #
+        </ul>
+    </div>
+    # } #
+</script>
+@section styles{
+@Styles.Render("~/assets/libs/unite-gallery/css/unite-gallery.css")
+@Styles.Render("~/assets/libs/unite-gallery/themes/default/ug-theme-default.css")
+@Styles.Render("~/assets/libs/unite-gallery/skins/alexis/alexis.css")
+    <style type="text/css">
+        .import-list {
+            height: 300px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .col-md-clear {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+}
+@section scripts{
+@Scripts.Render("~/assets/libs/unite-gallery/js/unitegallery.js")
+@Scripts.Render("~/assets/libs/unite-gallery/themes/default/ug-theme-default.js")
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var validator,grid;
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register('grid', ['.k-button']);
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('cancelRequest', ['.k-button']);
+            uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text" }, ".k-button"]);
+
+            dialog = $("#importDialog").data("kendoWindow");
+            grid = $("#visitorGrid").data("kendoGrid");
+            validator = $("form").kendoValidator({
+                rules: {
+                    otherPurpose: function (input) {
+                        if (input.is("[name=@Html.NameFor(m => m.OtherPurpose)]") && input.val() == "") {
+                            var d = $("#@Html.IdFor(m=>m.PurposeCodeID)").data("kendoDropDownList");
+                            var dataItem = d.dataItem();
+                            if (dataItem && dataItem.Key !== undefined) {
+                                return !(dataItem.Key.toUpperCase() == "OTHER");
+                            }
+                        }
+                        return true;
+                    },
+                    requireVisitorDetail: function (input) {
+                        if (input.is("[name=@Html.NameFor(m=>m.AcsVisitorDetails)]"))
+                        {
+                            return grid.dataSource.data().toJSON().length > 0;
+                        }
+                        return true;
+                    },
+                    requireEmployeeDetail: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    }
+                },
+                messages: {
+                    otherPurpose: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                    requireVisitorDetail: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    }
+                },
+                validate: function () {
+                    app.ui.showValidateSummary(this.errors());
+                }
+            }).data("kendoValidator");
+
+            $("#saveButton")
+                .on("validating", function (sender, args) {
+                    args.isValid = validator.validate();
+                })
+                .on("openDialog", function (sender, args) {
+                args.buttons.yes.action = function () {
+                    // get employee detail data.
+                    var visitors = [];
+                    $.each(grid.dataSource.data().toJSON(), function (index, item) {
+                        item.DetailID = undefined; // Remove Detail ID
+                        visitors.push(item);
+                    });
+                    $("#@Html.IdFor(m=>m.AcsVisitorDetails)").val(kendo.stringify(visitors));
+                    uiState.busy("save", true);
+                    $("form").submit();
+                };
+            });
+
+            $(".k-grid-import").on("click", function (e) {
+               $("#importButton")
+                   .attr("data-temp-id", $(this).data("temp-id"));
+               dialog.open().center();
+           });
+
+             $(".k-grid-clear").on("openDialog", function (sender, e) {
+                var tempDataId = $(this).data("temp-id");
+                e.buttons.yes.action = function () {
+                    uiState.busy('ajax', true);
+                    $.ajax({
+                        url: "@Url.Action("ClearTempVisitor", "AcsVisitor")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken({ "tempDataId": tempDataId }),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            // Refresh
+                            grid.dataSource.read();
+                        },
+                        error: function (xhr, statu, error) {
+                            app.ui.handleAjaxError(xhr, statu, error);
+                        },
+                        complete: function () {
+                            uiState.busy('ajax', false);
+                        }
+
+                    })
+                }
+            });
+
+             $("#gallery").unitegallery({
+                 gallery_skin: "alexis",
+                 gallery_width: 800,
+                 gallery_height: 600,
+                 gallery_autoplay: true,
+                 theme_enable_fullscreen_button: false,
+                 theme_enable_play_button: false,
+                 theme_enable_hidepanel_button: false,
+                 theme_enable_text_panel: true,
+             });
+
+             $("#mapWindow").kendoWindow({
+                 visible: false,
+                 modal: true,
+                 title: "@ViewResource.Map_Title",
+                 width: 820,
+                 height: 620,
+                 resizable: false,
+                 scrollable: false,
+                 pinned: true,
+                 actions: [
+                     "Close"
+                 ]
+             });
+
+            $("#cancelRequestButton").on("openDialog", function (sender, args) {
+                    args.buttons.yes.action = function ()
+                    {
+                        $(".k-validation-summary").hide();
+                        uiState.busy('cancelRequest', true);
+                        var data = {
+                            id: "@Model.ReqNo",
+                            note: $("#@Html.IdFor(m=>m.Note)").val()
+                        }
+                        $.ajax({
+                            url: "@Url.Action("CancelRequestFromEdit","AcsVisitor")",
+                            type: "POST",
+                            data: app.addAntiForgeryToken(data),
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                window.location = "@Url.Action("Edit", "AcsVisitor", new { id = Model.ReqNo })";
+                            },
+                            error: function (xhr,status,error) {
+                                var message = app.ui.handleAjaxError(xhr, status, error);
+                                showMessage(message);
+                            },
+                            complete: function () {
+                                uiState.busy('cancelRequest', false);
+                            }
+                        });
+                     };
+                });
+
+            // load all tab content
+            $("#visitorTabstrip .k-item").each(function (index, item) {
+                if (index == 0) { return; }
+                $("#visitorTabstrip").data("kendoTabStrip").reload(item);
+            });
+
+            app.ui.datePickerRelate($("#@Html.IdFor(m=>m.EntryDateFrom)").data("kendoDatePicker"), $("#@Html.IdFor(m=>m.EntryDateTo)").data("kendoDatePicker"));
+
+            //updatePurposeUIState();
+        });
+
+        function viewMapClicked(e) {
+            e.preventDefault();
+            var w = $("#mapWindow").data("kendoWindow");
+            w.open().center()
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("grid", true);
+        }
+
+        function visitorDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            if (e.type && e.type !== "read") {
+                this.read();
+            }
+            $(".k-tab-visitor-list span.k-link").html(kendo.format("<i class=\"fa fa-users\"></i> @ViewResource.AcsVisitor_VisitorListSection_Title ({0})", e.response.Total));
+        }
+
+        function transactionDataSourceRequestEnd(e) {
+            uiState.busy("grid", false);
+            $(".k-tab-transaction span.k-link").html(kendo.format("<i class=\"fa fa-cogs\"></i> @ViewResource.AcsVisitor_TransactionListSection_Title ({0})", e.response.Total));
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function gridSave(e) {
+
+        }
+
+        function gridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.AcsVisitor_PopUpSection_Add_Title" },
+                edit: { title: "@ViewResource.AcsVisitor_PopUpSection_Edit_Title " }
+            };
+
+            var combo = $("#VerifyTypeID").data("kendoDropDownList");
+            combo.bind("change", function (args) {
+                if(this.value()==0)
+                    $(".k-verifyno-field").hide();
+                else
+                    $(".k-verifyno-field").show();
+            });
+
+            if (e.model.VerifyTypeID == 0)
+                $(".k-verifyno-field").hide();
+            else
+                $(".k-verifyno-field").show();
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function gridCancel(e) {
+            this.cancelChanges();
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='IDCardNo']").focus();
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function purposeCodeChange(e) {
+            updatePurposeUIState();
+        }
+
+        function purposeCodeDataBound(e) {
+            updatePurposeUIState();
+        }
+
+        function updatePurposeUIState() {
+            var purpose = $("#@Html.NameFor(m => m.PurposeCodeID)").data("kendoDropDownList");
+            $(".other-purpose").hide('fast');
+            $("[data-for=@Html.NameFor(m => m.OtherPurpose)]").hide('fast');
+            var dataItem = purpose.dataItem();
+            if (dataItem && dataItem.Key !== undefined) {
+                if (dataItem.Key.toLowerCase() == "other") {
+                    $(".other-purpose").show('fast');
+                }
+            }
+        }
+
+        function importButtonClicked(e) {
+            e.preventDefault();
+            var tempDataId = $(e.event.target).attr("data-temp-id");
+            uiState.busy("import", true);
+            var data = JSON.parse($("#importData").val());
+            $.ajax({
+                url: "@Url.Action("Import","AcsVisitor")",
+                type: "POST",
+                data: app.addAntiForgeryToken({"data": data, "tempDataId": tempDataId }),
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    uiState.busy("import", false);
+                    if (data.IsSucceed) {
+                        // All import employee are success.
+                        dialog.close();
+
+                        grid.dataSource.read();
+                    } else {
+                        clearImportDialog();
+                        displayImportResult(data);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var message = app.ui.handleAjaxError(xhr, status, error);
+                    // display error
+                    $(".k-validation-message").html(message);
+                    uiState.busy("import", false);
+                }
+            })
+        }
+
+        function closeButtonClicked(e) {
+            e.preventDefault();
+            dialog.close();
+
+        }
+
+        function filesSuccess(e) {
+            if (e.operation == "upload") {
+                var r = e.response;
+                $("#importData").val(kendo.stringify(r.Data));
+                $(".import-container").empty().append(kendo.template($("#employeeTemplate").html())(r));
+                if (r.Data.length > 0) {
+                    $(".import-action-container").show();
+                } else {
+                    $(".import-action-container").hide();
+                }
+
+                // move to center
+                dialog.center();
+            }
+        }
+
+        function clearImportDialog() {
+            $(".import-container").empty();
+            $(".import-action-container").hide();
+            $("#importData").val("[]");
+            $("#files").data("kendoUpload").clearAllFiles();
+        }
+
+        function displayImportResult(data) {
+            $(".import-action-container").hide();
+            $(".import-container").empty().append(kendo.template($("#resultTemplate").html())(data));
+
+        }
+
+        function dialogOpen(e) {
+            clearImportDialog();
+        }
+    </script>
+}

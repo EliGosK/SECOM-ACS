@@ -1,0 +1,449 @@
+﻿@using SECOM.ACS.Models
+@{
+
+}
+<div class="select-type">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="control-label col-md-2">@(Html.DisplayName<CardViewModel>("CardNo"))</label>
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox().Name("cardNo")
+                    .HtmlAttributes(new { @maxlength = "50", style = "width:100%" })
+                )
+            </div>
+            <label class="control-label col-md-2 ">@(Html.DisplayName<CardViewModel>("CardType"))</label>
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList().Name("cardType")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/card/type/search")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">@(Html.DisplayName<CardViewModel>("IsActive"))</label>
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect()
+                    .Name("status")
+                    .BindTo(AcsModelHelper.GetCardStatus())
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .Placeholder(WidgetResource.AllOptions)
+                    .AutoClose(false)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="button-container">
+                    @Html.SearchButton(htmlAttributes: new { @class = "k-primary k-search" })
+                    @Html.ClearButton(htmlAttributes: new { @class = "k-button-warning k-clear" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    @Html.AntiForgeryToken()
+    @(Html.Kendo().Grid<CardViewModel>()
+        .Name("grid")
+            .Scrollable()
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { style = "height:500px" })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("CardEditor")
+                .Window(w => w.Width(800)
+                .Events(ev => ev.Activate("popupEditActivate")))
+            )
+            .ToolBar(t =>
+            {
+                if (this.Context.HasPermission("MAS060", PermissionNames.Add))
+                {
+                    t.Template(Html.GridAddButton() + "  " + Html.CommandButton("import", "download", WidgetResource.Button_Import_Text, new { @class = "k-button-info k-grid-import" }));
+                }
+            }
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(100)
+                    .ClientTemplate("#=renderEditButton(data)#")
+                    .Visible(this.Context.HasPermission("MAS060",PermissionNames.Edit));
+                c.Template(t => { })
+                    .Width(100)
+                    .ClientTemplate("#=renderDeleteButton(data)#")
+                    .Visible(this.Context.HasPermission("MAS060", PermissionNames.Delete));             
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=_rowNo#").Title(WidgetResource.Grid_Column_No);
+                c.Bound(f => f.CardNo);
+                c.Bound(f => f.CardType);
+                c.Bound(f => f.Note);
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("List", "Card")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+                    t.Update(r => r.Action("Update", "Card")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("Delete", "Card")
+                         .DataType("json")
+                         .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("Create", "Card")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                }
+            )
+    .Schema(s =>
+    {
+        s.Data("Data");
+        s.Total("Total");
+        s.Errors("Errors");
+        s.Model(m =>
+        {
+            m.Id(f => f.CardID);
+            m.Field(f => f.CardNo);
+            m.Field(f => f.CardType);
+            m.Field(f => f.Note);
+            m.Field(f => f.SelectedArea);
+            m.Field(f => f.IsActive).DefaultValue("1");
+        });
+    })
+    .PageSize(20)
+    .ServerFiltering(true)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .Events(e =>
+    {
+        e.RequestStart("dataSourceRequestStart");
+        e.RequestEnd("dataSourceRequestEnd");
+        e.Error("dataSourceError");
+    })
+    )
+    .Events(ev =>
+    {
+        ev.Edit("gridEdit");
+        ev.DataBinding("gridBinding");
+
+
+    })
+    .AutoBind(false)
+    )
+</div>
+@(Html.Kendo().Window()
+        .Modal(true)
+        .Draggable(true)
+        .Name("importDialog")
+        .Title(ViewResource.Card_PopUpSection_Import_Title)
+        .Visible(false)
+        .HtmlAttributes(new { @class = "k-content" })
+        .Width(800)
+        .Content(
+            "<div class='upload-container'>" +
+            Html.Kendo().Upload()
+                    .Name("files")
+                    .Async(a => a
+                    .Save("Upload", "Card")
+                    .AutoUpload(true)
+                    )
+                    .Validation(v => v
+                    .AllowedExtensions(ApplicationContext.Setting.Card.AllowedFileExtensions)
+                    .MaxFileSize(ApplicationContext.Setting.Card.AllowUploadFileMaxFileSize)
+                    )
+
+                    .Events(ev => ev.Success("filesSuccess"))
+
+                    .Multiple(false) +
+            Html.DisplayUploadHint(ApplicationContext.Setting.Card.AllowedFileExtensions, ApplicationContext.Setting.Card.AllowUploadFileMaxFileSize) +
+            "<div class='import-card-container'></div>" +
+            "<div class='import-card-action button-container' style='display:none'><div style='text-align:center'>" +
+            Html.CommandButton("import-button", "save", WidgetResource.Button_Save_Text, new { @class = "k-button-primary" }).Events(ev => ev.Click("saveButtonClicked")) +
+            "&nbsp;" +
+            Html.CommandButton("close-button", "times-circle", WidgetResource.Button_Close_Text, new { @class = "k-button-warning" }).Events(ev => ev.Click("closeButtonClicked")) +
+            "</div></div>" +
+        "</div>"
+    )
+    .Events(ev => ev.Open("dialogOpen"))
+)
+@Html.Hidden("cardimportdata", "[]")
+<script id="cardTemplate" type="text/x-kendo-template">
+    # if (data.Data.length>0) { #
+    <h3><i class="fa fa-id-card"></i> #= kendo.format("@ViewResource.ImportData_Success_Title",data.Data.length) #</h3>
+    <div class="import-card-list">
+        <div class="row">
+            # for (var i=0;i< data.Data.length;i++){ #
+            <div class="col-md-10">
+                <div class="well well-sm">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardID")):</strong> #=data.Data[i].CardID# </div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardType")):</strong> #=data.Data[i].CardType#</div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardNo")):</strong> #=data.Data[i].CardNo# </div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("AreaID")):</strong> #=data.Data[i].AreaID.join()#</div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("Note")):</strong> #=data.Data[i].Note#</div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("Active")):</strong> #=data.Data[i].Active#</div>
+                    </div>
+                </div>
+            </div>
+            # } #
+        </div>
+    </div>
+    # } #
+    # if (data.Errors.length>0) { #
+    <h3><i class="fa fa-id-card"></i> #= kendo.format("@ViewResource.ImportData_Error_Title",data.Errors.length) #</h3>
+    <div class="import-card-list">
+        <ul class="list-unstyled">
+            # for (var i = 0;i< data.Errors.length; i++) { #
+            <li>
+                <label class="badge">#=i+1#</label> <i class="fa fa-file-text-o"></i> #=data.Errors[i].Data.join('|')#
+                <div class="alert alert-danger">
+                    #=data.Errors[i].Error #
+                </div>
+            </li>
+            # } #
+        </ul>
+    </div>
+    # } #
+</script>
+<script id="resultTemplate" type="text/x-kendo-template">
+    <div class="import-card-list">
+        <div class="row">
+            # if (data.IsSucceed){ #
+            <div class="alert alert-success">@ViewResource.Card_PopUpSection_ImportSuccess</div>
+            # } else { #
+            # for (var i=0;i< data.Results.length;i++) {  #
+            # var result = data.Results[i]; #
+            # if (!result.Error) { continue; } #
+            <div class="col-md-10">
+                <div class="well well-sm">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardID")):</strong> #=data[i].CardID# </div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardType")):</strong> #=data[i].CardType#</div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("CardNo")):</strong> #=data[i].CardNo# </div>
+                        <div><strong>@(Html.DisplayName<CardImportData>("AreaID")):</strong> #=data[i].AreaID.join()#</div>
+
+                    </div>
+                </div>
+            </div>
+            #  } } #
+        </div>
+    </div>
+</script>
+
+@section styles{
+    <style type="text/css">
+        .import-card-list {
+            height: 300px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .col-md-clear {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid, dialog;
+        var update = 0;
+        $(document).ready(function (e) {
+            uiState.register("search", [".k-button"]);
+            uiState.register('ajax', ['.k-button']);
+            uiState.register('import', ['.k-button']);
+            app.ui.applyUploadLocalize("#files");
+            grid = $("#grid").data("kendoGrid");
+            dialog = $("#importDialog").data("kendoWindow");
+            $(".k-search").on("click", function (e) {
+                e.preventDefault();
+                grid.dataSource.page(1);
+            });
+
+            $(".k-clear").on("click", function (e) {
+                e.preventDefault();
+                app.ui.clear(["#grid", "#cardNo", "#cardType", "#status"]);
+                //app.ui.clear(["#requestType", "#itemType", "#itemName", "#status"]); // status not clear
+                $('input[name="status"]').prop('checked', false); // clear rdo button
+                //document.getElementById("rdoActive").checked = true; // check all button after clear but clear grid
+                //grid.dataSource.data([]);
+            });
+
+            $(".k-grid-import").on("click", function (e) {
+                dialog.open().center();
+            });
+        });
+
+        function clearImportDialog() {
+            $(".import-card-container").empty();
+            $(".import-action-container").hide();
+            $("#cardimportdata").val("[]");
+            $("#files").data("kendoUpload").files = [];
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+        function gridEdit(e) {
+            e.container.find("#Upload").hide();
+            var Area = e.container.find("#SelectedArea").data("kendoMultiSelect");
+
+            if (update == 1) {
+                e.container.find("#Upload").show();
+                e.container.find("#edit").hide();
+                update = 0;
+            }
+            var options = {
+                create: { title: "@(ViewResource.Card_PopUpSection_Add_Title)", button: { text: "@WidgetResource.Button_Add_Text" } },
+                edit: { title: "@(ViewResource.Card_PopUpSection_Edit_Title)", button: { text: "@WidgetResource.Button_Update_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            if (!e.model.isNew()) {
+                e.container.find("#CardID").attr("readonly", "readonly");
+
+                //e.container.find("#ItemType").attr("readonly", "readonly");
+
+            }
+            Area.value(e.model.SelectedArea);
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    CardNo: $("#cardNo").val(),
+                    CardType: $("#cardType").data("kendoDropDownList").value(),
+                    Status: $("#status").data("kendoMultiSelect").value()
+                }
+            };
+        }
+
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+        function filesSuccess(e) {
+            if (e.operation == "upload") {
+                var r = e.response;
+                $("#cardimportdata").val(kendo.stringify(r.Data));
+                $(".import-card-container").empty().append(kendo.template($("#cardTemplate").html())(r));
+                if (r.Data.length > 0) {
+                    $(".import-card-action").show();
+                } else {
+                    $(".import-card-action").hide();
+                }
+                dialog.center();
+            }
+        }
+
+        function saveButtonClicked(e) {
+            e.preventDefault();
+            uiState.busy("import", true);
+            var data = JSON.parse($("#cardimportdata").val());
+            $.ajax({
+                url: "@Url.Action("Import","Card")",
+                type: "POST",
+                data: app.addAntiForgeryToken({ "data": data }),
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    uiState.busy("import", false);
+                    if (data.IsSucceed) {
+                        // All import card are success.
+                        var dialog = $("#importDialog").data("kendoWindow");
+                        dialog.close();
+                    } else {
+                        clearImportDialog();
+                        displayImportResult(data);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var message = app.ui.handleAjaxError(xhr, status, error);
+                    // display error
+                    $(".k-validation-message").html(message);
+                    uiState.busy("import", false);
+                }
+            })
+        }
+
+        function closeButtonClicked(e) {
+            e.preventDefault();
+            var dialog = $("#importDialog").data("kendoWindow");
+            dialog.close();
+
+        }
+
+        function displayImportResult(data) {
+            $(".import-card-action").hide();
+            $(".import-card-container").empty().append(kendo.template($("#resultTemplate").html())(data));
+
+        }
+
+        function renderEditButton(data) {
+            var html = "";
+            if (data.EditAble)
+            {
+                html ='@Html.Raw(Html.GridEditButton().ToHtmlString())';
+            }
+
+            return html;
+        }
+
+        function renderDeleteButton(data) {
+            var html = "";
+       
+            if (data.DeleteAble) {
+                html = '@Html.Raw(Html.GridDeleteButton().ToHtmlString())';
+            }
+            return html;
+        }
+
+
+        function dialogOpen(e) {
+            clearImportDialog();
+        }
+    </script>
+
+}

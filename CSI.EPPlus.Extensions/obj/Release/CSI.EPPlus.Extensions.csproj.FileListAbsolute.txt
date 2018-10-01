@@ -1,0 +1,6 @@
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Release\CSI.EPPlus.Extensions.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Release\CSI.EPPlus.Extensions.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Release\EPPlus.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Release\EPPlus.xml
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\obj\Release\CSI.EPPlus.Extensions.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\obj\Release\CSI.EPPlus.Extensions.pdb

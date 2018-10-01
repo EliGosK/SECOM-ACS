@@ -1,0 +1,9 @@
+﻿@model object
+
+@(Html.Kendo().DropDownListFor(model => model)
+    .DataSource(ds => ds.Read(r => r.Url("/api/miscs/list/VRF")))
+    .DataTextField("Name")
+    .DataValueField("Value")
+    .ValuePrimitive(true)
+   .OptionLabel(new { Name = WidgetResource.List_NA_Options, Value = 0 })
+    .HtmlAttributes(new { style = "width:100%" }))

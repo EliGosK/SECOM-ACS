@@ -1,0 +1,7 @@
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Debug\CSI.EPPlus.Extensions.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Debug\CSI.EPPlus.Extensions.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Debug\EPPlus.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\bin\Debug\EPPlus.xml
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\obj\Debug\CSI.EPPlus.Extensions.csprojResolveAssemblyReference.cache
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\obj\Debug\CSI.EPPlus.Extensions.dll
+D:\SECOM-ACS\Repos\Dev\CSI.EPPlus.Extensions\obj\Debug\CSI.EPPlus.Extensions.pdb

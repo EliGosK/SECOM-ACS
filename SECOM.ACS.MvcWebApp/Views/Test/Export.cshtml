@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Export";
+}
+
+<h2>Export Sample</h2>
+@Html.Kendo().Button().Name("exportButton").Content("<i class=\"fa fa-file-text-o\"></i> Export").HtmlAttributes(new { @class = "k-primary k-export" }).Events(ev => ev.Click("exportButtonClicked"))
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('export',
+                [
+                    {
+                        elem: '.k-export',
+                        busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> Exporting"
+                    }
+                    , ".k-button"
+                ]);
+
+        });
+
+         function exportButtonClicked(e) {
+            e.preventDefault();
+            uiState.busy('export', true);
+            var data = {
+                RequestBy: "sittichok",
+                AreaID: 1
+            }
+            $.ajax({
+                url: "@Url.Action("ExportSampleAsync", "Test")",
+                data: data,
+                async: false,
+                type: "POST",
+                success: function (data, status,xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    window.location = kendo.format("@Url.Action("Download","Media")?id={0}&filename={1}", data.id,escape(data.filename));
+                    uiState.busy('export', false);
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+                    uiState.busy('export', false);
+                }
+            });
+        }
+    </script>
+}

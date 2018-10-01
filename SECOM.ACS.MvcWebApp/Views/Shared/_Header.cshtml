@@ -1,0 +1,23 @@
+﻿    <!-- HEADER -->
+@{ 
+    var version = ApplicationContext.Setting.Version ?? "";
+}
+<header id="header">
+    <div class="container-fluid">
+        <div class="pull-right">
+            <a href="#"><img src="~/Images/logo_group.gif" class="logo-group img-responsive" title="Go to AISIN Group Website." /></a>
+        </div>
+        <div class="pull-right margin-right-10">
+            @Html.Partial("_LanguageSwitcher")
+        </div>
+        <div class="logo">
+            <a href="@Url.Action("Index","Home")"><img src="~/Images/img_aia.gif" title="AISIN AI is the future of manual transmissions" /> @Resources.SiteMapLocalizationResource.ApplicationName @version</a>
+        </div>
+    </div>
+</header>
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.MvcSiteMap().Menu("AcsMenuHelperModel")
+}
+
+<!-- END HEADER -->

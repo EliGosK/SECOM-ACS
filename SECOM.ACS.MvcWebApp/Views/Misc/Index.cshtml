@@ -1,0 +1,244 @@
+﻿@{ 
+    var allowEdit = ViewContext.Controller.HasPermission("MAS010", PermissionNames.Edit);
+    var allowDelete = ViewContext.Controller.HasPermission("MAS010", PermissionNames.Delete);
+    var columnWidth = (allowEdit ? 40 : 0) + (allowDelete ? 40 : 0);
+}
+<div class="search-container animated fadeIn">
+    <div class="form-horizontal well well-sm">
+        <div class="row">
+            <label class="col-md-2 control-label">@ViewResource.Misc_SearchSection_MiscType</label>
+            <div class="col-md-2">
+                @(Html.Kendo().DropDownList()
+                    .Name("miscType")
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/systemmiscs/list/misctype")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { style = "width:100%" })
+                )
+            </div>      
+            <label class="col-md-1 control-label">@ViewResource.Misc_SearchSection_MiscStatus</label>
+            <div class="col-md-2">
+                @(Html.Kendo().DropDownList()
+                    .Name("status")
+                    .BindTo(AcsModelHelper.GetMiscStatus())
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>    
+            <div class="col-md-4">
+                @Html.SearchButton(htmlAttributes: new { @class = "k-primary k-search" })
+                @Html.ClearButton(htmlAttributes: new { @class = "k-button-warning k-clear" })
+            </div>
+        </div>
+    </div>
+</div>
+<h2><i class="fa fa-th-list"></i> @ViewResource.Misc_GridSection_Title</h2>
+<div class="grid-cotnainer animated fadeIn">
+    @(Html.Kendo().Grid<MiscViewModel>()
+        .Name("grid")
+            .Scrollable(s => s.Height(500))
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { style = "min-height:200px" })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("MiscEditor")
+                .Window(w => w.Width(600)
+                .Events(ev => ev.Activate("popupEditActivate")))
+            )
+            .ToolBar(t => { if (this.Context.HasPermission("MAS010", PermissionNames.Add)) { t.Template(Html.GridAddButton().ToHtmlString()); } })
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(columnWidth)
+                    .ClientTemplate("#=renderActionButton(data)#")
+                    .Visible(allowEdit || allowDelete);
+                c.Template(t => { })
+                    .Width(60)
+                    .Title(WidgetResource.Grid_Column_No)
+                    .HtmlAttributes(new { @class = "text-right" })
+                    .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.MiscType)
+                    .Width(120)
+                    .ClientTemplate("#=getMiscTypeName(data) #");
+                c.Bound(f => f.MiscName)
+                    .Width(120);
+                c.Bound(f => f.MiscDisplayEN)
+                    .Width(160);
+                c.Bound(f => f.MiscDisplayTH)
+                    .Width(160);
+                c.Bound(f => f.MiscRemark)
+                    .Width(160);
+                c.Bound(f => f.Status)
+                    .ClientTemplate("#=renderStatus(data)#")
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(60);
+
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("List", "Misc")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+                    t.Update(r => r.Action("Update", "Misc")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("Delete", "Misc")
+                         .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("Create", "Misc")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                })
+            .Schema(s =>
+            {
+                s.Data("Data");
+                s.Total("Total");
+                s.Errors("Errors");
+                s.Model(m =>
+                {
+                    m.Id(f => f.MiscID);
+                    m.Field(f => f.MiscType);
+                    m.Field(f => f.MiscDisplayEN);
+                    m.Field(f => f.MiscDisplayTH);
+                    m.Field(f => f.MiscRemark);
+                    m.Field(f => f.Status).DefaultValue("1");
+                });
+            })
+            .PageSize(20)
+            .ServerFiltering(true)
+            .ServerPaging(true)
+            .ServerSorting(true)
+            .Events(e =>
+            {
+                e.RequestStart("dataSourceRequestStart");
+                e.RequestEnd("dataSourceRequestEnd");
+                e.Error("dataSourceError");
+            })
+        )
+        .Events(ev => {
+            ev.Edit("gridEdit");
+            ev.DataBinding("gridBinding");
+        })
+    )
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+        var miscTypes = @Html.JsonSystemMisc("MiscType");
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            uiState.register('ajax', ['.k-button']);
+            $(".k-search").on("click", function (e) {
+                e.preventDefault();
+                grid.dataSource.page(1);
+            });
+            $(".k-clear").on("click", function (e) {
+                e.preventDefault();
+                app.ui.clear(["#grid", "#miscType"]);
+                grid.dataSource.data([]);
+            });
+
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function dataSourceRequestEnd(e) {         
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {            
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            this.cancelChanges();
+        }
+
+        function gridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.Misc_PopUpSection_Add_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                edit: { title: "@ViewResource.Misc_PopUpSection_Edit_Title", button: { text: "@WidgetResource.Button_Update_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            if (!e.model.isNew()) {
+                e.container.find(".k-edit-visible").show();
+                e.container.find(".k-add-visible").hide();
+
+                e.container.find("#MiscName")
+                    .attr("disabled", "disabled")
+                    .attr("readonly", "readonly");
+                e.container.find("#MiscTypeName").val(getMiscTypeName(e.model));
+
+            } else {
+                e.container.find(".k-edit-visible").hide();
+                e.container.find(".k-add-visible").show();
+            }
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    Type: $("#miscType").data("kendoDropDownList").value(),
+                    Status: $("#status").data("kendoDropDownList").value()
+                }
+            };
+        }
+
+        function getMiscTypeName(data){
+            var type = app.data.getName(miscTypes, data.MiscType);
+            return type === "" ? data.MiscType : type;
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderActionButton(data) {
+            var html = '';
+            @if (allowEdit)
+            {
+                <text>html += '@Html.Raw(Html.GridEditButton().ToHtmlString())';</text>
+            }
+
+            @if (allowDelete)
+            {
+                <text>html += data.DeleteAble ?'@Html.Raw(Html.GridDeleteButton().ToHtmlString())':'';</text>
+            }
+             return html;
+        }
+
+         function renderStatus(data) {
+             return data.Status=="1" ? "<label class=\"label label-success\">@ModelMetadataResource.MiscStatus_Active</label>" : "<label class=\"label label-default\">@ModelMetadataResource.MiscStatus_Inactive</label>";
+         }
+    </script>
+}

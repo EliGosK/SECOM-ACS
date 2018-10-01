@@ -1,0 +1,83 @@
+﻿@model LoginViewModel
+@using Vereyon.Web
+<div class="login-container animated fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-md-lg-3 col-lg-6" style="float: none; margin: 0 auto;">
+
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal k-text-lg", role = "form", @novalidate = "novalidate" }))
+                {
+                    <div class="well well-sm well-rounded">
+                        <h1>
+                            <i class="fa fa-fw fa-sign-in"></i> @ViewResource.Login_FormSection_Title
+                        </h1>
+                        <hr />
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Username, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-7">
+                                @Html.Kendo().TextBoxFor(m => m.Username).HtmlAttributes(new { @style = "width:100%", @required = "required", @data_field = Html.DisplayNameFor(m => m.Username) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-7">
+                                @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { @type = "password", @style = "width:100%", @required = "required", @data_field = Html.DisplayNameFor(m => m.Password) })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                @Html.Kendo().CheckBoxFor(m => m.RememberMe).Label(Html.DisplayName<LoginViewModel>("RememberMe").ToHtmlString())
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-7">
+                                @Html.CommandButton("signInButton", "sign-in", WidgetResource.Button_Sigin_Text, new { @type = "submit", @class = "k-primary btn-lg btn-block" })
+                            </div>
+                        </div>
+                    </div>
+                    @Html.RenderFlashMessages()
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section styles{
+    <style type="text/css">
+        body {
+            background: rgba(255, 255, 255, 0.5) url(/assets/img/bg2.png) no-repeat 0 50%;
+       }
+    </style>    
+}
+@section scripts {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        $(document).ready(function () {
+            app.initPage();
+            // Validation
+            uiState.register("signin", [{ elem: "#signInButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text"},".k-button"]);
+            $("form").kendoValidator({}).submit(function (e) {
+                uiState.busy("signin", true);
+            });
+
+            $("#Username").on("keypress", function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    $("#Password").select();
+                }
+            });
+
+            $("#Password").on("keypress", function (e) {
+                if (e.which == 13) {
+                    $("#signInButton").focus();
+                    $("#signInButton").click();
+                }
+            });
+
+            setTimeout(function () {
+                $("#@Html.IdFor(m=>m.Username)").select();
+            }, 100);
+
+        });
+    </script>
+}
+

@@ -1,0 +1,108 @@
+﻿@model  PrivilegeViewDSHData
+
+<div class="grid-container">
+
+    @if (Model.ViewDSH01)
+    {
+        @Html.Partial("_RequestInProgress")
+    }
+
+    @if (Model.ViewDSH02)
+    {
+        @Html.Partial("_RequestWaitingToApprover")
+    }
+
+    @if (Model.ViewDSH03)
+    {
+
+        @Html.Partial("_RequestWaitToAcknowledge")
+    }
+
+    @if (Model.ViewDSH04)
+    {
+        @Html.Partial("_SecurityRoom")
+    }
+
+    @if (Model.ViewDSH05 && Model.IsVerifyItemOut)
+    {
+        @Html.Partial("_ItemOut")
+    }
+
+    @if (Model.ViewDSH06 && Model.IsVerifyItemIn)
+    {
+        @Html.Partial("_ItemIn")
+
+    }
+    @if (Model.ViewDSH07 && Model.IsLending)
+    {
+        @Html.Partial("_RequestWaitToInputLending")
+    }
+
+    @if (Model.ViewDSH08)
+    {
+        @Html.Partial("_WitnessRequest")
+    }
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+
+        $(document).ready(function (e) {
+            uiState.register('ajax', [{ elem: ".k-refresh", busyContent: "<i class=\"fa fa-refresh fa-spin\"></i> Refreshing" },".k-button"])
+
+            $(".k-refresh").on("click", function (e) {
+                e.preventDefault();                
+                var gridID = $(this).data("id");
+                var grid = $("#"+gridID).data("kendoGrid");
+                grid.dataSource.page(1);
+            });
+        });
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            //app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+    
+        function renderActionButton(data,name) {
+            var url = "";
+            switch (data.ObjectID)
+            {
+                case "ACS020":
+                    url = "@Url.Action("Detail", "AcsEmployee")";
+                    break;
+                case "ACS030":
+                    url = "@Url.Action("Detail", "AcsVisitor")";
+                    break;
+                case "ACS050":
+                    url = "@Url.Action("Detail", "AcsItemIn")";
+                    break;
+                case "ACS040":
+                    url = "@Url.Action("Detail", "AcsItemOut")";
+                    break;
+                case "ACS060":
+                    url = "@Url.Action("Detail", "AcsPhoto")";
+                    break;
+            }
+            url = url + "/" + data.ReqNo ;
+            return "<a href = \""+ url + "\"target=\"_blank\" class=\"k-button k-button-primary k-button-cmd k-grid-view\"><i class=\"fa fa-search\"></a>";
+        }
+
+    </script>
+}
+

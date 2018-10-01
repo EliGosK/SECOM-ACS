@@ -1,0 +1,45 @@
+﻿@model VisitorCardRegistrationViewModel
+
+<div class="k-edit-form-container" id="user-group-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.VerifyTypeID, new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @(Html.Kendo().DropDownListFor(f => f.VerifyTypeID)
+                .DataSource(ds => ds.Read(r => r.Url("/api/miscs/list/VRF")))
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .ValuePrimitive(true)
+                .OptionLabel(new { Name = WidgetResource.List_NA_Options, Value = 0 })
+                .HtmlAttributes(new { @style = "width:100%", required="required", data_field=Html.DisplayNameFor(m=>m.VerifyTypeID) })
+                )
+            </div>
+           
+        </div>
+        <div class="form-group k-verifyno-field">
+            @Html.LabelRequiredHintFor(f => f.VerifyNo, new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.Kendo().TextBoxFor(m => m.VerifyNo).HtmlAttributes(new { @style = "width:100%", maxlength=256, data_field = Html.DisplayNameFor(m => m.VerifyNo) })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(f => f.CardID, new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @(Html.Kendo().DropDownListFor(m => m.CardID)
+                    .DataSource(ds => ds.Read(r =>
+                          r.Action("FindCards", "CardRegistration", new { cardType = CardType.Visitor, pageSize = 20 })
+                          .Type(HttpVerbs.Post))
+                        .ServerFiltering(true)
+                    )
+                    .DataTextField("CardNo")
+                    .DataValueField("CardID")
+                    .ValuePrimitive(true)
+                    .Filter(FilterType.Contains)
+                    .OptionLabel(WidgetResource.List_ClearOptions)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+        </div>
+    </div>
+    @Html.KendoValidationSummary()
+</div>

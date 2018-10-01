@@ -1,0 +1,20 @@
+﻿@{ 
+    var supportCultures = new [] {
+        new { name= "English", lang= "en", icon = "bfh-flag-US", url=Url.Action("ChangeLanguage","Home", new { lang = "en",returnUrl = Url.Encode(Request.RawUrl) }) },
+        new { name = "ไทย", lang = "th", icon="bfh-flag-TH", url=Url.Action("ChangeLanguage","Home", new { lang = "th",returnUrl = Url.Encode(Request.RawUrl) }) }
+    };
+
+    var selectedLang = System.Globalization.CultureInfo.GetCultureInfo(UICulture).TwoLetterISOLanguageName;
+}
+@(Html.Kendo().DropDownList()
+    .Name("app-lang")
+    .HtmlAttributes(new {  style="width:140px"})
+    .BindTo(supportCultures)
+    .DataTextField("name")
+    .DataValueField("lang")
+    .Value(selectedLang)
+    .ValueTemplate("<i class=\"glyphicon #=data.icon#\"></i> #= data.name #")
+    .Template("<i class=\"glyphicon #=data.icon#\"></i> #= data.name #")
+    .Events(ev=>ev.Select("function(e){ var dataItem = this.dataItem(e.item); window.location = dataItem.url; }"))
+)
+

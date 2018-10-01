@@ -1,0 +1,17 @@
+﻿@model object
+
+@(Html.Kendo().DropDownListFor(model => model)    
+    .AutoBind(true)
+    .DataTextField("EmployeeNo")
+    .DataValueField("EmployeeNo")
+    .Template("<strong>Employee No. #=EmployeeNo#</strong><div>#=FirstName# #=LastName#</div>")
+    .DataSource(ds => ds
+        .Read(r=>r
+            .Action("FindEmployee","Employee"))
+            .ServerFiltering(true))
+    .Filter(FilterType.StartsWith)
+    
+)
+
+
+    

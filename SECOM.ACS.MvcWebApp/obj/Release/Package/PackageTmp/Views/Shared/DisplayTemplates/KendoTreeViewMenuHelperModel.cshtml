@@ -1,0 +1,63 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+@using Kendo.Mvc.UI.Fluent;
+
+@helper RenderTreeView(List<SiteMapNodeModel> nodeList)
+{
+var permissionIcons = new Dictionary<string, string>()
+    {
+        { "VIEW", "fa fa-search" },
+        { "CREATE", "fa fa-plus-o" },
+        { "EDIT", "fa fa-edit" },
+        { "DELETE", "fa fa-trash" },
+        { "PRINT", "fa fa-print" }
+    };
+
+    @(Html.Kendo().TreeView()
+        .Name("permissions")
+        .Checkboxes(c => { c.CheckChildren(true); c.Name("permission"); })
+        .ExpandAll(true)
+        .Items(root =>
+        {
+            foreach (SiteMapNodeModel node in nodeList)
+            {
+                var iconClass = !node.Attributes.ContainsKey("icon") ? "fa fa-cubes" : String.Concat("fa fa-", (string)node.Attributes["icon"]);
+                var ignoreSecurity = node.Attributes.ContainsKey("ignoreSecurity") ? (string)node.Attributes["ignoreSecurity"] : "false";
+                if (ignoreSecurity == "true") { continue; }
+
+                root.Add().Text(node.Title)
+                    .Expanded(true)
+                    .SpriteCssClasses(iconClass)
+                    .Items(s =>
+                    {
+                        foreach (SiteMapNodeModel childNode in node.Children)
+                        {
+                            var objectId2 = childNode.Attributes.ContainsKey("objectId") ? (string)childNode.Attributes["objectId"] : "";
+                            var iconClass2 = childNode.Attributes.ContainsKey("icon") ? String.Concat("fa fa-", (string)childNode.Attributes["icon"]) : "fa fa-cubes";
+                            var permissions = childNode.Attributes.ContainsKey("permissions") ? (string)childNode.Attributes["permissions"] : "View";
+                            if (String.IsNullOrEmpty(objectId2)) { continue; }
+                            s.Add().Text(childNode.Title)
+                                .SpriteCssClasses(iconClass2)
+                                .HtmlAttributes(new { @data_object_id = objectId2 })
+                                .Items(p =>
+                                {
+
+                                    foreach (var permission in permissions.Split(new char[] { ',', ';' }))
+                                    {
+                                        var id = String.Format("{0}_{1}", objectId2, permission).ToUpper();
+                                        if (permissionIcons.ContainsKey(permission.ToUpper()))
+                                            p.Add().Text(permission).SpriteCssClasses(permissionIcons[permission.ToUpper()]).Id(id);
+                                        else
+                                            p.Add().Text(permission).SpriteCssClasses("fa fa-lock").Id(id);
+                                    }
+
+                                })
+                                ;
+                        }
+                    });
+            }
+        })
+    )
+}
+@RenderTreeView(Model.Nodes)

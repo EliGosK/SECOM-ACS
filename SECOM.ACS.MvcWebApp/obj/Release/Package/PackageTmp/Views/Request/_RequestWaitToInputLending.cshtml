@@ -1,0 +1,58 @@
+﻿@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+<div class="grid-container">
+    @(Html.Kendo().Grid<RequestDH07DataViewModel>()
+        .Name("ds07Grid")
+        .Pageable(p => p
+            .PageSizes(true)
+            .Refresh(true)
+            .ButtonCount(5)
+        )
+        .ToolBar(t => t.Template(@<text>
+    @Html.CommandButton("ds07RefreshButton", "refresh", WidgetResource.Button_Refresh_Text, new { @class = "k-primary k-refresh", data_grid_id = "ds07Grid" }).Events(ev => ev.Click("searchButtonClicked"))
+           </text>))
+        .Columns(c =>
+        {
+            c.Template(t => { })
+                .Width(50)
+                .ClientTemplate("#=renderActionButton(data,'view')#");
+            c.Template(t => { })
+                .Title(WidgetResource.Grid_Column_No)
+                .Width(60)
+                .ClientTemplate("#=_rowNo#")
+                .HtmlAttributes(new { @class = "text-right" });
+            c.Bound(f => f.ReqNo)
+                .HtmlAttributes(new { @class = "text-center" })
+                ;
+            c.Bound(f => f.EntryDateFrom)
+                .Width(120)
+                .Format(gridDateFormat)
+                .HtmlAttributes(new { @class = "text-center" });
+            c.Bound(f => f.EquipName)
+                .HtmlAttributes(new { })
+                ;
+            c.Bound(f => f.Area);
+            c.Bound(f => f.RequestBy)
+                .HtmlAttributes(new {  })
+                ;
+            c.Bound(f => f.RequestDate)
+                .HtmlAttributes(new { @class = "text-center" })
+                .Format(gridDateFormat)
+                 .Width(120);
+            c.Bound(f => f.AssetCode)
+                .HtmlAttributes(new { @class = "text-center" });
+        })
+        .DataSource(ds => ds
+                .Ajax()
+            .Read(r => r.Action("DashboardReq07", "Request"))
+            .Events(e =>
+            {
+                e.RequestStart("dataSourceRequestStart");
+                e.RequestEnd("dataSourceRequestEnd");
+                e.Error("dataSourceError");
+            })
+        )
+        .Events(ev => { ev.DataBinding("gridDataBinding"); })
+    )
+</div>

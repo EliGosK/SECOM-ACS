@@ -1,0 +1,92 @@
+﻿@model EmployeeInformationViewModel
+
+<h2><i class="fa fa-users"></i> @ViewResource.UserGroup_Title</h2>
+<div class="grid-container">
+    @(Html.Kendo().Grid<RoleViewModel>()
+        .Name("roleGrid")        
+        .ToolBar(t =>t.Template(@<text>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m=>m.UserGroups, new { @class = "control-label col-md-1" })
+                    <div class="col-md-5">
+                        @(Html.Kendo().MultiSelect()
+                .Name("userGroups")
+                .DataSource(ds => ds.Read(r=>
+                    r.Action("GetTempUserGroupForCreate", "Employee", new { tempDataId = Model.UserGroupDataTempId })
+                    .Data("getSelectedUserGroups")
+                    .Type(HttpVerbs.Post))
+                    
+                )
+                .DataTextField("Name")
+                .DataValueField("RoleID")
+                .AutoClose(false)
+                .AutoBind(false)
+                .Events(ev=>ev.Change("userGroupsChange").DataBound("userGroupsDataBound"))
+                .HtmlAttributes(new { }))
+                        
+                    </div>
+                    <div class="col-md-2">
+                        @Html.CommandButton("addUserGroupButton", "plus-circle", WidgetResource.Button_Add_Text, new { @class = "k-primary k-usergroup-add k-state-disabled" , @disabled="disabled" })
+                    </div>
+                </div>
+            </div></text>
+        ))
+        .Editable(et=>et.Mode(GridEditMode.PopUp))
+        .Columns(c =>
+        {
+            c.Template(t => { }).ClientTemplate(Html.GridDeleteButton().ToHtmlString()).Width(50);
+            c.Template(t => { }).ClientTemplate("#=_rowNo#")
+                .Width(60)
+                .HtmlAttributes(new { @class = "text-right" })
+                .Title(WidgetResource.Grid_Column_No);
+            c.Bound(f => f.Name);
+            c.Bound(f => f.Description);
+        })
+        .DataSource(ds => ds
+            .Custom().Transport(t =>
+            {
+                t.Read(r =>
+                    r.Action("ListTempUserGroup", "Employee", new { tempDataId = Model.UserGroupDataTempId, employeeId = Model.EmployeeID })
+                    .Type(HttpVerbs.Post)
+                );
+                t.Create(r =>
+                   r.Action("CreateTempUserGroup", "Employee", new { tempDataId = Model.UserGroupDataTempId })
+                   .Type(HttpVerbs.Post)
+               );
+                t.Update(r =>
+                   r.Action("UpdateTempUserGroup", "Employee", new { tempDataId = Model.UserGroupDataTempId })
+                   .Type(HttpVerbs.Post)
+               );
+                t.Destroy(r =>
+                    r.Action("DeleteTempUserGroup", "Employee", new { tempDataId = Model.UserGroupDataTempId })
+                    .Type(HttpVerbs.Post)
+                );
+            })
+            .Schema(s =>
+            {
+                s.Model(m =>
+                {
+                    m.Id(f => f.RoleID);
+                    m.Field(f => f.Name).Editable(false);
+                    m.Field(f => f.Description).Editable(false);
+                });
+            })
+            .Events(ev =>
+            {
+                ev.RequestStart("dataSourceRequestStart");
+                ev.RequestEnd("dataSourceRequestEnd");
+                ev.Error("dataSourceError");
+            })
+            .PageSize(20)
+            .ServerFiltering(true)
+            .ServerPaging(true)
+            .ServerSorting(true)
+        )
+        .AutoBind(false)
+        .Events(ev =>
+        {
+            ev.DataBinding("gridDataBinding");
+            ev.DataBound("userGroupGridDataBound");
+        })
+    )
+</div>

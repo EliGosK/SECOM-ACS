@@ -1,0 +1,208 @@
+﻿@{
+    var sendTo = "sittichok@csithai.com";
+    var requestNo = String.Format("E{0:yyyyMMdd}-01", DateTime.Now);
+}
+<h2><i class="fa fa-send"></i> Send Request Mail</h2>
+<div class="well well-sm"> 
+    <div class="form-horizontal form-request">
+        <div class="form-group">
+            @Html.Label("Mail To", new { @class = "col-md-2 control-label" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBox().Name("sendTo").Value(sendTo).HtmlAttributes(new { @style = "width:100%", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Document Type", new { @class = "col-md-2 control-label" })
+            <div class="col-md-8">
+                @(Html.Kendo().DropDownList().Name("documentType")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/types/doctype")))
+                    .DataTextField("SysMiscValue1")
+                    .DataValueField("SysMiscCode")
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .Events(ev => ev.Select("documentTypeSelect"))
+                    .HtmlAttributes(new { @style = "width:100%", required = true })
+                )
+                @Html.KendoValidationMessage("documentType")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Request No", new { @class = "col-md-2 control-label" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBox().Name("requestNo").Value(requestNo).HtmlAttributes(new { @style = "width:100%" })
+            </div>
+        </div>
+        <div class="form-group row-assign-code">
+            @Html.Label("Item Name", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox().Name("itemName")
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="form-group row-reject-reason">
+            @Html.Label("Reject Reason", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox().Name("rejectReason")
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div style="margin:5px 0px">
+                    @Html.Kendo().Button().Name("waitForApproval").Content("Wait For Approval").HtmlAttributes(new { @class= "k-button-request", data_mail_name = "RequestWaitForApproval" })
+                    @Html.Kendo().Button().Name("approve").Content("Approve").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestApproved" })
+                    @Html.Kendo().Button().Name("acknowledge").Content("Request Acknowledge").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestAcknowledge" })
+                </div>
+                <div style="margin:5px 0px">
+                    @Html.Kendo().Button().Name("reject").Content("Reject").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestRejected" })
+                    @Html.Kendo().Button().Name("rejectArea").Content("Reject By Area").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestRejectedByArea" })
+                </div>
+                <div style="margin:5px 0px">
+                    @Html.Kendo().Button().Name("cancel").Content("Cancelled").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestCancelled" })
+                    @Html.Kendo().Button().Name("expire").Content("Document Expired").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestExpired" })
+                    @Html.Kendo().Button().Name("witnesss").Content("Witness").HtmlAttributes(new { @class = "k-button-request", data_mail_name = "RequestWithness" })
+                </div>               
+            </div>
+        </div>
+
+    </div>
+</div>
+<h2><i class="fa fa-key"></i> Password Reset Mail</h2>
+<div class="well well-sm">
+    <div class="form-horizontal form-password-reset">
+        <div class="form-group">
+            @Html.Label("Employee ID", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().DropDownList().Name("employeeId")
+                    .DataSource(ds=>
+                        ds.Read(r=>
+                            r.Url("/api/employees").Type(HttpVerbs.Get)
+                        )
+                        .ServerFiltering(false)    
+                    )
+                    .DataTextField("EmployeeNameEN")
+                    .DataValueField("EmployeeID")
+                    .Filter(FilterType.Contains)
+                    .HtmlAttributes(new { @style = "width:100%", required = "required" })
+                )
+            </div>                 
+        </div>
+        <div class="form-group">
+            @Html.Label("New Password", new { @class = "col-md-2 control-label" })
+            <div class="col-md-4">
+                @(Html.Kendo().TextBox().Name("newPassword")
+                    .HtmlAttributes(new { @style = "width:100%", required = "required" })
+                )
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div style="margin:5px 0px">
+                    @Html.Kendo().Button().Name("passwordReset").Content("Password Reset").HtmlAttributes(new { data_mail_name = "PasswordReset" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        $(document).ready(function () {
+            uiState.register("ajax", [".k-button"]);
+
+            $(".form-request").kendoValidator();
+            $(".form-password-reset").kendoValidator();
+            $(".row-assign-code").hide('fast');
+            $(".k-button-request").on("click", function (e) {
+                e.preventDefault();
+                var v = $(".form-horizontal").data("kendoValidator");
+                if (v.validate()) {
+                    var data = {
+                        mailTo: $("#sendTo").val().split(","),
+                        requestNo: $("#requestNo").val(),
+                        documentCode: $("#documentType").data("kendoDropDownList").value(),
+                        mailName: $(this).data("mail-name"),
+                        itemName: $("#itemName").val(),
+                        rejectReason: $("#rejectReason").val(),
+                        areaNameEN: "Sample Area EN",
+                        areaNameTH: "Sample Area TH"
+                    }
+                    sendMail(data);
+                }
+            });
+
+            $("#passwordReset").on("click", function (e) {
+                e.preventDefault();
+                var v = $(".form-horizontal").data("kendoValidator");
+                if (v.validate()) {
+                    var employee = $("#employeeId").data("kendoDropDownList");
+                    var dataItem = employee.dataItem();
+                    var data = {
+                        mailTo: $("#sendTo").val().split(","),
+                        mailName: $(this).data("mail-name"),
+                        employeeNameEN: dataItem.EmployeeNameEN,
+                        employeeNameTH: dataItem.EmployeeNameTH,
+                        newPassword: $("#newPassword").val()
+                    }
+                    sendPasswordResetMail(data);
+                }
+            });
+        });
+
+        function documentTypeSelect(e) {
+            var dataItem = e.dataItem;
+            if (dataItem) {
+                switch (dataItem.SysMiscCode) {
+
+                    case "ACS040":
+                    case "ACS050":
+                        $(".row-assign-code").show('show');
+                        break;
+                    default:
+                        $(".row-assign-code").hide('hide');
+                        break;
+                }
+            } else {
+                $(".row-assign-code").hide('hide');
+            }
+        }
+
+        function sendMail(data) {
+            uiState.busy("ajax", true);
+            $.ajax({
+                url: "@Url.Action("SendMail","Mail")",
+                type: "POST",
+                data: data,
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+                },
+                complete: function () {
+                    uiState.busy("ajax", false);
+                }
+            });
+        }
+
+        function sendPasswordResetMail(data) {
+            uiState.busy("ajax",true);
+            $.ajax({
+                url: "@Url.Action("SendPasswordResetMail","Mail")",
+                type: "POST",
+                data: data,
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                },
+                error: function (xhr, status, error) {
+                    app.ui.handleAjaxError(xhr, status, error);
+                },
+                complete: function () {
+                    uiState.busy("ajax", false);
+                }
+            });
+        }
+    </script>
+}

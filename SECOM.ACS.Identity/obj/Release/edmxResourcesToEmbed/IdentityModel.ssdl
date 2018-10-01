@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SECOM.ACS.Identity.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbs_Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+    <Property Name="IsSystemRole" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH01" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH02" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH03" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH04" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH05" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH06" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH07" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH08" Type="bit" Nullable="false" />
+    <Property Name="ViewDSH09" Type="bit" Nullable="false" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbs_RoleUserMapping">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbs_User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="PasswordFormat" Type="int" Nullable="false" />
+    <Property Name="LastChangePassword" Type="datetime" />
+    <Property Name="LastSignedInDate" Type="datetime" />
+    <Property Name="IsVerifyItemOut" Type="bit" Nullable="false" />
+    <Property Name="IsVerifyItemIn" Type="bit" Nullable="false" />
+    <Property Name="IsLending" Type="bit" Nullable="false" />
+    <Property Name="EmpID" Type="varchar" MaxLength="50" />
+    <Property Name="FactoryCode" Type="varchar" MaxLength="50" />
+    <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateBy" Type="varchar" MaxLength="20" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_tbs_UserRoleMapping_tbs_Role">
+    <End Role="tbs_Role" Type="Self.tbs_Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tbs_RoleUserMapping" Type="Self.tbs_RoleUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbs_Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="tbs_RoleUserMapping">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbs_UserRoleMapping_tbs_User">
+    <End Role="tbs_User" Type="Self.tbs_User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tbs_RoleUserMapping" Type="Self.tbs_RoleUserMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbs_User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tbs_RoleUserMapping">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SECOMACSIdentityStoreContainer">
+    <EntitySet Name="tbs_Role" EntityType="Self.tbs_Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbs_RoleUserMapping" EntityType="Self.tbs_RoleUserMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbs_User" EntityType="Self.tbs_User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbs_UserRoleMapping_tbs_Role" Association="Self.FK_tbs_UserRoleMapping_tbs_Role">
+      <End Role="tbs_Role" EntitySet="tbs_Role" />
+      <End Role="tbs_RoleUserMapping" EntitySet="tbs_RoleUserMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbs_UserRoleMapping_tbs_User" Association="Self.FK_tbs_UserRoleMapping_tbs_User">
+      <End Role="tbs_User" EntitySet="tbs_User" />
+      <End Role="tbs_RoleUserMapping" EntitySet="tbs_RoleUserMapping" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

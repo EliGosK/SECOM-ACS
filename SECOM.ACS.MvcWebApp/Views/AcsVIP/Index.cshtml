@@ -1,0 +1,232 @@
+﻿@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+
+@section styles{
+    <style type="text/css">
+        .k-status {
+            margin: 5px;
+        }
+    </style>
+}
+<h2><i class="fa fa-id-card-o"></i> @ViewResource.AcsVIP_Title</h2>
+<div class="grid-container">
+
+    @Html.AntiForgeryToken()
+    @(Html.Kendo().Grid<VIPCardRegistrationViewModel>()
+        .Name("grid")
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .ToolBar(t =>
+            {
+            t.Template(@<text>
+        <div class="pull-right" style="padding-right:20px">
+            <label class="k-text-bold control-text k-latest-request"></label>
+        </div>
+        <div>
+            <label class="k-text-bold k-status">@WidgetResource.Grid_Status_Text</label>
+            @(Html.Kendo().DropDownList().Name("cardStatus")
+                        .DataSource(ds => ds.Read(r => r.Url("/api/systemmiscs/list/VIPCardStatus")))
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .OptionLabel(WidgetResource.AllOptions)
+                        .HtmlAttributes(new { @class = "" })
+                        .Events(ev => ev.Change("cardStatusChange"))
+            )
+        </div>
+            </text>);
+            })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                        .TemplateName("VIPCardRegistrationEditor")
+                        .Window(w => w.Width(900)
+                            .Scrollable(false)
+                            .Events(ev => ev.Activate("popupEditorActivate"))
+                        )
+                .CreateAt(GridInsertRowPosition.Bottom)
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .ClientTemplate("#=renderActionButton(data)#")
+                    .Width(50);
+                c.Bound(f => f.CardNo)
+                    .Width(140);
+                c.Bound(f => f.Status)
+                    .ClientTemplate("#=renderStatusName(data)#")
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(80);
+                c.Bound(f => f.Name)
+                    .Width(140);
+                c.Bound(f => f.Company)
+                    .Width(140);
+                c.Bound(f => f.PositionName)
+                    .Width(140);
+                c.Bound(f => f.Area)
+                    .ClientTemplate("#=renderArea(data)#");
+                c.Bound(f => f.EntryDateFrom)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Format(gridDateFormat)
+                    .Width(100);
+            })
+             .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListVIPCardRegistration", "AcsVIP")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria"));
+                    t.Update(r => r.Action("SaveVIPCardRegistration", "AcsVIP")
+                        .Data("sendAntiForgery")
+                        .Type(HttpVerbs.Post));
+                }
+            )
+            .Schema(s =>
+            {
+                s.Data("Data");
+                s.Total("Total");
+                s.Errors("Errors");
+                s.Model(m =>
+                {
+                    m.Id(f => f.CardNo);
+                    m.Field(f => f.Status);
+                    m.Field(f => f.Name);
+                    m.Field(f => f.Company);
+                    m.Field(f => f.EntryDateFrom);
+
+                });
+            })
+            .PageSize(20)
+            .ServerFiltering(false)
+            .ServerPaging(false)
+            .ServerSorting(false)
+            .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError"))
+        )
+        .Events(ev => { ev.Edit("gridEdit"); ev.DataBinding("gridBinding"); ev.Save("gridSave"); })
+        .AutoBind(true)
+    )
+</div>
+<script id="areaTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled list-inline">
+        # for (var i=0;i < data.length ; i++ ){ #
+        <li><label class="label label-primary label-md"><i class="fa fa-map-marker"></i> #=data[i].Name#</label></li>
+        # } #
+    </ul>
+</script>
+<script id="areaListTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled list-inline">
+        # for (var i=0; i < data.length; i++){ #
+        <li><label class="label label-primary label-md"> <i class="fa fa-map-marker"></i> #=data[i].Name #</label></li>
+        # } #
+    </ul>
+</script>
+@section scripts
+{
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid;
+
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register("ajax", [".k-button"]);
+            grid = $("#grid").data("kendoGrid");
+
+        });
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function gridEdit(e) {
+            var requestNo = e.container.find("#RequestNo").data("kendoTextBox");
+            var cardNo = e.container.find("#CardNo").data("kendoTextBox");
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            if (e.model.Status == "@VIPCardStatus.Unavailable") {
+                $(".k-available-status", e.container).remove();
+                //$(".k-unavailable-status", e.container).show();
+                $(".required-hint", e.container).removeClass("required-hint");
+                e.container.find("#Name").attr("readonly", "readonly").prop("disabled", "disabled");
+                e.container.find("#Company").attr("readonly", "readonly").prop("disabled", "disabled");
+                e.container.find("#Description").attr("readonly", "readonly").prop("disabled", "disabled");
+
+                var content = kendo.template($("#areaListTemplate").html())(e.model.Area);
+                e.container.find(".k-area-list").html(content);
+                var options = {
+                    edit: { title: "VIP Card Registration", button: { text: "Return Card" } },
+                    cancelButton: { text: "Cancel" }
+                };
+                app.ui.initGridPopupEditor(e, options);
+            } else {
+                e.container.find(".k-unavailable-status").remove();
+                var options = {
+                    edit: { title: "VIP Card Registration", button: { text: "Register" } },
+                    cancelButton: { text: "Cancel" }
+                };
+
+                //var m = $("#SelectedAreaList", e.container).data("kendoMultiSelect");
+                //m.value(e.model.DefaultArea);
+
+                app.ui.initGridPopupEditor(e, options);
+            }
+        }
+
+        function renderActionButton(data) {
+            var css = data.Status == "@VIPCardStatus.Available" ? "k-primary" : "k-button-warning";
+            var icon = data.Status == "@VIPCardStatus.Available" ? "edit" : "repeat";
+            var title = data.Status == "@VIPCardStatus.Available" ? "Register VIP Card" : "Return Card";
+            return "<a class=\"k-button k-button-cmd k-grid-edit "+css+"\" title=\""+title+"\"><i class=\"fa fa-"+icon+"\"></i></a>";
+        }
+
+        function renderStatusName(data) {
+            var css = data.Status == "@CardVIPStatus.Available" ? "success" : "danger";
+            return "<label class=\"label label-md label-"+css+"\">"+data.StatusName+"</label>";
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    cardStatus: $("#cardStatus").data("kendoDropDownList").value()
+                }
+            };
+        }
+
+        function cardStatusChange(e) {
+            grid.dataSource.read();
+        }
+
+        function renderArea(data) {
+            return kendo.template($("#areaTemplate").html())(data.Area);
+        }
+
+        function sendAntiForgery() {
+            return app.addAntiForgeryToken({});
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            app.ui.handleDataSourceRequestEnd(e);
+            if (e.type !== "read") {
+                this.read();
+            }
+
+            var html = kendo.format("@ViewResource.AcsVIP_LatestRequest {0:d/M/yyyy HH:mm}", new Date());
+            $(".k-latest-request").html(html);
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e);
+        }
+
+        function gridSave(e) {
+            e.model.dirty = true;
+        }
+
+        function popupEditorActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+    </script>
+}

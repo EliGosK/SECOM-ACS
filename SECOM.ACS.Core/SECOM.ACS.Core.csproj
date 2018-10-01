@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{47FC5918-BC87-46B2-A585-6E60952F084E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SECOM.ACS</RootNamespace>
+    <AssemblyName>SECOM.ACS.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Migrate|AnyCPU'">
+    <OutputPath>bin\Release_Migrate\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\EntityFramework\AcsItemInDetailRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsItemOutDetailRepository.cs" />
+    <Compile Include="Data\EntityFramework\AreaOrganizeMappingRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsVisitorDetailRepository.cs" />
+    <Compile Include="Data\EntityFramework\AreaCardMappingRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsTaskRepository.cs" />
+    <Compile Include="Data\EntityFramework\ReqAreaMappingRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsTransactionRepository.cs" />
+    <Compile Include="Data\IAcsEmployeeDetailRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsEmployeeDetailRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsRequestInquriyRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsVIPRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsEmployeeRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsItemInRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsItemOutRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsPhotoRepository.cs" />
+    <Compile Include="Data\EntityFramework\AcsVisitorRepository.cs" />
+    <Compile Include="Data\EntityFramework\AreaApproverRepository.cs" />
+    <Compile Include="Data\EntityFramework\AreaRepository.cs" />
+    <Compile Include="Data\EntityFramework\CardRepository.cs" />
+    <Compile Include="Data\EntityFramework\ReqApproverListRepository.cs" />
+    <Compile Include="Data\EntityFramework\PositionRepository.cs" />
+    <Compile Include="Data\EntityFramework\DepartmentRepository.cs" />
+    <Compile Include="Data\EntityFramework\SystemMiscRepository.cs" />
+    <Compile Include="Data\EntityFramework\EmployeeRepository.cs" />
+    <Compile Include="Data\EntityFramework\GateRepository.cs" />
+    <Compile Include="Data\EntityFramework\ItemRepository.cs" />
+    <Compile Include="Data\EntityFramework\MiscRepository.cs" />
+    <Compile Include="Data\EntityFramework\PermissionDashboardRepository.cs" />
+    <Compile Include="Data\EntityFramework\PermissionRecordRepository.cs" />
+    <Compile Include="Data\EntityFramework\UnitOfWork.cs" />
+    <Compile Include="Data\IAcsItemInDetailRepository.cs" />
+    <Compile Include="Data\IAcsItemOutDetailRepository.cs" />
+    <Compile Include="Data\IAcsRequestInquriyRepository.cs" />
+    <Compile Include="Data\IAreaOrganizeMappingRepository.cs" />
+    <Compile Include="Data\IAcsVIPRepository.cs" />
+    <Compile Include="Data\IAcsVisitorDetailRepository.cs" />
+    <Compile Include="Data\IAreaApproverRepository.cs" />
+    <Compile Include="Data\IAreaCardMappingRepository.cs" />
+    <Compile Include="Data\IAcsTaskRepository.cs" />
+    <Compile Include="Data\IPositionRepository.cs" />
+    <Compile Include="Data\IDepartmentRepository.cs" />
+    <Compile Include="Data\IGateRepository.cs" />
+    <Compile Include="Data\IReqApproverListRepository.cs" />
+    <Compile Include="Data\IReqAreaMappingRepository.cs" />
+    <Compile Include="Data\IAcsTransactionRepository.cs" />
+    <Compile Include="Data\ISystemMiscRepository.cs" />
+    <Compile Include="Data\IPermissionDashboardRepository.cs" />
+    <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\ICardRepository.cs" />
+    <Compile Include="Data\IAreaRepository.cs" />
+    <Compile Include="Data\IEmployeeRepository.cs" />
+    <Compile Include="Data\IItemRepository.cs" />
+    <Compile Include="Data\IMiscRepository.cs" />
+    <Compile Include="Data\IAcsEmployeeRepository.cs" />
+    <Compile Include="Data\IAcsItemInRepository.cs" />
+    <Compile Include="Data\IAcsItemOutRepository.cs" />
+    <Compile Include="Data\IAcsPhotoRepository.cs" />
+    <Compile Include="Data\IAcsVisitorRepository.cs" />
+    <Compile Include="Data\IPermissionRepository.cs" />
+    <Compile Include="Models\AcsEmployee.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsEmployee.Partial.cs" />
+    <Compile Include="Models\AcsEmployeeDetail.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsEmployeeDetailDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemIn.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemInDetailDataView.Partial.cs" />
+    <Compile Include="Models\AcsItemInDetail.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemInDetailDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemOut.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemOut.Partial.cs" />
+    <Compile Include="Models\AcsItemIn.Partial.cs" />
+    <Compile Include="Models\AcsItemOutDetail.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsItemOutDetailDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ACSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ACSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsPhoto.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsPhoto.Partial.cs" />
+    <Compile Include="Models\AcsVisitorTransactionDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaOrganizeMapping.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaOrganizeMapping.Partial.cs" />
+    <Compile Include="Models\BusinessTripCardRegistrationView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeForImportAcs.Partial.cs" />
+    <Compile Include="Models\DashboardSearchCriteria.cs" />
+    <Compile Include="Models\IAcsRequest.cs" />
+    <Compile Include="Models\AcsTask.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsVIP.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsVIP.Partial.cs" />
+    <Compile Include="Models\AcsVisitor.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsVisitorDetail.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsVisitorDetailDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsVistor.Partial.cs" />
+    <Compile Include="Models\Area.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaApprover.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaApprover.Partial.cs" />
+    <Compile Include="Models\AreaCardMapping.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AreaMapping.Partial.cs" />
+    <Compile Include="Models\AreaMapping.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AcsTask.Partial.cs" />
+    <Compile Include="Models\Card.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Card.Partial.cs" />
+    <Compile Include="Models\AcsView.cs" />
+    <Compile Include="Models\CardNoView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CardView.Partial.cs" />
+    <Compile Include="Models\CheckOverlapCardNoList.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckOverlapPeriodCardNoList.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentTypeData.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeApprovalDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeForImportAcs.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeInformation.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntryTimeSetting.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Gate.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GateDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GenerateReqNoData.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Item.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ItemDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Misc.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PermissionDashboard.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PermissionMapping.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrivilegeViewDSHData.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceiveReturnBusinessTripCardDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceiveReturnVisitorCardDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReqApproverList.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReqApproverList.Partial.cs" />
+    <Compile Include="Models\DocumentTypes.cs" />
+    <Compile Include="Models\EntryTimeSetting.Partial.cs" />
+    <Compile Include="Models\Position.Partial.cs" />
+    <Compile Include="Models\CardRegistration.cs" />
+    <Compile Include="Models\ReqAreaMapping.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH01DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH02DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH03DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH04DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH05DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH06DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH07DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH08DataView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestDH08DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH07DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH06DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH05DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH04DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH03DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH02DataView.Partial.cs" />
+    <Compile Include="Models\RequestDH01DataView.Partial.cs" />
+    <Compile Include="Models\RequestInquriyData.Partial.cs" />
+    <Compile Include="Models\RequestSearchCriteria.cs" />
+    <Compile Include="Models\Gate.Partial.cs" />
+    <Compile Include="Models\Misc.Partial.cs" />
+    <Compile Include="Models\Area.Partial.cs" />
+    <Compile Include="Models\Item.Partial.cs" />
+    <Compile Include="Models\Employee.Partial.cs" />
+    <Compile Include="Models\PermissionDashboard.Partial.cs" />
+    <Compile Include="Models\PermissionRecord.Partial.cs" />
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\ReceiveReturnBusinessTripCardDataView.Partial.cs" />
+    <Compile Include="Models\ReceiveReturnVisitorCardDataView.partial.cs" />
+    <Compile Include="Models\SystemMisc.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemMisc.Partial.cs" />
+    <Compile Include="Models\TransactionAcs.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRole.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIPCardRegistrationView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VisitorCardRegistrationView.cs">
+      <DependentUpon>AcsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSI.ComponentModel\CSI.ComponentModel.csproj">
+      <Project>{6244D808-BF55-4483-BD15-D938604E52C7}</Project>
+      <Name>CSI.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSI.Data.EntityFramework\CSI.Data.EntityFramework.csproj">
+      <Project>{756bec9f-35dc-4b2d-b995-943dcd8eaa4c}</Project>
+      <Name>CSI.Data.EntityFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\ACSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ACSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AcsClassDiagram.cd" />
+    <None Include="Models\ACSModel.edmx.diagram">
+      <DependentUpon>ACSModel.edmx</DependentUpon>
+    </None>
+    <Compile Include="Models\Department.Partial.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\AcsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AcsModel.Context.cs</LastGenOutput>
+      <DependentUpon>ACSModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\AcsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AcsModel.cs</LastGenOutput>
+      <DependentUpon>ACSModel.edmx</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

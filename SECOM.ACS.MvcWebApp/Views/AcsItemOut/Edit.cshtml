@@ -1,0 +1,345 @@
+﻿@model AcsItemOutViewModel
+@using Vereyon.Web
+@{
+    var currentUser = User.Identity.Name;
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+    var dateFormat = AcsModelHelper.GetDateFormat();
+    var userData = User.Identity.GetUserData();
+    var currentDate = DateTime.Today;
+    var allowCurrentDate = Model.Status == RequestStatus.Approved && userData.IsVerifyItemOut && currentDate == Model.TakeOutDate;
+    var allowMorethanDate = Model.Status == RequestStatus.Approved && userData.IsVerifyItemOut && currentDate > Model.TakeOutDate;
+    var allowEdit = Model.Status == RequestStatus.Approved && userData.IsVerifyItemOut && currentDate >= Model.TakeOutDate;
+}
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("Edit", "AcsItemOut", FormMethod.Post, new { @id = "requestForm", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.HiddenFor(m => m.RequestNo)
+        @Html.AntiForgeryToken()
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.RequestNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.RequestNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployee.Department, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.TakeOutName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.TakeOutName)
+                </div>
+                @Html.LabelFor(m => m.Company, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.Company)
+                </div>
+                @Html.LabelFor(m => m.Department, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.Department)
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.TakeOutDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.TakeOutDate, dateFormat)
+                </div>
+                @Html.LabelFor(m => m.AreaID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFactory(Model.Area.FactoryCode): @Html.DisplayLocalize(Model.Area, "AreaDisplay")
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayLocalize(Model.Purpose, "MiscDisplay")</label>
+                @if (!String.IsNullOrEmpty(Model.OtherPurpose))
+                {
+                    @Html.LabelFor(m => m.OtherPurpose, new { @class = "col-md-2 control-label" })
+                    <label class="col-md-4 control-text">@Model.OtherPurpose</label>
+                }
+            </div>
+        </div>
+
+        <h2><i class="fa fa-th-list"></i> @ViewResource.AcsItemOut_ItemList_Title</h2>
+        <div class="row">
+            <div class="grid-container col-sm-12">
+                @(Html.Kendo().Grid<AcsItemOutItemViewModel>()
+                    .Name("itemGrid")
+                    .Scrollable()
+                    .Pageable(p => p
+                    .PageSizes(true)
+                    .Refresh(true)
+                    .ButtonCount(5)
+            )
+            .Editable(editable => editable.Mode(GridEditMode.PopUp)
+                        .TemplateName("ItemEditorForAct")
+                        .Window(w => w.Width(400)
+                        .Scrollable(false))
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate(Html.GridEditButton().ToHtmlString())
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Visible(allowEdit);
+                c.Template(t => { })
+                    .Width(50)
+                    .Title(WidgetResource.Grid_Column_No)
+                    .HtmlAttributes(new { @class = "text-right" })
+                    .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.ItemTypeName);
+                c.Bound(f => f.ItemName);
+                c.Bound(f => f.Description);
+                c.Bound(f => f.Confidential)
+                                .Width(100)
+                                .ClientTemplate("#=renderConfidential(data)#")
+                                .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.RequestItemQty)
+                                .Width(120)
+                                .HtmlAttributes(new { @class = "text-right" }); ;
+                c.Bound(f => f.PlanReturnDate)
+                                .Width(120)
+                                .Format(gridDateFormat)
+                                .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.ActualTakeOutQty)
+                                .Width(120)
+                                .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.ActualReturnQty)
+                                .Width(120)
+                                .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.ActualReturn)
+                                .Width(120)
+                                .Format(gridDateFormat)
+                                .HtmlAttributes(new { @class = "text-center" });
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    if (allowEdit)
+                    {
+                        t.Read(r => r.Action("ListTempItemOutDetails", "AcsItemOut", new { tmpDataID = Model.TempDataId })
+                            .Type(HttpVerbs.Post));
+                        t.Update(r => r.Action("UpdateItemList", "AcsItemOut", new { tmpDataID = Model.TempDataId })
+                            .Type(HttpVerbs.Post));
+                    }
+                    else
+                    {
+                        t.Read(r => r.Action("ListAcsItemOutDetail", "AcsItemOut", new { requestNo = Model.RequestNo })
+                            .Type(HttpVerbs.Post)
+                            .DataType("json"));
+                    }
+                }
+            )
+                .Schema(s =>
+                {
+                    s.Data("Data");
+                    s.Total("Total");
+                    s.Errors("Errors");
+                    s.Model(m =>
+                    {
+                        m.Id(f => f.DetailID);
+                        m.Field(f => f.ItemTypeName).Editable(false);
+                        m.Field(f => f.ItemName).Editable(false);
+                        m.Field(f => f.Description).Editable(false);
+                        m.Field(f => f.Confidential).Editable(false);
+                        m.Field(f => f.RequestItemQty).Editable(false);
+                        m.Field(f => f.PlanReturnDate).Editable(false);
+                        m.Field(f => f.ActualTakeOutQty);
+                        m.Field(f => f.ActualReturnQty);
+                        m.Field(f => f.ActualReturn);
+                        m.Field(f => f.UpdateBy);
+                    });
+                })
+                .PageSize(20)
+                .ServerFiltering(true)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+                )
+                .Events(ev => {
+                    ev.DataBinding("gridDataBinding");
+                    ev.Save("gridSave");
+                    ev.Edit("gridEdit");
+                })
+                )
+            </div>
+        </div>
+
+        <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+        <div class="well well-sm form-horizontal">
+            @{
+                Model.ViewMode = RequestViewMode.View;
+                Html.RenderPartial("_DisplayApproverList", Model);
+            }
+        </div>
+
+        <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+        <div class="well well-sm">
+            @(Html.Kendo().EditorFor(m => m.Note)
+                .Tools(t => t.Clear()
+                      .Bold().Italic().Underline().Strikethrough()
+                      .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                      .InsertUnorderedList().InsertOrderedList()
+                      .Outdent().Indent()
+                      .Formatting()
+                      .CleanFormatting()
+                )
+                .Value(Html.DisplayHtmlFor(m => m.Note).ToString())
+                .HtmlAttributes(new { @class = "k-textbox", style = "width:100%", @maxlength = 4000 })
+            )
+        </div>
+
+        <div class="button-container text-center">
+            @Html.KendoConfirmButton("saveButton", "save" , WidgetResource.Button_Save_Text, new { @class = "k-primary", @data_content = MessageHelper.ConfirmSave() })
+            <a href="@Url.Action("Detail",new { id = Model.RequestNo })" class="k-button k-button-warning"><i class="fa fa-times-circle"></i> @WidgetResource.Button_Cancel_Text</a> 
+        </div>
+        @Html.Hidden("AcsItemOutDetails", "[]")
+    }
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        @*var itemTypes = @Html.Raw(Json.Encode(ItemType.GetList()));*@
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register('ajax', ['.k-button']);
+            uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text" }, ".k-button"]);
+
+            $("#saveButton")
+                .on("openDialog", function (sender, args) {
+                    args.buttons.yes.action = function () {
+                        // get items detail data.
+                        var grid = $("#itemGrid").data("kendoGrid");
+                        var itemsList = [];
+
+                        $.each(grid.dataSource.data().toJSON(), function (index, item) {
+                            itemsList.push({
+                                "DetailID": item.DetailID, "ItemID": item.ItemID, "Seq": item.Seq, "ItemTypeID": item.ItemTypeID
+                                , "ItemTypeName": item.ItemTypeName, "ItemName": item.ItemName, "Description": item.Description
+                                , "Confidential": item.Confidential, "RequestItemQty": item.RequestItemQty, "PlanReturnDate": item.PlanReturnDate
+                                , "ActualTakeOutQty": item.ActualTakeOutQty, "ActualReturnQty": item.ActualReturnQty, "ActualReturn": item.ActualReturn
+                                , "UpdateBy": item.UpdateBy
+                            });
+                        });
+                        $("#AcsItemOutDetails").val(kendo.stringify(itemsList));
+                        uiState.busy("save", true);
+                        $("form").submit();
+                    };
+                });
+
+        });
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+
+        }
+
+        function gridEdit(e) {
+
+            var model = e.model;
+
+            var returnDatePicker = $("#ActualReturn").data("kendoDatePicker");
+            var minDate = kendo.parseDate(@Html.Raw(Json.Encode(Model.TakeOutDate.ToString("yyyy-MM-dd",System.Globalization.CultureInfo.GetCultureInfo(Culture)))),"yyyy-MM-dd");
+            returnDatePicker.min(minDate);
+
+            $("#ActualTakeOutQty").attr("data-max", e.model.RequestItemQty);
+            $("#ActualReturnQty").attr("data-max", e.model.RequestItemQty);
+
+            var validator = e.container.kendoValidator({
+                rules: {
+                    inputTakeInQty: function (input) {
+                        if (input.is("[name='ActualTakeOutQty']"))
+                        {
+                            var value = input.data("kendoNumericTextBox").value();
+                            return value <= input.data("max");
+                        }
+                        return true;
+                    },
+                    inputReturnQty: function (input) {
+                        if (input.is("[name='ActualReturnQty']")) {
+                            var value = input.data("kendoNumericTextBox").value();
+                            return value <= input.data("max");
+                        }
+                        return true;
+                    }
+                },
+                messages: {
+                    inputTakeInQty:  kendo.format("Maximum value for Take Out Qty is {0}",e.model.RequestItemQty) ,
+                    inputReturnQty: kendo.format("Maximum value for Return Qty is {0}",e.model.RequestItemQty)
+                }
+            });
+
+            @if(allowMorethanDate)
+            {
+                <text>$("#A1", e.container).hide();</text>
+            }
+
+            var options = {
+                create: { title: "@ViewResource.AcsItemOut_PopUpSection_Add_Title", button: { text: "@WidgetResource.Button_Add_Text" } },
+                edit: { title: "@ViewResource.AcsItemOut_PopUpSection_Edit_Title", button: { text: "@WidgetResource.Button_Save_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            if (e.type && e.type !== "read") {
+                this.read();
+                //console.log(e.type);
+            }
+            //app.ui.handleDataSourceRequestEnd(e);
+        }
+
+        function gridSave(e) {
+            //console.log("Grid SAve.");
+            var v = e.container.data("kendoValidator");
+            if (!v.validate()) {
+                e.preventDefault();
+            }
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+            //grid.dataSource.cancelChanges();
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+
+        function getItemTypeName(data) {
+            return app.data.getName(itemTypes, data.ItemType);
+        }
+
+       function renderConfidential(data) {
+            return data.Confidential ? "<label class=\"label label-md label-primary\">@ViewResource.Confdt_IsTrue</label>" : "<label>@ViewResource.Confdt_IsFalse</label>";
+        }
+    </script>
+}

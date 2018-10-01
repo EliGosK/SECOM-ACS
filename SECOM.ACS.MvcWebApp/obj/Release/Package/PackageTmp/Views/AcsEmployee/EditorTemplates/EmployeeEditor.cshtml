@@ -1,0 +1,33 @@
+﻿@model AcsEmployeeDetailViewModel
+
+<div class="k-edit-form-container" id="editor-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.EmployeeName, new { @class = "control-label col-md-4" })
+            <div class="col-md-6 control-text">
+                @(Html.Kendo().DropDownListFor(m => m.EmployeeID)
+                    .DataSource(ds=>
+                        ds.Read(r=>
+                            r.Action("Find","Employee")
+                                .Type(HttpVerbs.Post)
+                            )
+                            .ServerFiltering(true)
+                    )
+                    .Filter(FilterType.Contains)
+                    .DataTextField("EmployeeDisplay")
+                    .DataValueField("EmployeeID")
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .HtmlAttributes(new { style = "width:100%", @required = "required" })
+                    .Events(ev=>ev.Select("function(e){ $(\"label[data-display-field=departmentName]\").empty(); if (e.dataItem){  $(\"label[data-display-field=departmentName]\").html(e.dataItem.DepartmentName); } }"))
+                )
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.DepartmentName, new { @class = "control-label col-md-4" })
+            <div class="col-md-6 control-text" >
+                <label data-display-field="departmentName"></label>
+            </div>
+        </div>
+    </div>
+    @Html.KendoValidationSummary("edit-form-error-message",new { @style="margin:0 15px" })
+</div>

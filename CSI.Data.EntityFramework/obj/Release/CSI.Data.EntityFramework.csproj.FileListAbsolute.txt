@@ -1,0 +1,12 @@
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\CSI.Data.EntityFramework.dll.config
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\CSI.Data.EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\CSI.Data.EntityFramework.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\CSI.ComponentModel.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\EntityFramework.SqlServer.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\CSI.ComponentModel.pdb
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\EntityFramework.xml
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\bin\Release\EntityFramework.SqlServer.xml
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Release\CSI.Data.EntityFramework.csprojResolveAssemblyReference.cache
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Release\CSI.Data.EntityFramework.dll
+D:\SECOM-ACS\Repos\Dev\CSI.Data.EntityFramework\obj\Release\CSI.Data.EntityFramework.pdb

@@ -1,0 +1,25 @@
+﻿@model RoleViewModel
+
+<div class="k-edit-form-container" id="user-group-container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.RoleID, new { @class = "control-label col-md-2" })
+            <div class="col-md-6 control-text">
+                @(Html.Kendo().DropDownListFor(m => m.RoleID)
+                    .DataTextField("Name")
+                    .DataValueField("RoleID")
+                    .OptionLabel(WidgetResource.SelectOptions)
+                    .DataSource(ds=>ds.Read(r=>r.Url("/api/roles")))
+                    .HtmlAttributes(new { style = "width:100%", @required = "required" })                
+                )
+            </div>
+        </div>
+        <div class="row">
+           @Html.LabelFor(m => m.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-4 description-field control-text">
+                @Html.HiddenFor(m=>m.Name)
+            </div>
+        </div>
+    </div>
+    @Html.KendoValidationSummary()
+</div>

@@ -1,0 +1,49 @@
+﻿<div class="grid-cotnainer">
+    @(Html.Kendo().NumericTextBox()
+        .Name("qty")
+        .Decimals(4)
+        .Min(0)
+        .Max(500)
+        .RestrictDecimals(false)
+        .Round(false)
+        .Value(5)
+        .Format("n4")
+    )
+       
+    @Html.Kendo().Button().Name("changeButton").Content("0 Decimals").Events(ev=>ev.Click("changeButtonClicked"))
+    @Html.Kendo().Button().Name("changeButton2").Content("2 Decimals").Events(ev => ev.Click("changeButton2Clicked"))
+    @Html.Kendo().Button().Name("changeButton3").Content("4 Decimals").Events(ev => ev.Click("changeButton3Clicked"))
+    @Html.Kendo().Button().Name("showButton").Content("show").Events(ev => ev.Click("showButtonClicked"))
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        function changeButtonClicked(e) {
+            var text = $("#qty").data("kendoNumericTextBox");
+            evaluateQty(text, 0, "n0");
+        }
+
+        function changeButton2Clicked(e) {
+            var text = $("#qty").data("kendoNumericTextBox");
+            evaluateQty(text, 2, "n2");
+        }
+
+        function changeButton3Clicked(e) {
+            var text = $("#qty").data("kendoNumericTextBox");
+            evaluateQty(text, 4, "n4");
+        }
+
+        function showButtonClicked(e) {
+            kendo.alert($("#qty").data("kendoNumericTextBox").value());
+        }
+
+        function evaluateQty(w,decimals,format) {
+            $.extend(true, w.options, { "decimals": decimals, "format": format });
+            var t = kendo.format("{0:"+format+"}", w.value());
+            w.value(kendo.parseFloat(t));
+        }
+    </script>
+}
+
+

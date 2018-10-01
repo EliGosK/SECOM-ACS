@@ -1,0 +1,302 @@
+﻿@{
+    var allowEdit = ViewContext.Controller.HasPermission("MAS030", PermissionNames.Edit);
+    var allowDelete = ViewContext.Controller.HasPermission("MAS030", PermissionNames.Delete);
+    var columnWidth = (allowEdit ? 40 : 0) + (allowDelete ? 40 : 0);
+}
+<div class="search-container">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="col-md-1 control-label">@ViewResource.Area_SearchSection_Factory</label>
+            <div class="col-md-4">
+                @(Html.Kendo().MultiSelect().Name("factory")
+                .Filter(FilterType.StartsWith)
+                .DataSource(ds =>
+                    ds.Read(r =>
+                        r.Url("/api/systemmiscs/factory")
+                    )
+                 )
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .AutoClose(false)
+                .HtmlAttributes(new { style = "width:100%" })
+                .Placeholder(WidgetResource.AllOptions)
+                )
+            </div>
+            <label class="col-md-1 control-label">@ViewResource.Area_SearchSection_Status</label>
+            <div class="col-md-3">
+                @(Html.Kendo().MultiSelect()
+                    .Name("status")
+                    .BindTo(AcsModelHelper.GetAreaStatus())
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .HtmlAttributes(new { style = "width:100%" })
+                    .Placeholder(WidgetResource.AllOptions)
+                    .AutoClose(false)
+                )
+            </div>
+            <div class="col-md-3">
+                @Html.SearchButton(htmlAttributes: new { @class = "k-primary k-search" })
+                @Html.ClearButton(htmlAttributes: new { @class = "k-button-warning k-clear" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    @(Html.Kendo().Grid<AreaViewModel>()
+        .Name("grid")
+            .Scrollable(s => s.Height(500))
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .HtmlAttributes(new { style = "min-height:200px" })
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("AreaEditor")
+                .Window(w => w.Width(800)
+                .Events(ev => ev.Activate("popupEditActivate")))
+            )
+            .ToolBar(t => {
+                if (this.Context.HasPermission("MAS030", PermissionNames.Add))
+                {
+
+                    t.Template((Html.GridAddButton().ToHtmlString()));
+                }
+            }
+                )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .ClientTemplate("#=renderActionButton(data)#")
+                    .Visible(allowEdit || allowDelete)
+                    .Width(columnWidth);
+                c.Template(t => { })
+                  .Width(60)
+                  .Title(WidgetResource.Grid_Column_No)
+                  .HtmlAttributes(new { @class = "text-right" })
+                  .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.FactoryCode)
+                    .ClientTemplate("#=renderFactory(data)#")
+                    .Width(100);
+                c.Bound(f => f.AreaID)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Visible(false)
+                    .Width(60);
+                c.Bound(f => f.AreaName)
+                    .Width(140);
+                c.Bound(f => f.AreaDisplayEN);
+                c.Bound(f => f.AreaDisplayTH);
+                c.Bound(f => f.ConfdtLevel)
+                    .HtmlAttributes(new { @class = "text-center" })
+                   .Width(100);
+                c.Bound(f => f.Gates)
+                    .Width(100)
+                    .ClientTemplate("#=renderGate(data)#");
+                c.Bound(f => f.Status)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .ClientTemplate("#=renderStatus(data)#")
+                   .Width(80);
+
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("List", "Area")
+                        .Type(HttpVerbs.Post)
+                            .Data("getSearchCriteria")
+                            .DataType("json"));
+                    t.Update(r => r.Action("Update", "Area")
+                         .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("Delete", "Area")
+                         .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("Create", "Area")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                })
+    .Schema(s =>
+    {
+        s.Data("Data");
+        s.Total("Total");
+        s.Errors("Errors");
+        s.Model(m =>
+        {
+            m.Id(f => f.AreaID);
+            m.Field(f => f.FactoryCode);
+            m.Field(f => f.ConfdtLevel);
+            m.Field(f => f.Gates);
+            m.Field(f => f.SelectedGates);
+            m.Field(f => f.AreaDisplayEN);
+            m.Field(f => f.AreaDisplayTH);
+            m.Field(f => f.Status).DefaultValue("1");
+            m.Field(f => f.ApproverDepartment);
+            m.Field(f => f.ApproverPosition);
+            m.Field(f => f.Sub1Department);
+            m.Field(f => f.Sub1Position);
+            m.Field(f => f.Sub2Department);
+            m.Field(f => f.Sub2Position);
+        });
+    })
+    .PageSize(20)
+    .ServerFiltering(true)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .Events(e =>
+    {
+        e.RequestStart("dataSourceRequestStart");
+        e.RequestEnd("dataSourceRequestEnd");
+        e.Error("dataSourceError");
+    })
+    )
+    .Events(ev => { ev.Edit("gridEdit"); ev.DataBinding("gridBinding"); })
+    )
+
+</div>
+<script id="gateTemplate" type="text/x-kendo-template">
+    <ul class="list-unstyled list-gate">
+        # for (var i=0; i < data.length;i++){ #
+        <li><i class="fa fa-circle"></i> #= data[i].Name #</li>
+        # } #
+    </ul>
+</script>
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+        var factories = @Html.JsonSystemMisc("Factory");
+
+        $(document).ready(function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+
+            uiState.register('ajax', ['.k-button']);
+
+            $(".k-search").on("click", function (e) {
+                    e.preventDefault();
+                    grid.dataSource.page(1);
+                });
+
+            $(".k-clear").on("click", function (e) {
+                    e.preventDefault();
+                    app.ui.clear(["#grid", "#status", "#factory"]);
+                });
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            this.cancelChanges();
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+            $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function gridEdit(e) {
+            console.log(e)
+            var factory = e.container.find("#FactoryCode").data("kendoDropDownList");
+            var gates = e.container.find("#SelectedGates").data("kendoMultiSelect");
+            var options = {
+            create: { title: "@(ViewResource.Area_PopUpSection_Add_Title)",button: { text: "@WidgetResource.Button_Add_Text" } },
+                edit: { title: "@(ViewResource.Area_PopUpSection_Edit_Title)", button: { text: "@WidgetResource.Button_Update_Text" } },
+                cancelButton: { text: "@WidgetResource.Button_Cancel_Text" }
+            };
+
+            if (!e.model.isNew()) {
+                e.container.find("#AreaName").attr("readonly", "readonly");
+                factory.enable(false);
+            }
+
+            factory.bind("select", function (e) {
+                if (e.dataItem) {
+                    updateGateDataSource(gates, e.dataItem.Value)
+                }
+            });
+
+            updateGateDataSource(gates, e.model.FactoryCode);
+            gates.value(e.model.SelectedGates);
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function updateGateDataSource(widget,factoryCode) {
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: "/api/gates/factory/" + factoryCode,
+                        dataType: "json"
+                    }
+                }
+            });
+            widget.setDataSource(dataSource);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    factoryCode: $("#factory").data("kendoMultiSelect").value(),
+                    status: $("#status").data("kendoMultiSelect").value()
+                }
+            };
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderFactory(data) {
+            return app.data.getName(factories, data.FactoryCode);
+        }
+
+        function renderGate(data) {
+            if (data.Gates == undefined) { return ""; }
+            return kendo.template($("#gateTemplate").html())(data.Gates);
+        }
+
+        function renderActionButton(data) {
+            var html = '';
+            @if (allowEdit)
+            {
+                <text>html += '@Html.Raw(Html.GridEditButton().ToHtmlString())';</text>
+            }
+
+            @if (allowDelete)
+            {
+                <text>html += '@Html.Raw(Html.GridDeleteButton().ToHtmlString())';</text>
+            }
+             return html;
+        }
+
+        function renderStatus(data) {
+           switch (data.Status)
+            {
+                case "@AreaStatus.Active":
+                   return "<label class=\"label label-md label-primary\">@ModelMetadataResource.AreaStatus_Active</label>";
+                case "@AreaStatus.Inactive":
+                   return "<label class=\"label label-md label-default\">@ModelMetadataResource.AreaStatus_Inactive</label>";
+                default:
+                    return data.Status;
+            }
+        }
+    </script>
+}
+

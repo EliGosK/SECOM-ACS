@@ -1,0 +1,82 @@
+﻿@model VIPCardRegistrationViewModel
+
+<div id="VIPCardRegis" style="margin:5px">
+    <div class="form-horizontal">
+        @Html.HiddenFor(m => m.Status)
+        @Html.HiddenFor(m => m.CardID)
+        <div class="form-group">
+            @Html.LabelFor(m => m.CardNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.Kendo().TextBoxFor(m => m.CardNo).HtmlAttributes(new { @style = "width:100%", maxlength = 20, @readonly="readonly", @disabled="disabled" })
+            </div>
+            @Html.LabelFor(m => m.RequestNo, new { @class = "control-label col-md-2 k-unavailable-status" })
+            <div class="col-md-3 k-unavailable-status">
+                @Html.Kendo().TextBoxFor(m => m.RequestNo).HtmlAttributes(new { @style = "width:100%", maxlength = 20, @readonly = "readonly", @disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBoxFor(m => m.Name).HtmlAttributes(new { @style = "width:100%" , required = "required", data_field = Html.DisplayNameFor(m => m.Name),maxlength =256 })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelRequiredHintFor(m => m.Company, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBoxFor(m => m.Company).HtmlAttributes(new { @style = "width:100%", maxlength = 256 })
+            </div>
+        </div>
+
+        <div class="form-group k-available-status">
+            @Html.LabelRequiredHintFor(m => m.PositionID, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @(Html.Kendo().DropDownListFor(m => m.PositionID)
+                .DataSource(ds => ds.Read(r => r.Url("/api/miscs/list/" +MiscTypes.VIPPosition)))
+                .DataTextField("Name")
+                .DataValueField("Value")
+                .ValuePrimitive(true)
+                .OptionLabel(WidgetResource.SelectOptions)
+                .HtmlAttributes(new { @style = "width:100%", required="required", data_field=Html.DisplayNameFor(m=>m.PositionID) })
+                )
+            </div>
+        </div>
+
+        <div class="form-group k-unavailable-status">
+            @Html.LabelFor(m => m.PositionID, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBoxFor(m=>m.PositionName).HtmlAttributes(new { @style="width:100%", @readonly=true, @disabled="disabled" })
+            </div>
+        </div>
+
+        <div class="form-group k-available-status">
+            @Html.LabelRequiredHintFor(m => m.SelectedAreaList, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @(Html.Kendo().MultiSelectFor(m => m.SelectedAreaList)
+                .DataSource(ds => ds.Read(r => r.Url("/api/area/list")))
+                .DataTextField("Name")
+                .DataValueField("AreaID")
+                .ValuePrimitive(true)
+                .Placeholder(WidgetResource.SelectOptions)
+                .HtmlAttributes(new { @data_field = Html.DisplayNameFor(m => m.Area), @style = "width:100%", required = "required" })
+                .AutoClose(false)
+                )
+                @Html.KendoValidationMessageFor(m => m.Area)
+            </div>
+        </div>
+
+        <div class="form-group k-unavailable-status">
+            @Html.LabelFor(m => m.Area, new { @class = "control-label col-md-2" })
+            <div class="col-md-8 k-area-list">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.Kendo().TextBoxFor(m => m.Description).HtmlAttributes(new { @style = "width:100%" , maxlength=256})
+            </div>
+        </div>
+    </div>
+</div>
+

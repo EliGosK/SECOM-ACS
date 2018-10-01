@@ -1,0 +1,26 @@
+﻿<div class="grid-cotnainer">
+    @Html.CommandButton("errorButton","times-circle","Error",new { @class = "k-button k-button-danger" }).Events(ev=>ev.Click("errroButtonClicked"))
+    @Html.KendoValidationSummary()
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        function errroButtonClicked(e) {
+            $("#validation-summary").empty().hide();
+            $.ajax({
+                url: "@Url.Action("Error")",
+                type: "POST",
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                },
+                error: function (xhr, status, error) {
+                    var message = app.ui.handleAjaxError(xhr, status, error);
+                    $("#validation-summary").html(message).show();
+                }
+            });
+        }
+    </script>
+}
+
+

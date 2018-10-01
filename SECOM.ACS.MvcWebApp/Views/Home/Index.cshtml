@@ -1,0 +1,104 @@
+﻿@{
+    var carouselImages = new string[]{
+        "~/Images/carousel/s1.jpg",
+        "~/Images/carousel/s2.jpg",
+        "~/Images/carousel/s3.jpg",
+        "~/Images/carousel/s5.png"
+
+    };
+}
+
+<div id="carousel-acs" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @for (int i = 0; i < carouselImages.Length; i++)
+            {
+            <li data-target="#carousel-acs" data-slide-to="@i" class="@(i==0?"active":"in-active")"></li>
+        }
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        @for (int i = 0; i < carouselImages.Length; i++)
+            {
+            <div class="item text-center @(i==0?"active":"in-active")">
+                <img src="@Url.Content(carouselImages[i])" class="img-responsive" />
+            </div>
+        }
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-acs" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-acs" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<div class="welcome-container">
+    <h1>Welcome to AISIN AI - Access Control System</h1>
+    <div class="form-horizontal well well-sm well-shadow">
+        <div class="form-group">
+            
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Dashboard", "Request")" class="k-button k-button-info  btn-block btn-lg"><i class="fa fa-window-restore"></i> Dashboard</a>
+                </div>
+            
+            @if (ViewContext.Controller.HasPermission("ACS020", PermissionNames.Add))
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Create", "AcsEmployee")" class="k-button k-button-success btn-block btn-lg"><i class="fa fa-edit"></i> Request Employee To Access</a>
+                </div>
+            }
+            @if (ViewContext.Controller.HasPermission("ACS030", PermissionNames.Add))
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Create", "RequestVisitor")" class="k-button k-button-danger btn-block btn-lg"><i class="fa fa-edit"></i> Request Visitor To Access</a>
+                </div>
+            }
+
+            @if (ViewContext.Controller.HasPermission("ACS040", PermissionNames.Add))
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Create", "RequestItemOut")" class="k-button k-button-warning2 btn-block btn-lg"><i class="fa fa-upload"></i> Request Item Out</a>
+                </div>
+            }
+            @if (ViewContext.Controller.HasPermission("ACS050", PermissionNames.Add))
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Create", "RequestItemIn")" class="k-button k-button-warning btn-block btn-lg"><i class="fa fa-download"></i> Request Item In</a>
+                </div>
+            }
+            @if (ViewContext.Controller.HasPermission("ACS060", PermissionNames.Add))
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-margin-button">
+                    <a href="@Url.Action("Create", "RequestPhotographing")" class="k-button k-button-info2 btn-block btn-lg"><i class="fa fa-camera"></i> Request Photographing</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section styles
+    {
+    <style type="text/css">
+        #carousel-acs {
+            max-height: 280px;
+            overflow-y: hidden;
+        }
+
+        .welcome-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+            .welcome-container h1 {
+                font-size: 2.4em;
+            }
+
+        .col-margin-button {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+}

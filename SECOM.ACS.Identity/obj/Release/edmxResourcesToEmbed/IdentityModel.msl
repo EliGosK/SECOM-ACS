@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SECOMACSIdentityStoreContainer" CdmEntityContainer="IdentityContext">
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="SECOM.ACS.Identity.Role">
+        <MappingFragment StoreEntitySet="tbs_Role">
+          <ScalarProperty Name="ViewDSH09" ColumnName="ViewDSH09" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="ViewDSH08" ColumnName="ViewDSH08" />
+          <ScalarProperty Name="ViewDSH07" ColumnName="ViewDSH07" />
+          <ScalarProperty Name="ViewDSH06" ColumnName="ViewDSH06" />
+          <ScalarProperty Name="ViewDSH05" ColumnName="ViewDSH05" />
+          <ScalarProperty Name="ViewDSH04" ColumnName="ViewDSH04" />
+          <ScalarProperty Name="ViewDSH03" ColumnName="ViewDSH03" />
+          <ScalarProperty Name="ViewDSH02" ColumnName="ViewDSH02" />
+          <ScalarProperty Name="ViewDSH01" ColumnName="ViewDSH01" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsSystemRole" ColumnName="IsSystemRole" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="SECOM.ACS.Identity.User">
+        <MappingFragment StoreEntitySet="tbs_User">
+          <ScalarProperty Name="IsLending" ColumnName="IsLending" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+          <ScalarProperty Name="IsVerifyItemIn" ColumnName="IsVerifyItemIn" />
+          <ScalarProperty Name="IsVerifyItemOut" ColumnName="IsVerifyItemOut" />
+          <ScalarProperty Name="LastSignedInDate" ColumnName="LastSignedInDate" />
+          <ScalarProperty Name="LastChangePassword" ColumnName="LastChangePassword" />
+          <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tbs_RoleUserMapping" TypeName="SECOM.ACS.Identity.tbs_RoleUserMapping" StoreEntitySet="tbs_RoleUserMapping">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="UserID" />
+      </EndProperty>
+      <EndProperty Name="Role">
+        <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

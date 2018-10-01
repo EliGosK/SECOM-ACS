@@ -1,0 +1,736 @@
+﻿@model AcsEmployeeViewModel
+@using Vereyon.Web;
+@using SECOM.ACS.Infrastructure;
+@{
+    var startTime = ApplicationContext.Setting.KendoUI.TimePickerMinTime;
+    var endTime = ApplicationContext.Setting.KendoUI.TimePickerMaxTime;
+    var photoTypes = AcsModelHelper.GetPhotoByTypes();
+    var internval = ApplicationContext.Setting.KendoUI.TimePickerInterval;
+    var findEmployeeMinLength = ApplicationContext.Setting.KendoUI.AutoCompleteMinLengthForEmployeeName;
+    var mapImageFolder = ApplicationContext.Setting.MapImageFolder;
+
+    var note = Html.DisplayHtmlFor(m => m.Note).ToString();
+}
+@Html.RenderFlashMessages()
+<div class="animated fadeIn">
+    @using (Html.BeginForm("EditForAuthor", "AcsEmployee", FormMethod.Post, new { @id = "edit-form", @class = "form-horizontal", @novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ReqNo)
+        <div class="well well-warning">
+            @MessageResource.MSG0034
+        </div>
+        <div class="well well-sm">
+            <div class="row">
+                @Html.LabelFor(m => m.ReqNo, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Model.ReqNo</label>
+                @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                <label class="col-md-2 control-text">@Html.DisplayRequestStatusName(Model.Status)</label>
+            </div>
+            <div class="row">
+
+                @Html.LabelFor(m => m.CreateBy, new { @class = "col-md-2 control-label" })
+                <div class="col-md-3 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeName)
+                </div>
+                @Html.LabelFor(m => m.RequestEmployeeDepartmentName, new { @class = "col-md-1 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayFor(m => m.RequestEmployeeDepartmentName)
+                </div>
+                @Html.LabelFor(m => m.CreateDate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2 control-text">
+                    @Html.DisplayDate(Model.CreateDate)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestFor, new { @class = "col-md-2 control-label" })
+                <div class="col-md-4 control-text">
+                    @Html.DisplayRequestFor(Model.RequestFor)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.EntryDateFrom, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @(Html.Kendo().DatePickerFor(m => m.EntryDateFrom)
+                        .Min(DateTime.Now)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m => m.EntryTimeFrom, startTime, endTime, internval)
+                        .HtmlAttributes(new { style = "width:100px" })
+                    )
+                    <span>-</span>
+                    @(Html.Kendo().DatePickerFor(m => m.EntryDateTo)
+                        .Min(DateTime.Now)
+                        .Events(ev => ev.Change("datePickerChange"))
+                        .HtmlAttributes(new { @required = "required" })
+                    )
+                    @(Html.DropDownTimePickerFor(m => m.EntryTimeTo, startTime, endTime, internval)
+                        .HtmlAttributes(new { style = "width:100px" }))
+
+                </div>
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.Areas, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 control-text">
+                    <ul class="list-unstyled list-inline">
+                        @{
+                            foreach (var areaApprover in Model.AreaApprovals.Where(t => t.AreaID.HasValue).ToList())
+                            {
+                                <li><label class="label label-primary label-md">@Html.DisplayFactory(areaApprover.Area.FactoryCode): @ModelLocalizeManager.GetValue(areaApprover.Area, "AreaDisplay")</label></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    @Html.CommandButton("viewMapButton", "map", WidgetResource.Button_ViewMap_Text, new { @class = "k-button-info" }).Events(ev => ev.Click("viewMapClicked"))
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelRequiredHintFor(m => m.PurposeCodeID, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2">
+                    @(Html.Kendo().DropDownListFor(m => m.PurposeCodeID)
+                        .DataSource(ds => ds.Read(r => r
+                              .Url("/api/miscs/list/" + PurposeRequestTypes.Employee)
+                              .Type(HttpVerbs.Get)
+                            )
+                        )
+                        .DataTextField("Name")
+                        .DataValueField("Value")
+                        .Filter(FilterType.Contains)
+                        .OptionLabel(WidgetResource.SelectOptions)
+                        .HtmlAttributes(new { style = "width:100%", @data_field = Html.DisplayNameFor(m => m.PurposeCodeID) })
+                        .Events(ev => ev.Change("purposeCodeChange").DataBound("purposeCodeDataBound"))
+                    )
+                </div>
+                @Html.LabelRequiredHintFor(m => m.OtherPurpose, new { @class = "col-md-1 control-label other-purpose" })
+                <div class="col-md-6">
+                    @(Html.Kendo().TextBoxFor(m => m.OtherPurpose).HtmlAttributes(new { @maxlength = "256", style = "width:100%", @class = "other-purpose", @data_field = Html.DisplayNameFor(m => m.OtherPurpose) })
+                    )
+                </div>
+            </div>
+        </div>
+
+                            if (Model.RequestFor == RequestFors.BusinessTrip)
+                            {
+                                <h2><i class="fa fa-th-list"></i> @ViewResource.AcsEmployee_BusinessTripSection_Title</h2>
+                                <div class="grid-container">
+                                    @(Html.Kendo().Grid<AcsEmployeeDetailViewModel>()
+                .Name("businessTripGrid")
+                .Scrollable()
+                .Pageable(p => p.Refresh(true).PageSizes(true).ButtonCount(5))
+                .HtmlAttributes(new { style = "height:100%;" })
+                .ToolBar(t => t.Template(
+                        Html.GridAddButton().ToHtmlString() +
+                        Html.CommandButton("importBusinessTrip", "download", WidgetResource.Button_Import_Text, new { @type = "button", @class = "k-button-info k-grid-import", @data_request_for = RequestFors.BusinessTrip, @data_temp_id = Model.TempDataId, @data_grid = "businessTripGrid", }).ToHtmlString() +
+                        Html.KendoConfirmButton("clearBusinessTrip", "times-circle", WidgetResource.Button_Clear_Text, new { @type = "button", @class = "k-button-warning k-grid-clear", @data_content = MessageHelper.ConfirmClearEmployeeList(), @data_grid = "businessTripGrid", @data_temp_id = Model.TempDataId }).ToHtmlString())
+                    )
+                .Columns(c =>
+                {
+                    c.Template(f => { }).ClientTemplate("#=_rowNo#")
+                           .Title(WidgetResource.Grid_Column_No)
+                           .HtmlAttributes(new { @class = "text-right" })
+                           .Width(60);
+                    c.Bound(f => f.EmployeeName);
+                    c.Bound(f => f.DepartmentName);
+                    c.Command(cmd =>
+                    {
+                        cmd.Edit().Text(" ")
+                            .CancelText(" ")
+                            .UpdateText(" ")
+                            .HtmlAttributes(new { @class = "k-button-sm" });
+                        cmd.Destroy().Text(" ")
+                            .HtmlAttributes(new { @class = "k-button-sm k-button-danger" });
+                    }).Width(100);
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r =>
+                            r.Action("GetTempEmployee", "AcsEmployee", new { tempDataId = Model.TempBusinessDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Create(r =>
+                            r.Action("CreateTempEmployee", "AcsEmployee", new { tempDataId = Model.TempBusinessDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Update(r =>
+                            r.Action("UpdateTempEmployee", "AcsEmployee", new { tempDataId = Model.TempBusinessDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Destroy(r =>
+                            r.Action("DeleteTempEmployee", "AcsEmployee", new { tempDataId = Model.TempBusinessDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                    })
+                    .Schema(s =>
+                    {
+                        s.Model(m =>
+                        {
+                            m.Id(f => f.DetailID);
+
+                        });
+                        s.Data("Data").Total("Total").Errors("Errors");
+                    })
+                    .Events(ev =>
+                    {
+                        ev.RequestStart("dataSourceRequestStart");
+                        ev.RequestEnd("dataSourceRequestEnd");
+                        ev.Error("dataSourceError");
+                    })
+                    .PageSize(20)
+                    .ServerFiltering(true)
+                    .ServerPaging(true)
+                    .ServerSorting(true)
+                )
+                .AutoBind(true)
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridBinding");
+                })
+            )
+        </div>
+    }
+
+    if (Model.RequestFor == RequestFors.Employee)
+    {
+        <h2><i class="fa fa-th-list"></i> @ViewResource.AcsEmployee_EmployeeListSection_Title</h2>
+        <div class="grid-container">
+            @(Html.Kendo().Grid<AcsEmployeeDetailViewModel>()
+                .Name("employeeGrid")
+                .Scrollable()
+                .Pageable(p => p.Refresh(true).PageSizes(true).ButtonCount(5))
+                .HtmlAttributes(new { style = "height:100%;" })
+                 .ToolBar(t => t.Template(
+                    Html.GridAddButton().ToHtmlString() +
+                    Html.CommandButton("importEmployee", "download", WidgetResource.Button_Import_Text, new { @type = "button", @class = "k-button-info k-grid-import", @data_request_for = RequestFors.Employee, @data_temp_id = Model.TempDataId, @data_grid = "employeeGrid", }).ToHtmlString() +
+                    Html.KendoConfirmButton("clearEmployee", "times-circle", WidgetResource.Button_Clear_Text, new { @type = "button", @class = "k-button-warning k-grid-clear", @data_content = MessageHelper.ConfirmClearEmployeeList(), @data_grid = "employeeGrid", @data_temp_id = Model.TempDataId }).ToHtmlString())
+                )
+                .Columns(c =>
+                {
+                    c.Command(cmd =>
+                    {
+                        cmd.Edit().Text(" ")
+                            .CancelText(" ")
+                            .UpdateText(" ")
+                            .HtmlAttributes(new { @class = "k-button-sm" });
+                        cmd.Destroy().Text(" ")
+                            .HtmlAttributes(new { @class = "k-button-sm k-button-danger" });
+                    }).Width(100);
+                    c.Template(f => { }).ClientTemplate("#=_rowNo#")
+                        .Title(WidgetResource.Grid_Column_No)
+                        .HtmlAttributes(new { @class = "text-right" })
+                        .Width(60);
+                    c.Bound(f => f.EmployeeID);
+                    c.Bound(f => f.EmployeeName);
+                    c.Bound(f => f.DepartmentName);
+                    
+                })
+                .DataSource(ds => ds
+                    .Custom().Transport(t =>
+                    {
+                        t.Read(r =>
+                            r.Action("GetTempEmployee", "AcsEmployee", new { tempDataId = Model.TempEmployeeDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Create(r =>
+                            r.Action("CreateTempEmployee", "AcsEmployee", new { tempDataId = Model.TempEmployeeDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Update(r =>
+                            r.Action("UpdateTempEmployee", "AcsEmployee", new { tempDataId = Model.TempEmployeeDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                        t.Destroy(r =>
+                            r.Action("DeleteTempEmployee", "AcsEmployee", new { tempDataId = Model.TempEmployeeDataId })
+                            .Type(HttpVerbs.Post)
+                        );
+                    })
+                    .Schema(s =>
+                    {
+                        s.Model(m =>
+                        {
+                            m.Id(f => f.DetailID);
+                            m.Field(f => f.EmployeeName).Editable(false);
+                            m.Field(f => f.DepartmentName).Editable(false);
+                        });
+                        s.Data("Data").Total("Total").Errors("Errors");
+                    })
+                    .Events(ev =>
+                    {
+                        ev.RequestStart("dataSourceRequestStart");
+                        ev.RequestEnd("dataSourceRequestEnd");
+                        ev.Error("dataSourceError");
+                    })
+                    .PageSize(20)
+                    .ServerFiltering(true)
+                    .ServerPaging(true)
+                    .ServerSorting(true)
+                )
+                .AutoBind(true)
+                .Events(ev =>
+                {
+                    ev.DataBinding("gridBinding");
+                })
+                                    )
+                                </div>
+                            }
+                            @Html.Hidden("AcsEmployeeDetails", "[]", new { data_field = Html.DisplayNameFor(m => m.AcsEmployeeDetails) })
+                            <h2><i class="fa fa-list-ul"></i> @ViewResource.ApprovalSection_Title</h2>
+                            <div class="well well-sm form-horizontal">
+                                @{
+                                    Model.ViewMode = RequestViewMode.View;
+                                    Html.RenderPartial("_DisplayApproverList", Model);
+                                }
+                            </div>
+                            <h2><i class="fa fa-file-text-o"></i> @ViewResource.NoteSection_Title</h2>
+                            <div class="well well-sm">
+                                @(Html.Kendo().EditorFor(m=>m.Note)
+                                    .Tools(t => t.Clear()
+                                          .Bold().Italic().Underline().Strikethrough()
+                                          .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                                          .InsertUnorderedList().InsertOrderedList()
+                                          .Outdent().Indent()
+                                          .Formatting()
+                                          .CleanFormatting()
+                                    )      
+                                    .Value(Html.DisplayHtmlFor(m=>m.Note).ToString())
+                                    .HtmlAttributes(new { @class = "k-textbox", style = "width:100%", @maxlength = 4000 }))
+                            </div>
+                            <div class="text-center">
+                                <div class="button-container">
+                                    @(Html.KendoConfirmButton("saveButton", "<i class='fa fa-save'></i> " + WidgetResource.Button_Save_Text, new { @class = "k-primary", data_content = MessageHelper.ConfirmSave() }))
+                                    <a class="k-button k-button-warning" href="@Url.Action("Detail",new { id = Model.ReqNo })"><i class="fa fa-times-circle"></i> @WidgetResource.Button_Cancel_Text</a>
+                                    @if (Model.AllowCancelRequest(User))
+                                    {
+                                        @Html.KendoConfirmButton("cancelRequestButton", "times-circle", WidgetResource.Button_CancelRequest_Text, new { @class = "k-button-danger k-cancel-request", data_content = MessageHelper.ConfirmCancelRequest() })
+                                    }
+                                </div>
+                            </div>
+                                    }
+</div>
+<div id="mapWindow">
+    @Html.UniteGallery("gallery", mapImageFolder)
+</div>
+@(Html.Kendo().Window()
+        .Modal(true)
+        .Draggable(true)
+        .Name("importDialog")
+        .Title(ViewResource.AcsEmployee_PopUpSection_Import_Title)
+        .Visible(false)
+        .HtmlAttributes(new { @class = "k-content" })
+        .Width(800)
+        .Content(
+            "<div class='upload-container'>" +
+            Html.Kendo().Upload()
+                    .Name("files")
+                    .Async(a => a
+                    .Save("Upload", "AcsEmployee")
+                    .AutoUpload(true)
+                    )
+                    .Validation(v => v
+                        .AllowedExtensions(ApplicationContext.Setting.AcsEmployee.AllowedFileExtensions)
+                        .MaxFileSize(ApplicationContext.Setting.AcsEmployee.AllowUploadFileMaxFileSize)
+                    )
+                    .Events(ev => ev.Success("filesSuccess"))
+                    .Multiple(false).ToHtmlString() +
+            Html.DisplayUploadHint(ApplicationContext.Setting.AcsEmployee.AllowedFileExtensions, ApplicationContext.Setting.AcsEmployee.AllowUploadFileMaxFileSize) +
+            "<div class='import-container'></div>" +
+            "<div class='import-action-container button-container' style='display:none'><div style='text-align:center'>" +
+            Html.CommandButton("importButton", "save", WidgetResource.Button_Save_Text, new { @type = "button", @class = "k-button-primary" }).Events(ev => ev.Click("importButtonClicked")) +
+            "&nbsp;" +
+            Html.CommandButton("closeButton", "times-circle", WidgetResource.Button_Close_Text, new { @type = "button", @class = "k-button-warning" }).Events(ev => ev.Click("closeButtonClicked")) +
+            "</div></div></div>"
+    )
+    .Events(ev => ev.Open("dialogOpen"))
+)
+@Html.Hidden("employeeImportData", "[]")
+<script id="employeeTemplate" type="text/x-kendo-template">
+    # if (data.Data.length>0) { #
+    <h3><i class="fa fa-id-user"></i> #= kendo.format("@ViewResource.ImportData_Success_Title",data.Data.length) #</h3>
+    <div class="import-list">
+        <div class="row">
+            # for (var i=0;i< data.Data.length;i++){ #
+            <div class="col-md-10">
+                <div class="well well-sm">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        # if (data.Data[i].EmployeeID!==undefined){ #
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.EmployeeID)):</strong> #=data.Data[i].EmployeeID# </div>
+                        # } else { #
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.EmployeeName)):</strong> #=data.Data[i].EmployeeName#</div>
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.DepartmentName)):</strong> #=data.Data[i].DepartmentName# </div>
+                        # }  #
+                    </div>
+                </div>
+            </div>
+            # } #
+        </div>
+    </div>
+    # } #
+    # if (data.Errors.length>0) { #
+    <h3><i class="fa fa-id-user"></i> #= kendo.format("@ViewResource.ImportData_Error_Title",data.Errors.length) #</h3>
+    <div class="import-list">
+        <ul class="list-unstyled">
+            # for (var i = 0;i< data.Errors.length; i++) { #
+            <li>
+                <label class="badge">#=i+1#</label> <i class="fa fa-file-text-o"></i> #=data.Errors[i].Data.join('|')#
+                <div class="alert alert-danger">
+                    #=data.Errors[i].Error #
+                </div>
+            </li>
+            # } #
+        </ul>
+    </div>
+    # } #
+</script>
+<script id="resultTemplate" type="text/x-kendo-template">
+    <div class="import-list">
+        <div class="row">
+            # if (data.IsSucceed){ #
+            <div class="alert alert-success">@ViewResource.AcsEmployee_PopUpSection_ImportSuccess</div>
+            # } else { #
+            # for (var i=0;i< data.Results.length;i++) {  #
+            # var result = data.Results[i]; #
+            # if (!result.Error) { continue; } #
+            <div class="col-md-10">
+                <div class="alert alert-danger">
+                    <div style="float:left">
+                        <label class="badge">#=i+1#</label>
+                    </div>
+                    <div style="padding-left:40px">
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.EmployeeID)):</strong> #=result.Data.EmployeeID# </div>
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.EmployeeName)):</strong> #=result.Data.EmployeeName#</div>
+                        <div><strong>@(Html.DisplayName<AcsEmployeeDetailViewModel>(t => t.DepartmentName)):</strong> #=result.Data.DepartmentName# </div>
+                        <div><strong>Error:</strong> #=result.Error# </div>
+                    </div>
+                </div>
+            </div>
+            #  } } #
+        </div>
+    </div>
+</script>
+@section styles{
+    @Styles.Render("~/assets/libs/unite-gallery/css/unite-gallery.css")
+    @Styles.Render("~/assets/libs/unite-gallery/themes/default/ug-theme-default.css")
+    @Styles.Render("~/assets/libs/unite-gallery/skins/alexis/alexis.css")
+    <style type="text/css">
+        .import-list {
+            height: 300px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .col-md-clear {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+}
+@section scripts{
+    @Scripts.Render("~/assets/libs/unite-gallery/js/unitegallery.js")
+    @Scripts.Render("~/assets/libs/unite-gallery/themes/default/ug-theme-default.js")
+    <script type="text/javascript">
+        var validator, dialog;
+        var uiState = new AppUIState();
+
+        $(document).ready(function (e) {
+            app.initPage();
+            uiState.register("grid", ['.k-button']);
+            uiState.register("cancelRequest", ['.k-button']);
+            uiState.register("save", [{ elem: "#saveButton", busyContent: "<i class=\"fa fa-spin fa-spinner\"></i> @WidgetResource.Button_Busy_Text"},".k-button"]);
+
+            validator = $("form").kendoValidator({
+                rules: {
+                    otherPurpose: function (input) {
+                        if (input.is("[name=@Html.NameFor(m => m.OtherPurpose)]") && input.val() == "") {
+                            var d = $("#@Html.IdFor(m=>m.PurposeCodeID)").data("kendoDropDownList");
+                            var dataItem = d.dataItem();
+                            if (dataItem && dataItem.Key !== undefined) {
+                                return !(dataItem.Key.toUpperCase() == "OTHER");
+                            }
+                        }
+                        return true;
+                    },
+                    requireEmployeeDetail: function (input) {
+                        if (input.is("[name=@Html.NameFor(m=>m.AcsEmployeeDetails)]"))
+                        {
+                            var gridId = "@(Model.RequestFor== RequestFors.Employee ? "#employeeGrid" : "#businessTripGrid")";
+                            var grid = $(gridId).data("kendoGrid");
+                            return grid.dataSource.data().toJSON().length > 0;
+                        }
+                        return true;
+                    }
+                },
+                messages: {
+                    otherPurpose: function (input) {
+                        return app.ui.getRequiredMessage(input);
+                    },
+                     requireEmployeeDetail: function (input) {
+                        return "@ViewResource.AcsEmployeeDetailRequired";
+                    }
+                },
+                validate: function () {
+                    app.ui.showValidateSummary(this.errors());
+                }
+            }).data("kendoValidator");
+
+            dialog = $("#importDialog").data("kendoWindow");
+
+            $(".k-grid-import").on("click", function (e) {
+                $("#importButton")
+                    .attr("data-temp-id", $(this).data("temp-id"))
+                    .attr("data-grid", $(this).data("grid"))
+                    .attr("data-request-for", $(this).data("request-for"));
+
+                $("#files").data("kendoUpload").options.async.saveUrl = "@Url.Action("Upload", "AcsEmployee")?v=" + $(this).data("request-for");
+                dialog.open().center();
+            });
+
+            $(".k-grid-clear").on("openDialog", function (sender, e) {
+                var tempDataId = $(this).data("temp-id");
+                var gridId = $(this).data("grid");
+                e.buttons.yes.action = function () {
+                    uiState.busy('ajax', true);
+                    $.ajax({
+                        url: "@Url.Action("ClearTempEmployee", "AcsEmployee")",
+                        type: "POST",
+                        data: app.addAntiForgeryToken({ "tempDataId": tempDataId }),
+                        success: function (data, status, xhr) {
+                            app.ui.handleAjaxSuccess(data, status, xhr);
+                            // Refresh
+                            $("#" + gridId).data("kendoGrid").dataSource.read();
+                        },
+                        error: function (xhr, statu, error) {
+                            app.ui.handleAjaxError(xhr, statu, error);
+                        },
+                        complete: function () {
+                            uiState.busy('ajax', false);
+                        }
+
+                    })
+                }
+            });
+
+            $("#gallery").unitegallery({
+                gallery_skin: "alexis",
+                gallery_width: 800,
+                gallery_height: 600,
+                gallery_autoplay: true,
+                theme_enable_fullscreen_button: false,
+                theme_enable_play_button: false,
+                theme_enable_hidepanel_button: false,
+                theme_enable_text_panel: true,
+            });
+
+            $("#mapWindow").kendoWindow({
+                visible: false,
+                modal: true,
+                title: "@ViewResource.Map_Title",
+                width: 820,
+                height: 620,
+                resizable: false,
+                scrollable: false,
+                pinned: true,
+                actions: [
+                    "Close"
+                ]
+            });
+
+            $("#saveButton")
+                .on("validating", function (sender, args) {
+                    args.isValid = validator.validate();
+                })
+                .on("openDialog", function (sender, args) {
+                    var gridId = "@(Model.RequestFor== RequestFors.Employee ? "#employeeGrid" : "#businessTripGrid")";
+                    var grid = $(gridId).data("kendoGrid");
+                    var employees = [];
+                    $.each(grid.dataSource.data().toJSON(), function (index, item) {
+                        employees.push({ "Seq": item.Seq, "EmployeeID": item.EmployeeID, "EmployeeName": item.EmployeeName , "DepartmentName": item.DepartmentName });
+                    });
+                    $("#AcsEmployeeDetails").val(kendo.stringify(employees));
+                    args.buttons.yes.action = function () {
+                        uiState.busy("save", true);
+                        $("form").submit();
+                    };
+                });
+
+             $("#cancelRequestButton").on("openDialog", function (sender, args) {
+                    args.buttons.yes.action = function ()
+                    {
+                        $(".k-validation-summary").hide();
+                        uiState.busy('cancelRequest', true);
+                        var data = {
+                            id: "@Model.ReqNo",
+                            note: $("#@Html.IdFor(m=>m.Note)").val()
+                        }
+                        $.ajax({
+                            url: "@Url.Action("CancelRequestFromEdit","AcsEmployee")",
+                            type: "POST",
+                            data: app.addAntiForgeryToken(data),
+                            success: function (data, status, xhr) {
+                                app.ui.handleAjaxSuccess(data, status, xhr);
+                                window.location = "@Url.Action("Edit","AcsEmployee",new { id = Model.ReqNo })";
+                            },
+                            error: function (xhr,status,error) {
+                                var message = app.ui.handleAjaxError(xhr, status, error);
+                                showMessage(message);
+                            },
+                            complete: function () {
+                                uiState.busy('cancelRequest', false);
+                            }
+                        });
+                     };
+                });
+
+             app.ui.datePickerRelate($("#@Html.IdFor(m=>m.EntryDateFrom)").data("kendoDatePicker"), $("#@Html.IdFor(m=>m.EntryDateTo)").data("kendoDatePicker"));
+            updatePurposeUIState();
+        });
+
+
+        function purposeCodeChange(e) {
+            updatePurposeUIState();
+        }
+
+        function purposeCodeDataBound(e) {
+            updatePurposeUIState();
+        }
+
+        function requestForChange(e) {
+            updateEmployeeListUIState();
+        }
+
+        function updateEmployeeListUIState()
+        {
+            var reqFor = "@Model.RequestFor";
+            $("#business-trip-container").hide();
+            $("#employee-list-container").hide();
+            if (reqFor == "@RequestFors.BusinessTrip")
+                $("#business-trip-container").show();
+            else
+                $("#employee-list-container").show();
+          }
+
+        function updatePurposeUIState() {
+            var purpose = $("#@Html.NameFor(m => m.PurposeCodeID)").data("kendoDropDownList");
+            $(".other-purpose").hide('fast');
+            $("[data-for=@Html.NameFor(m => m.OtherPurpose)]").hide('fast');
+            var dataItem = purpose.dataItem();
+            if (dataItem && dataItem.Key !== undefined) {
+                if (dataItem.Key.toLowerCase() == "other") {
+                    setTimeout(function () {
+                        $(".other-purpose").show('fast');
+                    }, 100);
+                }
+            }
+        }
+
+        function datePickerChange(e) {
+            app.ui.handleDatePickerNullValue(this);
+        }
+
+        function gridBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy('grid', true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy('grid', false);
+            if (e.type && e.type !== "read") {
+                this.read();
+            }
+        }
+
+        function dataSourceError(e) {
+            var h = app.ui.handleDataSourceError(e);
+            $("#edit-form-error-message").empty();
+            if (h.handled) {
+                $("#edit-form-error-message").show().html(h.message);
+            }
+        }
+
+        function viewMapClicked(e) {
+            e.preventDefault();
+            var w = $("#mapWindow").data("kendoWindow");
+            w.open().center()
+        }
+
+        function importButtonClicked(e) {
+            e.preventDefault();
+            var tempDataId = $(e.event.target).attr("data-temp-id");
+            var requestFor = $(e.event.target).attr("data-request-for");
+            var gridId = $(e.event.target).attr("data-grid");
+            uiState.busy("import", true);
+            var data = JSON.parse($("#employeeImportData").val());
+            $.ajax({
+                url: "@Url.Action("Import","AcsEmployee")",
+                type: "POST",
+                data: app.addAntiForgeryToken({"data": data, "tempDataId": tempDataId, "requestFor": requestFor}),
+                success: function (data, status, xhr) {
+                    app.ui.handleAjaxSuccess(data, status, xhr);
+                    uiState.busy("import", false);
+                    if (data.IsSucceed) {
+                        // All import employee are success.
+                        dialog.close();
+
+                        $("#" + gridId).data("kendoGrid").dataSource.read();
+                    } else {
+                        clearImportDialog();
+                        displayImportResult(data);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var message = app.ui.handleAjaxError(xhr, status, error);
+                    // display error
+                    $(".k-validation-message").html(message);
+                    uiState.busy("import", false);
+                }
+            })
+        }
+
+        function closeButtonClicked(e) {
+            e.preventDefault();
+            dialog.close();
+        }
+
+        function filesSuccess(e) {
+            if (e.operation == "upload") {
+                var r = e.response;
+                $("#employeeImportData").val(kendo.stringify(r.Data));
+                $(".import-container").empty().append(kendo.template($("#employeeTemplate").html())(r));
+                if (r.Data.length > 0) {
+                    $(".import-action-container").show();
+                } else {
+                    $(".import-action-container").hide();
+                }
+
+                // move to center
+                dialog.center();
+            }
+        }
+
+        function clearImportDialog() {
+            $(".import-container").empty();
+            $(".import-action-container").hide();
+            $("#employeeImportData").val("[]");
+            $("#files").data("kendoUpload").clearAllFiles();
+        }
+
+        function displayImportResult(data) {
+            $(".import-container").append(kendo.template($("#resultTemplate").html())(data));
+
+        }
+
+        function dialogOpen(e) {
+            clearImportDialog();
+        }
+    </script>
+}

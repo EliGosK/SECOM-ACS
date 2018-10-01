@@ -1,0 +1,54 @@
+﻿@using System.Globalization;
+@{ 
+    var culture = System.Globalization.CultureInfo.GetCultureInfo(UICulture).TwoLetterISOLanguageName;
+    var appName = ApplicationContext.Setting.ApplicationName ?? "Access Control System";
+    var version = ApplicationContext.Setting.Version ?? "";
+    var companyName = ApplicationContext.Setting.CompanyName ?? "AISIN AI Co.,Ltd";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@companyName - @Resources.SiteMapLocalizationResource.ApplicationName @version</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    @Styles.Render("~/assets/libs/kendo/styles/kendo-ui")    
+    @Styles.Render("~/assets/css/app")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/kendo-ui")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div id="page-body">
+        @Html.Partial("_Header")
+        <!-- Page Content Holder -->
+        <div id="content" class="animated fadeIn">
+            <div class="container-fluid">
+                <div class="row">
+                    @Html.Partial("_PageTitle")
+                </div>
+                <div class="row">
+                    <div class="page-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="notifications" style="display:none"></div>
+        <div id="ajax-notifications" style="display:none"></div>
+        @Html.Partial("_Footer")
+    </div>
+    @Scripts.Render("~/bundles/app")    
+    @if (UICulture != CultureInfo.GetCultureInfo("en").Name)
+    {
+        @Scripts.Render(String.Format("~/bundles/app/{0}", culture));
+    }
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

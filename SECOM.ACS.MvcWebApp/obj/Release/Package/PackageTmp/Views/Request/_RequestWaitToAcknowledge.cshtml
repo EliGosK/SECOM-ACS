@@ -1,0 +1,84 @@
+﻿@model RequestDH03DataViewModel
+@{
+    var gridDateFormat = AcsModelHelper.GetGridDateFormat();
+}
+<div class="search-container">
+    <div class="well well-shadow form-horizontal">
+        <div class="row">
+            @Html.LabelFor(m => m.DocumentType, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList().Name("ds03DocType")
+                    .DataSource(ds => ds.Read(r=>r.Action("ListDocumentTypeForRequestAcknowledge","Request")))
+                    .DataTextField("Name")
+                    .DataValueField("Value")
+                    .OptionLabel(WidgetResource.AllOptions)
+                    .HtmlAttributes(new { @style = "width:100%" })
+                )
+            </div>
+            <div class="col-md-4">
+                @Html.SearchButton("ds03SearchButton", new { @class = "k-primary k-search", @data_grid_id = "ds03Grid" }).Events(ev=>ev.Click("searchButtonClicked"))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    @(Html.Kendo().Grid<RequestDH03DataViewModel>()
+            .Name("ds03Grid")
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(50)
+                    .ClientTemplate("#=renderActionButton(data,'view')#");
+                c.Template(t => { })
+                    .Title(WidgetResource.Grid_Column_No)
+                    .Width(60)
+                    .ClientTemplate("#=_rowNo#")
+                    .HtmlAttributes(new { @class = "text-right" });
+                c.Bound(f => f.DocumentType)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(200);
+                c.Bound(f => f.ReqNo)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(100);
+                c.Bound(f => f.EntryDateFrom)
+                    .Width(120)
+                    .Format(gridDateFormat)
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.EntryTimeFrom)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(100)
+                    .ClientTemplate("#=EntryTimeFromString#");
+                c.Bound(f => f.EntryDateTo)
+                    .Width(120)
+                    .Format(gridDateFormat)
+                    .HtmlAttributes(new { @class = "text-center" });
+                c.Bound(f => f.EntryTimeTo)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(100)
+                    .ClientTemplate("#=EntryTimeToString#");
+                c.Bound(f => f.Area)
+                      .Width(200);
+                c.Bound(f => f.ReqStatus)
+                    .ClientTemplate("#=renderRequestStatus(data)#")
+                    .HtmlAttributes(new { @class = "text-center" });
+
+            })
+
+            .DataSource(ds => ds
+                 .Ajax()
+                .Read(r => r.Action("DashboardReq03", "Request").Data("getDSH03SearchCriteria").Type(HttpVerbs.Post))
+                .Events(e =>
+                {
+                    e.RequestStart("dataSourceRequestStart");
+                    e.RequestEnd("dataSourceRequestEnd");
+                    e.Error("dataSourceError");
+                })
+            )
+            .Events(ev => { ev.DataBinding("gridDataBinding"); })
+    )
+</div>

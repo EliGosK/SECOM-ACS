@@ -1,0 +1,20 @@
+﻿[
+  {
+    "alt": "map1.jpg",
+    "description": "Floor 1",
+    "imageUrl": "~/content/map/map1.jpg",
+    "thumbmailImageUrl": ""
+  },
+  {
+    "alt": "map2.jpg",
+    "description": "Floor 2",
+    "imageUrl": "~/content/map/map2.jpg",
+    "thumbmailImageUrl": ""
+  },
+  {
+    "alt":  "map3.jpg",
+    "description": "Floor 3",
+    "imageUrl": "~/content/map/map3.jpg",
+    "thumbmailImageUrl": ""
+  }
+]

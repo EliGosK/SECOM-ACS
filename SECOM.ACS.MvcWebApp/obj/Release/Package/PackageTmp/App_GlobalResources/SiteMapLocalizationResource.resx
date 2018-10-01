@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ACS010" xml:space="preserve">
+    <value> Dashboard</value>
+    <comment>ACS010: Dashboard</comment>
+  </data>
+  <data name="ACS020" xml:space="preserve">
+    <value>ACS020: Request Access for Employee</value>
+  </data>
+  <data name="ACS030" xml:space="preserve">
+    <value>ACS030: Request Access for Visitor</value>
+  </data>
+  <data name="ACS040" xml:space="preserve">
+    <value>ACS040: Request Item Out</value>
+  </data>
+  <data name="ACS050" xml:space="preserve">
+    <value>ACS050: Request Item In</value>
+  </data>
+  <data name="ACS060" xml:space="preserve">
+    <value>ACS060: Request Photographing</value>
+  </data>
+  <data name="ACS070" xml:space="preserve">
+    <value>ACS070: Request Inquiry</value>
+  </data>
+  <data name="ACS080" xml:space="preserve">
+    <value>ACS080: Card Registration</value>
+  </data>
+  <data name="ACS081" xml:space="preserve">
+    <value>ACS081: Receive/Return Card</value>
+  </data>
+  <data name="ACS090" xml:space="preserve">
+    <value>ACS090: VIP Card Registration</value>
+  </data>
+  <data name="MAS010" xml:space="preserve">
+    <value>MAS010: Miscellaneous</value>
+  </data>
+  <data name="MAS020" xml:space="preserve">
+    <value>MAS020: Item Master</value>
+  </data>
+  <data name="MAS021" xml:space="preserve">
+    <value>MAS021: Item Master Entry</value>
+  </data>
+  <data name="MAS030" xml:space="preserve">
+    <value>MAS030: Area Master</value>
+  </data>
+  <data name="MAS031" xml:space="preserve">
+    <value>MAS031: Area Master Entry</value>
+  </data>
+  <data name="MAS040" xml:space="preserve">
+    <value>MAS040: Offline/Online System</value>
+  </data>
+  <data name="MAS050" xml:space="preserve">
+    <value>MAS050: Search Employee</value>
+  </data>
+  <data name="MAS051" xml:space="preserve">
+    <value>MAS051: Employee Entry</value>
+  </data>
+  <data name="MAS060" xml:space="preserve">
+    <value>MAS060: Card Master</value>
+  </data>
+  <data name="MAS061" xml:space="preserve">
+    <value>MAS061: Card Master Entry</value>
+  </data>
+  <data name="SYS010" xml:space="preserve">
+    <value>SYS010: Log in</value>
+  </data>
+  <data name="SYS020" xml:space="preserve">
+    <value>SYS020: User Role</value>
+  </data>
+  <data name="SYS030" xml:space="preserve">
+    <value>SYS030: User Role Authorization</value>
+  </data>
+  <data name="SYS040" xml:space="preserve">
+    <value>SYS040: Change Password</value>
+  </data>
+  <data name="SYS060" xml:space="preserve">
+    <value>SYS060: Application Log</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Access Control System</value>
+  </data>
+  <data name="ACCOUNTINFO" xml:space="preserve">
+    <value>Account Info</value>
+  </data>
+  <data name="CARDREGIST" xml:space="preserve">
+    <value>Card Registration</value>
+  </data>
+  <data name="LOGOUT" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="MASTER" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="REQ" xml:space="preserve">
+    <value>Request</value>
+  </data>
+  <data name="SYSTEM" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SYS050" xml:space="preserve">
+    <value>SYS050: Schedule Task</value>
+  </data>
+  <data name="MAS052" xml:space="preserve">
+    <value>MAS052: Employee Import</value>
+  </data>
+</root>

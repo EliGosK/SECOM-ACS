@@ -1,0 +1,217 @@
+﻿@{
+    var objectId = "SYS020";
+    var allowEdit = ViewContext.Controller.HasPermission(objectId, PermissionNames.Edit);
+    var allowDelete = ViewContext.Controller.HasPermission(objectId, PermissionNames.Delete);
+}
+<div class="search-container">
+    <div class="form-horizontal well well-sm">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Role Name</label>
+            <div class="col-md-3">
+                @(Html.Kendo().AutoComplete()
+                    .Name("name")
+                    .DataSource(ds => ds.Read(r => r.Url("/api/roles"))
+                        .ServerFiltering(false)
+                    )
+                    .DataTextField("Name")
+                    .MinLength(2)
+                    .Filter(FilterType.Contains)
+                    .HtmlAttributes(new { style = "width:100%" })
+
+                )
+            </div>
+            <div class="col-md-5">
+                @(Html.SearchButton("searchButton",new { @class = "k-primary k-button-search" })
+                        .Events(e => e.Click("searchButtonClicked"))
+                )
+                @(Html.ClearButton("clearButton",new { @class = "k-button-warning k-button-clear" })
+                        .Events(e => e.Click("clearButtonClicked"))
+                )
+            </div>
+        </div>
+    </div>
+</div>
+<h2><i class="fa fa-th-list"></i> @ViewResource.UserGroup_ListSection_Title</h2>
+<div class="grid-cotnainer">
+    @(Html.Kendo().Grid<RoleViewModel>()
+        .Name("grid")
+            .Pageable(p => p
+                .PageSizes(true)
+                .Refresh(true)
+                .ButtonCount(5)
+            )
+            .AutoBind(false)
+            .Editable(e => e.Mode(GridEditMode.PopUp)
+                .TemplateName("RoleEditor")
+                .Window(w => w.Width(600)
+                .Events(ev => ev.Activate("popupEditActivate")))
+                .CreateAt(GridInsertRowPosition.Bottom)
+                .ConfirmDelete(MessageHelper.ConfirmDelete())
+            )
+           .ToolBar(t =>
+           {
+               if (ViewContext.Controller.HasPermission(objectId, "ADD"))
+               {
+                   t.Template(Html.GridAddButton().ToHtmlString());
+               }
+           })
+            .Columns(c =>
+            {
+                c.Template(t => { })
+                    .Width(90)
+                    .ClientTemplate("#= data.IsSystemRole?'':renderButton(data) #")
+                    .Visible(allowEdit || allowDelete);
+                c.Template(t => { })
+                   .Width(50)
+                   .Title(WidgetResource.Grid_Column_No)
+                   .HtmlAttributes(new { @class = "text-right" })
+                   .ClientTemplate("#=_rowNo#");
+                c.Bound(f => f.Name);
+                c.Bound(f => f.Description);
+                c.Bound(f => f.IsActive)
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .Width(80)
+                    .ClientTemplate("#=renderIsActive(data)#");
+            })
+            .DataSource(ds => ds
+                .Custom().Transport(t =>
+                {
+                    t.Read(r => r.Action("ListRole", "Security")
+                        .Type(HttpVerbs.Post)
+                        .Data("getSearchCriteria")
+                        .DataType("json"));
+                    t.Update(r => r.Action("UpdateRole", "Security")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Destroy(r => r.Action("DeleteRole", "Security")
+                         .DataType("json")
+                        .Type(HttpVerbs.Post));
+                    t.Create(r => r.Action("CreateRole", "Security")
+                        .DataType("json")
+                        .Type(HttpVerbs.Post));
+                }
+            )
+
+    .Schema(s =>
+    {
+        s.Data("Data");
+        s.Total("Total");
+        s.Errors("Errors");
+        s.Model(m =>
+        {
+            m.Id(f => f.RoleID);
+            m.Field(f => f.Name);
+            m.Field(f => f.Description);
+            m.Field(f => f.IsActive).DefaultValue(true);
+        });
+    })
+    .PageSize(20)
+    .ServerFiltering(true)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .Events(e =>
+    {
+        e.RequestStart("dataSourceRequestStart");
+        e.RequestEnd("dataSourceRequestEnd");
+        e.Error("dataSourceError");
+    })
+    )
+    .Events(ev =>
+    {
+        ev.Edit("gridEdit");
+        ev.DataBinding("gridDataBinding");
+    })
+    )
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        var uiState = new AppUIState();
+        var grid;
+        $(document).ready(function () {
+            app.initPage();
+            uiState.register('ajax', ['.k-button']);
+            grid = $("#grid").data("kendoGrid");
+        });
+
+        function searchButtonClicked(e) {
+            e.preventDefault();
+            grid.dataSource.page(1);
+        }
+
+        function clearButtonClicked(e) {
+            e.preventDefault();
+            app.ui.clear(["#roleName", "#grid", "#name"]);
+        }
+
+        function dataSourceRequestStart(e) {
+            uiState.busy("ajax", true);
+        }
+
+        function dataSourceRequestEnd(e) {
+            uiState.busy("ajax", false);
+            app.ui.handleDataSourceRequestEnd(e);
+            app.ui.handleGridDataSourceRequestEnd(e, grid);
+        }
+
+        function dataSourceError(e) {
+            var result = app.ui.handleDataSourceError(e);
+            if (result.handled) {
+                $(".k-edit-form-error-message").html(result.message).show();
+            }
+        }
+
+        function gridEdit(e) {
+            var options = {
+                create: { title: "@ViewResource.UserGroup_PopUpSection_Add_Title" },
+                edit: { title: "@ViewResource.UserGroup_PopUpSection_Edit_Title" }
+            };
+            e.container.find(".k-edit-form-error-message").empty().hide();
+            e.container.find("#RoleID").focus();
+            app.ui.initGridPopupEditor(e, options);
+        }
+
+        function popupEditActivate(e) {
+            this.wrapper.find("input[name='Name']").focus();
+        }
+
+        function getSearchCriteria() {
+            return {
+                criteria: {
+                    Name: $("#name").data("kendoAutoComplete").value()
+                }
+            };
+        }
+
+        function gridDataBinding(e)
+        {
+            app.ui.initGridRowNo(this);
+        }
+
+        function renderButton(data) {
+            var html = "";
+            @if (allowEdit)
+            {
+                <text>html += '@Html.Raw(Html.GridEditButton())';</text>
+            }
+
+            @if (allowDelete)
+            {
+                <text>html += '@Html.Raw(Html.GridDeleteButton())';</text>
+            }
+            return html;
+        }
+
+        function renderIsActive(data) {
+            return data.IsActive? "<label class=\"label label-primary\">@ModelMetadataResource.CardStatus_Active</label>":"<label class=\"label label-default\">@ModelMetadataResource.CardStatus_Inactive</label>";
+        }
+
+        function deleteButtonClicked(e) {
+            e.preventDefault();
+            kendo.confirm("@MessageHelper.ConfirmDelete()")
+                .done(function () { })
+                .fail(function () { });
+        }
+    </script>
+}

@@ -1,0 +1,1925 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SECOMACSModelsStoreContainer" CdmEntityContainer="ACSContext">
+    <EntitySetMapping Name="AreaApprovers">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AreaApprover">
+        <MappingFragment StoreEntitySet="tbm_AreaApprover">
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Employee">
+        <MappingFragment StoreEntitySet="tbm_Employee">
+          <ScalarProperty Name="SpecialPositionID" ColumnName="SpecialPositionID" />
+          <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
+          <ScalarProperty Name="StartWorkingDate" ColumnName="StartWorkingDate" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="IsHRLink" ColumnName="IsHRLink" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gates">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Gate">
+        <MappingFragment StoreEntitySet="tbm_Gate">
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="GateID" ColumnName="GateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Item">
+        <MappingFragment StoreEntitySet="tbm_Item">
+          <ScalarProperty Name="ItemTypeID" ColumnName="ItemTypeID" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPhoto" ColumnName="IsPhoto" />
+          <ScalarProperty Name="IsItemIn" ColumnName="IsItemIn" />
+          <ScalarProperty Name="IsItemOut" ColumnName="IsItemOut" />
+          <ScalarProperty Name="IsConfdt" ColumnName="IsConfdt" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ItemDisplayTH" ColumnName="ItemDisplayTH" />
+          <ScalarProperty Name="ItemDisplayEN" ColumnName="ItemDisplayEN" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Miscs">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Misc">
+        <MappingFragment StoreEntitySet="tbm_Misc">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="DeleteAble" ColumnName="DeleteAble" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="MiscRemark" ColumnName="MiscRemark" />
+          <ScalarProperty Name="MiscDisplayTH" ColumnName="MiscDisplayTH" />
+          <ScalarProperty Name="MiscDisplayEN" ColumnName="MiscDisplayEN" />
+          <ScalarProperty Name="MiscName" ColumnName="MiscName" />
+          <ScalarProperty Name="MiscType" ColumnName="MiscType" />
+          <ScalarProperty Name="MiscID" ColumnName="MiscID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsItemInDetails">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsItemInDetail">
+        <MappingFragment StoreEntitySet="tbr_AcsItemInDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="ActReturnDate" ColumnName="ActReturnDate" />
+          <ScalarProperty Name="ActReturnQty" ColumnName="ActReturnQty" />
+          <ScalarProperty Name="ActInQty" ColumnName="ActInQty" />
+          <ScalarProperty Name="PlanReturnDate" ColumnName="PlanReturnDate" />
+          <ScalarProperty Name="ReqQty" ColumnName="ReqQty" />
+          <ScalarProperty Name="ConfdtFlag" ColumnName="ConfdtFlag" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsItemOutDetails">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsItemOutDetail">
+        <MappingFragment StoreEntitySet="tbr_AcsItemOutDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="ActReturnDate" ColumnName="ActReturnDate" />
+          <ScalarProperty Name="ActReturnQty" ColumnName="ActReturnQty" />
+          <ScalarProperty Name="ActOutQty" ColumnName="ActOutQty" />
+          <ScalarProperty Name="PlanReturnDate" ColumnName="PlanReturnDate" />
+          <ScalarProperty Name="ReqQty" ColumnName="ReqQty" />
+          <ScalarProperty Name="ConfdtFlag" ColumnName="ConfdtFlag" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsVisitorDetails">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsVisitorDetail">
+        <MappingFragment StoreEntitySet="tbr_AcsVisitorDetail">
+          <ScalarProperty Name="VerifyNo" ColumnName="VerifyNo" />
+          <ScalarProperty Name="VerifyTypeID" ColumnName="VerifyTypeID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Photographing" ColumnName="Photographing" />
+          <ScalarProperty Name="ItemInOut" ColumnName="ItemInOut" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReqAreaMappings">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.ReqAreaMapping">
+        <MappingFragment StoreEntitySet="tbr_ReqAreaMapping">
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="ReqType" ColumnName="ReqType" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PermissionMappings">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.PermissionMapping">
+        <MappingFragment StoreEntitySet="tbs_PermissionMapping">
+          <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionAcs">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.TransactionAcs">
+        <MappingFragment StoreEntitySet="tbt_TransactionAcs">
+          <ScalarProperty Name="CancelAcsDate" ColumnName="CancelAcsDate" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="SendAcsDate" ColumnName="SendAcsDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CardReturnTime" ColumnName="CardReturnTime" />
+          <ScalarProperty Name="CardReceiveTime" ColumnName="CardReceiveTime" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="ReqType" ColumnName="ReqType" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Department">
+        <MappingFragment StoreEntitySet="tbm_Department">
+          <ScalarProperty Name="NameTH" ColumnName="NameTH" />
+          <ScalarProperty Name="NameEN" ColumnName="NameEN" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Positions">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Position">
+        <MappingFragment StoreEntitySet="tbm_Position">
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="PositionRank" ColumnName="PositionRank" />
+          <ScalarProperty Name="PositionLevel" ColumnName="PositionLevel" />
+          <ScalarProperty Name="NameTH" ColumnName="NameTH" />
+          <ScalarProperty Name="NameEN" ColumnName="NameEN" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetMiscsByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_M010_GetByCriteria" />
+    <FunctionImportMapping FunctionImportName="DeletePermissionMappingsByRoleId" FunctionName="SECOM.ACS.Models.Store.acs_S030_DeletePermissionMappingByRoleId" />
+    <FunctionImportMapping FunctionImportName="UpdatePermissionDashboard" FunctionName="SECOM.ACS.Models.Store.acs_S030_UpdatePermissionDashboard" />
+    <FunctionImportMapping FunctionImportName="GetPermissionDashboard" FunctionName="SECOM.ACS.Models.Store.acs_S030_GetPermissionDashboard">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.PermissionDashboard">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="ViewDSH01" ColumnName="ViewDSH01" />
+          <ScalarProperty Name="ViewDSH02" ColumnName="ViewDSH02" />
+          <ScalarProperty Name="ViewDSH03" ColumnName="ViewDSH03" />
+          <ScalarProperty Name="ViewDSH04" ColumnName="ViewDSH04" />
+          <ScalarProperty Name="ViewDSH05" ColumnName="ViewDSH05" />
+          <ScalarProperty Name="ViewDSH06" ColumnName="ViewDSH06" />
+          <ScalarProperty Name="ViewDSH07" ColumnName="ViewDSH07" />
+          <ScalarProperty Name="ViewDSH08" ColumnName="ViewDSH08" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetFactory" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetFactory" />
+    <FunctionImportMapping FunctionImportName="GetGatesByFactoryCode" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetGate" />
+    <FunctionImportMapping FunctionImportName="InsertMisc" FunctionName="SECOM.ACS.Models.Store.acs_M011_InsertMisc" />
+    <FunctionImportMapping FunctionImportName="DeleteMisc" FunctionName="SECOM.ACS.Models.Store.acs_M010_DeleteMisc" />
+    <FunctionImportMapping FunctionImportName="UpdateMisc" FunctionName="SECOM.ACS.Models.Store.acs_M011_UpdateMisc" />
+    <FunctionImportMapping FunctionImportName="CheckMiscInUse" FunctionName="SECOM.ACS.Models.Store.acs_M010_CheckMiscInUse" />
+    <FunctionImportMapping FunctionImportName="GetAreaDataViews" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetArea">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AreaDataView">
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteItem" FunctionName="SECOM.ACS.Models.Store.acs_M020_DeleteItem" />
+    <FunctionImportMapping FunctionImportName="InsertItem" FunctionName="SECOM.ACS.Models.Store.acs_M021_InsertItem" />
+    <FunctionImportMapping FunctionImportName="UpdateItem" FunctionName="SECOM.ACS.Models.Store.acs_M021_UpdateItem" />
+    <FunctionImportMapping FunctionImportName="GetItemDataViewsByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_M020_SearchItemsByCriteria">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.ItemDataView">
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemDisplayEN" ColumnName="ItemDisplayEN" />
+          <ScalarProperty Name="ItemDisplayTH" ColumnName="ItemDisplayTH" />
+          <ScalarProperty Name="IsItemOut" ColumnName="IsItemOut" />
+          <ScalarProperty Name="IsItemIn" ColumnName="IsItemIn" />
+          <ScalarProperty Name="IsPhoto" ColumnName="IsPhoto" />
+          <ScalarProperty Name="IsConfdt" ColumnName="IsConfdt" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ItemTypeID" ColumnName="ItemTypeID" />
+          <ScalarProperty Name="MiscName" ColumnName="MiscName" />
+          <ScalarProperty Name="MiscDisplayTH" ColumnName="MiscDisplayTH" />
+          <ScalarProperty Name="MiscDisplayEN" ColumnName="MiscDisplayEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CheckDuplicateItem" FunctionName="SECOM.ACS.Models.Store.acs_M021_CheckDuplicateItem" />
+    <FunctionImportMapping FunctionImportName="CheckDuplicateMisc" FunctionName="SECOM.ACS.Models.Store.acs_M011_CheckDuplicateMisc" />
+    <FunctionImportMapping FunctionImportName="CheckItemInUse" FunctionName="SECOM.ACS.Models.Store.acs_M020_CheckItemInUse" />
+    <FunctionImportMapping FunctionImportName="GetAreaByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_M030_SearchArea" />
+    <EntitySetMapping Name="AcsItemOuts">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsItemOut">
+        <MappingFragment StoreEntitySet="tbr_AcsItemOut">
+          <ScalarProperty Name="ForceDoneDate" ColumnName="ForceDoneDate" />
+          <ScalarProperty Name="ForceDoneBy" ColumnName="ForceDoneBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="OtherPurpose" ColumnName="OtherPurpose" />
+          <ScalarProperty Name="PurposeCodeID" ColumnName="PurposeCodeID" />
+          <ScalarProperty Name="TakeOutName" ColumnName="TakeOutName" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="TakeOutDate" ColumnName="TakeOutDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsPhotoes">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsPhoto">
+        <MappingFragment StoreEntitySet="tbr_AcsPhoto">
+          <ScalarProperty Name="ForceDoneDate" ColumnName="ForceDoneDate" />
+          <ScalarProperty Name="ForceDoneBy" ColumnName="ForceDoneBy" />
+          <ScalarProperty Name="AckDate" ColumnName="AckDate" />
+          <ScalarProperty Name="AckBy" ColumnName="AckBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="ActReturnDate" ColumnName="ActReturnDate" />
+          <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
+          <ScalarProperty Name="IsLending" ColumnName="IsLending" />
+          <ScalarProperty Name="OtherPurpose" ColumnName="OtherPurpose" />
+          <ScalarProperty Name="PurposeCodeID" ColumnName="PurposeCodeID" />
+          <ScalarProperty Name="OtherEquip" ColumnName="OtherEquip" />
+          <ScalarProperty Name="EquipItemID" ColumnName="EquipItemID" />
+          <ScalarProperty Name="TargetItem" ColumnName="TargetItem" />
+          <ScalarProperty Name="WitnessEmpID" ColumnName="WitnessEmpID" />
+          <ScalarProperty Name="TakePhotoName" ColumnName="TakePhotoName" />
+          <ScalarProperty Name="PhotoEmpID" ColumnName="PhotoEmpID" />
+          <ScalarProperty Name="PhotoByType" ColumnName="PhotoByType" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="TakePhotoTimeTo" ColumnName="TakePhotoTimeTo" />
+          <ScalarProperty Name="TakePhotoDateTo" ColumnName="TakePhotoDateTo" />
+          <ScalarProperty Name="TakePhotoTimeFrom" ColumnName="TakePhotoTimeFrom" />
+          <ScalarProperty Name="TakePhotoDateFrom" ColumnName="TakePhotoDateFrom" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsVisitors">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsVisitor">
+        <MappingFragment StoreEntitySet="tbr_AcsVisitor">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="OtherPurpose" ColumnName="OtherPurpose" />
+          <ScalarProperty Name="PurposeCodeID" ColumnName="PurposeCodeID" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReqApproverLists">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.ReqApproverList">
+        <MappingFragment StoreEntitySet="tbr_ReqApproverList">
+          <ScalarProperty Name="ReferenceApprovalID" ColumnName="ReferenceApprovalID" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="ApprovalID" ColumnName="ApprovalID" />
+          <ScalarProperty Name="RejectReason" ColumnName="RejectReason" />
+          <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+          <ScalarProperty Name="ApprovalCode" ColumnName="ApprovalCode" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="ApproveUserName" ColumnName="ApproveUserName" />
+          <ScalarProperty Name="Step" ColumnName="Step" />
+          <ScalarProperty Name="ReqType" ColumnName="ReqType" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsVIPs">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsVIP">
+        <MappingFragment StoreEntitySet="tbr_AcsVIP">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="PositionMiscID" ColumnName="PositionMiscID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsEmployees">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsEmployee">
+        <MappingFragment StoreEntitySet="tbr_AcsEmployee">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="OtherPurpose" ColumnName="OtherPurpose" />
+          <ScalarProperty Name="PurposeCodeID" ColumnName="PurposeCodeID" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="RequestFor" ColumnName="RequestFor" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcsItemIns">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsItemIn">
+        <MappingFragment StoreEntitySet="tbr_AcsItemIn">
+          <ScalarProperty Name="ForceDoneDate" ColumnName="ForceDoneDate" />
+          <ScalarProperty Name="ForceDoneBy" ColumnName="ForceDoneBy" />
+          <ScalarProperty Name="AckDate" ColumnName="AckDate" />
+          <ScalarProperty Name="AckBy" ColumnName="AckBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="OtherPurpose" ColumnName="OtherPurpose" />
+          <ScalarProperty Name="PurposeCodeID" ColumnName="PurposeCodeID" />
+          <ScalarProperty Name="TakeInName" ColumnName="TakeInName" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="TakeInDate" ColumnName="TakeInDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertArea" FunctionName="SECOM.ACS.Models.Store.acs_M031_InsertArea" />
+    <FunctionImportMapping FunctionImportName="UpdateArea" FunctionName="SECOM.ACS.Models.Store.acs_M031_UpdateArea" />
+    <FunctionImportMapping FunctionImportName="InsertAreaGateMapping" FunctionName="SECOM.ACS.Models.Store.acs_M031_InsertAreaGateMapping" />
+    <FunctionImportMapping FunctionImportName="DeleteAreaGateMapping" FunctionName="SECOM.ACS.Models.Store.acs_M031_DeleteAreaGateMapping" />
+    <FunctionImportMapping FunctionImportName="DeleteCard" FunctionName="SECOM.ACS.Models.Store.acs_M060_DeleteCard" />
+    <FunctionImportMapping FunctionImportName="CheckDuplicateCard" FunctionName="SECOM.ACS.Models.Store.acs_M061_CheckDuplicateCard" />
+    <FunctionImportMapping FunctionImportName="CheckCardInUse" FunctionName="SECOM.ACS.Models.Store.acs_M060_CheckCardInUse" />
+    <FunctionImportMapping FunctionImportName="InsertCard" FunctionName="SECOM.ACS.Models.Store.acs_M061_InsertCard" />
+    <FunctionImportMapping FunctionImportName="InsertAreaCardMapping" FunctionName="SECOM.ACS.Models.Store.acs_M061_InsertAreaCardMapping" />
+    <FunctionImportMapping FunctionImportName="UpdateCard" FunctionName="SECOM.ACS.Models.Store.acs_M061_UpdateCard" />
+    <FunctionImportMapping FunctionImportName="DeleteAreaCardMapping" FunctionName="SECOM.ACS.Models.Store.acs_M061_DeleteAreaCardMapping" />
+    <FunctionImportMapping FunctionImportName="GetCardTypeForCreate" FunctionName="SECOM.ACS.Models.Store.acs_M061_GetCardTypeAdd" />
+    <FunctionImportMapping FunctionImportName="GetCardTypeForSearch" FunctionName="SECOM.ACS.Models.Store.acs_M060_GetCardTypeSearch" />
+    <FunctionImportMapping FunctionImportName="GetCardsByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_M060_SearchCardsByCriteria" />
+    <FunctionImportMapping FunctionImportName="CheckDuplicateArea" FunctionName="SECOM.ACS.Models.Store.acs_M031_CheckDuplicateArea" />
+    <FunctionImportMapping FunctionImportName="CheckAreaInUse" FunctionName="SECOM.ACS.Models.Store.acs_M030_CheckAreaInUse" />
+    <FunctionImportMapping FunctionImportName="GetSuperiorApprover" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetSuperiorApprover">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeApprovalDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAreaApprover" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetAreaApprover">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeApprovalDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAcknowledgePerson" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetGAApprover">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeApprovalDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FindArea" FunctionName="SECOM.ACS.Models.Store.acs_COM_FindArea" />
+    <FunctionImportMapping FunctionImportName="FindDepartment" FunctionName="SECOM.ACS.Models.Store.acs_COM_FindDepartment" />
+    <FunctionImportMapping FunctionImportName="GetEmployeeInformation" FunctionName="SECOM.ACS.Models.Store.acs_M051_GetEmployeeInformation">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeInformation">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="DepartmentEN" ColumnName="DepartmentEN" />
+          <ScalarProperty Name="DepartmentTH" ColumnName="DepartmentTH" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="LendingFlag" ColumnName="LendingFlag" />
+          <ScalarProperty Name="IsVerifyItemIn" ColumnName="IsVerifyItemIn" />
+          <ScalarProperty Name="IsVerifyItemOut" ColumnName="IsVerifyItemOut" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FindEmployee" FunctionName="SECOM.ACS.Models.Store.acs_COM_FindEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="IsHRLink" ColumnName="IsHRLink" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="DepartmentTH" ColumnName="DepartmentTH" />
+          <ScalarProperty Name="DepartmentEN" ColumnName="DepartmentEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDefaultEntryTime" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetDefaultEntryTime">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EntryTimeSetting">
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Card">
+        <MappingFragment StoreEntitySet="tbm_Card">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DeleteAble" ColumnName="DeleteAble" />
+          <ScalarProperty Name="EditAble" ColumnName="EditAble" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardType" ColumnName="CardType" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.Area">
+        <MappingFragment StoreEntitySet="tbm_Area">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ConfdtLevel" ColumnName="ConfdtLevel" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AreaCardMappings">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AreaCardMapping">
+        <MappingFragment StoreEntitySet="tbm_AreaCardMapping">
+          <ScalarProperty Name="IsMainArea" ColumnName="IsMainArea" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tbm_AreaGateMapping" TypeName="SECOM.ACS.Models.tbm_AreaGateMapping" StoreEntitySet="tbm_AreaGateMapping">
+      <EndProperty Name="Gate">
+        <ScalarProperty Name="GateID" ColumnName="GateID" />
+      </EndProperty>
+      <EndProperty Name="tbm_Area">
+        <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeDataViewsByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_M050_SearchEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="IsHRLink" ColumnName="IsHRLink" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="DepartmentTH" ColumnName="DepartmentTH" />
+          <ScalarProperty Name="DepartmentEN" ColumnName="DepartmentEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertReqApproverList" FunctionName="SECOM.ACS.Models.Store.acs_COM_InsertReqApproverList" />
+    <FunctionImportMapping FunctionImportName="DeleteReqApproverList" FunctionName="SECOM.ACS.Models.Store.acs_COM_DeleteReqApproverList" />
+    <FunctionImportMapping FunctionImportName="GetUserRolesByEmployeeID" FunctionName="SECOM.ACS.Models.Store.acs_M051_GetRoleUserByEmployeeID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.UserRole">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsSystemRole" ColumnName="IsSystemRole" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ViewDSH01" ColumnName="ViewDSH01" />
+          <ScalarProperty Name="ViewDSH02" ColumnName="ViewDSH02" />
+          <ScalarProperty Name="ViewDSH03" ColumnName="ViewDSH03" />
+          <ScalarProperty Name="ViewDSH04" ColumnName="ViewDSH04" />
+          <ScalarProperty Name="ViewDSH05" ColumnName="ViewDSH05" />
+          <ScalarProperty Name="ViewDSH06" ColumnName="ViewDSH06" />
+          <ScalarProperty Name="ViewDSH07" ColumnName="ViewDSH07" />
+          <ScalarProperty Name="ViewDSH08" ColumnName="ViewDSH08" />
+          <ScalarProperty Name="ViewDSH09" ColumnName="ViewDSH09" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAreaByEmployeeID" FunctionName="SECOM.ACS.Models.Store.acs_M051_GetAreaByEmployeeID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AreaMapping">
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="IsMainArea" ColumnName="IsMainArea" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertOrUpdateCard" FunctionName="SECOM.ACS.Models.Store.acs_M060_InsertOrUpdateCard" />
+    <EntitySetMapping Name="AcsEmployeeDetails">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsEmployeeDetail">
+        <MappingFragment StoreEntitySet="tbr_AcsEmployeeDetail">
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemMiscs">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.SystemMisc">
+        <MappingFragment StoreEntitySet="tbs_SystemMisc">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="SysMiscSortNo" ColumnName="SysMiscSortNo" />
+          <ScalarProperty Name="SysMiscValue3" ColumnName="SysMiscValue3" />
+          <ScalarProperty Name="SysMiscValue2" ColumnName="SysMiscValue2" />
+          <ScalarProperty Name="SysMiscValue1" ColumnName="SysMiscValue1" />
+          <ScalarProperty Name="SysMiscCode" ColumnName="SysMiscCode" />
+          <ScalarProperty Name="SysMiscType" ColumnName="SysMiscType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpdateAcsPhoto" FunctionName="SECOM.ACS.Models.Store.acs_A060_UpdateAcsPhoto" />
+    <FunctionImportMapping FunctionImportName="CheckOverlapPeriodCardNo" FunctionName="SECOM.ACS.Models.Store.acs_A080_CheckOverlapPeriodCardNo">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.CheckOverlapPeriodCardNoList">
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="VisitorName" ColumnName="VisitorName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CheckOverlapCardNo" FunctionName="SECOM.ACS.Models.Store.acs_A080_CheckOverlapCardNo">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.CheckOverlapCardNoList">
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="VisitorName" ColumnName="VisitorName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetCardNo" FunctionName="SECOM.ACS.Models.Store.acs_A080_GetCardNo">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.CardNoView">
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeDataViewsForRequest" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="IsHRLink" ColumnName="IsHRLink" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="DepartmentTH" ColumnName="DepartmentTH" />
+          <ScalarProperty Name="DepartmentEN" ColumnName="DepartmentEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FindPosition" FunctionName="SECOM.ACS.Models.Store.acs_COM_FindPosition" />
+    <FunctionImportMapping FunctionImportName="DeleteRoleUserMapping" FunctionName="SECOM.ACS.Models.Store.acs_M051_DeleteRoleUserMapping" />
+    <FunctionImportMapping FunctionImportName="InsertRoleUserMapping" FunctionName="SECOM.ACS.Models.Store.acs_M051_InsertRoleUserMapping" />
+    <FunctionImportMapping FunctionImportName="GetDepartment" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetDepartment" />
+    <FunctionImportMapping FunctionImportName="GetPositionsForAreaApproval" FunctionName="SECOM.ACS.Models.Store.acs_M031_GetPosition" />
+    <FunctionImportMapping FunctionImportName="DeleteArea" FunctionName="SECOM.ACS.Models.Store.acs_M030_DeleteArea" />
+    <FunctionImportMapping FunctionImportName="GetRequestDataViewsByCriteria" FunctionName="SECOM.ACS.Models.Store.acs_A070_SearchRequest">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDocumentType" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetDocumentType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.DocumentTypeData">
+          <ScalarProperty Name="DocObjectID" ColumnName="DocObjectID" />
+          <ScalarProperty Name="DocTypeEN" ColumnName="DocTypeEN" />
+          <ScalarProperty Name="DocTypeTH" ColumnName="DocTypeTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardRequestInProgress" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS01RequestInProgress">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH01DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardRequestWaitToApprover" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS02ReqWaitToApprove">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH02DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardReqWaitToAcknowledge" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS03ReqWaitToAcknowledge">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH03DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardSecurityRoom" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS04SecurityRoom">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH04DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardItemOut" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS05ItemOutRequestToConfirmQTY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH05DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="TakeOutDate" ColumnName="TakeOutDate" />
+          <ScalarProperty Name="EntrTimeFrom" ColumnName="EntrTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="SourcePlace" ColumnName="SourcePlace" />
+          <ScalarProperty Name="TakeOutCompany" ColumnName="TakeOutCompany" />
+          <ScalarProperty Name="TakeOutDepartment" ColumnName="TakeOutDepartment" />
+          <ScalarProperty Name="TakeOutName" ColumnName="TakeOutName" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+          <ScalarProperty Name="SourcePlaceTH" ColumnName="SourcePlaceTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardItemIn" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS06ItemInRequestToConfirmQTY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH06DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="TakeInDate" ColumnName="TakeInDate" />
+          <ScalarProperty Name="EntrTimeFrom" ColumnName="EntrTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="BringingArea" ColumnName="BringingArea" />
+          <ScalarProperty Name="TakeOutCompany" ColumnName="TakeOutCompany" />
+          <ScalarProperty Name="TakeOutDepartment" ColumnName="TakeOutDepartment" />
+          <ScalarProperty Name="TakeInName" ColumnName="TakeInName" />
+          <ScalarProperty Name="ReqStatus" ColumnName="ReqStatus" />
+          <ScalarProperty Name="BringingAreaTH" ColumnName="BringingAreaTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardLending" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS07ReqWaitToInputLending">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH07DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+          <ScalarProperty Name="EquipNameEN" ColumnName="EquipNameEN" />
+          <ScalarProperty Name="EquipNameTH" ColumnName="EquipNameTH" />
+          <ScalarProperty Name="AssetCode" ColumnName="AssetCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetDashboardWitness" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetDHS08WitnessRequest">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.RequestDH08DataView">
+          <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+          <ScalarProperty Name="DocumentTypeEN" ColumnName="DocumentTypeEN" />
+          <ScalarProperty Name="DocumentTypeTH" ColumnName="DocumentTypeTH" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="ReqStatusEN" ColumnName="ReqStatusEN" />
+          <ScalarProperty Name="ReqStatusTH" ColumnName="ReqStatusTH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="RequestByEN" ColumnName="RequestByEN" />
+          <ScalarProperty Name="RequestByTH" ColumnName="RequestByTH" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+          <ScalarProperty Name="EquipNameEN" ColumnName="EquipNameEN" />
+          <ScalarProperty Name="EquipNameTH" ColumnName="EquipNameTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteReqAreaMappings" FunctionName="SECOM.ACS.Models.Store.acs_COM_DeleteReqAreaMapping" />
+    <FunctionImportMapping FunctionImportName="GetVIPCardRegistrationView" FunctionName="SECOM.ACS.Models.Store.acs_A090_RetrieveVIPCardList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.VIPCardRegistrationView">
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PositionMiscID" ColumnName="PositionMiscID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="StatusEN" ColumnName="StatusEN" />
+          <ScalarProperty Name="StatusTH" ColumnName="StatusTH" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetPrivilegeViewUser" FunctionName="SECOM.ACS.Models.Store.acs_A010_GetPrivilegeViewDHS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.PrivilegeViewDSHData">
+          <ScalarProperty Name="ViewDSH01" ColumnName="ViewDSH01" />
+          <ScalarProperty Name="ViewDSH02" ColumnName="ViewDSH02" />
+          <ScalarProperty Name="ViewDSH03" ColumnName="ViewDSH03" />
+          <ScalarProperty Name="ViewDSH04" ColumnName="ViewDSH04" />
+          <ScalarProperty Name="ViewDSH05" ColumnName="ViewDSH05" />
+          <ScalarProperty Name="ViewDSH06" ColumnName="ViewDSH06" />
+          <ScalarProperty Name="ViewDSH07" ColumnName="ViewDSH07" />
+          <ScalarProperty Name="ViewDSH08" ColumnName="ViewDSH08" />
+          <ScalarProperty Name="ViewDSH09" ColumnName="ViewDSH09" />
+          <ScalarProperty Name="IsVerifyItemIn" ColumnName="IsVerifyItemIn" />
+          <ScalarProperty Name="IsVerifyItemOut" ColumnName="IsVerifyItemOut" />
+          <ScalarProperty Name="IsLending" ColumnName="IsLending" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeByUserName" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetEmployeeByUserName" />
+    <FunctionImportMapping FunctionImportName="InsertAcsVIP" FunctionName="SECOM.ACS.Models.Store.acs_A090_InsertAcsVIP" />
+    <FunctionImportMapping FunctionImportName="GetAcsEmployeeDetailDataViews" FunctionName="SECOM.ACS.Models.Store.acs_A020_GetAcsEmployeeDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AcsEmployeeDetailDataView">
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="DepartmentNameTH" ColumnName="DepartmentNameTH" />
+          <ScalarProperty Name="DepartmentNameEN" ColumnName="DepartmentNameEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetReceiveRetrunVisitorCardDataView" FunctionName="SECOM.ACS.Models.Store.acs_A081_RetrieveVisitor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.ReceiveReturnVisitorCardDataView">
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="VisitorName" ColumnName="VisitorName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="AreaTH" ColumnName="AREATH" />
+          <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
+          <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
+          <ScalarProperty Name="VerifyTypeID" ColumnName="VerifyTypeID" />
+          <ScalarProperty Name="VerifyNo" ColumnName="VerifyNo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetReceiveReturnBusinessCardDataView" FunctionName="SECOM.ACS.Models.Store.acs_A081_RetrieveBusinessTrip">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.ReceiveReturnBusinessTripCardDataView">
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="AreaTH" ColumnName="AREATH" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
+          <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
+          <ScalarProperty Name="BusinessEmployee" ColumnName="BusinessEmployee" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertAcsEmployee" FunctionName="SECOM.ACS.Models.Store.acs_A020_InsertAcsEmployee" />
+    <FunctionImportMapping FunctionImportName="InsertAcsEmployeeDetail" FunctionName="SECOM.ACS.Models.Store.acs_A020_InsertAcsEmployeeDetail" />
+    <FunctionImportMapping FunctionImportName="InsertAcsPhoto" FunctionName="SECOM.ACS.Models.Store.acs_A060_InsertAcsPhoto" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsEmployee" FunctionName="SECOM.ACS.Models.Store.acs_A020_UpdateAcsEmployee" />
+    <FunctionImportMapping FunctionImportName="InsertAcsVisitor" FunctionName="SECOM.ACS.Models.Store.acs_A030_InsertAcsVisitor" />
+    <FunctionImportMapping FunctionImportName="InsertAcsVisitorDetail" FunctionName="SECOM.ACS.Models.Store.acs_A030_InsertAcsVisitorDetail" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsVisitor" FunctionName="SECOM.ACS.Models.Store.acs_A030_UpdateAcsVisitor" />
+    <FunctionImportMapping FunctionImportName="DeleteAcsVisitorDetail" FunctionName="SECOM.ACS.Models.Store.acs_A030_DeleteAcsVisitorDetail" />
+    <FunctionImportMapping FunctionImportName="GetAcsVisitorDetailDataViews" FunctionName="SECOM.ACS.Models.Store.acs_A030_GetAcsVisitorDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AcsVisitorDetailDataView">
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="VerifyTypeID" ColumnName="VerifyTypeID" />
+          <ScalarProperty Name="VerifyNo" ColumnName="VerifyNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="ItemInOut" ColumnName="ItemInOut" />
+          <ScalarProperty Name="Photographing" ColumnName="Photographing" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="VerifyTypeEN" ColumnName="VerifyTypeEN" />
+          <ScalarProperty Name="VerifyTypeTH" ColumnName="VerifyTypeTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <!--<FunctionImportMapping FunctionImportName="UpdateReceiveVisitorCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReceiveVisitorCard" />
+          <FunctionImportMapping FunctionImportName="UpdateReturnVisitorCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReturnVisitorCard" />-->
+    <FunctionImportMapping FunctionImportName="ReceiveVisitorCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReceiveVisitorCard" />
+    <FunctionImportMapping FunctionImportName="ReturnVisitorCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReturnVisitorCard" />
+    <FunctionImportMapping FunctionImportName="InsertVIPTransactionAcs" FunctionName="SECOM.ACS.Models.Store.acs_A090_InsertVIPTransactionAcs" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsVIP" FunctionName="SECOM.ACS.Models.Store.acs_A090_UpdateAcsVIP" />
+    <FunctionImportMapping FunctionImportName="UpdateVIPTransactionAcs" FunctionName="SECOM.ACS.Models.Store.acs_A090_UpdateVIPTransactionAcs" />
+    <FunctionImportMapping FunctionImportName="InsertAreaMapping" FunctionName="SECOM.ACS.Models.Store.acs_M051_InsertAreaMapping" />
+    <FunctionImportMapping FunctionImportName="DeleteAreaMapping" FunctionName="SECOM.ACS.Models.Store.acs_M051_DeleteAreaMapping" />
+    <FunctionImportMapping FunctionImportName="InsertAreaApprover" FunctionName="SECOM.ACS.Models.Store.acs_M031_InsertAreaApprover" />
+    <FunctionImportMapping FunctionImportName="UpdateEmployee" FunctionName="SECOM.ACS.Models.Store.acs_M051_UpdateEmployee" />
+    <FunctionImportMapping FunctionImportName="GetEmployeeForImportAcsToAdd" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetImportACS_Add">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeForImportAcs">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardFormat" ColumnName="CardFormat" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="AccessGroup1" ColumnName="AccessGroup1" />
+          <ScalarProperty Name="StartGroup1" ColumnName="StartGroup1" />
+          <ScalarProperty Name="ExpireGroup1" ColumnName="ExpireGroup1" />
+          <ScalarProperty Name="AccessGroup2" ColumnName="AccessGroup2" />
+          <ScalarProperty Name="StartGroup2" ColumnName="StartGroup2" />
+          <ScalarProperty Name="ExpireGroup2" ColumnName="ExpireGroup2" />
+          <ScalarProperty Name="AccessGroup3" ColumnName="AccessGroup3" />
+          <ScalarProperty Name="StartGroup3" ColumnName="StartGroup3" />
+          <ScalarProperty Name="ExpireGroup3" ColumnName="ExpireGroup3" />
+          <ScalarProperty Name="AccessGroup4" ColumnName="AccessGroup4" />
+          <ScalarProperty Name="StartGroup4" ColumnName="StartGroup4" />
+          <ScalarProperty Name="ExpireGroup4" ColumnName="ExpireGroup4" />
+          <ScalarProperty Name="AccessGroup5" ColumnName="AccessGroup5" />
+          <ScalarProperty Name="StartGroup5" ColumnName="StartGroup5" />
+          <ScalarProperty Name="ExpireGroup5" ColumnName="ExpireGroup5" />
+          <ScalarProperty Name="AccessGroup6" ColumnName="AccessGroup6" />
+          <ScalarProperty Name="StartGroup6" ColumnName="StartGroup6" />
+          <ScalarProperty Name="ExpireGroup6" ColumnName="ExpireGroup6" />
+          <ScalarProperty Name="AccessGroup7" ColumnName="AccessGroup7" />
+          <ScalarProperty Name="StartGroup7" ColumnName="StartGroup7" />
+          <ScalarProperty Name="ExpireGroup7" ColumnName="ExpireGroup7" />
+          <ScalarProperty Name="AccessGroup8" ColumnName="AccessGroup8" />
+          <ScalarProperty Name="StartGroup8" ColumnName="StartGroup8" />
+          <ScalarProperty Name="ExpireGroup8" ColumnName="ExpireGroup8" />
+          <ScalarProperty Name="AccessGroup9" ColumnName="AccessGroup9" />
+          <ScalarProperty Name="StartGroup9" ColumnName="StartGroup9" />
+          <ScalarProperty Name="ExpireGroup9" ColumnName="ExpireGroup9" />
+          <ScalarProperty Name="AccessGroup10" ColumnName="AccessGroup10" />
+          <ScalarProperty Name="StartGroup10" ColumnName="StartGroup10" />
+          <ScalarProperty Name="ExpireGroup10" ColumnName="ExpireGroup10" />
+          <ScalarProperty Name="AccessGroup11" ColumnName="AccessGroup11" />
+          <ScalarProperty Name="StartGroup11" ColumnName="StartGroup11" />
+          <ScalarProperty Name="ExpireGroup11" ColumnName="ExpireGroup11" />
+          <ScalarProperty Name="AccessGroup12" ColumnName="AccessGroup12" />
+          <ScalarProperty Name="StartGroup12" ColumnName="StartGroup12" />
+          <ScalarProperty Name="ExpireGroup12" ColumnName="ExpireGroup12" />
+          <ScalarProperty Name="AccessGroup13" ColumnName="AccessGroup13" />
+          <ScalarProperty Name="StartGroup13" ColumnName="StartGroup13" />
+          <ScalarProperty Name="ExpireGroup13" ColumnName="ExpireGroup13" />
+          <ScalarProperty Name="AccessGroup14" ColumnName="AccessGroup14" />
+          <ScalarProperty Name="StartGroup14" ColumnName="StartGroup14" />
+          <ScalarProperty Name="ExpireGroup14" ColumnName="ExpireGroup14" />
+          <ScalarProperty Name="AccessGroup15" ColumnName="AccessGroup15" />
+          <ScalarProperty Name="StartGroup15" ColumnName="StartGroup15" />
+          <ScalarProperty Name="ExpireGroup15" ColumnName="ExpireGroup15" />
+          <ScalarProperty Name="AccessGroup16" ColumnName="AccessGroup16" />
+          <ScalarProperty Name="StartGroup16" ColumnName="StartGroup16" />
+          <ScalarProperty Name="ExpireGroup16" ColumnName="ExpireGroup16" />
+          <ScalarProperty Name="AccessGroup17" ColumnName="AccessGroup17" />
+          <ScalarProperty Name="StartGroup17" ColumnName="StartGroup17" />
+          <ScalarProperty Name="ExpireGroup17" ColumnName="ExpireGroup17" />
+          <ScalarProperty Name="AccessGroup18" ColumnName="AccessGroup18" />
+          <ScalarProperty Name="StartGroup18" ColumnName="StartGroup18" />
+          <ScalarProperty Name="ExpireGroup18" ColumnName="ExpireGroup18" />
+          <ScalarProperty Name="AccessGroup19" ColumnName="AccessGroup19" />
+          <ScalarProperty Name="StartGroup19" ColumnName="StartGroup19" />
+          <ScalarProperty Name="ExpireGroup19" ColumnName="ExpireGroup19" />
+          <ScalarProperty Name="AccessGroup20" ColumnName="AccessGroup20" />
+          <ScalarProperty Name="StartGroup20" ColumnName="StartGroup20" />
+          <ScalarProperty Name="ExpireGroup20" ColumnName="ExpireGroup20" />
+          <ScalarProperty Name="AccessGroup21" ColumnName="AccessGroup21" />
+          <ScalarProperty Name="StartGroup21" ColumnName="StartGroup21" />
+          <ScalarProperty Name="ExpireGroup21" ColumnName="ExpireGroup21" />
+          <ScalarProperty Name="AccessGroup22" ColumnName="AccessGroup22" />
+          <ScalarProperty Name="StartGroup22" ColumnName="StartGroup22" />
+          <ScalarProperty Name="ExpireGroup22" ColumnName="ExpireGroup22" />
+          <ScalarProperty Name="AccessGroup23" ColumnName="AccessGroup23" />
+          <ScalarProperty Name="StartGroup23" ColumnName="StartGroup23" />
+          <ScalarProperty Name="ExpireGroup23" ColumnName="ExpireGroup23" />
+          <ScalarProperty Name="AccessGroup24" ColumnName="AccessGroup24" />
+          <ScalarProperty Name="StartGroup24" ColumnName="StartGroup24" />
+          <ScalarProperty Name="ExpireGroup24" ColumnName="ExpireGroup24" />
+          <ScalarProperty Name="AccessGroup25" ColumnName="AccessGroup25" />
+          <ScalarProperty Name="StartGroup25" ColumnName="StartGroup25" />
+          <ScalarProperty Name="ExpireGroup25" ColumnName="ExpireGroup25" />
+          <ScalarProperty Name="AccessGroup26" ColumnName="AccessGroup26" />
+          <ScalarProperty Name="StartGroup26" ColumnName="StartGroup26" />
+          <ScalarProperty Name="ExpireGroup26" ColumnName="ExpireGroup26" />
+          <ScalarProperty Name="AccessGroup27" ColumnName="AccessGroup27" />
+          <ScalarProperty Name="StartGroup27" ColumnName="StartGroup27" />
+          <ScalarProperty Name="ExpireGroup27" ColumnName="ExpireGroup27" />
+          <ScalarProperty Name="AccessGroup28" ColumnName="AccessGroup28" />
+          <ScalarProperty Name="StartGroup28" ColumnName="StartGroup28" />
+          <ScalarProperty Name="ExpireGroup28" ColumnName="ExpireGroup28" />
+          <ScalarProperty Name="AccessGroup29" ColumnName="AccessGroup29" />
+          <ScalarProperty Name="StartGroup29" ColumnName="StartGroup29" />
+          <ScalarProperty Name="ExpireGroup29" ColumnName="ExpireGroup29" />
+          <ScalarProperty Name="AccessGroup30" ColumnName="AccessGroup30" />
+          <ScalarProperty Name="StartGroup30" ColumnName="StartGroup30" />
+          <ScalarProperty Name="ExpireGroup30" ColumnName="ExpireGroup30" />
+          <ScalarProperty Name="AccessGroup31" ColumnName="AccessGroup31" />
+          <ScalarProperty Name="StartGroup31" ColumnName="StartGroup31" />
+          <ScalarProperty Name="ExpireGroup31" ColumnName="ExpireGroup31" />
+          <ScalarProperty Name="AccessGroup32" ColumnName="AccessGroup32" />
+          <ScalarProperty Name="StartGroup32" ColumnName="StartGroup32" />
+          <ScalarProperty Name="ExpireGroup32" ColumnName="ExpireGroup32" />
+          <ScalarProperty Name="AccessGroup33" ColumnName="AccessGroup33" />
+          <ScalarProperty Name="StartGroup33" ColumnName="StartGroup33" />
+          <ScalarProperty Name="ExpireGroup33" ColumnName="ExpireGroup33" />
+          <ScalarProperty Name="AccessGroup34" ColumnName="AccessGroup34" />
+          <ScalarProperty Name="StartGroup34" ColumnName="StartGroup34" />
+          <ScalarProperty Name="ExpireGroup34" ColumnName="ExpireGroup34" />
+          <ScalarProperty Name="AccessGroup35" ColumnName="AccessGroup35" />
+          <ScalarProperty Name="StartGroup35" ColumnName="StartGroup35" />
+          <ScalarProperty Name="ExpireGroup35" ColumnName="ExpireGroup35" />
+          <ScalarProperty Name="AccessGroup36" ColumnName="AccessGroup36" />
+          <ScalarProperty Name="StartGroup36" ColumnName="StartGroup36" />
+          <ScalarProperty Name="ExpireGroup36" ColumnName="ExpireGroup36" />
+          <ScalarProperty Name="AccessGroup37" ColumnName="AccessGroup37" />
+          <ScalarProperty Name="StartGroup37" ColumnName="StartGroup37" />
+          <ScalarProperty Name="ExpireGroup37" ColumnName="ExpireGroup37" />
+          <ScalarProperty Name="AccessGroup38" ColumnName="AccessGroup38" />
+          <ScalarProperty Name="StartGroup38" ColumnName="StartGroup38" />
+          <ScalarProperty Name="ExpireGroup38" ColumnName="ExpireGroup38" />
+          <ScalarProperty Name="AccessGroup39" ColumnName="AccessGroup39" />
+          <ScalarProperty Name="StartGroup39" ColumnName="StartGroup39" />
+          <ScalarProperty Name="ExpireGroup39" ColumnName="ExpireGroup39" />
+          <ScalarProperty Name="AccessGroup40" ColumnName="AccessGroup40" />
+          <ScalarProperty Name="StartGroup40" ColumnName="StartGroup40" />
+          <ScalarProperty Name="ExpireGroup40" ColumnName="ExpireGroup40" />
+          <ScalarProperty Name="AccessGroup41" ColumnName="AccessGroup41" />
+          <ScalarProperty Name="StartGroup41" ColumnName="StartGroup41" />
+          <ScalarProperty Name="ExpireGroup41" ColumnName="ExpireGroup41" />
+          <ScalarProperty Name="AccessGroup42" ColumnName="AccessGroup42" />
+          <ScalarProperty Name="StartGroup42" ColumnName="StartGroup42" />
+          <ScalarProperty Name="ExpireGroup42" ColumnName="ExpireGroup42" />
+          <ScalarProperty Name="AccessGroup43" ColumnName="AccessGroup43" />
+          <ScalarProperty Name="StartGroup43" ColumnName="StartGroup43" />
+          <ScalarProperty Name="ExpireGroup43" ColumnName="ExpireGroup43" />
+          <ScalarProperty Name="AccessGroup44" ColumnName="AccessGroup44" />
+          <ScalarProperty Name="StartGroup44" ColumnName="StartGroup44" />
+          <ScalarProperty Name="ExpireGroup44" ColumnName="ExpireGroup44" />
+          <ScalarProperty Name="AccessGroup45" ColumnName="AccessGroup45" />
+          <ScalarProperty Name="StartGroup45" ColumnName="StartGroup45" />
+          <ScalarProperty Name="ExpireGroup45" ColumnName="ExpireGroup45" />
+          <ScalarProperty Name="AccessGroup46" ColumnName="AccessGroup46" />
+          <ScalarProperty Name="StartGroup46" ColumnName="StartGroup46" />
+          <ScalarProperty Name="ExpireGroup46" ColumnName="ExpireGroup46" />
+          <ScalarProperty Name="AccessGroup47" ColumnName="AccessGroup47" />
+          <ScalarProperty Name="StartGroup47" ColumnName="StartGroup47" />
+          <ScalarProperty Name="ExpireGroup47" ColumnName="ExpireGroup47" />
+          <ScalarProperty Name="AccessGroup48" ColumnName="AccessGroup48" />
+          <ScalarProperty Name="StartGroup48" ColumnName="StartGroup48" />
+          <ScalarProperty Name="ExpireGroup48" ColumnName="ExpireGroup48" />
+          <ScalarProperty Name="AccessGroup49" ColumnName="AccessGroup49" />
+          <ScalarProperty Name="StartGroup49" ColumnName="StartGroup49" />
+          <ScalarProperty Name="ExpireGroup49" ColumnName="ExpireGroup49" />
+          <ScalarProperty Name="AccessGroup50" ColumnName="AccessGroup50" />
+          <ScalarProperty Name="StartGroup50" ColumnName="StartGroup50" />
+          <ScalarProperty Name="ExpireGroup50" ColumnName="ExpireGroup50" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeForImportAcsToCancel" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetImportACS_Cancel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeForImportAcs">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardFormat" ColumnName="CardFormat" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="AccessGroup1" ColumnName="AccessGroup1" />
+          <ScalarProperty Name="StartGroup1" ColumnName="StartGroup1" />
+          <ScalarProperty Name="ExpireGroup1" ColumnName="ExpireGroup1" />
+          <ScalarProperty Name="AccessGroup2" ColumnName="AccessGroup2" />
+          <ScalarProperty Name="StartGroup2" ColumnName="StartGroup2" />
+          <ScalarProperty Name="ExpireGroup2" ColumnName="ExpireGroup2" />
+          <ScalarProperty Name="AccessGroup3" ColumnName="AccessGroup3" />
+          <ScalarProperty Name="StartGroup3" ColumnName="StartGroup3" />
+          <ScalarProperty Name="ExpireGroup3" ColumnName="ExpireGroup3" />
+          <ScalarProperty Name="AccessGroup4" ColumnName="AccessGroup4" />
+          <ScalarProperty Name="StartGroup4" ColumnName="StartGroup4" />
+          <ScalarProperty Name="ExpireGroup4" ColumnName="ExpireGroup4" />
+          <ScalarProperty Name="AccessGroup5" ColumnName="AccessGroup5" />
+          <ScalarProperty Name="StartGroup5" ColumnName="StartGroup5" />
+          <ScalarProperty Name="ExpireGroup5" ColumnName="ExpireGroup5" />
+          <ScalarProperty Name="AccessGroup6" ColumnName="AccessGroup6" />
+          <ScalarProperty Name="StartGroup6" ColumnName="StartGroup6" />
+          <ScalarProperty Name="ExpireGroup6" ColumnName="ExpireGroup6" />
+          <ScalarProperty Name="AccessGroup7" ColumnName="AccessGroup7" />
+          <ScalarProperty Name="StartGroup7" ColumnName="StartGroup7" />
+          <ScalarProperty Name="ExpireGroup7" ColumnName="ExpireGroup7" />
+          <ScalarProperty Name="AccessGroup8" ColumnName="AccessGroup8" />
+          <ScalarProperty Name="StartGroup8" ColumnName="StartGroup8" />
+          <ScalarProperty Name="ExpireGroup8" ColumnName="ExpireGroup8" />
+          <ScalarProperty Name="AccessGroup9" ColumnName="AccessGroup9" />
+          <ScalarProperty Name="StartGroup9" ColumnName="StartGroup9" />
+          <ScalarProperty Name="ExpireGroup9" ColumnName="ExpireGroup9" />
+          <ScalarProperty Name="AccessGroup10" ColumnName="AccessGroup10" />
+          <ScalarProperty Name="StartGroup10" ColumnName="StartGroup10" />
+          <ScalarProperty Name="ExpireGroup10" ColumnName="ExpireGroup10" />
+          <ScalarProperty Name="AccessGroup11" ColumnName="AccessGroup11" />
+          <ScalarProperty Name="StartGroup11" ColumnName="StartGroup11" />
+          <ScalarProperty Name="ExpireGroup11" ColumnName="ExpireGroup11" />
+          <ScalarProperty Name="AccessGroup12" ColumnName="AccessGroup12" />
+          <ScalarProperty Name="StartGroup12" ColumnName="StartGroup12" />
+          <ScalarProperty Name="ExpireGroup12" ColumnName="ExpireGroup12" />
+          <ScalarProperty Name="AccessGroup13" ColumnName="AccessGroup13" />
+          <ScalarProperty Name="StartGroup13" ColumnName="StartGroup13" />
+          <ScalarProperty Name="ExpireGroup13" ColumnName="ExpireGroup13" />
+          <ScalarProperty Name="AccessGroup14" ColumnName="AccessGroup14" />
+          <ScalarProperty Name="StartGroup14" ColumnName="StartGroup14" />
+          <ScalarProperty Name="ExpireGroup14" ColumnName="ExpireGroup14" />
+          <ScalarProperty Name="AccessGroup15" ColumnName="AccessGroup15" />
+          <ScalarProperty Name="StartGroup15" ColumnName="StartGroup15" />
+          <ScalarProperty Name="ExpireGroup15" ColumnName="ExpireGroup15" />
+          <ScalarProperty Name="AccessGroup16" ColumnName="AccessGroup16" />
+          <ScalarProperty Name="StartGroup16" ColumnName="StartGroup16" />
+          <ScalarProperty Name="ExpireGroup16" ColumnName="ExpireGroup16" />
+          <ScalarProperty Name="AccessGroup17" ColumnName="AccessGroup17" />
+          <ScalarProperty Name="StartGroup17" ColumnName="StartGroup17" />
+          <ScalarProperty Name="ExpireGroup17" ColumnName="ExpireGroup17" />
+          <ScalarProperty Name="AccessGroup18" ColumnName="AccessGroup18" />
+          <ScalarProperty Name="StartGroup18" ColumnName="StartGroup18" />
+          <ScalarProperty Name="ExpireGroup18" ColumnName="ExpireGroup18" />
+          <ScalarProperty Name="AccessGroup19" ColumnName="AccessGroup19" />
+          <ScalarProperty Name="StartGroup19" ColumnName="StartGroup19" />
+          <ScalarProperty Name="ExpireGroup19" ColumnName="ExpireGroup19" />
+          <ScalarProperty Name="AccessGroup20" ColumnName="AccessGroup20" />
+          <ScalarProperty Name="StartGroup20" ColumnName="StartGroup20" />
+          <ScalarProperty Name="ExpireGroup20" ColumnName="ExpireGroup20" />
+          <ScalarProperty Name="AccessGroup21" ColumnName="AccessGroup21" />
+          <ScalarProperty Name="StartGroup21" ColumnName="StartGroup21" />
+          <ScalarProperty Name="ExpireGroup21" ColumnName="ExpireGroup21" />
+          <ScalarProperty Name="AccessGroup22" ColumnName="AccessGroup22" />
+          <ScalarProperty Name="StartGroup22" ColumnName="StartGroup22" />
+          <ScalarProperty Name="ExpireGroup22" ColumnName="ExpireGroup22" />
+          <ScalarProperty Name="AccessGroup23" ColumnName="AccessGroup23" />
+          <ScalarProperty Name="StartGroup23" ColumnName="StartGroup23" />
+          <ScalarProperty Name="ExpireGroup23" ColumnName="ExpireGroup23" />
+          <ScalarProperty Name="AccessGroup24" ColumnName="AccessGroup24" />
+          <ScalarProperty Name="StartGroup24" ColumnName="StartGroup24" />
+          <ScalarProperty Name="ExpireGroup24" ColumnName="ExpireGroup24" />
+          <ScalarProperty Name="AccessGroup25" ColumnName="AccessGroup25" />
+          <ScalarProperty Name="StartGroup25" ColumnName="StartGroup25" />
+          <ScalarProperty Name="ExpireGroup25" ColumnName="ExpireGroup25" />
+          <ScalarProperty Name="AccessGroup26" ColumnName="AccessGroup26" />
+          <ScalarProperty Name="StartGroup26" ColumnName="StartGroup26" />
+          <ScalarProperty Name="ExpireGroup26" ColumnName="ExpireGroup26" />
+          <ScalarProperty Name="AccessGroup27" ColumnName="AccessGroup27" />
+          <ScalarProperty Name="StartGroup27" ColumnName="StartGroup27" />
+          <ScalarProperty Name="ExpireGroup27" ColumnName="ExpireGroup27" />
+          <ScalarProperty Name="AccessGroup28" ColumnName="AccessGroup28" />
+          <ScalarProperty Name="StartGroup28" ColumnName="StartGroup28" />
+          <ScalarProperty Name="ExpireGroup28" ColumnName="ExpireGroup28" />
+          <ScalarProperty Name="AccessGroup29" ColumnName="AccessGroup29" />
+          <ScalarProperty Name="StartGroup29" ColumnName="StartGroup29" />
+          <ScalarProperty Name="ExpireGroup29" ColumnName="ExpireGroup29" />
+          <ScalarProperty Name="AccessGroup30" ColumnName="AccessGroup30" />
+          <ScalarProperty Name="StartGroup30" ColumnName="StartGroup30" />
+          <ScalarProperty Name="ExpireGroup30" ColumnName="ExpireGroup30" />
+          <ScalarProperty Name="AccessGroup31" ColumnName="AccessGroup31" />
+          <ScalarProperty Name="StartGroup31" ColumnName="StartGroup31" />
+          <ScalarProperty Name="ExpireGroup31" ColumnName="ExpireGroup31" />
+          <ScalarProperty Name="AccessGroup32" ColumnName="AccessGroup32" />
+          <ScalarProperty Name="StartGroup32" ColumnName="StartGroup32" />
+          <ScalarProperty Name="ExpireGroup32" ColumnName="ExpireGroup32" />
+          <ScalarProperty Name="AccessGroup33" ColumnName="AccessGroup33" />
+          <ScalarProperty Name="StartGroup33" ColumnName="StartGroup33" />
+          <ScalarProperty Name="ExpireGroup33" ColumnName="ExpireGroup33" />
+          <ScalarProperty Name="AccessGroup34" ColumnName="AccessGroup34" />
+          <ScalarProperty Name="StartGroup34" ColumnName="StartGroup34" />
+          <ScalarProperty Name="ExpireGroup34" ColumnName="ExpireGroup34" />
+          <ScalarProperty Name="AccessGroup35" ColumnName="AccessGroup35" />
+          <ScalarProperty Name="StartGroup35" ColumnName="StartGroup35" />
+          <ScalarProperty Name="ExpireGroup35" ColumnName="ExpireGroup35" />
+          <ScalarProperty Name="AccessGroup36" ColumnName="AccessGroup36" />
+          <ScalarProperty Name="StartGroup36" ColumnName="StartGroup36" />
+          <ScalarProperty Name="ExpireGroup36" ColumnName="ExpireGroup36" />
+          <ScalarProperty Name="AccessGroup37" ColumnName="AccessGroup37" />
+          <ScalarProperty Name="StartGroup37" ColumnName="StartGroup37" />
+          <ScalarProperty Name="ExpireGroup37" ColumnName="ExpireGroup37" />
+          <ScalarProperty Name="AccessGroup38" ColumnName="AccessGroup38" />
+          <ScalarProperty Name="StartGroup38" ColumnName="StartGroup38" />
+          <ScalarProperty Name="ExpireGroup38" ColumnName="ExpireGroup38" />
+          <ScalarProperty Name="AccessGroup39" ColumnName="AccessGroup39" />
+          <ScalarProperty Name="StartGroup39" ColumnName="StartGroup39" />
+          <ScalarProperty Name="ExpireGroup39" ColumnName="ExpireGroup39" />
+          <ScalarProperty Name="AccessGroup40" ColumnName="AccessGroup40" />
+          <ScalarProperty Name="StartGroup40" ColumnName="StartGroup40" />
+          <ScalarProperty Name="ExpireGroup40" ColumnName="ExpireGroup40" />
+          <ScalarProperty Name="AccessGroup41" ColumnName="AccessGroup41" />
+          <ScalarProperty Name="StartGroup41" ColumnName="StartGroup41" />
+          <ScalarProperty Name="ExpireGroup41" ColumnName="ExpireGroup41" />
+          <ScalarProperty Name="AccessGroup42" ColumnName="AccessGroup42" />
+          <ScalarProperty Name="StartGroup42" ColumnName="StartGroup42" />
+          <ScalarProperty Name="ExpireGroup42" ColumnName="ExpireGroup42" />
+          <ScalarProperty Name="AccessGroup43" ColumnName="AccessGroup43" />
+          <ScalarProperty Name="StartGroup43" ColumnName="StartGroup43" />
+          <ScalarProperty Name="ExpireGroup43" ColumnName="ExpireGroup43" />
+          <ScalarProperty Name="AccessGroup44" ColumnName="AccessGroup44" />
+          <ScalarProperty Name="StartGroup44" ColumnName="StartGroup44" />
+          <ScalarProperty Name="ExpireGroup44" ColumnName="ExpireGroup44" />
+          <ScalarProperty Name="AccessGroup45" ColumnName="AccessGroup45" />
+          <ScalarProperty Name="StartGroup45" ColumnName="StartGroup45" />
+          <ScalarProperty Name="ExpireGroup45" ColumnName="ExpireGroup45" />
+          <ScalarProperty Name="AccessGroup46" ColumnName="AccessGroup46" />
+          <ScalarProperty Name="StartGroup46" ColumnName="StartGroup46" />
+          <ScalarProperty Name="ExpireGroup46" ColumnName="ExpireGroup46" />
+          <ScalarProperty Name="AccessGroup47" ColumnName="AccessGroup47" />
+          <ScalarProperty Name="StartGroup47" ColumnName="StartGroup47" />
+          <ScalarProperty Name="ExpireGroup47" ColumnName="ExpireGroup47" />
+          <ScalarProperty Name="AccessGroup48" ColumnName="AccessGroup48" />
+          <ScalarProperty Name="StartGroup48" ColumnName="StartGroup48" />
+          <ScalarProperty Name="ExpireGroup48" ColumnName="ExpireGroup48" />
+          <ScalarProperty Name="AccessGroup49" ColumnName="AccessGroup49" />
+          <ScalarProperty Name="StartGroup49" ColumnName="StartGroup49" />
+          <ScalarProperty Name="ExpireGroup49" ColumnName="ExpireGroup49" />
+          <ScalarProperty Name="AccessGroup50" ColumnName="AccessGroup50" />
+          <ScalarProperty Name="StartGroup50" ColumnName="StartGroup50" />
+          <ScalarProperty Name="ExpireGroup50" ColumnName="ExpireGroup50" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteAreaApprover" FunctionName="SECOM.ACS.Models.Store.acs_M031_DeleteAreaApprover" />
+    <FunctionImportMapping FunctionImportName="InsertReqAreaMapping" FunctionName="SECOM.ACS.Models.Store.acs_COM_InsertReqAreaMapping" />
+    <EntitySetMapping Name="AcsTasks">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AcsTask">
+        <MappingFragment StoreEntitySet="tbs_AcsTask">
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="Fail" ColumnName="Fail" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+          <ScalarProperty Name="LastRunDateTime" ColumnName="LastRunDateTime" />
+          <ScalarProperty Name="LastResultMessage" ColumnName="LastResultMessage" />
+          <ScalarProperty Name="IsLastResultSuccess" ColumnName="IsLastResultSuccess" />
+          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertAcsItemOutDetail" FunctionName="SECOM.ACS.Models.Store.acs_A040_InsertAcsItemOutDetail" />
+    <FunctionImportMapping FunctionImportName="InsertAcsItemOut" FunctionName="SECOM.ACS.Models.Store.acs_A040_InsertAcsItemOut" />
+    <FunctionImportMapping FunctionImportName="InsertAcsItemIn" FunctionName="SECOM.ACS.Models.Store.acs_A050_InsertAcsItemIn" />
+    <FunctionImportMapping FunctionImportName="GetAcsItemOutDetailDataViews" FunctionName="SECOM.ACS.Models.Store.acs_A040_GetAcsItemOutDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AcsItemOutDetailDataView">
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ConfdtFlag" ColumnName="ConfdtFlag" />
+          <ScalarProperty Name="ReqQty" ColumnName="ReqQty" />
+          <ScalarProperty Name="PlanReturnDate" ColumnName="PlanReturnDate" />
+          <ScalarProperty Name="ActOutQty" ColumnName="ActOutQty" />
+          <ScalarProperty Name="ActReturnQty" ColumnName="ActReturnQty" />
+          <ScalarProperty Name="ActReturnDate" ColumnName="ActReturnDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ItemDisplayEN" ColumnName="ItemDisplayEN" />
+          <ScalarProperty Name="ItemDisplayTH" ColumnName="ItemDisplayTH" />
+          <ScalarProperty Name="ItemTypeDisplayEN" ColumnName="ItemTypeDisplayEN" />
+          <ScalarProperty Name="ItemTypeDisplayTH" ColumnName="ItemTypeDisplayTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeForImportAcsByEffectiveDate" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetImportACS_Batch">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeForImportAcs">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardFormat" ColumnName="CardFormat" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="AccessGroup1" ColumnName="AccessGroup1" />
+          <ScalarProperty Name="StartGroup1" ColumnName="StartGroup1" />
+          <ScalarProperty Name="ExpireGroup1" ColumnName="ExpireGroup1" />
+          <ScalarProperty Name="AccessGroup2" ColumnName="AccessGroup2" />
+          <ScalarProperty Name="StartGroup2" ColumnName="StartGroup2" />
+          <ScalarProperty Name="ExpireGroup2" ColumnName="ExpireGroup2" />
+          <ScalarProperty Name="AccessGroup3" ColumnName="AccessGroup3" />
+          <ScalarProperty Name="StartGroup3" ColumnName="StartGroup3" />
+          <ScalarProperty Name="ExpireGroup3" ColumnName="ExpireGroup3" />
+          <ScalarProperty Name="AccessGroup4" ColumnName="AccessGroup4" />
+          <ScalarProperty Name="StartGroup4" ColumnName="StartGroup4" />
+          <ScalarProperty Name="ExpireGroup4" ColumnName="ExpireGroup4" />
+          <ScalarProperty Name="AccessGroup5" ColumnName="AccessGroup5" />
+          <ScalarProperty Name="StartGroup5" ColumnName="StartGroup5" />
+          <ScalarProperty Name="ExpireGroup5" ColumnName="ExpireGroup5" />
+          <ScalarProperty Name="AccessGroup6" ColumnName="AccessGroup6" />
+          <ScalarProperty Name="StartGroup6" ColumnName="StartGroup6" />
+          <ScalarProperty Name="ExpireGroup6" ColumnName="ExpireGroup6" />
+          <ScalarProperty Name="AccessGroup7" ColumnName="AccessGroup7" />
+          <ScalarProperty Name="StartGroup7" ColumnName="StartGroup7" />
+          <ScalarProperty Name="ExpireGroup7" ColumnName="ExpireGroup7" />
+          <ScalarProperty Name="AccessGroup8" ColumnName="AccessGroup8" />
+          <ScalarProperty Name="StartGroup8" ColumnName="StartGroup8" />
+          <ScalarProperty Name="ExpireGroup8" ColumnName="ExpireGroup8" />
+          <ScalarProperty Name="AccessGroup9" ColumnName="AccessGroup9" />
+          <ScalarProperty Name="StartGroup9" ColumnName="StartGroup9" />
+          <ScalarProperty Name="ExpireGroup9" ColumnName="ExpireGroup9" />
+          <ScalarProperty Name="AccessGroup10" ColumnName="AccessGroup10" />
+          <ScalarProperty Name="StartGroup10" ColumnName="StartGroup10" />
+          <ScalarProperty Name="ExpireGroup10" ColumnName="ExpireGroup10" />
+          <ScalarProperty Name="AccessGroup11" ColumnName="AccessGroup11" />
+          <ScalarProperty Name="StartGroup11" ColumnName="StartGroup11" />
+          <ScalarProperty Name="ExpireGroup11" ColumnName="ExpireGroup11" />
+          <ScalarProperty Name="AccessGroup12" ColumnName="AccessGroup12" />
+          <ScalarProperty Name="StartGroup12" ColumnName="StartGroup12" />
+          <ScalarProperty Name="ExpireGroup12" ColumnName="ExpireGroup12" />
+          <ScalarProperty Name="AccessGroup13" ColumnName="AccessGroup13" />
+          <ScalarProperty Name="StartGroup13" ColumnName="StartGroup13" />
+          <ScalarProperty Name="ExpireGroup13" ColumnName="ExpireGroup13" />
+          <ScalarProperty Name="AccessGroup14" ColumnName="AccessGroup14" />
+          <ScalarProperty Name="StartGroup14" ColumnName="StartGroup14" />
+          <ScalarProperty Name="ExpireGroup14" ColumnName="ExpireGroup14" />
+          <ScalarProperty Name="AccessGroup15" ColumnName="AccessGroup15" />
+          <ScalarProperty Name="StartGroup15" ColumnName="StartGroup15" />
+          <ScalarProperty Name="ExpireGroup15" ColumnName="ExpireGroup15" />
+          <ScalarProperty Name="AccessGroup16" ColumnName="AccessGroup16" />
+          <ScalarProperty Name="StartGroup16" ColumnName="StartGroup16" />
+          <ScalarProperty Name="ExpireGroup16" ColumnName="ExpireGroup16" />
+          <ScalarProperty Name="AccessGroup17" ColumnName="AccessGroup17" />
+          <ScalarProperty Name="StartGroup17" ColumnName="StartGroup17" />
+          <ScalarProperty Name="ExpireGroup17" ColumnName="ExpireGroup17" />
+          <ScalarProperty Name="AccessGroup18" ColumnName="AccessGroup18" />
+          <ScalarProperty Name="StartGroup18" ColumnName="StartGroup18" />
+          <ScalarProperty Name="ExpireGroup18" ColumnName="ExpireGroup18" />
+          <ScalarProperty Name="AccessGroup19" ColumnName="AccessGroup19" />
+          <ScalarProperty Name="StartGroup19" ColumnName="StartGroup19" />
+          <ScalarProperty Name="ExpireGroup19" ColumnName="ExpireGroup19" />
+          <ScalarProperty Name="AccessGroup20" ColumnName="AccessGroup20" />
+          <ScalarProperty Name="StartGroup20" ColumnName="StartGroup20" />
+          <ScalarProperty Name="ExpireGroup20" ColumnName="ExpireGroup20" />
+          <ScalarProperty Name="AccessGroup21" ColumnName="AccessGroup21" />
+          <ScalarProperty Name="StartGroup21" ColumnName="StartGroup21" />
+          <ScalarProperty Name="ExpireGroup21" ColumnName="ExpireGroup21" />
+          <ScalarProperty Name="AccessGroup22" ColumnName="AccessGroup22" />
+          <ScalarProperty Name="StartGroup22" ColumnName="StartGroup22" />
+          <ScalarProperty Name="ExpireGroup22" ColumnName="ExpireGroup22" />
+          <ScalarProperty Name="AccessGroup23" ColumnName="AccessGroup23" />
+          <ScalarProperty Name="StartGroup23" ColumnName="StartGroup23" />
+          <ScalarProperty Name="ExpireGroup23" ColumnName="ExpireGroup23" />
+          <ScalarProperty Name="AccessGroup24" ColumnName="AccessGroup24" />
+          <ScalarProperty Name="StartGroup24" ColumnName="StartGroup24" />
+          <ScalarProperty Name="ExpireGroup24" ColumnName="ExpireGroup24" />
+          <ScalarProperty Name="AccessGroup25" ColumnName="AccessGroup25" />
+          <ScalarProperty Name="StartGroup25" ColumnName="StartGroup25" />
+          <ScalarProperty Name="ExpireGroup25" ColumnName="ExpireGroup25" />
+          <ScalarProperty Name="AccessGroup26" ColumnName="AccessGroup26" />
+          <ScalarProperty Name="StartGroup26" ColumnName="StartGroup26" />
+          <ScalarProperty Name="ExpireGroup26" ColumnName="ExpireGroup26" />
+          <ScalarProperty Name="AccessGroup27" ColumnName="AccessGroup27" />
+          <ScalarProperty Name="StartGroup27" ColumnName="StartGroup27" />
+          <ScalarProperty Name="ExpireGroup27" ColumnName="ExpireGroup27" />
+          <ScalarProperty Name="AccessGroup28" ColumnName="AccessGroup28" />
+          <ScalarProperty Name="StartGroup28" ColumnName="StartGroup28" />
+          <ScalarProperty Name="ExpireGroup28" ColumnName="ExpireGroup28" />
+          <ScalarProperty Name="AccessGroup29" ColumnName="AccessGroup29" />
+          <ScalarProperty Name="StartGroup29" ColumnName="StartGroup29" />
+          <ScalarProperty Name="ExpireGroup29" ColumnName="ExpireGroup29" />
+          <ScalarProperty Name="AccessGroup30" ColumnName="AccessGroup30" />
+          <ScalarProperty Name="StartGroup30" ColumnName="StartGroup30" />
+          <ScalarProperty Name="ExpireGroup30" ColumnName="ExpireGroup30" />
+          <ScalarProperty Name="AccessGroup31" ColumnName="AccessGroup31" />
+          <ScalarProperty Name="StartGroup31" ColumnName="StartGroup31" />
+          <ScalarProperty Name="ExpireGroup31" ColumnName="ExpireGroup31" />
+          <ScalarProperty Name="AccessGroup32" ColumnName="AccessGroup32" />
+          <ScalarProperty Name="StartGroup32" ColumnName="StartGroup32" />
+          <ScalarProperty Name="ExpireGroup32" ColumnName="ExpireGroup32" />
+          <ScalarProperty Name="AccessGroup33" ColumnName="AccessGroup33" />
+          <ScalarProperty Name="StartGroup33" ColumnName="StartGroup33" />
+          <ScalarProperty Name="ExpireGroup33" ColumnName="ExpireGroup33" />
+          <ScalarProperty Name="AccessGroup34" ColumnName="AccessGroup34" />
+          <ScalarProperty Name="StartGroup34" ColumnName="StartGroup34" />
+          <ScalarProperty Name="ExpireGroup34" ColumnName="ExpireGroup34" />
+          <ScalarProperty Name="AccessGroup35" ColumnName="AccessGroup35" />
+          <ScalarProperty Name="StartGroup35" ColumnName="StartGroup35" />
+          <ScalarProperty Name="ExpireGroup35" ColumnName="ExpireGroup35" />
+          <ScalarProperty Name="AccessGroup36" ColumnName="AccessGroup36" />
+          <ScalarProperty Name="StartGroup36" ColumnName="StartGroup36" />
+          <ScalarProperty Name="ExpireGroup36" ColumnName="ExpireGroup36" />
+          <ScalarProperty Name="AccessGroup37" ColumnName="AccessGroup37" />
+          <ScalarProperty Name="StartGroup37" ColumnName="StartGroup37" />
+          <ScalarProperty Name="ExpireGroup37" ColumnName="ExpireGroup37" />
+          <ScalarProperty Name="AccessGroup38" ColumnName="AccessGroup38" />
+          <ScalarProperty Name="StartGroup38" ColumnName="StartGroup38" />
+          <ScalarProperty Name="ExpireGroup38" ColumnName="ExpireGroup38" />
+          <ScalarProperty Name="AccessGroup39" ColumnName="AccessGroup39" />
+          <ScalarProperty Name="StartGroup39" ColumnName="StartGroup39" />
+          <ScalarProperty Name="ExpireGroup39" ColumnName="ExpireGroup39" />
+          <ScalarProperty Name="AccessGroup40" ColumnName="AccessGroup40" />
+          <ScalarProperty Name="StartGroup40" ColumnName="StartGroup40" />
+          <ScalarProperty Name="ExpireGroup40" ColumnName="ExpireGroup40" />
+          <ScalarProperty Name="AccessGroup41" ColumnName="AccessGroup41" />
+          <ScalarProperty Name="StartGroup41" ColumnName="StartGroup41" />
+          <ScalarProperty Name="ExpireGroup41" ColumnName="ExpireGroup41" />
+          <ScalarProperty Name="AccessGroup42" ColumnName="AccessGroup42" />
+          <ScalarProperty Name="StartGroup42" ColumnName="StartGroup42" />
+          <ScalarProperty Name="ExpireGroup42" ColumnName="ExpireGroup42" />
+          <ScalarProperty Name="AccessGroup43" ColumnName="AccessGroup43" />
+          <ScalarProperty Name="StartGroup43" ColumnName="StartGroup43" />
+          <ScalarProperty Name="ExpireGroup43" ColumnName="ExpireGroup43" />
+          <ScalarProperty Name="AccessGroup44" ColumnName="AccessGroup44" />
+          <ScalarProperty Name="StartGroup44" ColumnName="StartGroup44" />
+          <ScalarProperty Name="ExpireGroup44" ColumnName="ExpireGroup44" />
+          <ScalarProperty Name="AccessGroup45" ColumnName="AccessGroup45" />
+          <ScalarProperty Name="StartGroup45" ColumnName="StartGroup45" />
+          <ScalarProperty Name="ExpireGroup45" ColumnName="ExpireGroup45" />
+          <ScalarProperty Name="AccessGroup46" ColumnName="AccessGroup46" />
+          <ScalarProperty Name="StartGroup46" ColumnName="StartGroup46" />
+          <ScalarProperty Name="ExpireGroup46" ColumnName="ExpireGroup46" />
+          <ScalarProperty Name="AccessGroup47" ColumnName="AccessGroup47" />
+          <ScalarProperty Name="StartGroup47" ColumnName="StartGroup47" />
+          <ScalarProperty Name="ExpireGroup47" ColumnName="ExpireGroup47" />
+          <ScalarProperty Name="AccessGroup48" ColumnName="AccessGroup48" />
+          <ScalarProperty Name="StartGroup48" ColumnName="StartGroup48" />
+          <ScalarProperty Name="ExpireGroup48" ColumnName="ExpireGroup48" />
+          <ScalarProperty Name="AccessGroup49" ColumnName="AccessGroup49" />
+          <ScalarProperty Name="StartGroup49" ColumnName="StartGroup49" />
+          <ScalarProperty Name="ExpireGroup49" ColumnName="ExpireGroup49" />
+          <ScalarProperty Name="AccessGroup50" ColumnName="AccessGroup50" />
+          <ScalarProperty Name="StartGroup50" ColumnName="StartGroup50" />
+          <ScalarProperty Name="ExpireGroup50" ColumnName="ExpireGroup50" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertAcsItemInDetail" FunctionName="SECOM.ACS.Models.Store.acs_A050_InsertAcsItemInDetail" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsItemOut" FunctionName="SECOM.ACS.Models.Store.acs_A040_UpdateAcsItemOut" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsItemOutDetail" FunctionName="SECOM.ACS.Models.Store.acs_A040_UpdateAcsItemOutDetail" />
+    <FunctionImportMapping FunctionImportName="GetAreaDataView" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetAreaDataView">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AreaDataView">
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+          <ScalarProperty Name="AreaDisplayEN" ColumnName="AreaDisplayEN" />
+          <ScalarProperty Name="AreaDisplayTH" ColumnName="AreaDisplayTH" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAcsItemInDetailDataViews" FunctionName="SECOM.ACS.Models.Store.acs_A050_GetAcsItemInDetail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AcsItemInDetailDataView">
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="ReqNo" ColumnName="ReqNo" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ConfdtFlag" ColumnName="ConfdtFlag" />
+          <ScalarProperty Name="ReqQty" ColumnName="ReqQty" />
+          <ScalarProperty Name="PlanReturnDate" ColumnName="PlanReturnDate" />
+          <ScalarProperty Name="ActInQty" ColumnName="ActInQty" />
+          <ScalarProperty Name="ActReturnQty" ColumnName="ActReturnQty" />
+          <ScalarProperty Name="ActReturnDate" ColumnName="ActReturnDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="ItemDisplayEN" ColumnName="ItemDisplayEN" />
+          <ScalarProperty Name="ItemDisplayTH" ColumnName="ItemDisplayTH" />
+          <ScalarProperty Name="ItemTypeDisplayEN" ColumnName="ItemTypeDisplayEN" />
+          <ScalarProperty Name="ItemTypeDisplayTH" ColumnName="ItemTypeDisplayTH" />
+          <ScalarProperty Name="ItemTypeID" ColumnName="ItemTypeID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateAcsItemIn" FunctionName="SECOM.ACS.Models.Store.acs_A050_UpdateAcsItemIn" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsItemInDetail" FunctionName="SECOM.ACS.Models.Store.acs_A050_UpdateAcsItemInDetail" />
+    <FunctionImportMapping FunctionImportName="UpdateAcsItemInForAuthor" FunctionName="SECOM.ACS.Models.Store.acs_A050_UpdateAcsItemInForAuthor" />
+    <FunctionImportMapping FunctionImportName="GetLatestReqApproverList" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetLatestReqApproverList" />
+    <FunctionImportMapping FunctionImportName="DeleteAcsEmployeeDetail" FunctionName="SECOM.ACS.Models.Store.acs_A020_DeleteAcsEmployeeDetail" />
+    <FunctionImportMapping FunctionImportName="GetAcsVisitorTransactionDataViews" FunctionName="SECOM.ACS.Models.Store.acs_A030_GetAcsVisitorTransaction">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.AcsVisitorTransactionDataView">
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryTimeFrom" ColumnName="EntryTimeFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="EntryTimeTo" ColumnName="EntryTimeTo" />
+          <ScalarProperty Name="VerifyTypeID" ColumnName="VerifyTypeID" />
+          <ScalarProperty Name="VerifyTypeEN" ColumnName="VerifyTypeEN" />
+          <ScalarProperty Name="VerifyTypeTH" ColumnName="VerifyTypeTH" />
+          <ScalarProperty Name="VerifyNo" ColumnName="VerifyNo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <!--<FunctionImportMapping FunctionImportName="ReceiveBusinessTripCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReceiveBusinessTripCard" />
+          <FunctionImportMapping FunctionImportName="ReturnBusinessTripCard" FunctionName="SECOM.ACS.Models.Store.acs_A081_UpdateReturnBusinessTripCard" />-->
+    <FunctionImportMapping FunctionImportName="UpdateBusinessTripCardRegistration" FunctionName="SECOM.ACS.Models.Store.acs_A080_UpdateBusinessTripCardRegistration" />
+    <FunctionImportMapping FunctionImportName="GetBusinessTripCardRegistrationViews" FunctionName="SECOM.ACS.Models.Store.acs_A080_RetrieveBusinessTripCardRegistration">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.BusinessTripCardRegistrationView">
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="BusinessEmployee" ColumnName="BusinessEmployee" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+          <ScalarProperty Name="SendAcsDate" ColumnName="SendAcsDate" />
+          <ScalarProperty Name="AllowEditCardRegis" ColumnName="AllowEditCardRegis" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetVisitorCardRegistrationViews" FunctionName="SECOM.ACS.Models.Store.acs_A080_RetrieveVisitorCardRegistration">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.VisitorCardRegistrationView">
+          <ScalarProperty Name="TranID" ColumnName="TranID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+          <ScalarProperty Name="VisitorName" ColumnName="VisitorName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="AreaEN" ColumnName="AreaEN" />
+          <ScalarProperty Name="VerifyTypeID" ColumnName="VerifyTypeID" />
+          <ScalarProperty Name="VerifyNo" ColumnName="VerifyNo" />
+          <ScalarProperty Name="CardID" ColumnName="CardID" />
+          <ScalarProperty Name="AreaTH" ColumnName="AreaTH" />
+          <ScalarProperty Name="SendAcsDate" ColumnName="SendAcsDate" />
+          <ScalarProperty Name="EntryDateFrom" ColumnName="EntryDateFrom" />
+          <ScalarProperty Name="EntryDateTo" ColumnName="EntryDateTo" />
+          <ScalarProperty Name="AllowEditCardRegis" ColumnName="AllowEditCardRegis" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateVisitorCardRegistration" FunctionName="SECOM.ACS.Models.Store.acs_A080_UpdateVisitorCardRegistration" />
+    <FunctionImportMapping FunctionImportName="GetGAApprover" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetGAApprover">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeApprovalDataView">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpNameEN" ColumnName="EmpNameEN" />
+          <ScalarProperty Name="EmpNameTH" ColumnName="EmpNameTH" />
+          <ScalarProperty Name="PositionEN" ColumnName="PositionEN" />
+          <ScalarProperty Name="PositionTH" ColumnName="PositionTH" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteAcsItemOutDetail" FunctionName="SECOM.ACS.Models.Store.acs_A040_DeleteAcsItemOutDetail" />
+    <FunctionImportMapping FunctionImportName="DeleteAcsItemInDetail" FunctionName="SECOM.ACS.Models.Store.acs_A050_DeleteAcsItemInDetail" />
+    <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="SECOM.ACS.Models.Store.acs_COM_CreateUser" />
+    <FunctionImportMapping FunctionImportName="CreateEmployeeRoleMapping" FunctionName="SECOM.ACS.Models.Store.acs_COM_CreateEmployeeRoleMapping" />
+    <FunctionImportMapping FunctionImportName="GetAreaOrganizeMappings" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetAreaOrganizeMapping" />
+    <EntitySetMapping Name="AreaOrganizeMappings">
+      <EntityTypeMapping TypeName="SECOM.ACS.Models.AreaOrganizeMapping">
+        <MappingFragment StoreEntitySet="tbm_AreaOrganizeMapping">
+          <ScalarProperty Name="SpecialPositionID" ColumnName="SpecialPositionID" />
+          <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="MappingID" ColumnName="MappingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetEmployeeForImportAcs" FunctionName="SECOM.ACS.Models.Store.acs_COM_GetImportACS_Employee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SECOM.ACS.Models.EmployeeForImportAcs">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+          <ScalarProperty Name="CardFormat" ColumnName="CardFormat" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="AccessGroup1" ColumnName="AccessGroup1" />
+          <ScalarProperty Name="StartGroup1" ColumnName="StartGroup1" />
+          <ScalarProperty Name="ExpireGroup1" ColumnName="ExpireGroup1" />
+          <ScalarProperty Name="AccessGroup2" ColumnName="AccessGroup2" />
+          <ScalarProperty Name="StartGroup2" ColumnName="StartGroup2" />
+          <ScalarProperty Name="ExpireGroup2" ColumnName="ExpireGroup2" />
+          <ScalarProperty Name="AccessGroup3" ColumnName="AccessGroup3" />
+          <ScalarProperty Name="StartGroup3" ColumnName="StartGroup3" />
+          <ScalarProperty Name="ExpireGroup3" ColumnName="ExpireGroup3" />
+          <ScalarProperty Name="AccessGroup4" ColumnName="AccessGroup4" />
+          <ScalarProperty Name="StartGroup4" ColumnName="StartGroup4" />
+          <ScalarProperty Name="ExpireGroup4" ColumnName="ExpireGroup4" />
+          <ScalarProperty Name="AccessGroup5" ColumnName="AccessGroup5" />
+          <ScalarProperty Name="StartGroup5" ColumnName="StartGroup5" />
+          <ScalarProperty Name="ExpireGroup5" ColumnName="ExpireGroup5" />
+          <ScalarProperty Name="AccessGroup6" ColumnName="AccessGroup6" />
+          <ScalarProperty Name="StartGroup6" ColumnName="StartGroup6" />
+          <ScalarProperty Name="ExpireGroup6" ColumnName="ExpireGroup6" />
+          <ScalarProperty Name="AccessGroup7" ColumnName="AccessGroup7" />
+          <ScalarProperty Name="StartGroup7" ColumnName="StartGroup7" />
+          <ScalarProperty Name="ExpireGroup7" ColumnName="ExpireGroup7" />
+          <ScalarProperty Name="AccessGroup8" ColumnName="AccessGroup8" />
+          <ScalarProperty Name="StartGroup8" ColumnName="StartGroup8" />
+          <ScalarProperty Name="ExpireGroup8" ColumnName="ExpireGroup8" />
+          <ScalarProperty Name="AccessGroup9" ColumnName="AccessGroup9" />
+          <ScalarProperty Name="StartGroup9" ColumnName="StartGroup9" />
+          <ScalarProperty Name="ExpireGroup9" ColumnName="ExpireGroup9" />
+          <ScalarProperty Name="AccessGroup10" ColumnName="AccessGroup10" />
+          <ScalarProperty Name="StartGroup10" ColumnName="StartGroup10" />
+          <ScalarProperty Name="ExpireGroup10" ColumnName="ExpireGroup10" />
+          <ScalarProperty Name="AccessGroup11" ColumnName="AccessGroup11" />
+          <ScalarProperty Name="StartGroup11" ColumnName="StartGroup11" />
+          <ScalarProperty Name="ExpireGroup11" ColumnName="ExpireGroup11" />
+          <ScalarProperty Name="AccessGroup12" ColumnName="AccessGroup12" />
+          <ScalarProperty Name="StartGroup12" ColumnName="StartGroup12" />
+          <ScalarProperty Name="ExpireGroup12" ColumnName="ExpireGroup12" />
+          <ScalarProperty Name="AccessGroup13" ColumnName="AccessGroup13" />
+          <ScalarProperty Name="StartGroup13" ColumnName="StartGroup13" />
+          <ScalarProperty Name="ExpireGroup13" ColumnName="ExpireGroup13" />
+          <ScalarProperty Name="AccessGroup14" ColumnName="AccessGroup14" />
+          <ScalarProperty Name="StartGroup14" ColumnName="StartGroup14" />
+          <ScalarProperty Name="ExpireGroup14" ColumnName="ExpireGroup14" />
+          <ScalarProperty Name="AccessGroup15" ColumnName="AccessGroup15" />
+          <ScalarProperty Name="StartGroup15" ColumnName="StartGroup15" />
+          <ScalarProperty Name="ExpireGroup15" ColumnName="ExpireGroup15" />
+          <ScalarProperty Name="AccessGroup16" ColumnName="AccessGroup16" />
+          <ScalarProperty Name="StartGroup16" ColumnName="StartGroup16" />
+          <ScalarProperty Name="ExpireGroup16" ColumnName="ExpireGroup16" />
+          <ScalarProperty Name="AccessGroup17" ColumnName="AccessGroup17" />
+          <ScalarProperty Name="StartGroup17" ColumnName="StartGroup17" />
+          <ScalarProperty Name="ExpireGroup17" ColumnName="ExpireGroup17" />
+          <ScalarProperty Name="AccessGroup18" ColumnName="AccessGroup18" />
+          <ScalarProperty Name="StartGroup18" ColumnName="StartGroup18" />
+          <ScalarProperty Name="ExpireGroup18" ColumnName="ExpireGroup18" />
+          <ScalarProperty Name="AccessGroup19" ColumnName="AccessGroup19" />
+          <ScalarProperty Name="StartGroup19" ColumnName="StartGroup19" />
+          <ScalarProperty Name="ExpireGroup19" ColumnName="ExpireGroup19" />
+          <ScalarProperty Name="AccessGroup20" ColumnName="AccessGroup20" />
+          <ScalarProperty Name="StartGroup20" ColumnName="StartGroup20" />
+          <ScalarProperty Name="ExpireGroup20" ColumnName="ExpireGroup20" />
+          <ScalarProperty Name="AccessGroup21" ColumnName="AccessGroup21" />
+          <ScalarProperty Name="StartGroup21" ColumnName="StartGroup21" />
+          <ScalarProperty Name="ExpireGroup21" ColumnName="ExpireGroup21" />
+          <ScalarProperty Name="AccessGroup22" ColumnName="AccessGroup22" />
+          <ScalarProperty Name="StartGroup22" ColumnName="StartGroup22" />
+          <ScalarProperty Name="ExpireGroup22" ColumnName="ExpireGroup22" />
+          <ScalarProperty Name="AccessGroup23" ColumnName="AccessGroup23" />
+          <ScalarProperty Name="StartGroup23" ColumnName="StartGroup23" />
+          <ScalarProperty Name="ExpireGroup23" ColumnName="ExpireGroup23" />
+          <ScalarProperty Name="AccessGroup24" ColumnName="AccessGroup24" />
+          <ScalarProperty Name="StartGroup24" ColumnName="StartGroup24" />
+          <ScalarProperty Name="ExpireGroup24" ColumnName="ExpireGroup24" />
+          <ScalarProperty Name="AccessGroup25" ColumnName="AccessGroup25" />
+          <ScalarProperty Name="StartGroup25" ColumnName="StartGroup25" />
+          <ScalarProperty Name="ExpireGroup25" ColumnName="ExpireGroup25" />
+          <ScalarProperty Name="AccessGroup26" ColumnName="AccessGroup26" />
+          <ScalarProperty Name="StartGroup26" ColumnName="StartGroup26" />
+          <ScalarProperty Name="ExpireGroup26" ColumnName="ExpireGroup26" />
+          <ScalarProperty Name="AccessGroup27" ColumnName="AccessGroup27" />
+          <ScalarProperty Name="StartGroup27" ColumnName="StartGroup27" />
+          <ScalarProperty Name="ExpireGroup27" ColumnName="ExpireGroup27" />
+          <ScalarProperty Name="AccessGroup28" ColumnName="AccessGroup28" />
+          <ScalarProperty Name="StartGroup28" ColumnName="StartGroup28" />
+          <ScalarProperty Name="ExpireGroup28" ColumnName="ExpireGroup28" />
+          <ScalarProperty Name="AccessGroup29" ColumnName="AccessGroup29" />
+          <ScalarProperty Name="StartGroup29" ColumnName="StartGroup29" />
+          <ScalarProperty Name="ExpireGroup29" ColumnName="ExpireGroup29" />
+          <ScalarProperty Name="AccessGroup30" ColumnName="AccessGroup30" />
+          <ScalarProperty Name="StartGroup30" ColumnName="StartGroup30" />
+          <ScalarProperty Name="ExpireGroup30" ColumnName="ExpireGroup30" />
+          <ScalarProperty Name="AccessGroup31" ColumnName="AccessGroup31" />
+          <ScalarProperty Name="StartGroup31" ColumnName="StartGroup31" />
+          <ScalarProperty Name="ExpireGroup31" ColumnName="ExpireGroup31" />
+          <ScalarProperty Name="AccessGroup32" ColumnName="AccessGroup32" />
+          <ScalarProperty Name="StartGroup32" ColumnName="StartGroup32" />
+          <ScalarProperty Name="ExpireGroup32" ColumnName="ExpireGroup32" />
+          <ScalarProperty Name="AccessGroup33" ColumnName="AccessGroup33" />
+          <ScalarProperty Name="StartGroup33" ColumnName="StartGroup33" />
+          <ScalarProperty Name="ExpireGroup33" ColumnName="ExpireGroup33" />
+          <ScalarProperty Name="AccessGroup34" ColumnName="AccessGroup34" />
+          <ScalarProperty Name="StartGroup34" ColumnName="StartGroup34" />
+          <ScalarProperty Name="ExpireGroup34" ColumnName="ExpireGroup34" />
+          <ScalarProperty Name="AccessGroup35" ColumnName="AccessGroup35" />
+          <ScalarProperty Name="StartGroup35" ColumnName="StartGroup35" />
+          <ScalarProperty Name="ExpireGroup35" ColumnName="ExpireGroup35" />
+          <ScalarProperty Name="AccessGroup36" ColumnName="AccessGroup36" />
+          <ScalarProperty Name="StartGroup36" ColumnName="StartGroup36" />
+          <ScalarProperty Name="ExpireGroup36" ColumnName="ExpireGroup36" />
+          <ScalarProperty Name="AccessGroup37" ColumnName="AccessGroup37" />
+          <ScalarProperty Name="StartGroup37" ColumnName="StartGroup37" />
+          <ScalarProperty Name="ExpireGroup37" ColumnName="ExpireGroup37" />
+          <ScalarProperty Name="AccessGroup38" ColumnName="AccessGroup38" />
+          <ScalarProperty Name="StartGroup38" ColumnName="StartGroup38" />
+          <ScalarProperty Name="ExpireGroup38" ColumnName="ExpireGroup38" />
+          <ScalarProperty Name="AccessGroup39" ColumnName="AccessGroup39" />
+          <ScalarProperty Name="StartGroup39" ColumnName="StartGroup39" />
+          <ScalarProperty Name="ExpireGroup39" ColumnName="ExpireGroup39" />
+          <ScalarProperty Name="AccessGroup40" ColumnName="AccessGroup40" />
+          <ScalarProperty Name="StartGroup40" ColumnName="StartGroup40" />
+          <ScalarProperty Name="ExpireGroup40" ColumnName="ExpireGroup40" />
+          <ScalarProperty Name="AccessGroup41" ColumnName="AccessGroup41" />
+          <ScalarProperty Name="StartGroup41" ColumnName="StartGroup41" />
+          <ScalarProperty Name="ExpireGroup41" ColumnName="ExpireGroup41" />
+          <ScalarProperty Name="AccessGroup42" ColumnName="AccessGroup42" />
+          <ScalarProperty Name="StartGroup42" ColumnName="StartGroup42" />
+          <ScalarProperty Name="ExpireGroup42" ColumnName="ExpireGroup42" />
+          <ScalarProperty Name="AccessGroup43" ColumnName="AccessGroup43" />
+          <ScalarProperty Name="StartGroup43" ColumnName="StartGroup43" />
+          <ScalarProperty Name="ExpireGroup43" ColumnName="ExpireGroup43" />
+          <ScalarProperty Name="AccessGroup44" ColumnName="AccessGroup44" />
+          <ScalarProperty Name="StartGroup44" ColumnName="StartGroup44" />
+          <ScalarProperty Name="ExpireGroup44" ColumnName="ExpireGroup44" />
+          <ScalarProperty Name="AccessGroup45" ColumnName="AccessGroup45" />
+          <ScalarProperty Name="StartGroup45" ColumnName="StartGroup45" />
+          <ScalarProperty Name="ExpireGroup45" ColumnName="ExpireGroup45" />
+          <ScalarProperty Name="AccessGroup46" ColumnName="AccessGroup46" />
+          <ScalarProperty Name="StartGroup46" ColumnName="StartGroup46" />
+          <ScalarProperty Name="ExpireGroup46" ColumnName="ExpireGroup46" />
+          <ScalarProperty Name="AccessGroup47" ColumnName="AccessGroup47" />
+          <ScalarProperty Name="StartGroup47" ColumnName="StartGroup47" />
+          <ScalarProperty Name="ExpireGroup47" ColumnName="ExpireGroup47" />
+          <ScalarProperty Name="AccessGroup48" ColumnName="AccessGroup48" />
+          <ScalarProperty Name="StartGroup48" ColumnName="StartGroup48" />
+          <ScalarProperty Name="ExpireGroup48" ColumnName="ExpireGroup48" />
+          <ScalarProperty Name="AccessGroup49" ColumnName="AccessGroup49" />
+          <ScalarProperty Name="StartGroup49" ColumnName="StartGroup49" />
+          <ScalarProperty Name="ExpireGroup49" ColumnName="ExpireGroup49" />
+          <ScalarProperty Name="AccessGroup50" ColumnName="AccessGroup50" />
+          <ScalarProperty Name="StartGroup50" ColumnName="StartGroup50" />
+          <ScalarProperty Name="ExpireGroup50" ColumnName="ExpireGroup50" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateDocument" FunctionName="SECOM.ACS.Models.Store.acs_P020_UpdateDocument" />
+  </EntityContainerMapping>
+</Mapping>
